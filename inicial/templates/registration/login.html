@@ -1,0 +1,69 @@
+{% extends 'baselogin.html'%}
+
+
+<div id="navbar" hidden >
+ {%block nav%}{%endblock%}
+</div>
+{% block title %}Logar No sistema{%endblock%}
+{%block content%}
+
+
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+
+        <!-- Icon -->
+        <div class="fadeIn first">
+            <img src="\static\imagem\coruja.png" id="icon" alt="User Icon" />
+            <h1>Sistema Ari</h1>
+        </div>
+
+        <!-- Login Form -->
+        <form method="POST">
+           {% csrf_token %}
+            {{form.as_p}}
+        <button id="btnsalvar" class="btn btn-secondary" type="submit" >Logar</button>
+        </form>
+
+        
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{%endblock%}

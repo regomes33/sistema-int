@@ -1,0 +1,71 @@
+{% extends 'basepessoas.html'%}
+
+{% block title %}Dados{%endblock%}
+{%block content%}
+<div class="jumbotron">
+    <div class="container">
+        <h2>Filtrando Pessoas</h2>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h5>Pessoas Cadastradas no Sistema </h5>
+            <div class="col-9 search-div">
+                <form method="GET" id="search-form">
+                <input class="form-control" type="text" id="search" name="search" placeholder="Buscar Pessoa">
+                <i class="fas fa-search" id="search-btn"></i>
+                     <a class="btn btn-main" href="{%url 'relatorio_pdf'%}">Relatorio  Pessoa</a>
+                </form>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Nome</th>
+                    <th>Sobre Nome</th>
+                    <th>Nome da Mãe</th>
+                    <th>CPF</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for pessoa in pessoas %}
+                {% for pessoafoto in pessoafotos %}
+                {% if pessoafoto.fotopessoa %}
+                {% if pessoa.id == pessoafoto.pessoa.id %}
+                <tr>
+                   <td><img class="img-responsive"  style="width: 160px;" src="{{pessoafoto.fotopessoa.url}}"> </td>
+                   <td><a href="descricao/{{pessoa.id}}" title="Clique para Obter da Descrição">{{pessoa.nome }}</a></td>
+                    <td>{{pessoa.sobrenome}}</td>
+                    <td>{{pessoa.mae}}</td>
+                    <td>{{pessoa.cpf }}</td>
+                    <td><a href="editar/{{pessoa.id}}"> <i class="fas fa-pen" title="Clique para Editar!!"></i></a></td>
+
+                </tr>
+
+                {%endif%}
+                {%endif%}
+                {%endfor%}
+                {%endfor%}
+
+
+
+                </tbody>
+
+
+
+
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+{%endblock%}

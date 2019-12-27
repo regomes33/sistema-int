@@ -1,0 +1,38 @@
+<h1>Relatorio </h1>
+
+
+
+<h5>Relatorio de Pessoas  </h5>
+            <table >
+
+                <tr>
+                    <div id="superior">
+                        <td><stro>Foto </stro></td>
+                        <td><strong>Nome</strong></td>
+                        <td ><strong>Sobre Nome</strong></td>
+                        <td><strong>Nome da Mãe</strong></td>
+                        <td><strong>CPF</strong></td>
+                    </div>
+                </tr>
+
+
+                {% for pessoa in pessoas %}
+                {%for pessoafoto in pessoasfotos%}
+                {% if pessoafoto.fotopessoa %}
+                {% if pessoa.id == pessoafoto.pessoa.id %}
+
+                <tr>
+                    <td><img class="img-responsive"  style="width: 160px;" src="{{pessoafoto.fotopessoa.url}}"> </td>
+                    <td>{{pessoa.nome}}</td>
+                    <td>{{pessoa.sobrenome}}</td>
+                    <td>{{pessoa.mae}}</td>
+                    <td>{{pessoa.cpf }}</td>
+
+
+                </tr>
+
+                {%endif%}
+                {%endif%}
+                {%endfor%}
+                {%endfor%}
+            </table>
