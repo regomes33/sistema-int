@@ -88,3 +88,17 @@ def person_detail_pdf(request, pk):
     }
     filename = f'relatorio_pdf_{slugify(pessoa)}'
     return Render.render('relatorio_detail.html', params, filename)
+
+
+def validate_editar(request):
+    nome = request.GET.get('nome', None)
+    sobrenome = request.GET.get('sobrenome', None)
+    mae = request.GET.get('mae', None)
+    pai = request.GET.get('pai', None)
+    cpf = request.GET.get('cpf', None)
+
+    data = {
+        'is_taken': Pessoa.objects.filter(cpf__iexact=cpf).exists()
+
+    }
+    return JsonResponse(data)

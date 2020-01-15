@@ -72,15 +72,20 @@ $("#id_cpf").change(function () {
 
 
 
-function verificaNumero(e) {
-                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                    return true;
-                }
-            }
-$(document).ready(function() {
-                $("id_nome").keypress(verificaNumero);
+$("#id_nome").on('input', function () {
+	if (/[0-9]/g.test(this.value)) {
+		alert("Apenas letras");
+	}
+});
 
-            });
+$("#id_sobrenome").on('input', function () {
+	if (/[0-9]/g.test(this.value)) {
+		alert("Apenas letras");
+	}
+});
+
+
+
 
 
 (btnsalvar).on('click',function(){

@@ -1,6 +1,9 @@
 from django.shortcuts import render
-from .forms import *
+from django.urls import reverse
 
+from .forms import *
+from django.contrib import messages
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 
 # Create your views here.
 
@@ -31,10 +34,24 @@ def infracaoCadastro(request):
                     objeto_infracao_ocorrencia.infracao=objeto_infracao
                     objeto_infracao_ocorrencia.save()
 
-
+        messages.success(request, 'Salvo com sucesso!!')
 
 
 
     return render(request, 'infracao_form.html', {'form_infracao': form_infracao,
                                                   'form_modusoperandi':form_modusoperandi,
                                                   'form_ocorrencia':form_ocorrencia})
+
+
+
+def mesagem(request):
+    dataDoFato= request.Get.get('dataDoFato')
+    if request.method == 'POST':
+        if dataDoFato.length > 3:
+            msg_sucess = 'Cadastrado com sucesso.'
+            messages.success(request, msg_sucess)
+    url = 'infracao_form.html'
+    return HttpResponseRedirect(reverse(url))
+
+
+

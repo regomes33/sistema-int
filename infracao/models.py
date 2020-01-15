@@ -34,13 +34,13 @@ class Infracao(models.Model):
 
     ]
 
-    ARMA_DE_FOGO = [('Revol', 'Revolver'),
-                    ('Pist', 'Pistola'),
+    ARMA_DE_FOGO = [('Revolver', 'Revolver'),
+                    ('Pistola', 'Pistola'),
                     ('Fac','Faca')]
-    STATUS = [('Viv', 'Vivo'),
-              ('Mort', 'Morto'),
-              ('Pres', 'Preso'),
-              ('Solt', 'Solto')]
+    STATUS = [('Vivo', 'Vivo'),
+              ('Morto', 'Morto'),
+              ('Preso', 'Preso'),
+              ('Solto', 'Solto')]
 
     pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT)
 
@@ -73,31 +73,31 @@ class Infracao(models.Model):
 
 class Modusoperandi(models.Model):
     Faccao = {
-        ('nen', 'Nenhuma'),
-        ('cv', 'Comando Vermelho'),
-        ('pcc', 'PCC-Primeiro Comando da Capital'),
-        ('ade', 'ADE')
+        ('Nenhumas', 'Nenhuma'),
+        ('Comando Vermelho', 'Comando Vermelho'),
+        ('PCC', 'PCC-Primeiro Comando da Capital'),
+        ('ADE', 'ADE')
     }
     Funcao = {
-        ('chef', 'Chefe'),
-        ('menb', 'Membro'),
+        ('Chefe', 'Chefe'),
+        ('Menbro', 'Membro'),
     }
 
-    infracao=models.ForeignKey(Infracao,on_delete=models.PROTECT)
+    pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT)
     faccao = models.CharField(max_length=100,
                               choices=Faccao, null=True, blank=True)
     funcao = models.CharField(max_length=100,
                               choices=Funcao, null=True, blank=True)
 
-    def __str__(self):
-        return self.faccao + ', ' + self.funcao
+    # def __str__(self):
+    #     return self.faccao + ' ' + self.funcao
 
 
 
 class Ocorrencias(models.Model):
-    infracao = models.ForeignKey(Infracao, on_delete=models.PROTECT)
+    pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT)
     rai = models.CharField(max_length=100, null=True, blank=True)
-    dataDoFato = models.DateField()
+    dataDoFato = models.DateField('Data do Fato')
     descrição= models.CharField(max_length=500,null=True,blank=True)
 
 

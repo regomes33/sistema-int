@@ -1,6 +1,7 @@
 console.log('Funcuinou');
 var searchbtn = $('#search-btn');
 var searchform = $('#search-form');
+var btneditar = $('#btneditar')
 
 
 $(document).ready(function () {
@@ -54,7 +55,7 @@ $("#id_cpf").change(function () {
     var cpf = $(this).val();
 
     $.ajax({
-        url: 'validate_cpf/',
+        url: 'validate_editar/',
         data: {
             'cpf': cpf
         },
@@ -63,6 +64,7 @@ $("#id_cpf").change(function () {
             if (data.is_taken) {
                 alert("O Cpf digitado já existe .");
             }
+            
         }
     });
 
@@ -86,6 +88,39 @@ $(searchbtn).on('click', function () {
 
 
 })
+
+$("#formularioeditar").on('change paste', 'input, select, textarea', function () {
+    $mudou = true;
+});
+
+
+$(btneditar).on('click',function(){
+    
+    if ($mudou == true) {
+
+        var msj = 'Dados editados!! Deseja Salvar Edição?';
+        if (!confirm(msj)) {
+            return false;
+        } else {
+            $("#formularioeditar").submit();
+            
+        }
+        
+    }
+  
+    
+    
+       
+
+});
+
+
+
+
+
+
+
+
 
 
 

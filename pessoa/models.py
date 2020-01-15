@@ -28,11 +28,12 @@ class Pessoa(models.Model):
     cpf = models.CharField(max_length=14, blank=False, null=False, unique=True, )
 
     def __str__(self):
-        return self.nome + ' ' + self.sobrenome
+        return self.nome + ' ' + self.sobrenome + ' '+'CPF: '+self.cpf
 
     def clean_name(self):
         return self.cleaned_data["nome"].upper()
-
+    def clean_cpf(self):
+        return self.cleaned_data["cpf"].upper()
     def clean_sobrenome(self):
         return self.cleaned_data["sobrenome"].upper()
 

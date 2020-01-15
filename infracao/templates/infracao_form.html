@@ -4,21 +4,48 @@
 {%block content%}
 <div class='container'>
 
-	<form method="post" enctype="multipart/form-data">
-		{% csrf_token %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
 
-        <div >
+        <div class="card">
+            <div class="card-body">
 
             <h1>Cadastre a Infração</h1>
-             {{form_infracao |bootstrap}}
+            {{form_infracao |bootstrap}}
+            </div>
         </div>
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <h1>Modus Operando</h1>
+                {{form_modusoperandi|bootstrap}}
 
-        {{form_modusoperandi|bootstrap}}
-        {{form_ocorrencia|bootstrap}}
+            </div>
+        </div>
+        <br>
+        <div class="card">
+            <div class="card-body">
+            <h1>Infração</h1>
+            {{form_ocorrencia|bootstrap}}
 
-        <button id="submit" class="btn btn-secondary" type="submit"   >Salvar</button>
+            </div>
+        </div>
+        <br>
+        <button id="submit" class="btn btn-secondary" type="submit">Salvar</button>
     </form>
     <br>
+    <div id="mensagem">
+				{% for message in messages %}
+  					{% if 'success' in message.tags %}
+ 					 <p class="alert alert-success" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+ 						 {% else %}
+ 						 <p class="alert alert-warning" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+  							{% endif %}
+							{% endfor %}
+			</div>
+
+
+
 </div>
 
 {%endblock%}

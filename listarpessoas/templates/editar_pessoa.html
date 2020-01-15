@@ -3,20 +3,25 @@
 
 {% block title %}Update Pessoa{%endblock%}
 {%block content%}
-<form  method="POST">
+<form id="formularioeditar" method="POST">
     {% csrf_token %}
     <div class="container">
         <p> <h5>Atualizar dados da Pessoa</h5> </p>
-    </div>
-    <div class="container">
-        {{formeditarpessoa|bootstrap}}
-    </div>
-          <div class="container">
-	           <div class="row">
-	             <button id="btnsalvar" class="btn btn-secondary" type="submit" >Salvar</button>
-	            </div>
-		   </div>
 
+        <div class="form-group">
+            
+                {{formeditarpessoa|bootstrap}}
+            
+        </div>
+        <br>
+              <div >
+                   <div class="row">
+                     <button id="btneditar" class="btn btn-secondary" type="submit" >Salvar Edição</button>
+                    </div>
+               </div>
+               <br>
+               <br>
+    </div>
 </form>
 
 

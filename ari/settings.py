@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'widget_tweaks',
     'bootstrapform',
     'pessoa.apps.PessoaConfig',
@@ -72,6 +74,12 @@ TEMPLATES = [
         },
     },
 ]
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'sistema-int',
+    'API_KEY': '236715741456836',
+    'API_SECRET': 'naWUd_bLcVMuNYv19K7MVc9nJs4'
+}
 
 WSGI_APPLICATION = 'ari.wsgi.application'
 
@@ -125,4 +133,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = '{}/media'.format(BASE_DIR)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 

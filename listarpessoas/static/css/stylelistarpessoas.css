@@ -8,6 +8,19 @@
     margin-right: 60px;
 }
 
+
+.form-group .form-control{
+padding:10px;
+float:none;
+
+}
+.form-control{
+    float: right;
+    display: flexbox;
+    
+}
+
+
 .btn-main {
     margin-left: 100px;
     margin-bottom: 30px;
