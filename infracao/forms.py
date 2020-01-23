@@ -5,7 +5,7 @@ from .models import *
 class infracaoForm(forms.ModelForm):
     class Meta:
         model = Infracao
-        fields = ['pessoa', 'natureza', 'natureza2', 'qualificacao', 'arma_de_fogo', 'status']
+        fields = ['pessoa', 'primeiranatureza', 'segundanatureza', 'qualificacao', 'arma_de_fogo', 'status']
 
 
 class ModusOperandiForm(forms.ModelForm):

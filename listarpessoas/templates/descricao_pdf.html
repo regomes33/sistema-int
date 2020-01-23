@@ -3,7 +3,7 @@
 {% block title %}Dados{%endblock%}
 {%block content%}
 
-<div class="card">
+<div class="card" id="descricao">
       <div class="container">
             <div class="card-header">
                 Descrição
@@ -28,6 +28,7 @@
                 <br>
                 <a href="{% url 'listarpessoas' %}"  class="btn btn-primary">Retornar Para Listagem</a>
                 <a class="btn btn-main" href="{%url 'relatorio_pdf'%}">Relatorio  Pessoa</a>
+               
               </div>
       </div>
 </div>

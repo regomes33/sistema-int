@@ -1,18 +1,117 @@
-<h1>Relatorio </h1>
-<h5>Relatorio de Pessoas </h5>
-<table>
-  <tr>
-    <div id="superior">
-      <td><strong>Nome</strong></td>
-      <td><strong>Sobrenome</strong></td>
-      <td><strong>Nome da Mãe</strong></td>
-      <td><strong>CPF</strong></td>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+     <style type="text/css">
+   element.style {
+}
+.list-group-item {
+    padding: 10px;
+    margin-bottom: -14px;
+    position:absolute;
+    
+    
+}
+
+.list-group-item1 {
+    position: relative;
+    display: flex;
+    padding: 10px;
+    margin-bottom: -16px;
+    background-color:rgb(216, 204, 204);
+    font-size: 12px;
+    
+    
+}
+
+li{
+  list-style-type: none;
+}
+
+.espaco {
+    margin-right: 10px;
+    float: left;
+    padding: 5px;
+    line-height: 5px;
+    text-justify: auto;
+    letter-spacing: 5px;
+    line-height: 30px;
+    word-spacing: 50px;
+
+}
+
+
+  </style>
+</head>
+
+<body>
+    <div class="card">
+      <div class="container" id="descricao">
+        <div class="card-header">
+        
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Descrição da Pessoa </h5>
+
+          <ol class="list-group">
+            <li class="list-group-item " >
+             <p style="text-align: center;"> <img class="img-responsive" style="width: 160px;" src="{{pessoafoto.fotopessoa.url}}" /></li></p>
+              <br>
+              <hr style="border: 4px;">
+              <p style="text-align:center;font-size: 0.5cm;">Dados Pessoais</p>
+            <li class="list-group-item1" ><strong><label class="espaco">Nome:  </label></strong><label  style="float: right;">{{pessoa.nome}}</label></li>
+            <br>
+            <li class="list-group-item1"><strong><label class="espaco">Sobre Nome:  </label></strong>{{pessoa.sobrenome}}</li>
+            <br>
+            <li class="list-group-item1"><strong><label class="espaco">CPF:  </label></strong>{{pessoa.cpf}} </li>
+            <br>
+            <li class="list-group-item1"><strong><label class="espaco">Apelido: </label></strong>{{pessoa.apelido}} </li>
+            <br>
+            <li class="list-group-item1"><strong><label class="espaco">Nome da Mãe: </label></strong>{{pessoa.mae}} </li>
+            <br>
+            <li class="list-group-item1"><strong><label class="espaco">Nome do Pai: </label></strong>{{pessoa.pai}} </li>
+            
+          </ol>
+            <br>
+            
+          <ol class="list-group">
+            
+            <hr style="border: 4px;">
+            <p style="text-align: center; font-size: 0.5cm;">Dados de Endereço</p>
+            <li class="list-group-item1"><strong><label class="espaco">Endereço: </label></strong><label
+                style="float: right;">{{pessoaendereco.endereco}}</label></li>
+            <br>
+            <li class="list-group-item1"><strong><label class="espaco">Cidade: </label></strong>{{pessoaendereco.cidade}}</li>
+            <br>
+            <li class="list-group-item1"><strong><label class="espaco">Estado: </label></strong>{{pessoaendereco.estado}} </li>
+            <br>
+            <li class="list-group-item1"><strong><label class="espaco">País: </label></strong>{{pessoaendereco.pais}} </li>
+            <br>
+            
+          
+          </ol>
+
+
+
+            
+
+      
     </div>
-  </tr>
-  <tr>
-    <td>{{pessoa.nome}}</td>
-    <td>{{pessoa.sobrenome}}</td>
-    <td>{{pessoa.mae}}</td>
-    <td>{{pessoa.cpf }}</td>
-  </tr>
-</table>
+  </div>
+</div>
+
+
+
+ 
+
+
+  </body>
+</html>
+
+
+

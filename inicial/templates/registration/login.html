@@ -1,5 +1,5 @@
 {% extends 'baselogin.html'%}
-
+{% load bootstrap %}
 
 <div id="navbar" hidden >
  {%block nav%}{%endblock%}
@@ -9,27 +9,54 @@
 
 
 
-<div class="wrapper fadeInDown">
-    <div id="formContent">
-        <!-- Tabs Titles -->
+<!--<div class="wrapper fadeInDown">-->
+<!--    <div id="formContent">-->
+<!--        &lt;!&ndash; Tabs Titles &ndash;&gt;-->
 
-        <!-- Icon -->
-        <div class="fadeIn first">
-            <img src="\static\imagem\coruja.png" id="icon" alt="User Icon" />
-            <h1>Sistema Ari</h1>
-        </div>
+<!--        &lt;!&ndash; Icon &ndash;&gt;-->
+<!--        <div class="fadeIn first">-->
+<!--            <img src="\static\imagem\coruja.png" id="icon" alt="User Icon" />-->
+<!--            <h1>Sistema Ari</h1>-->
+<!--        </div>-->
 
-        <!-- Login Form -->
-        <form method="POST">
-           {% csrf_token %}
-            {{form.as_p}}
-        <button id="btnsalvar" class="btn btn-secondary" type="submit" >Logar</button>
-        </form>
+<!--        &lt;!&ndash; Login Form &ndash;&gt;-->
+<!--        <form method="POST">-->
+<!--           {% csrf_token %}-->
+<!--            {{form.as_p}}-->
+<!--        <button id="btnsalvar" class="btn btn-secondary" type="submit" >Logar</button>-->
+<!--        </form>-->
 
-        
+<!--        -->
 
-    </div>
-</div>
+<!--    </div>-->
+<!--</div>-->
+
+
+
+<div class="sidenav">
+         <div class="login-main-text">
+            <h2>Sistema Ari<br> Página de Login</h2>
+            <p>Logar ou Registrar no sistema .</p>
+         </div>
+      </div>
+      <div class="main">
+         <div class="col-md-6 col-sm-12">
+            
+            <div class="login-form">
+               <form method="POST">
+                  <div class="form-group">
+                     <img src="\static\imagem\coruja.png" style="width: 50px; margin-left: 120px;" id="icon" alt="User Icon" />
+                     <br>
+                     {% csrf_token %}
+                     {{form|bootstrap}}
+                  </div>
+
+                  <button id="btnsalvar" class="btn btn-secondary" type="submit">Logar</button>
+                  <button type="submit" class="btn btn-secondary">Registrar</button>
+               </form>
+            </div>
+         </div>
+      </div>
 
 
 

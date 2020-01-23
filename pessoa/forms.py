@@ -20,9 +20,9 @@ class PessoaForm(forms.ModelForm):
     cpf = forms.CharField(label='CPF', required=True,
                           widget=forms.TextInput(attrs={"placeholder": "Digite um CPF Valido"}))
 
-    nome = forms.CharField(label='', required=True,
+    nome = forms.CharField(label='Nome', required=True,
                            widget=forms.TextInput(attrs={"placeholder": "Digite o Nome: Apenas LETRAS "}))
-    sobrenome = forms.CharField(label='', required=True,
+    sobrenome = forms.CharField(label='Sobre Nome', required=True,
                                 widget=forms.TextInput(attrs={"placeholder": "Digite o Sobre Nome: Apenas LETRAS "}))
 
     class Meta:

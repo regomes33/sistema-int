@@ -20,7 +20,15 @@ float:none;
     
 }
 
+#content{
+background:red;
+float:center;
 
+}
+.main{
+background:red;
+
+}
 .btn-main {
     margin-left: 100px;
     margin-bottom: 30px;
@@ -133,7 +141,7 @@ float:none;
 
 footer {
     background: #333;
-    height: 300px;
+    height: 50px;
     border-top: 2px solid #202020;
 }
 

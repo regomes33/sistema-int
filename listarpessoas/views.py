@@ -1,12 +1,15 @@
 from django.contrib.admin.templatetags.admin_list import pagination
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.base import View
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.template.loader import get_template
 import xhtml2pdf.pisa as pisa
 import io
 from django.utils.text import slugify
+from django.conf import settings
+import pdfkit
 
+from infracao.models import Infracao
 from .forms import *
 
 
@@ -29,11 +32,12 @@ def descricao_pessoa(request, id):
     descricao1 = get_object_or_404(PessoaFoto, pk=id)
     descricao_contato = get_object_or_404(PessoaContato, pk=id)
     descricao_endereco = get_object_or_404(PessoaEndereco, pk=id)
-
+    descricao_infracao=get_object_or_404(Infracao,pk=id)
     return render(request, 'descricao_pessoa.html', {'descricao': descricao,
                                                      'descricao1': descricao1,
                                                      "descricao_contato": descricao_contato,
-                                                     "descricao_endereco": descricao_endereco})
+                                                     "descricao_endereco": descricao_endereco,
+                                                     "descricao_infracao":descricao_infracao})
 
 
 def editar_pessoa(request, id):
@@ -73,6 +77,7 @@ class Pdf(View):
         pessoas = Pessoa.objects.all()
         pessoasfotos = PessoaFoto.objects.all()
         params = {
+            'media':settings.BASE_DIR,
             'pessoas': pessoas,
             'pessoasfotos': pessoasfotos,
             'request': request,
@@ -82,12 +87,24 @@ class Pdf(View):
 
 def person_detail_pdf(request, pk):
     pessoa = Pessoa.objects.get(pk=pk)
+    pessoafoto=PessoaFoto.objects.get(pk=pk)
+    pessoaendereco=PessoaEndereco.objects.get(pk=pk)
+    infracao=Infracao.objects.get(pk=pk)
+
     params = {
+        'pessoafoto':pessoafoto,
         'pessoa': pessoa,
         'request': request,
+        'pessoaendereco':pessoaendereco,
+
+
     }
     filename = f'relatorio_pdf_{slugify(pessoa)}'
     return Render.render('relatorio_detail.html', params, filename)
+
+
+
+
 
 
 def validate_editar(request):

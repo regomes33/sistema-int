@@ -15,7 +15,7 @@ $(document).ready(function(){
 
 				rules:{
 					nome: {
-						minlength:5,
+						minlength:3,
 						required:true,
 						digits:false,
 
@@ -23,7 +23,7 @@ $(document).ready(function(){
 
 					} ,
 					sobrenome: {
-					    minlength:5,
+					    minlength:3,
 
 					},
 					cpf:{
