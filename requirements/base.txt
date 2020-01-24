@@ -1,13 +1,16 @@
 astroid==2.3.0
 autopep8==1.4.4
 certifi==2019.11.28
+cloudinary==1.19.1
 colorama==0.4.1
 dj-database-url==0.5.0
 dj-static==0.0.6
-Django==2.2.5
 django-bootstrap-form==3.4
+django-cloudinary-storage==0.2.3
+django-extensions==2.2.5
 django-localflavor==2.2
 django-widget-tweaks==1.4.5
+Django==2.2.5
 gunicorn==20.0.4
 html5lib==1.0.1
 isort==4.3.21
