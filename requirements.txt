@@ -1,2 +1,2 @@
--r requirements-dev.txt
+-r requirements/base.txt
 cloudinary==1.19.1
