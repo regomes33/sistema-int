@@ -28,10 +28,10 @@ def listarPessoas(request):
 
 def descricao_pessoa(request, id):
     descricao = get_object_or_404(Pessoa, pk=id)
-    descricao1 = get_object_or_404(PessoaFoto, pk=id)
-    descricao_contato = get_object_or_404(PessoaContato, pk=id)
-    descricao_endereco = get_object_or_404(PessoaEndereco, pk=id)
-    descricao_infracao = get_object_or_404(Infracao, pk=id)
+    descricao1 = get_object_or_404(PessoaFoto, pessoa=descricao)
+    descricao_contato = get_object_or_404(PessoaContato, pessoa=descricao)
+    descricao_endereco = get_object_or_404(PessoaEndereco, pessoa=descricao)
+    descricao_infracao = get_object_or_404(Infracao, pessoa=descricao)
     context = {
         'descricao': descricao,
         'descricao1': descricao1,

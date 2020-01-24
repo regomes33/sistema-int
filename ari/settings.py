@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'bootstrapform',
     'django_extensions',
+    # my apps
     'pessoa.apps.PessoaConfig',
     'infracao.apps.InfracaoConfig',
     'usuarios.apps.UsuariosConfig',
