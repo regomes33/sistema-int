@@ -10,3 +10,6 @@ def inicial(request):
     data = {}
     data['user'] = request.user
     return render(request, 'index.html', data)
+
+def registrarusuario(request):
+    return render(request,'registrar.html')

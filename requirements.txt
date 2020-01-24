@@ -1,1 +1,2 @@
 -r requirements-dev.txt
+cloudinary==1.19.1

@@ -32,7 +32,7 @@ def infracaoCadastro(request):
                     objeto_infracao_ocorrencia = ocorrencia.save(commit=False)
                     objeto_infracao_ocorrencia.infracao = objeto_infracao
                     objeto_infracao_ocorrencia.save()
-
+    messages.success(request, 'Salvo com sucesso!!')
     return render(request, 'infracao_form.html', {'form_infracao': form_infracao,
                                                   'form_modusoperandi': form_modusoperandi,
                                                   'form_ocorrencia': form_ocorrencia})
