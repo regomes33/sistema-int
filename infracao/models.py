@@ -8,7 +8,6 @@ from pessoa.models import Pessoa
 ''' Model com informações básicas de uma infração '''
 
 
-
 class Infracao(models.Model):
     NATUREZA = [
         ('art.28', 'Art. 28. Usuário '),
@@ -37,7 +36,7 @@ class Infracao(models.Model):
 
     ARMA_DE_FOGO = [('Revolver', 'Revolver'),
                     ('Pistola', 'Pistola'),
-                    ('Fac','Faca')]
+                    ('Fac', 'Faca')]
     STATUS = [('Vivo', 'Vivo'),
               ('Morto', 'Morto'),
               ('Preso', 'Preso'),
@@ -46,15 +45,16 @@ class Infracao(models.Model):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT)
 
     primeiranatureza = models.CharField('Primeira Natureza', max_length=50,
-                                choices=NATUREZA, null=True, blank=True, )
+                                        choices=NATUREZA, null=True, blank=True, )
     qualificacao = models.CharField(max_length=50,
                                     choices=QUALIFICACAO, null=True, blank=True)
     segundanatureza = models.CharField('Segunda Natureza', max_length=50,
-                                 choices=NATUREZA, null=True, blank=True, )
-    arma_de_fogo = models.CharField(max_length=50, null=True, blank=True, choices=ARMA_DE_FOGO)
+                                       choices=NATUREZA, null=True, blank=True, )
+    arma_de_fogo = models.CharField(
+        max_length=50, null=True, blank=True, choices=ARMA_DE_FOGO)
 
-    status = models.CharField(max_length=50, blank=True, null=True, choices=STATUS)
-
+    status = models.CharField(
+        max_length=50, blank=True, null=True, choices=STATUS)
 
     ''' model com informações do cometimento de crime '''
 
@@ -70,7 +70,7 @@ class Modusoperandi(models.Model):
         ('Chefe', 'Chefe'),
         ('Menbro', 'Membro'),
     }
-    infracao=models.ForeignKey(Infracao,on_delete=models.PROTECT)
+    pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
 
     faccao = models.CharField(max_length=100,
                               choices=Faccao, null=True, blank=True)
@@ -81,11 +81,8 @@ class Modusoperandi(models.Model):
     #     return self.faccao + ' ' + self.funcao
 
 
-
 class Ocorrencias(models.Model):
-    infracao = models.ForeignKey(Infracao, on_delete=models.PROTECT)
+    pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
     rai = models.CharField(max_length=100, null=True, blank=True)
-    dataDoFato = models.DateField('Data do Fato')
-    descrição= models.CharField(max_length=500,null=True,blank=True)
-
-
+    data_do_fato = models.DateField('Data do Fato')
+    descricao = models.CharField(max_length=500, null=True, blank=True)

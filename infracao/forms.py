@@ -3,21 +3,25 @@ from .models import *
 
 
 class infracaoForm(forms.ModelForm):
+
     class Meta:
         model = Infracao
-        fields = ['pessoa', 'primeiranatureza', 'segundanatureza', 'qualificacao', 'arma_de_fogo', 'status']
+        fields = ['pessoa', 'primeiranatureza', 'segundanatureza',
+                  'qualificacao', 'arma_de_fogo', 'status']
 
 
 class ModusOperandiForm(forms.ModelForm):
+
     class Meta:
         model = Modusoperandi
-        fields = [ 'faccao', 'funcao']
+        fields = ['faccao', 'funcao']
 
 
 class OcorrenciasForm(forms.ModelForm):
+
     class Meta:
         model = Ocorrencias
-        fields = ['rai', 'dataDoFato', 'descrição']
+        fields = ['rai', 'data_do_fato', 'descricao']
 
 #
 # class crimeForm(forms.ModelForm):
@@ -31,4 +35,3 @@ class OcorrenciasForm(forms.ModelForm):
 ModusoperandiFormSet = forms.formset_factory(ModusOperandiForm, extra=1)
 
 OcorrenciasFormSet = forms.formset_factory(OcorrenciasForm, extra=1)
-
