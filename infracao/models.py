@@ -9,6 +9,9 @@ from pessoa.models import Pessoa
 
 
 class Infracao(models.Model):
+    '''
+    Natureza
+    '''
     NATUREZA = [
         ('art.28', 'Art. 28. Usuário '),
         ('art.33', 'Art. 33. Trafico de Drogas'),
@@ -31,7 +34,6 @@ class Infracao(models.Model):
         ('Co-Aut', 'Co-Autor'),
         ('Part', 'Participe'),
         ('Vit', 'Vitima')
-
     ]
 
     ARMA_DE_FOGO = [('Revolver', 'Revolver'),
@@ -59,23 +61,24 @@ class Infracao(models.Model):
     ''' model com informações do cometimento de crime '''
 
 
-class Modusoperandi(models.Model):
-    Faccao = {
-        ('Nenhumas', 'Nenhuma'),
-        ('Comando Vermelho', 'Comando Vermelho'),
-        ('PCC', 'PCC-Primeiro Comando da Capital'),
-        ('ADE', 'ADE')
-    }
-    Funcao = {
+class Faccao(models.Model):
+    # Faccao = {
+    #     ('Nenhumas', 'Nenhuma'),
+    #     ('Comando Vermelho', 'Comando Vermelho'),
+    #     ('PCC', 'PCC-Primeiro Comando da Capital'),
+    #     ('ADE', 'ADE')
+    # }
+    funcao_choices = [
         ('Chefe', 'Chefe'),
-        ('Menbro', 'Membro'),
-    }
-    pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
-
-    faccao = models.CharField(max_length=100,
-                              choices=Faccao, null=True, blank=True)
-    funcao = models.CharField(max_length=100,
-                              choices=Funcao, null=True, blank=True)
+        ('Membro', 'Membro'),
+    ]
+    nome = models.CharField(max_length=100, unique=True)
+    funcao = models.CharField(
+        max_length=100,
+        choices=funcao_choices,
+        null=True,
+        blank=True
+    )
 
     # def __str__(self):
     #     return self.faccao + ' ' + self.funcao
