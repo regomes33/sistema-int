@@ -3,6 +3,7 @@ from .models import Arma
 from .models import Comparsa
 from .models import Faccao
 from .models import Infracao
+from .models import Modelo
 from .models import Natureza
 from .models import Ocorrencia
 from .models import Pessoa
@@ -76,8 +77,14 @@ class OcorrenciaAdmin(admin.ModelAdmin):
 @admin.register(Veiculo)
 class VeiculoAdmin(admin.ModelAdmin):
     list_display = ('placa', 'modelo', 'cor')
-    search_fields = ('placa', 'modelo', 'cor')
-    list_filter = ('funcao',)
+    search_fields = ('placa', 'modelo__modelo', 'cor')
+    list_filter = ('modelo', 'cor')
+
+
+@admin.register(Modelo)
+class ModeloAdmin(admin.ModelAdmin):
+    list_display = ('__str__',)
+    search_fields = ('modelo',)
 
 
 admin.site.register(PessoaContato)
