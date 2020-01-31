@@ -181,6 +181,9 @@ class Ocorrencia(models.Model):
 
 
 class PessoaOcorrencia(TimeStampedModel):
+    '''
+    Uma pessoa pode ter várias ocorrências.
+    '''
     pessoa = models.ForeignKey(
         Pessoa,
         related_name='pessoas',
