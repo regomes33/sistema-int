@@ -75,24 +75,33 @@ class Tatuagem(models.Model):
     )
 
 
+class Natureza(models.Model):
+    natureza = models.TextField(unique=True)
+
+    class Meta:
+        ordering = ('natureza',)
+        verbose_name = 'natureza'
+        verbose_name_plural = 'naturezas'
+
+    def __str__(self):
+        return self.natureza
+
+
 class Infracao(models.Model):
-    '''
-    Natureza
-    '''
-    NATUREZA = [
-        ('art.28', 'Art. 28. Usuário'),
-        ('art.33', 'Art. 33. Trafico de Drogas'),
-        ('Art.34', 'Art. 34. Maquinario'),
-        ('Art.35', 'Art. 35. Associarem-se duas ou mais pessoas para o Trafico'),
-        ('Art.36', 'Art. 36. Financiar Financiamento do Trafico'),
-        ('Art.121', 'Art.121. Matar Alguem'),
-        ('art.155', 'Art. 155. Furto'),
-        ('art.157', 'Art. 157. Roubo'),
-        ('art.157§3º', 'Art 157. §3º - Roubo Com Lesão Corporal'),
-        ('art.157§3º', 'Art 157. §3º -   Roubo Seguido de Morte (Latrocinio)'),
-        ('art.171', '  Art. 171. Estelionato'),
-        ('Lei.12850', 'Lei : 12850. Associação Criminosa')
-    ]
+    # NATUREZA = [
+    #     ('art.28', 'Art. 28. Usuário'),
+    #     ('art.33', 'Art. 33. Trafico de Drogas'),
+    #     ('Art.34', 'Art. 34. Maquinario'),
+    #     ('Art.35', 'Art. 35. Associarem-se duas ou mais pessoas para o Trafico'),
+    #     ('Art.36', 'Art. 36. Financiar Financiamento do Trafico'),
+    #     ('Art.121', 'Art.121. Matar Alguem'),
+    #     ('art.155', 'Art. 155. Furto'),
+    #     ('art.157', 'Art. 157. Roubo'),
+    #     ('art.157§3º', 'Art 157. §3º - Roubo Com Lesão Corporal'),
+    #     ('art.157§3º', 'Art 157. §3º -   Roubo Seguido de Morte (Latrocinio)'),
+    #     ('art.171', '  Art. 171. Estelionato'),
+    #     ('Lei.12850', 'Lei : 12850. Associação Criminosa')
+    # ]
 
     QUALIFICACAO = (
         ('aut', 'Autor'),
@@ -114,26 +123,29 @@ class Infracao(models.Model):
     )
 
     pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT)
-    primeiranatureza = models.CharField(
-        'Primeira Natureza',
-        max_length=50,
-        choices=NATUREZA,
+    primeira_natureza = models.ForeignKey(
+        Natureza,
+        on_delete=models.SET_NULL,
+        verbose_name='primeira natureza',
+        related_name='natureza1',
         null=True,
-        blank=True,
+        blank=True
     )
     qualificacao = models.CharField(
         max_length=5,
         choices=QUALIFICACAO,
         default='aut',
     )
-    segundanatureza = models.CharField(
-        'Segunda Natureza',
-        max_length=50,
-        choices=NATUREZA,
+    segunda_natureza = models.ForeignKey(
+        Natureza,
+        on_delete=models.SET_NULL,
+        verbose_name='segunda natureza',
+        related_name='natureza2',
         null=True,
-        blank=True,
+        blank=True
     )
     arma_de_fogo = models.CharField(
+        'arma de fogo',
         max_length=10,
         choices=ARMA_DE_FOGO,
         null=True,

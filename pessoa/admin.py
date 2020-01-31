@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Comparsa
 from .models import Infracao
+from .models import Natureza
 from .models import Ocorrencia
 from .models import Pessoa
 from .models import PessoaContato
@@ -25,6 +26,12 @@ class PessoaAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'nome', 'sobrenome', 'mae')
     search_fields = ('nome',)
     list_filter = ('nome',)
+
+
+@admin.register(Natureza)
+class NaturezaAdmin(admin.ModelAdmin):
+    list_display = ('__str__',)
+    search_fields = ('natureza',)
 
 
 @admin.register(Ocorrencia)
