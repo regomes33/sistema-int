@@ -23,7 +23,7 @@ INSTALLED_APPS = [
     'bootstrapform',
     'django_extensions',
     # my apps
-    'inicial.apps.InicialConfig',
+    'core',
     'pessoa.apps.PessoaConfig',
 ]
 
