@@ -20,7 +20,7 @@ class Pessoa(TimeStampedModel, CreatedBy, Address, Document):
         blank=True
     )
 
-    class META:
+    class Meta:
         ordering = ('nome',)
         verbose_name = 'nome'
         verbose_name_plural = 'nomes'
@@ -29,12 +29,20 @@ class Pessoa(TimeStampedModel, CreatedBy, Address, Document):
         return ' '.join(filter(None, [self.nome, self.sobrenome]))
 
 
-class PessoaFoto(models.Model):
+class PessoaFoto(TimeStampedModel):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT)
     fotopessoa = models.ImageField('Imagem da Pessoa', upload_to="pessoa")
 
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'foto'
+        verbose_name_plural = 'fotos'
 
-class PessoaContato(models.Model):
+    def __str__(self):
+        return f'{self.pk} - {self.pessoa}'
+
+
+class PessoaContato(TimeStampedModel):
     '''
     Telefones
     '''
@@ -51,8 +59,16 @@ class PessoaContato(models.Model):
     )
     contato = models.CharField(max_length=50)
 
+    class Meta:
+        ordering = ('pessoa', 'contato')
+        verbose_name = 'contato'
+        verbose_name_plural = 'contatos'
 
-class Comparsa(models.Model):
+    def __str__(self):
+        return self.contato
+
+
+class Comparsa(TimeStampedModel):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
     nome_comparsa = models.CharField(
         'nome',
@@ -61,8 +77,16 @@ class Comparsa(models.Model):
         blank=True
     )
 
+    class Meta:
+        ordering = ('pessoa', 'nome_comparsa')
+        verbose_name = 'comparsa'
+        verbose_name_plural = 'comparsas'
 
-class Tatuagem(models.Model):
+    def __str__(self):
+        return self.nome_comparsa
+
+
+class Tatuagem(TimeStampedModel):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT)
     foto_tatuagem = models.ImageField(
         'Imagem da Tatuagem',
@@ -73,6 +97,14 @@ class Tatuagem(models.Model):
         null=True,
         blank=True
     )
+
+    class Meta:
+        ordering = ('pessoa', '-created')
+        verbose_name = 'tatuagem'
+        verbose_name_plural = 'tatuagens'
+
+    def __str__(self):
+        return f'{self.pk} - {self.pessoa}'
 
 
 class Natureza(models.Model):
@@ -99,41 +131,19 @@ class Arma(models.Model):
         return self.arma
 
 
-class Infracao(models.Model):
-    # NATUREZA = [
-    #     ('art.28', 'Art. 28. Usuário'),
-    #     ('art.33', 'Art. 33. Trafico de Drogas'),
-    #     ('Art.34', 'Art. 34. Maquinario'),
-    #     ('Art.35', 'Art. 35. Associarem-se duas ou mais pessoas para o Trafico'),
-    #     ('Art.36', 'Art. 36. Financiar Financiamento do Trafico'),
-    #     ('Art.121', 'Art.121. Matar Alguem'),
-    #     ('art.155', 'Art. 155. Furto'),
-    #     ('art.157', 'Art. 157. Roubo'),
-    #     ('art.157§3º', 'Art 157. §3º - Roubo Com Lesão Corporal'),
-    #     ('art.157§3º', 'Art 157. §3º -   Roubo Seguido de Morte (Latrocinio)'),
-    #     ('art.171', '  Art. 171. Estelionato'),
-    #     ('Lei.12850', 'Lei : 12850. Associação Criminosa')
-    # ]
-
+class Infracao(TimeStampedModel):
     QUALIFICACAO = (
         ('aut', 'Autor'),
         ('coaut', 'Co-Autor'),
         ('part', 'Participe'),
         ('vit', 'Vitima')
     )
-
-    # ARMA_DE_FOGO = (
-    #     ('revolver', 'Revolver'),
-    #     ('pistola', 'Pistola'),
-    #     ('faca', 'Faca')
-    # )
     STATUS = (
         ('vivo', 'Vivo'),
         ('morto', 'Morto'),
         ('preso', 'Preso'),
         ('solto', 'Solto')
     )
-
     pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT)
     primeira_natureza = models.ForeignKey(
         Natureza,
@@ -170,28 +180,38 @@ class Infracao(models.Model):
         default='vivo'
     )
 
+    class Meta:
+        ordering = ('-created',)
+        verbose_name = 'infração'
+        verbose_name_plural = 'infrações'
+
+    def __str__(self):
+        return f'{self.pk} - {self.pessoa}'
+
 
 class Faccao(models.Model):
-    # Faccao = {
-    #     ('Nenhumas', 'Nenhuma'),
-    #     ('Comando Vermelho', 'Comando Vermelho'),
-    #     ('PCC', 'PCC-Primeiro Comando da Capital'),
-    #     ('ADE', 'ADE')
-    # }
-    funcao_choices = [
-        ('Chefe', 'Chefe'),
-        ('Membro', 'Membro'),
-    ]
+    FUNCAO_CHOICES = (
+        ('chefe', 'Chefe'),
+        ('membro', 'Membro'),
+    )
     nome = models.CharField(max_length=100, unique=True)
     funcao = models.CharField(
-        max_length=100,
-        choices=funcao_choices,
+        max_length=10,
+        choices=FUNCAO_CHOICES,
         null=True,
         blank=True
     )
 
+    class Meta:
+        ordering = ('nome',)
+        verbose_name = 'facção'
+        verbose_name_plural = 'facções'
 
-class Ocorrencia(models.Model):
+    def __str__(self):
+        return self.nome
+
+
+class Ocorrencia(TimeStampedModel):
     rai = models.CharField(max_length=100, null=True, blank=True)
     data_do_fato = models.DateField('Data do Fato')
     descricao = models.CharField(max_length=500, null=True, blank=True)
@@ -227,7 +247,15 @@ class PessoaOcorrencia(TimeStampedModel):
         return f'{self.pessoa} - {self.ocorrencia}'
 
 
-class Veiculo(models.Model):
+class Veiculo(TimeStampedModel):
     placa = models.CharField(max_length=100, null=True, blank=True)
     modelo = models.CharField(max_length=100, null=True, blank=True)
     cor = models.CharField(max_length=100, null=True, blank=True)
+
+    class Meta:
+        ordering = ('placa',)
+        verbose_name = 'veículo'
+        verbose_name_plural = 'veículos'
+
+    def __str__(self):
+        return f'{self.placa} - {self.modelo} - {self.cor}'
