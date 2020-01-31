@@ -1,8 +1,8 @@
 from django.db import models
-from localflavor.br.br_states import STATE_CHOICES
+from core.models import TimeStampedModel, CreatedBy, Address, Document
 
 
-class Pessoa(models.Model):
+class Pessoa(TimeStampedModel, CreatedBy, Address, Document):
     nome = models.CharField('nome', max_length=50, null=True, blank=True)
     sobrenome = models.CharField(
         'sobrenome',
@@ -13,7 +13,6 @@ class Pessoa(models.Model):
     apelido = models.CharField(max_length=50, null=True, blank=True)
     mae = models.CharField(max_length=50, null=True, blank=True)
     pai = models.CharField(max_length=50, null=True, blank=True)
-    cpf = models.CharField(max_length=14, blank=False, null=False, unique=True)
     faccao = models.ForeignKey(
         'Faccao',
         on_delete=models.SET_NULL,
@@ -22,21 +21,12 @@ class Pessoa(models.Model):
     )
 
     class META:
-        ordering = 'nome'
+        ordering = ('nome',)
         verbose_name = 'nome'
         verbose_name_plural = 'nomes'
 
     def __str__(self):
-        return self.nome + ' ' + self.sobrenome + ' ' + 'CPF: ' + self.cpf
-
-    def clean_name(self):
-        return self.cleaned_data["nome"].upper()
-
-    def clean_cpf(self):
-        return self.cleaned_data["cpf"].upper()
-
-    def clean_sobrenome(self):
-        return self.cleaned_data["sobrenome"].upper()
+        return ' '.join(filter(None, [self.nome, self.sobrenome]))
 
 
 class PessoaFoto(models.Model):
@@ -62,21 +52,14 @@ class PessoaContato(models.Model):
     contato = models.CharField(max_length=50)
 
 
-class PessoaEndereco(models.Model):
-    pessoa = models.ForeignKey(Pessoa,
-                               on_delete=models.CASCADE)
-    endereco = models.CharField(max_length=200)
-    complemento = models.CharField(max_length=200,
-                                   null=True, blank=True)
-    cidade = models.CharField(max_length=50)
-    estado = models.CharField('UF', max_length=100, choices=STATE_CHOICES)
-    pais = models.CharField(max_length=50,
-                            default='Brasil')
-
-
 class Comparsa(models.Model):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
-    comparsas = models.CharField(max_length=100, null=True, blank=True)
+    nome_comparsa = models.CharField(
+        'nome',
+        max_length=100,
+        null=True,
+        blank=True
+    )
 
 
 class Tatuagem(models.Model):

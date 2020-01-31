@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import Pessoa
 from .models import PessoaContato
-from .models import PessoaEndereco
 from .models import Comparsa
 from .models import PessoaFoto
 from .models import Tatuagem
@@ -29,6 +28,5 @@ class PessoaAdmin(admin.ModelAdmin):
 
 admin.site.register(PessoaFoto)
 admin.site.register(PessoaContato)
-admin.site.register(PessoaEndereco)
 admin.site.register(Comparsa)
 admin.site.register(Tatuagem)
