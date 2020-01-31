@@ -167,10 +167,36 @@ class Faccao(models.Model):
 
 
 class Ocorrencia(models.Model):
-    pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
     rai = models.CharField(max_length=100, null=True, blank=True)
     data_do_fato = models.DateField('Data do Fato')
     descricao = models.CharField(max_length=500, null=True, blank=True)
+
+    class Meta:
+        ordering = ('rai',)
+        verbose_name = 'ocorrencia'
+        verbose_name_plural = 'ocorrencias'
+
+    def __str__(self):
+        return self.rai
+
+
+class PessoaOcorrencia(TimeStampedModel):
+    pessoa = models.ForeignKey(
+        Pessoa,
+        related_name='pessoas',
+        on_delete=models.CASCADE,
+    )
+    ocorrencia = models.ForeignKey(
+        Ocorrencia,
+        related_name='ocorrencias',
+        on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        ordering = ('-created',)
+
+    def __str__(self):
+        return f'{self.pessoa} - {self.ocorrencia}'
 
 
 class Veiculo(models.Model):
