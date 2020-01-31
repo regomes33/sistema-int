@@ -22,8 +22,8 @@ class Pessoa(TimeStampedModel, CreatedBy, Address, Document):
 
     class Meta:
         ordering = ('nome',)
-        verbose_name = 'nome'
-        verbose_name_plural = 'nomes'
+        verbose_name = 'pessoa'
+        verbose_name_plural = 'pessoas'
 
     def __str__(self):
         return ' '.join(filter(None, [self.nome, self.sobrenome]))
