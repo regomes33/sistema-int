@@ -1,4 +1,5 @@
 from django.contrib import admin
+from .models import Arma
 from .models import Comparsa
 from .models import Infracao
 from .models import Natureza
@@ -26,6 +27,12 @@ class PessoaAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'nome', 'sobrenome', 'mae')
     search_fields = ('nome',)
     list_filter = ('nome',)
+
+
+@admin.register(Arma)
+class ArmaAdmin(admin.ModelAdmin):
+    list_display = ('__str__',)
+    search_fields = ('arma',)
 
 
 @admin.register(Natureza)

@@ -87,6 +87,18 @@ class Natureza(models.Model):
         return self.natureza
 
 
+class Arma(models.Model):
+    arma = models.CharField(max_length=50, unique=True)
+
+    class Meta:
+        ordering = ('arma',)
+        verbose_name = 'arma'
+        verbose_name_plural = 'armas'
+
+    def __str__(self):
+        return self.arma
+
+
 class Infracao(models.Model):
     # NATUREZA = [
     #     ('art.28', 'Art. 28. Usuário'),
@@ -110,11 +122,11 @@ class Infracao(models.Model):
         ('vit', 'Vitima')
     )
 
-    ARMA_DE_FOGO = (
-        ('revolver', 'Revolver'),
-        ('pistola', 'Pistola'),
-        ('faca', 'Faca')
-    )
+    # ARMA_DE_FOGO = (
+    #     ('revolver', 'Revolver'),
+    #     ('pistola', 'Pistola'),
+    #     ('faca', 'Faca')
+    # )
     STATUS = (
         ('vivo', 'Vivo'),
         ('morto', 'Morto'),
@@ -144,10 +156,11 @@ class Infracao(models.Model):
         null=True,
         blank=True
     )
-    arma_de_fogo = models.CharField(
-        'arma de fogo',
-        max_length=10,
-        choices=ARMA_DE_FOGO,
+    arma = models.ForeignKey(
+        Arma,
+        on_delete=models.SET_NULL,
+        verbose_name='arma de fogo',
+        related_name='armas',
         null=True,
         blank=True
     )
