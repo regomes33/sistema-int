@@ -254,7 +254,11 @@ class Veiculo(TimeStampedModel):
         on_delete=models.PROTECT,
         related_name='modelos',
     )
-    cor = models.CharField(max_length=100, null=True, blank=True)
+    cor = models.ForeignKey(
+        'Cor',
+        on_delete=models.PROTECT,
+        related_name='cores',
+    )
 
     class Meta:
         ordering = ('placa',)
@@ -275,3 +279,15 @@ class Modelo(models.Model):
 
     def __str__(self):
         return self.modelo
+
+
+class Cor(models.Model):
+    cor = models.CharField(max_length=50, unique=True)
+
+    class Meta:
+        ordering = ('cor',)
+        verbose_name = 'cor'
+        verbose_name_plural = 'cores'
+
+    def __str__(self):
+        return self.cor

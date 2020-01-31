@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Arma
+from .models import Cor
 from .models import Comparsa
 from .models import Faccao
 from .models import Infracao
@@ -85,6 +86,12 @@ class VeiculoAdmin(admin.ModelAdmin):
 class ModeloAdmin(admin.ModelAdmin):
     list_display = ('__str__',)
     search_fields = ('modelo',)
+
+
+@admin.register(Cor)
+class CorAdmin(admin.ModelAdmin):
+    list_display = ('__str__',)
+    search_fields = ('cor',)
 
 
 admin.site.register(PessoaContato)
