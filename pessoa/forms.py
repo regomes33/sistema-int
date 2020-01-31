@@ -9,7 +9,23 @@ from .models import *
 cpf_digits_re = re.compile(r'^(\d{3})\.(\d{3})\.(\d{3})-(\d{2})$')
 
 
+class infracaoForm(forms.ModelForm):
+
+    class Meta:
+        model = Infracao
+        fields = ['pessoa', 'primeiranatureza', 'segundanatureza',
+                  'qualificacao', 'arma_de_fogo', 'status']
+
+
+class OcorrenciasForm(forms.ModelForm):
+
+    class Meta:
+        model = Ocorrencias
+        fields = ['rai', 'data_do_fato', 'descricao']
+
+
 class PessoaFotoForm(forms.ModelForm):
+
     class Meta:
         model = PessoaFoto
         fields = ['fotopessoa']
@@ -31,24 +47,28 @@ class PessoaForm(forms.ModelForm):
 
 
 class PessoaContaForm(forms.ModelForm):
+
     class Meta:
         model = PessoaContato
         fields = ['categoria', 'contato']
 
 
 class PessoaEndereForm(forms.ModelForm):
+
     class Meta:
         model = PessoaEndereco
         fields = ['endereco', 'complemento', 'cidade', 'estado', 'pais']
 
 
 class ComparsasForm(forms.ModelForm):
+
     class Meta:
         model = Comparsas
         fields = ['comparsas', ]
 
 
 class TatuagemForm(forms.ModelForm):
+
     class Meta:
         model = Tatuagem
         fields = ['fototatuagem', 'descricaotatuagem']
