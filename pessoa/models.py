@@ -68,7 +68,7 @@ class PessoaContato(TimeStampedModel):
         return f'{self.pessoa} - {self.telefone}'
 
 
-class Comparsa(TimeStampedModel):
+class Comparsa(TimeStampedModel, Document):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
     nome_comparsa = models.CharField(
         'nome',
@@ -131,7 +131,7 @@ class Arma(models.Model):
         return self.arma
 
 
-class Infracao(TimeStampedModel):
+class Infracao(CreatedBy, TimeStampedModel):
     QUALIFICACAO = (
         ('aut', 'Autor'),
         ('coaut', 'Co-Autor'),
@@ -145,11 +145,11 @@ class Infracao(TimeStampedModel):
         ('solto', 'Solto')
     )
     pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT)
-    primeira_natureza = models.ForeignKey(
+    natureza = models.ForeignKey(
         Natureza,
         on_delete=models.SET_NULL,
-        verbose_name='primeira natureza',
-        related_name='natureza1',
+        verbose_name='natureza',
+        related_name='naturezas',
         null=True,
         blank=True
     )
@@ -157,14 +157,6 @@ class Infracao(TimeStampedModel):
         max_length=5,
         choices=QUALIFICACAO,
         default='aut',
-    )
-    segunda_natureza = models.ForeignKey(
-        Natureza,
-        on_delete=models.SET_NULL,
-        verbose_name='segunda natureza',
-        related_name='natureza2',
-        null=True,
-        blank=True
     )
     arma = models.ForeignKey(
         Arma,
@@ -211,8 +203,8 @@ class Faccao(models.Model):
         return self.nome
 
 
-class Ocorrencia(TimeStampedModel):
-    rai = models.CharField(max_length=100, null=True, blank=True)
+class Ocorrencia(CreatedBy, TimeStampedModel):
+    rai = models.IntegerField(null=True, blank=True)
     data_do_fato = models.DateField('Data do Fato')
     descricao = models.CharField(max_length=500, null=True, blank=True)
 
@@ -222,22 +214,72 @@ class Ocorrencia(TimeStampedModel):
         verbose_name_plural = 'ocorrencias'
 
     def __str__(self):
-        return self.rai
+        return str(self.rai)
 
 
-class PessoaOcorrencia(TimeStampedModel):
+class PessoaOcorrencia(CreatedBy, TimeStampedModel):
     '''
     Uma pessoa pode ter várias ocorrências.
     '''
     pessoa = models.ForeignKey(
         Pessoa,
-        related_name='pessoas',
+        related_name='pessoas_ocorrencias',
         on_delete=models.CASCADE,
     )
     ocorrencia = models.ForeignKey(
         Ocorrencia,
-        related_name='ocorrencias',
+        related_name='ocorrencias1',
         on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        ordering = ('-created',)
+
+    def __str__(self):
+        return f'{self.pessoa} - {self.ocorrencia}'
+
+
+class PessoaVeiculo(CreatedBy, TimeStampedModel):
+    '''
+    Uma pessoa pode ter vários veículos.
+    '''
+    pessoa = models.ForeignKey(
+        'Pessoa',
+        related_name='pessoas_veiculos',
+        on_delete=models.CASCADE,
+    )
+    veiculo = models.ForeignKey(
+        'Veiculo',
+        related_name='veiculos2',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        ordering = ('-created',)
+
+    def __str__(self):
+        return f'{self.pessoa} - {self.veiculo}'
+
+
+class OcorrenciaVeiculo(CreatedBy, TimeStampedModel):
+    '''
+    Uma ocorrência pode ter vários veículos.
+    '''
+    ocorrencia = models.ForeignKey(
+        'Ocorrencia',
+        related_name='ocorrencias',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+    veiculo = models.ForeignKey(
+        'Veiculo',
+        related_name='veiculos',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
     )
 
     class Meta:
