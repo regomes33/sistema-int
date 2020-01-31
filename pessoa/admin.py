@@ -25,12 +25,29 @@ class PessoaOcorrenciaInline(admin.TabularInline):
     extra = 0
 
 
+class PessoaContatoInline(admin.TabularInline):
+    model = PessoaContato
+    extra = 0
+
+
+class ComparsaInline(admin.TabularInline):
+    model = Comparsa
+    extra = 0
+
+
 @admin.register(Pessoa)
 class PessoaAdmin(admin.ModelAdmin):
-    inlines = (InfracaoInline, PessoaOcorrenciaInline,)
-    list_display = ('__str__', 'nome', 'sobrenome', 'apelido')
+    inlines = (InfracaoInline, PessoaOcorrenciaInline,
+               PessoaContatoInline, ComparsaInline)
+    list_display = ('__str__', 'nome', 'sobrenome', 'apelido', 'faccao')
     search_fields = ('nome', 'sobrenome', 'apelido', 'mae', 'pai')
     list_filter = ('faccao',)
+
+
+@admin.register(PessoaContato)
+class PessoaContatoAdmin(admin.ModelAdmin):
+    list_display = ('telefone', 'pessoa')
+    search_fields = ('pessoa__nome', 'telefone')
 
 
 @admin.register(Arma)
@@ -94,5 +111,4 @@ class CorAdmin(admin.ModelAdmin):
     search_fields = ('cor',)
 
 
-admin.site.register(PessoaContato)
 admin.site.register(PessoaFoto)

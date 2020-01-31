@@ -46,26 +46,26 @@ class PessoaContato(TimeStampedModel):
     '''
     Telefones
     '''
-    CONTATOS = (
+    TIPO_TELEFONE = (
         ('cel', 'Celular'),
         ('tel', 'Telefone'),
     )
 
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
-    categoria = models.CharField(
+    tipo_telefone = models.CharField(
         max_length=10,
-        choices=CONTATOS,
+        choices=TIPO_TELEFONE,
         default='cel'
     )
-    contato = models.CharField(max_length=50)
+    telefone = models.CharField(max_length=50)
 
     class Meta:
-        ordering = ('pessoa', 'contato')
+        ordering = ('pessoa', 'telefone')
         verbose_name = 'contato'
         verbose_name_plural = 'contatos'
 
     def __str__(self):
-        return self.contato
+        return f'{self.pessoa} - {self.telefone}'
 
 
 class Comparsa(TimeStampedModel):

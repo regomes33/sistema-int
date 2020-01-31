@@ -1,7 +1,7 @@
-# import names
+import names
 import string
 import timeit
-from random import choice, randint
+from random import choice, randint, randrange
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 from pessoa.models import Pessoa
@@ -46,6 +46,30 @@ def gen_email(first_name: str, last_name: str, company: str = None):
     last_name = slugify(last_name)
     email = '{}.{}@{}.com'.format(first_name, last_name, sufix)
     return email
+
+
+def gen_rg():
+    return gen_digits(10)
+
+
+def gen_cpf():
+    def calcula_digito(digs):
+        s = 0
+        qtd = len(digs)
+        for i in range(qtd):
+            s += n[i] * (1 + qtd - i)
+        res = 11 - s % 11
+        if res >= 10:
+            return 0
+        return res
+    n = [randrange(10) for i in range(9)]
+    n.append(calcula_digito(n))
+    n.append(calcula_digito(n))
+    return "%d%d%d%d%d%d%d%d%d%d%d" % tuple(n)
+
+
+def gen_phone():
+    return f'{gen_digits(2)} {gen_digits(4)}-{gen_digits(4)}'
 
 
 def create_modelo():
@@ -144,17 +168,73 @@ def create_faccao():
 
 def create_pessoa():
     # Pessoa
-    pass
+    Infracao.objects.all().delete()
+    Pessoa.objects.all().delete()
+    aux = []
+    _range = range(10)
+    items = progressbar(_range, "Pessoas: ")
+    for item in items:
+        nome = gen_first_name()
+        sobrenome = gen_last_name()
+        apelido = gen_first_name()
+        mae = f'{gen_first_name()} {gen_last_name()}'
+        pai = f'{gen_first_name()} {gen_last_name()}'
+        faccoes = Faccao.objects.all()
+        faccao = choice(faccoes)
+
+        obj = Pessoa(
+            nome=nome,
+            sobrenome=sobrenome,
+            apelido=apelido,
+            mae=mae,
+            pai=pai,
+            faccao=faccao,
+            city='Goiânia',
+            uf='GO',
+            rg=gen_rg(),
+            cpf=gen_cpf(),
+            cnh=gen_digits(6),
+        )
+        aux.append(obj)
+    Pessoa.objects.bulk_create(aux)
 
 
 def create_pessoacontato():
     # PessoaContato
-    pass
+    PessoaContato.objects.all().delete()
+    aux = []
+    pessoas = Pessoa.objects.all()
+    pessoas = progressbar(pessoas, "Contatos: ")
+    for pessoa in pessoas:
+        telefone1 = gen_phone()
+        obj1 = PessoaContato(
+            pessoa=pessoa,
+            telefone=telefone1
+        )
+        aux.append(obj1)
+
+        telefone2 = gen_phone()
+        obj2 = PessoaContato(
+            pessoa=pessoa,
+            telefone=telefone2
+        )
+        aux.append(obj2)
+    PessoaContato.objects.bulk_create(aux)
 
 
 def create_comparsa():
     # Comparsa
-    pass
+    aux = []
+    pessoas = Pessoa.objects.all()
+    pessoas = progressbar(pessoas, "Comparsas: ")
+    for pessoa in pessoas:
+        for _ in range(3):
+            obj = Comparsa(
+                pessoa=pessoa,
+                nome_comparsa=f'{gen_first_name()} {gen_last_name()}'
+            )
+            aux.append(obj)
+    Comparsa.objects.bulk_create(aux)
 
 
 def create_infracao():
