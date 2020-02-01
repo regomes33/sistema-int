@@ -5,7 +5,7 @@ from datetime import date, datetime, timedelta
 from random import random, choice, randint, randrange, sample
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
-from core.fix.data import ARMA, NATUREZA, FACCAO, MODELO, COR, LOREM
+from core.fix.data import ARMA, NATUREZA, FACCAO, MODELO, COR, LOREM, CIDADE
 from core.management.commands.progress_bar import progressbar
 from ocorrencia.models import Arma
 from ocorrencia.models import Infracao
@@ -86,6 +86,10 @@ def gen_text():
     lorem = LOREM.split(' ')
     text = sample(lorem, randint(15, 30))
     return ' '.join(text).title()
+
+
+def gen_city():
+    return choice(CIDADE)
 
 
 def create_modelo():
@@ -198,6 +202,12 @@ def create_pessoa():
         faccoes = Faccao.objects.all()
         faccao = choice(faccoes)
 
+        address = f'Rua {gen_first_name()} {gen_last_name()}'
+        address_number = randint(100, 9999)
+        district = gen_last_name()
+        city = gen_city()
+        cep = f'{gen_digits(5)}-{gen_digits(3)}'
+
         obj = Pessoa(
             nome=nome,
             sobrenome=sobrenome,
@@ -205,8 +215,12 @@ def create_pessoa():
             mae=mae,
             pai=pai,
             faccao=faccao,
-            city='Goiânia',
+            address=address,
+            address_number=address_number,
+            district=district,
+            city=city,
             uf='GO',
+            cep=cep,
             rg=gen_rg(),
             cpf=gen_cpf(),
             cnh=gen_digits(6),
