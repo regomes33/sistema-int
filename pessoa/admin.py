@@ -1,16 +1,13 @@
 from django.contrib import admin
 from .models import Comparsa
-from .models import Cor
 from .models import Faccao
 from ocorrencia.models import Infracao
-from .models import Modelo
 from .models import Pessoa
 from .models import PessoaContato
 from .models import PessoaFoto
 from ocorrencia.models import PessoaOcorrencia
 from .models import PessoaVeiculo
 from .models import Tatuagem
-from .models import Veiculo
 
 
 class InfracaoInline(admin.TabularInline):
@@ -82,29 +79,10 @@ class FaccaoAdmin(admin.ModelAdmin):
     list_filter = ('funcao',)
 
 
-@admin.register(Veiculo)
-class VeiculoAdmin(admin.ModelAdmin):
-    list_display = ('placa', 'modelo', 'cor')
-    search_fields = ('placa', 'modelo__modelo', 'cor')
-    list_filter = ('modelo', 'cor')
-
-
 @admin.register(PessoaVeiculo)
 class PessoaVeiculoAdmin(admin.ModelAdmin):
     list_display = ('__str__',)
     # search_fields = ('',)
-
-
-@admin.register(Modelo)
-class ModeloAdmin(admin.ModelAdmin):
-    list_display = ('__str__',)
-    search_fields = ('modelo',)
-
-
-@admin.register(Cor)
-class CorAdmin(admin.ModelAdmin):
-    list_display = ('__str__',)
-    search_fields = ('cor',)
 
 
 admin.site.register(PessoaFoto)

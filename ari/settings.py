@@ -24,8 +24,9 @@ INSTALLED_APPS = [
     'django_extensions',
     # my apps
     'core',
-    'pessoa.apps.PessoaConfig',
     'ocorrencia.apps.OcorrenciaConfig',
+    'pessoa.apps.PessoaConfig',
+    'veiculo.apps.VeiculoConfig',
 ]
 
 MIDDLEWARE = [

@@ -84,8 +84,8 @@ class Ocorrencia(CreatedBy, TimeStampedModel):
 
     class Meta:
         ordering = ('rai',)
-        verbose_name = 'ocorrencia'
-        verbose_name_plural = 'ocorrencias'
+        verbose_name = 'ocorrência'
+        verbose_name_plural = 'ocorrências'
 
     def __str__(self):
         return str(self.rai)
