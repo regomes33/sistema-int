@@ -80,7 +80,7 @@ class Infracao(CreatedBy, TimeStampedModel):
 class Ocorrencia(CreatedBy, TimeStampedModel):
     rai = models.IntegerField(null=True, blank=True)
     data_do_fato = models.DateField('Data do Fato')
-    descricao = models.CharField(max_length=500, null=True, blank=True)
+    descricao = models.TextField('descrição', null=True, blank=True)
 
     class Meta:
         ordering = ('rai',)
@@ -134,4 +134,4 @@ class OcorrenciaVeiculo(CreatedBy, TimeStampedModel):
         ordering = ('-created',)
 
     def __str__(self):
-        return f'{self.pessoa} - {self.ocorrencia}'
+        return f'{self.ocorrencia} - {self.veiculo}'

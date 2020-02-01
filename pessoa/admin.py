@@ -27,6 +27,7 @@ class PessoaContatoInline(admin.TabularInline):
 
 class ComparsaInline(admin.TabularInline):
     model = Comparsa
+    fields = ('nome', 'rg', 'cpf', 'cnh')
     extra = 0
 
 
@@ -47,6 +48,7 @@ class PessoaAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'nome', 'sobrenome', 'apelido', 'faccao')
     search_fields = ('nome', 'sobrenome', 'apelido', 'mae', 'pai')
     list_filter = ('faccao',)
+    date_hierarchy = 'created'
 
 
 @admin.register(PessoaContato)
@@ -83,6 +85,7 @@ class FaccaoAdmin(admin.ModelAdmin):
 class PessoaVeiculoAdmin(admin.ModelAdmin):
     list_display = ('__str__',)
     # search_fields = ('',)
+    date_hierarchy = 'created'
 
 
 admin.site.register(PessoaFoto)

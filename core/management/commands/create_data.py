@@ -1,25 +1,27 @@
 import names
 import string
 import timeit
-from random import choice, randint, randrange
+from datetime import date, datetime, timedelta
+from random import random, choice, randint, randrange, sample
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
-from pessoa.models import Pessoa
-from pessoa.models import PessoaFoto
-from pessoa.models import PessoaContato
-from pessoa.models import Comparsa
-from pessoa.models import Tatuagem
-from pessoa.models import Natureza
-from pessoa.models import Arma
-from pessoa.models import Infracao
-from pessoa.models import Faccao
-from pessoa.models import Ocorrencia
-from pessoa.models import PessoaOcorrencia
-from pessoa.models import Veiculo
-from pessoa.models import Modelo
-from pessoa.models import Cor
+from core.fix.data import ARMA, NATUREZA, FACCAO, MODELO, COR, LOREM
 from core.management.commands.progress_bar import progressbar
-from core.fix.data import ARMA, NATUREZA, FACCAO, MODELO, COR
+from ocorrencia.models import Arma
+from ocorrencia.models import Infracao
+from ocorrencia.models import Natureza
+from ocorrencia.models import Ocorrencia
+from ocorrencia.models import PessoaOcorrencia
+from pessoa.models import Comparsa
+from pessoa.models import Faccao
+from pessoa.models import Pessoa
+from pessoa.models import PessoaContato
+from pessoa.models import PessoaFoto
+from pessoa.models import PessoaVeiculo
+from pessoa.models import Tatuagem
+from veiculo.models import Cor
+from veiculo.models import Modelo
+from veiculo.models import Veiculo
 
 
 def gen_string(max_length):
@@ -48,6 +50,14 @@ def gen_email(first_name: str, last_name: str, company: str = None):
     return email
 
 
+def gen_date(min_year=2019, max_year=datetime.now().year):
+    # gera um date no formato yyyy-mm-dd
+    start = date(min_year, 1, 1)
+    years = max_year - min_year + 1
+    end = start + timedelta(days=365 * years)
+    return start + (end - start) * random()
+
+
 def gen_rg():
     return gen_digits(10)
 
@@ -70,6 +80,12 @@ def gen_cpf():
 
 def gen_phone():
     return f'{gen_digits(2)} {gen_digits(4)}-{gen_digits(4)}'
+
+
+def gen_text():
+    lorem = LOREM.split(' ')
+    text = sample(lorem, randint(15, 30))
+    return ' '.join(text).title()
 
 
 def create_modelo():
@@ -224,6 +240,7 @@ def create_pessoacontato():
 
 def create_comparsa():
     # Comparsa
+    # Três pra cada pessoa.
     aux = []
     pessoas = Pessoa.objects.all()
     pessoas = progressbar(pessoas, "Comparsas: ")
@@ -231,25 +248,110 @@ def create_comparsa():
         for _ in range(3):
             obj = Comparsa(
                 pessoa=pessoa,
-                nome_comparsa=f'{gen_first_name()} {gen_last_name()}'
+                nome=f'{gen_first_name()} {gen_last_name()}',
+                rg=gen_rg(),
+                cpf=gen_cpf(),
+                cnh=gen_digits(6),
             )
             aux.append(obj)
     Comparsa.objects.bulk_create(aux)
 
 
+QUALIFICACAO = [
+    ('aut', 'Autor'),
+    ('coaut', 'Co-Autor'),
+    ('part', 'Participe'),
+    ('vit', 'Vitima')
+]
+
+STATUS = [
+    ('vivo', 'Vivo'),
+    ('morto', 'Morto'),
+    ('preso', 'Preso'),
+    ('solto', 'Solto')
+]
+
+
 def create_infracao():
     # Infracao
-    pass
+    # Duas pra cada pessoa.
+    Infracao.objects.all().delete
+    aux = []
+    pessoas = Pessoa.objects.all()
+    pessoas = progressbar(pessoas, "Infrações: ")
+    naturezas = Natureza.objects.all()
+    armas = Arma.objects.all()
+    for pessoa in pessoas:
+        for _ in range(2):
+            natureza = choice(naturezas)
+            qualificacao = choice(QUALIFICACAO)[0]
+            arma = choice(armas)
+            status = choice(STATUS)[0]
+            obj = Infracao(
+                pessoa=pessoa,
+                natureza=natureza,
+                qualificacao=qualificacao,
+                arma=arma,
+                status=status,
+            )
+            aux.append(obj)
+    Infracao.objects.bulk_create(aux)
 
 
 def create_ocorrencia():
     # Ocorrencia
-    pass
+    Ocorrencia.objects.all().delete()
+    aux = []
+    items = progressbar(range(10), "Ocorrências: ")
+    for _ in range(10):
+        rai = randint(1000, 9999)
+        data_do_fato = gen_date()
+        descricao = gen_text()
+        obj = Ocorrencia(
+            rai=rai,
+            data_do_fato=data_do_fato,
+            descricao=descricao,
+        )
+        aux.append(obj)
+    Ocorrencia.objects.bulk_create(aux)
 
 
 def create_pessoaocorrencia():
     # PessoaOcorrencia
-    pass
+    # Três pra cada pessoa.
+    PessoaOcorrencia.objects.all().delete
+    aux = []
+    pessoas = Pessoa.objects.all()
+    ocorrencias = Ocorrencia.objects.all()
+    pessoas = progressbar(pessoas, "Pessoa Ocorrências: ")
+    for pessoa in pessoas:
+        for _ in range(3):
+            ocorrencia = choice(ocorrencias)
+            obj = PessoaOcorrencia(
+                pessoa=pessoa,
+                ocorrencia=ocorrencia
+            )
+            aux.append(obj)
+    PessoaOcorrencia.objects.bulk_create(aux)
+
+
+def create_pessoaveiculo():
+    # PessoaVeiculo
+    # Dois pra cada pessoa.
+    PessoaVeiculo.objects.all().delete
+    aux = []
+    pessoas = Pessoa.objects.all()
+    veiculos = Veiculo.objects.all()
+    pessoas = progressbar(pessoas, "Pessoa Veiculos: ")
+    for pessoa in pessoas:
+        for _ in range(2):
+            veiculo = choice(veiculos)
+            obj = PessoaVeiculo(
+                pessoa=pessoa,
+                veiculo=veiculo
+            )
+            aux.append(obj)
+    PessoaVeiculo.objects.bulk_create(aux)
 
 
 class Command(BaseCommand):
@@ -270,6 +372,7 @@ class Command(BaseCommand):
         create_infracao()
         create_ocorrencia()
         create_pessoaocorrencia()
+        create_pessoaveiculo()
 
         toc = timeit.default_timer()
 

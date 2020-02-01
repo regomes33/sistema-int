@@ -71,20 +71,19 @@ class PessoaContato(TimeStampedModel):
 
 class Comparsa(TimeStampedModel, Document):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
-    nome_comparsa = models.CharField(
-        'nome',
+    nome = models.CharField(
         max_length=100,
         null=True,
         blank=True
     )
 
     class Meta:
-        ordering = ('pessoa', 'nome_comparsa')
+        ordering = ('pessoa', 'nome')
         verbose_name = 'comparsa'
         verbose_name_plural = 'comparsas'
 
     def __str__(self):
-        return self.nome_comparsa
+        return self.nome
 
 
 class Tatuagem(TimeStampedModel):

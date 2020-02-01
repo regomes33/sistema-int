@@ -52,3 +52,5 @@ COR = [
     'Vermelho',
     'Violeta',
 ]
+
+LOREM = 'lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip commodo consequat duis aute irure dolor reprehenderit voluptate velit esse cillum dolore fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt culpa qui officia deserunt mollit anim laborum'
