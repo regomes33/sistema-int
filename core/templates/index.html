@@ -1,112 +1,88 @@
-{% extends 'baseinicial.html'%}
+{% extends 'base.html'%}
 {% load bootstrap %}
 
 {% block title %}Usuarios do sistema{%endblock%}
+
 {%block content%}
 
 <div class="col">
-    ola {{user.usuario.nome}}
-    <h5>Escolha as opções</h5>
-    
+  ola {{ request.user.first_name }}
+  <h5>Escolha as opções</h5>
 </div>
 <div id="accordion">
-    <div class="card">
-        <div class="card-header" id="headingOne">
-            <h5 class="mb-0">
-                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                    aria-controls="collapseOne">
-                  Para Cadastrar Pessoa
-                </button>
-            </h5>
-        </div>
-
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-            <div class="card-body">
-                <div class="content">
-                    <div class="row">
-                        <div class="col-md">
-                            <p><h6>Para Cadastro de Pessoas </h6></p>
-                            <a class="btn btn-primary" href="{% url 'pessoa' %}" role="button">Cadastrar Pessoa</a>
-                            
-                
-                
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Para Cadastrar Pessoa
+        </button>
+      </h5>
     </div>
-    <div class="card">
-        <div class="card-header" id="headingTwo">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="false" aria-controls="collapseTwo">
-                   Para Cadastrar Usuários
-                </button>
-            </h5>
-        </div>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-            <div class="card-body">
-                <div class="content">
-                    <div class="row">
-                        <div class="col-md">
-                            
-                            <a class="btn btn-primary" href="#" role="button">Cadastrar Usuario</a>
-                            
-                
-                
-                        </div>
-                    </div>
-                </div>
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+        <div class="content">
+          <div class="row">
+            <div class="col-md">
+              <p>
+                <h6>Para Cadastro de Pessoas </h6>
+              </p>
+              <a class="btn btn-primary" href="{ url 'pessoa' %}" role="button">Cadastrar Pessoa</a>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-    <div class="card">
-        <div class="card-header" id="headingThree">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
-                    aria-expanded="false" aria-controls="collapseThree">
-                    Para Listagens 
-                </button>
-            </h5>
-        </div>
-        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-            <div class="card-body">
-                <div class="content">
-                    <div class="row">
-                        <div class="col-md">
-                            
-                            <a class="btn btn-primary" href="{% url 'listarpessoas' %}" role="button">Listar</a>
-                            
-                
-                
-                        </div>
-                    </div>
-                </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Para Cadastrar Usuários
+        </button>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="card-body">
+        <div class="content">
+          <div class="row">
+            <div class="col-md">
+              <a class="btn btn-primary" href="#" role="button">Cadastrar Usuario</a>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Para Listagens
+        </button>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div class="card-body">
+        <div class="content">
+          <div class="row">
+            <div class="col-md">
+              <a class="btn btn-primary" href="{ url 'listarpessoas' %}" role="button">Listar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-
-
-
-
-    
-
- <p>
-    <div class="content">
-        <div class="row">
-            <div class="col"   >
-            
-            <a class="btn btn-primary" href="accounts/logout" role="button">Sair</a>
-
-
-            </div>
-         </div>
+<p>
+  <div class="content">
+    <div class="row">
+      <div class="col">
+        <a class="btn btn-primary" href="accounts/logout" role="button">Sair</a>
+      </div>
     </div>
+  </div>
 </p>
-
 </div>
+
 {%endblock%}

@@ -1,9 +1,9 @@
 from django.urls import path, include
-from .views import inicial, registrarusuario
+from core import views as v
 
 
 urlpatterns = [
-    path('', inicial, name="inicial"),
+    path('', v.index, name="inicial"),
+    path('registrar/', v.registrarusuario, name='registrar'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('registrar/', registrarusuario, name='registrar'),
 ]
