@@ -1,17 +1,17 @@
-import io
-from django.conf import settings
-from django.contrib import messages
-from django.contrib.admin.templatetags.admin_list import pagination
-from django.db import IntegrityError, transaction
-from django.forms import modelformset_factory
-from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect
-from django.template.loader import get_template
-from django.urls import reverse
-from django.utils.text import slugify
-from django.views.generic.base import View
-from .models import Infracao
-import xhtml2pdf.pisa as pisa
+# import io
+# from django.conf import settings
+# from django.contrib import messages
+# from django.contrib.admin.templatetags.admin_list import pagination
+# from django.db import IntegrityError, transaction
+# from django.forms import modelformset_factory
+# from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
+# from django.shortcuts import render, get_object_or_404, redirect
+# from django.template.loader import get_template
+# from django.urls import reverse
+# from django.utils.text import slugify
+# from django.views.generic.base import View
+# from .models import Infracao
+# import xhtml2pdf.pisa as pisa
 
 
 # def pessoaCadastro(request):

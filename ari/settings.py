@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     # my apps
     'core',
     'pessoa.apps.PessoaConfig',
+    'ocorrencia.apps.OcorrenciaConfig',
 ]
 
 MIDDLEWARE = [

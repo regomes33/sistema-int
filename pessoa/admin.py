@@ -1,17 +1,13 @@
 from django.contrib import admin
-from .models import Arma
 from .models import Comparsa
 from .models import Cor
 from .models import Faccao
-from .models import Infracao
+from ocorrencia.models import Infracao
 from .models import Modelo
-from .models import Natureza
-from .models import Ocorrencia
-from .models import OcorrenciaVeiculo
 from .models import Pessoa
 from .models import PessoaContato
 from .models import PessoaFoto
-from .models import PessoaOcorrencia
+from ocorrencia.models import PessoaOcorrencia
 from .models import PessoaVeiculo
 from .models import Tatuagem
 from .models import Veiculo
@@ -62,12 +58,6 @@ class PessoaContatoAdmin(admin.ModelAdmin):
     search_fields = ('pessoa__nome', 'telefone')
 
 
-@admin.register(Arma)
-class ArmaAdmin(admin.ModelAdmin):
-    list_display = ('__str__',)
-    search_fields = ('arma',)
-
-
 @admin.register(Comparsa)
 class ComparsaAdmin(admin.ModelAdmin):
     list_display = ('__str__',)
@@ -85,35 +75,11 @@ class TatuagemAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(Natureza)
-class NaturezaAdmin(admin.ModelAdmin):
-    list_display = ('__str__',)
-    search_fields = ('natureza',)
-
-
 @admin.register(Faccao)
 class FaccaoAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'funcao')
     search_fields = ('nome',)
     list_filter = ('funcao',)
-
-
-class OcorrenciaInline(admin.TabularInline):
-    model = Ocorrencia
-    extra = 0
-
-
-@admin.register(Ocorrencia)
-class OcorrenciaAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'data_do_fato')
-    search_fields = ('rai', 'descricao')
-
-
-# @admin.register(PessoaOcorrencia)
-# class PessoaOcorrenciaAdmin(admin.ModelAdmin):
-#     inlines = (OcorrenciaInline,)
-#     list_display = ('__str__',)
-#     # search_fields = ('',)
 
 
 @admin.register(Veiculo)
