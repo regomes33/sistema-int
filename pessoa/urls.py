@@ -1,6 +1,10 @@
 from django.urls import path, include
 from .views import *
 
+
+app_name = 'pessoa'
+
+
 urlpatterns = [
     # path('', listarPessoas, name='listarpessoas'),
     # path('accounts/', include('django.contrib.auth.urls')),

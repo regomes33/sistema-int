@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}| Ocorrências{%endblock%}
+
+{% block content %}
+
+<div class="container">
+  <h4>Ocorrências</h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>RAI</th>
+        <th>Data do fato</th>
+        <th>Descrição</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for object in object_list %}
+        <tr>
+          <td>{{ object.rai }}</td>
+          <td>{{ object.data_do_fato }}</td>
+          <td>{{ object.descricao }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock content %}

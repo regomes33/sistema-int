@@ -1,15 +1,46 @@
 {% extends 'base.html'%}
 {% load bootstrap %}
-
-{% block title %}Usuarios do sistema{%endblock%}
-
+{% block title %}| Usuários{%endblock%}
 {%block content%}
-
-<div class="col">
+<div class="col mb-5">
   ola {{ request.user.first_name }}
-  <h5>Escolha as opções</h5>
+  <h5>Escolha uma das opções</h5>
 </div>
-<div id="accordion">
+
+<div class="container">
+  <div class="card-deck">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a href="">Pessoas</a>
+        </h5>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a href="{% url 'ocorrencia:ocorrencias' %}">Ocorrências</a>
+        </h5>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a href="">Infrações</a>
+        </h5>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a href="">Veículos</a>
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div id="accordion">
   <div class="card">
     <div class="card-header" id="headingOne">
       <h5 class="mb-0">
@@ -73,16 +104,6 @@
       </div>
     </div>
   </div>
+</div> -->
 </div>
-<p>
-  <div class="content">
-    <div class="row">
-      <div class="col">
-        <a class="btn btn-primary" href="accounts/logout" role="button">Sair</a>
-      </div>
-    </div>
-  </div>
-</p>
-</div>
-
 {%endblock%}
