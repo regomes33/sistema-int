@@ -1,7 +1,7 @@
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from .forms import OcorrenciaForm
+from .forms import OcorrenciaForm, InfracaoForm
 from .models import Ocorrencia, Infracao
 
 
@@ -36,4 +36,17 @@ def infracoes(request):
     template_name = 'infracoes.html'
     object_list = Infracao.objects.all()
     context = {'object_list': object_list}
+    return render(request, template_name, context)
+
+
+def infracao_create(request):
+    form = InfracaoForm(request.POST or None)
+    template_name = 'infracao_form.html'
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('ocorrencia:infracoes'))
+
+    context = {'form': form}
     return render(request, template_name, context)

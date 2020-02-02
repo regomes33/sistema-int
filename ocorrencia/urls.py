@@ -13,8 +13,7 @@ ocorrencia_patterns = [
 
 infracao_patterns = [
     path('', v.infracoes, name="infracoes"),
-    # path('<int:pk>/', v.infracao, name="infracao"),
-    # path('add/', v.infracao_create, name="infracao_create"),
+    path('add/', v.infracao_create, name="infracao_create"),
 ]
 
 

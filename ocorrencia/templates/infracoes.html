@@ -5,7 +5,7 @@
 
 <div class="container">
   <div>
-    <a class="btn btn-primary" href="{ url 'ocorrencia:infracao_create' %}">Adicionar</a>
+    <a class="btn btn-primary" href="{% url 'ocorrencia:infracao_create' %}">Adicionar</a>
   </div>
 
   <h4>Infrações</h4>
@@ -23,9 +23,7 @@
     <tbody>
       {% for object in object_list %}
         <tr>
-          <td>
-            <a href="{ url 'ocorrencia:infracao' object.pk %}">{{ object }}</a>
-          </td>
+          <td>{{ object }}</td>
           <td>{{ object.natureza }}</td>
           <td>{{ object.get_qualificacao_display }}</td>
           <td>{{ object.arma }}</td>
