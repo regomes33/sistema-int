@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}| Ocorrência{%endblock%}
+
+{% block content %}
+
+<div class="container">
+  <h4>Ocorrência {{ object }}</h4>
+
+  <ul class="list-group">
+    <li class="list-group-item">RAI: {{ object.rai }}</li>
+    <li class="list-group-item">Data do fato: {{ object.data_do_fato }}</li>
+    <li class="list-group-item">Descrição: {{ object.descricao }}</li>
+  </ul>
+</div>
+
+{% endblock content %}

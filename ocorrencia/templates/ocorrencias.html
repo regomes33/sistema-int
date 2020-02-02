@@ -5,6 +5,7 @@
 
 <div class="container">
   <h4>Ocorrências</h4>
+
   <table class="table">
     <thead>
       <tr>
@@ -16,7 +17,9 @@
     <tbody>
       {% for object in object_list %}
         <tr>
-          <td>{{ object.rai }}</td>
+          <td>
+            <a href="{% url 'ocorrencia:ocorrencia' object.pk %}">{{ object.rai }}</a>
+          </td>
           <td>{{ object.data_do_fato }}</td>
           <td>{{ object.descricao }}</td>
         </tr>
