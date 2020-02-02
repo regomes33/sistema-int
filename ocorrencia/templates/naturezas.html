@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}| Naturezas{%endblock%}
+
+{% block content %}
+
+<div class="container">
+  <div>
+    <a class="btn btn-primary" href="{% url 'ocorrencia:ocorrencia_create' %}">Adicionar</a>
+  </div>
+
+  <h4>Naturezas</h4>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Natureza</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for object in object_list %}
+        <tr>
+          <td>{{ object }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock content %}

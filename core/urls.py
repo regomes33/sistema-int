@@ -6,7 +6,7 @@ app_name = 'core'
 
 
 urlpatterns = [
-    path('', v.index, name="inicial"),
+    path('', v.index, name="index"),
     path('registrar/', v.registrarusuario, name='registrar'),
     path('accounts/', include('django.contrib.auth.urls')),
 ]

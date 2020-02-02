@@ -16,8 +16,13 @@ infracao_patterns = [
     path('add/', v.infracao_create, name="infracao_create"),
 ]
 
+natureza_patterns = [
+    path('', v.naturezas, name="naturezas"),
+]
+
 
 urlpatterns = [
     path('ocorrencia/', include(ocorrencia_patterns)),
     path('infracao/', include(infracao_patterns)),
+    path('natureza/', include(natureza_patterns)),
 ]

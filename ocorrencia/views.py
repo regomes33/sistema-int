@@ -2,7 +2,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from .forms import OcorrenciaForm, InfracaoForm
-from .models import Ocorrencia, Infracao
+from .models import Ocorrencia, Infracao, Natureza
 
 
 def ocorrencias(request):
@@ -49,4 +49,11 @@ def infracao_create(request):
             return HttpResponseRedirect(reverse('ocorrencia:infracoes'))
 
     context = {'form': form}
+    return render(request, template_name, context)
+
+
+def naturezas(request):
+    template_name = 'naturezas.html'
+    object_list = Natureza.objects.all()
+    context = {'object_list': object_list}
     return render(request, template_name, context)
