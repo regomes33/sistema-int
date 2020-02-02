@@ -1,4 +1,7 @@
+from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
+from .forms import OcorrenciaForm
 from .models import Ocorrencia
 
 
@@ -13,4 +16,17 @@ def ocorrencia(request, pk):
     template_name = 'ocorrencia.html'
     obj = Ocorrencia.objects.get(pk=pk)
     context = {'object': obj}
+    return render(request, template_name, context)
+
+
+def ocorrencia_create(request):
+    form = OcorrenciaForm(request.POST or None)
+    template_name = 'ocorrencia_form.html'
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('ocorrencia:ocorrencias'))
+
+    context = {'form': form}
     return render(request, template_name, context)
