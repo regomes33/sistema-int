@@ -12,7 +12,7 @@ veiculo_patterns = [
 
 modelo_patterns = [
     path('', v.modelos, name="modelos"),
-    # path('add/', v.modelo_create, name="modelo_create"),
+    path('add/', v.modelo_create, name="modelo_create"),
 ]
 
 
