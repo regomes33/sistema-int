@@ -16,6 +16,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from .models import Pessoa
+from ocorrencia.models import PessoaOcorrencia
 
 
 def pessoas(request):
@@ -28,7 +29,11 @@ def pessoas(request):
 def pessoa(request, pk):
     template_name = 'pessoa.html'
     obj = Pessoa.objects.get(pk=pk)
-    context = {'object': obj}
+    ocorrencias = PessoaOcorrencia.objects.filter(pessoa=pk)
+    context = {
+        'object': obj,
+        'ocorrencias': ocorrencias
+    }
     return render(request, template_name, context)
 
 

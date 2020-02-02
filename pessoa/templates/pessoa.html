@@ -2,34 +2,149 @@
 {% block title %}| Pessoa{%endblock%}
 {% block content %}
 <div class="container">
-  <div class="card" style="width: 18rem;">
-    <div class="card-body">
-      <h2 class="card-title">{{ object }}</h2>
-      <p class="card-text">Apelido: {{ object.apelido }}</p>
-      <h5 class="card-title">Facção: {{ object.faccao }}</h5>
+  <div class="accordion" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <span><i class="fa fa-chevron-up"></i></span>
+            Detalhes
+          </button>
+        </h2>
+      </div>
+      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+          <div class="row row-cols-1 row-cols-md-3">
+            <div class="col text-left mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <h2 class="card-title">{{ object }}</h2>
+                  <p class="card-text">Apelido: {{ object.apelido }}</p>
+                  <h5 class="card-title">Facção: {{ object.faccao }}</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <h5>Filiação</h5>
+                    <p class="card-text">Mãe: {{ object.mae }}</p>
+                    <p class="card-text">Pai: {{ object.pai }}</p>
+                  </li>
+                  <li class="list-group-item">
+                    <h5>Documentos</h5>
+                    <p class="card-text">RG: {{ object.rg }}</p>
+                    <p class="card-text">CPF: {{ object.cpf }}</p>
+                    <p class="card-text">CNH: {{ object.cnh }}</p>
+                  </li>
+                  <li class="list-group-item">
+                    <h5>Endereço</h5>
+                    <p class="card-text">{{ object.get_address }}</p>
+                    <p class="card-text">{{ object.get_address_complement }}</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col text-left mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Contatos</h3>
+                  {% for contato in object.pessoacontato_set.all %}
+                  <p class="card-text">{{ contato.telefone }} <span class="badge badge-info">{{ contato.tipo }}</span></p>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="card mt-4">
+                <div class="card-body">
+                  <h3 class="card-title">Veículos</h3>
+                  {% for veiculo in object.pessoas_veiculos.all %}
+                  <p class="card-text">{{ veiculo.get_veiculo }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            <div class="col text-left mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Comparsas</h3>
+                  {% for comparsa in object.comparsa_set.all %}
+                  <p class="card-text">{{ comparsa }}</p>
+                  <ul class="list-group list-group-flush mb-4">
+                    <li class="list-group-item">{{ comparsa.rg }}</li>
+                    <li class="list-group-item">{{ comparsa.cpf }}</li>
+                    <li class="list-group-item">{{ comparsa.cnh }}</li>
+                  </ul>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">
-        <h5>Filiação</h5>
-        <p class="card-text">Mãe: {{ object.mae }}</p>
-        <p class="card-text">Pai: {{ object.pai }}</p>
-      </li>
-      <li class="list-group-item">
-        <h5>Documentos</h5>
-        <p class="card-text">RG: {{ object.rg }}</p>
-        <p class="card-text">CPF: {{ object.cpf }}</p>
-        <p class="card-text">CNH: {{ object.cnh }}</p>
-      </li>
-      <li class="list-group-item">
-        <h5>Endereço</h5>
-        <p class="card-text">{{ object.get_address }}</p>
-        <p class="card-text">{{ object.get_address_complement }}</p>
-      </li>
-    </ul>
-    <!-- <div class="card-body">
-      <a href="#" class="card-link">Card link</a>
-      <a href="#" class="card-link">Another link</a>
-    </div> -->
+    <div class="card">
+      <div class="card-header" id="headingTwo">
+        <h2 class="mb-0">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <span><i class="fa fa-chevron-down"></i></span>
+            Ocorrências
+          </button>
+        </h2>
+      </div>
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>RAI</th>
+                <th>Data do fato</th>
+                <th>Descrição</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for ocorrencia in ocorrencias %}
+              <tr>
+                <td>{{ ocorrencia.ocorrencia.rai }}</td>
+                <td>{{ ocorrencia.ocorrencia.data_do_fato }}</td>
+                <td>{{ ocorrencia.ocorrencia.descricao }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingThree">
+        <h2 class="mb-0">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            <span><i class="fa fa-chevron-down"></i></span>
+            Infrações
+          </button>
+        </h2>
+      </div>
+      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Natureza</th>
+                <th>Qualificação</th>
+                <th>Arma</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for infracao in object.infracao_set.all %}
+              <tr>
+                <td>{{ infracao.natureza }}</td>
+                <td>{{ infracao.get_qualificacao_display }}</td>
+                <td>{{ infracao.arma }}</td>
+                <td>{{ infracao.get_status_display }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock content %}

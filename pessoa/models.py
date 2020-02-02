@@ -53,15 +53,15 @@ class PessoaContato(TimeStampedModel):
     '''
     Telefones
     '''
-    TIPO_TELEFONE = (
+    TIPO = (
         ('cel', 'Celular'),
         ('tel', 'Telefone'),
     )
 
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
-    tipo_telefone = models.CharField(
+    tipo = models.CharField(
         max_length=10,
-        choices=TIPO_TELEFONE,
+        choices=TIPO,
         default='cel'
     )
     telefone = models.CharField(max_length=50)
@@ -157,3 +157,6 @@ class PessoaVeiculo(CreatedBy, TimeStampedModel):
 
     def __str__(self):
         return f'{self.pessoa} - {self.veiculo}'
+
+    def get_veiculo(self):
+        return self.veiculo
