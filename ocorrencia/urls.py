@@ -18,6 +18,7 @@ infracao_patterns = [
 
 natureza_patterns = [
     path('', v.naturezas, name="naturezas"),
+    path('add/', v.natureza_create, name="natureza_create"),
 ]
 
 
