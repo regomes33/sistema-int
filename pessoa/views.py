@@ -25,6 +25,13 @@ def pessoas(request):
     return render(request, template_name, context)
 
 
+def pessoa(request, pk):
+    template_name = 'pessoa.html'
+    obj = Pessoa.objects.get(pk=pk)
+    context = {'object': obj}
+    return render(request, template_name, context)
+
+
 # def pessoaCadastro(request):
 #     # form_pessoa = PessoaForm()
 #     form_pessoa = PessoaForm()

@@ -29,6 +29,12 @@ class Pessoa(TimeStampedModel, CreatedBy, Address, Document):
     def __str__(self):
         return ' '.join(filter(None, [self.nome, self.sobrenome]))
 
+    def get_address(self):
+        return '{}, {} {}'.format(self.address, self.address_number, self.complement or '')
+
+    def get_address_complement(self):
+        return ' - '.join(filter(None, [self.district, self.city, self.uf]))
+
 
 class PessoaFoto(TimeStampedModel):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT)
