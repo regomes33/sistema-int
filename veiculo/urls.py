@@ -7,8 +7,7 @@ app_name = 'veiculo'
 
 veiculo_patterns = [
     path('', v.veiculos, name="veiculos"),
-    # path('<int:pk>/', v.veiculo, name="veiculo"),
-    # path('add/', v.veiculo_create, name="veiculo_create"),
+    path('add/', v.veiculo_create, name="veiculo_create"),
 ]
 
 
