@@ -10,7 +10,13 @@ veiculo_patterns = [
     path('add/', v.veiculo_create, name="veiculo_create"),
 ]
 
+modelo_patterns = [
+    path('', v.modelos, name="modelos"),
+    # path('add/', v.modelo_create, name="modelo_create"),
+]
+
 
 urlpatterns = [
     path('veiculo/', include(veiculo_patterns)),
+    path('modelo/', include(modelo_patterns)),
 ]
