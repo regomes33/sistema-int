@@ -12,6 +12,17 @@
 # from django.views.generic.base import View
 # from .models import Infracao
 # import xhtml2pdf.pisa as pisa
+from django.http import JsonResponse, HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse
+from .models import Pessoa
+
+
+def pessoas(request):
+    template_name = 'pessoas.html'
+    object_list = Pessoa.objects.all()
+    context = {'object_list': object_list}
+    return render(request, template_name, context)
 
 
 # def pessoaCadastro(request):

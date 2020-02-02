@@ -1,12 +1,18 @@
 from django.urls import path, include
-from .views import *
+from pessoa import views as v
 
 
 app_name = 'pessoa'
 
 
+pessoa_patterns = [
+    path('', v.pessoas, name="pessoas"),
+    # path('add/', v.pessoa_create, name="pessoa_create"),
+]
+
+
 urlpatterns = [
-    # path('', listarPessoas, name='listarpessoas'),
+    path('', include(pessoa_patterns)),
     # path('accounts/', include('django.contrib.auth.urls')),
     # path('', pessoaCadastro, name="pessoa"),
     # path('validate_cpf/', validate_cpf, name="validade_cpf"),

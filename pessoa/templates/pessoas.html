@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}| Pessoas{%endblock%}
+
+{% block content %}
+
+<div class="container">
+  <div>
+    <a class="btn btn-primary" href="{% url 'ocorrencia:ocorrencia_create' %}">Adicionar</a>
+  </div>
+
+  <h4>Pessoas</h4>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nome completo</th>
+        <th>Apelido</th>
+        <th>Facção</th>
+        <th>Bairro</th>
+        <th>Cidade</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for object in object_list %}
+        <tr>
+          <td>{{ object }}</td>
+          <td>{{ object.apelido }}</td>
+          <td>{{ object.faccao }}</td>
+          <td>{{ object.district }}</td>
+          <td>{{ object.city }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock content %}
