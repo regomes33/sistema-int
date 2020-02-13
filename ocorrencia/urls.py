@@ -21,9 +21,14 @@ natureza_patterns = [
     path('add/', v.natureza_create, name="natureza_create"),
 ]
 
+homicidio_patterns = [
+    path('', v.homicidios, name="homicidios"),
+    path('add/', v.homicidio_create, name="homicidio_create"),
+]
 
 urlpatterns = [
     path('ocorrencia/', include(ocorrencia_patterns)),
     path('infracao/', include(infracao_patterns)),
     path('natureza/', include(natureza_patterns)),
+    path('homicidio/', include(homicidio_patterns)),
 ]

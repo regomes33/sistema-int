@@ -1,5 +1,5 @@
 from django import forms
-from .models import Ocorrencia, Infracao, Natureza
+from .models import Ocorrencia, Infracao, Natureza, Homicidio
 
 
 class OcorrenciaForm(forms.ModelForm):
@@ -20,4 +20,11 @@ class NaturezaForm(forms.ModelForm):
 
     class Meta:
         model = Natureza
+        fields = '__all__'
+
+
+class HomicidioForm(forms.ModelForm):
+
+    class Meta:
+        model = Homicidio
         fields = '__all__'

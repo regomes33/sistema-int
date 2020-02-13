@@ -57,6 +57,7 @@ class MotivacaoAdmin(admin.ModelAdmin):
 
 @admin.register(Homicidio)
 class HomicidioAdmin(admin.ModelAdmin):
-    list_display = ('__str__',)
-    # list_filter = ('qualificacao', 'arma', 'status',)
-    # date_hierarchy = 'created'
+    list_display = ('__str__', 'data_do_homicidio',
+                    'forma', 'uf', 'area_upm', 'vitima', 'motivacao')
+    list_filter = ('forma', 'uf', 'area_upm', 'motivacao')
+    date_hierarchy = 'created'

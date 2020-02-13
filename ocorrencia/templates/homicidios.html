@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}| Homicídios{%endblock%}
+
+{% block content %}
+
+<div class="container">
+  <div>
+    <a class="btn btn-primary" href="{% url 'ocorrencia:homicidio_create' %}">Adicionar</a>
+  </div>
+
+  <h4>Homicídios</h4>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>RAI</th>
+        <th>Data do Homicídio</th>
+        <th>Forma</th>
+        <th>UF</th>
+        <th>Área UPM</th>
+        <th>Vítima</th>
+        <th>Instrumento</th>
+        <th>Motivação</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for object in object_list %}
+        <tr>
+          <td>{{ object.rai }}</td>
+          <td>{{ object.data_do_homicidio }}</td>
+          <td>{{ object.get_forma_display }}</td>
+          <td>{{ object.uf }}</td>
+          <td>{{ object.area_upm }}</td>
+          <td>{{ object.vitima }}</td>
+          <td>{{ object.instrumento }}</td>
+          <td>{{ object.motivacao }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock content %}
