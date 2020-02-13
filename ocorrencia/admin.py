@@ -4,6 +4,9 @@ from .models import Infracao
 from .models import Natureza
 from .models import Ocorrencia
 from .models import OcorrenciaVeiculo
+from .models import AreaUpm
+from .models import Motivacao
+from .models import Homicidio
 
 
 @admin.register(Arma)
@@ -36,3 +39,24 @@ class InfracaoAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'qualificacao', 'arma', 'status',)
     list_filter = ('qualificacao', 'arma', 'status',)
     date_hierarchy = 'created'
+
+
+@admin.register(AreaUpm)
+class AreaUpmAdmin(admin.ModelAdmin):
+    list_display = ('__str__',)
+    # list_filter = ('qualificacao', 'arma', 'status',)
+    # date_hierarchy = 'created'
+
+
+@admin.register(Motivacao)
+class MotivacaoAdmin(admin.ModelAdmin):
+    list_display = ('__str__',)
+    # list_filter = ('qualificacao', 'arma', 'status',)
+    # date_hierarchy = 'created'
+
+
+@admin.register(Homicidio)
+class HomicidioAdmin(admin.ModelAdmin):
+    list_display = ('__str__',)
+    # list_filter = ('qualificacao', 'arma', 'status',)
+    # date_hierarchy = 'created'
