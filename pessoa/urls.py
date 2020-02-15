@@ -8,9 +8,8 @@ app_name = 'pessoa'
 pessoa_patterns = [
     path('', v.pessoas, name="pessoas"),
     path('<int:pk>/', v.pessoa, name="pessoa"),
-    # path('add/', v.pessoa_create, name="pessoa_create"),
+    path('add/', v.pessoa_create, name="pessoa_create"),
 ]
-
 
 urlpatterns = [
     path('', include(pessoa_patterns)),

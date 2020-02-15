@@ -23,6 +23,12 @@ class Veiculo(TimeStampedModel):
     def __str__(self):
         return f'{self.placa} - {self.modelo} - {self.cor}'
 
+    def to_dict(self):
+        return {
+            'value': self.pk,
+            'text': self.__str__(),
+        }
+
 
 class Modelo(models.Model):
     modelo = models.CharField(max_length=70, unique=True)

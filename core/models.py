@@ -61,7 +61,13 @@ class Address(models.Model):
         blank=True
     )
     cep = models.CharField('CEP', max_length=9, null=True, blank=True)
-    country = models.CharField('país', max_length=50, default='Brasil')
+    country = models.CharField(
+        'país',
+        max_length=50,
+        default='Brasil',
+        null=True,
+        blank=True
+    )
 
     class Meta:
         abstract = True

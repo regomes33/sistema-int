@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'bootstrapform',
     'django_extensions',
     # my apps
+    'api',
     'core',
     'ocorrencia.apps.OcorrenciaConfig',
     'pessoa.apps.PessoaConfig',

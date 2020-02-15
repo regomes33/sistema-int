@@ -1,6 +1,7 @@
 from django.db import models
 from core.models import TimeStampedModel, CreatedBy, Address
 from pessoa.models import Pessoa, Veiculo
+from utils.data import QUALIFICACAO, STATUS
 
 
 class Natureza(models.Model):
@@ -14,6 +15,12 @@ class Natureza(models.Model):
     def __str__(self):
         return self.natureza
 
+    def to_dict(self):
+        return {
+            'value': self.pk,
+            'text': self.natureza,
+        }
+
 
 class Arma(models.Model):
     arma = models.CharField(max_length=50, unique=True)
@@ -26,21 +33,15 @@ class Arma(models.Model):
     def __str__(self):
         return self.arma
 
+    def to_dict(self):
+        return {
+            'value': self.pk,
+            'text': self.arma,
+        }
+
 
 class Infracao(CreatedBy, TimeStampedModel):
-    QUALIFICACAO = (
-        ('aut', 'Autor'),
-        ('coaut', 'Co-Autor'),
-        ('part', 'Participe'),
-        ('vit', 'Vitima')
-    )
-    STATUS = (
-        ('vivo', 'Vivo'),
-        ('morto', 'Morto'),
-        ('preso', 'Preso'),
-        ('solto', 'Solto')
-    )
-    pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT)
+    pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT, blank=True)
     natureza = models.ForeignKey(
         Natureza,
         on_delete=models.SET_NULL,

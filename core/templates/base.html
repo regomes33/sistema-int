@@ -19,18 +19,30 @@
   <script src="{%static 'js/jquery.validate.min.js'%}"></script>
   <script src="{%static 'js/jquery.mask.min.js'%}"></script>
   <script src="{%static 'js/localization/messages_pt_BR.js'%}"></script>
+
+  <!-- VueJS -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <!-- Axios -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  {% block style %}{% endblock style %}
 </head>
 
 <body>
-  <div class="container-fluid">
-    {%block nav%}
-    {% include "nav.html" %}
-    {%endblock%}
-    {%block content%}{%endblock%}
-    <!-- <footer class="footer mt-auto py-3">
-      <p>Sistema ARI</p>
-    </footer> -->
+  <div id="app">
+    <div class="container-fluid">
+      {% block nav %}
+        {% include "nav.html" %}
+      {% endblock nav %}
+      {% block content %}{% endblock content %}
+      <!-- <footer class="footer mt-auto py-3">
+        <p>Sistema ARI</p>
+      </footer> -->
+    </div>
+  {% block js %}{% endblock js %}
   </div>
+  {% block vuejs %}{% endblock vuejs %}
 </body>
 
 </html>

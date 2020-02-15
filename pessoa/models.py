@@ -4,13 +4,8 @@ from veiculo.models import Veiculo
 
 
 class Pessoa(TimeStampedModel, CreatedBy, Address, Document):
-    nome = models.CharField('nome', max_length=50, null=True, blank=True)
-    sobrenome = models.CharField(
-        'sobrenome',
-        max_length=100,
-        null=True,
-        blank=True,
-    )
+    nome = models.CharField('nome', max_length=50)
+    sobrenome = models.CharField('sobrenome', max_length=100)
     apelido = models.CharField(max_length=50, null=True, blank=True)
     mae = models.CharField(max_length=50, null=True, blank=True)
     pai = models.CharField(max_length=50, null=True, blank=True)
@@ -34,6 +29,23 @@ class Pessoa(TimeStampedModel, CreatedBy, Address, Document):
 
     def get_address_complement(self):
         return ' - '.join(filter(None, [self.district, self.city, self.uf]))
+
+    def to_dict(self):
+        # document_dict = Document.to_dict_base(self)
+        # address_dict = Address.to_dict_base(self)
+        return {
+            'pk': self.pk,
+            'nome': self.nome,
+            'sobrenome': self.sobrenome,
+            'apelido': self.apelido,
+            'mae': self.mae,
+            'pai': self.pai,
+            # **document_dict,
+            # **address_dict,
+            # 'full_address': self.get_address(),
+            # 'address_complement': self.get_address_complement(),
+            # 'cep': self.cep,
+        }
 
 
 class PessoaFoto(TimeStampedModel):
