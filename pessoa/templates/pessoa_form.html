@@ -355,7 +355,8 @@
     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
     axios.defaults.xsrfCookieName = 'csrftoken'
 
-    const endpoint = 'http://localhost:8000/'
+    // const endpoint = 'http://localhost:8000/api/'
+    const endpoint = 'https://sistema-int.herokuapp.com/api/'
 
     var app = new Vue({
       el: '#app',
@@ -416,47 +417,47 @@
         ]
       },
       created() {
-        axios.get(endpoint + 'api/naturezas/')
+        axios.get(endpoint + 'naturezas/')
         .then(response => {
           this.naturezas = response.data.data;
         })
 
-        axios.get(endpoint + 'api/faccoes/')
+        axios.get(endpoint + 'faccoes/')
         .then(response => {
           this.faccoes = response.data.data;
         })
 
-        axios.get(endpoint + 'api/qualificacoes/')
+        axios.get(endpoint + 'qualificacoes/')
         .then(response => {
           this.qualificacoes = response.data.data;
         })
 
-        axios.get(endpoint + 'api/armas/')
+        axios.get(endpoint + 'armas/')
         .then(response => {
           this.armas = response.data.data;
         })
 
-        axios.get(endpoint + 'api/status/')
+        axios.get(endpoint + 'status/')
         .then(response => {
           this.status = response.data.data;
         })
 
-        axios.get(endpoint + 'api/veiculos/')
+        axios.get(endpoint + 'veiculos/')
         .then(response => {
           this.carros = response.data.data;
         })
 
-        axios.get(endpoint + 'api/ocorrencias/')
+        axios.get(endpoint + 'ocorrencias/')
         .then(response => {
           this.ocorrencias_list = response.data.data;
         })
 
-        axios.get(endpoint + 'api/tipo_telefone/')
+        axios.get(endpoint + 'tipo_telefone/')
         .then(response => {
           this.tipos = response.data.data;
         })
 
-        axios.get(endpoint + 'api/ufs/')
+        axios.get(endpoint + 'ufs/')
         .then(response => {
           this.ufs = response.data.data;
         })
