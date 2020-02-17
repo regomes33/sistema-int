@@ -2,11 +2,11 @@ import json
 from pprint import pprint
 from django.http import JsonResponse
 from pessoa.models import Pessoa
-from pessoa.forms import PessoaForm, PessoaVeiculoForm
+from pessoa.forms import PessoaForm, PessoaContatoForm, PessoaVeiculoForm
 from ocorrencia.models import Natureza, Arma, Ocorrencia
 from ocorrencia.forms import InfracaoForm, PessoaOcorrenciaForm
 from veiculo.models import Veiculo
-from utils.data import QUALIFICACAO, STATUS
+from utils.data import QUALIFICACAO, STATUS, TIPO
 
 
 def pessoas(request):
@@ -50,6 +50,17 @@ def pessoa_add(request):
                         veiculo_post.pessoa = pessoa_post
                         veiculo_post.save()
 
+        # Adiciona Contatos
+        contatos_data = json.loads(request.POST.get('contatos'))
+        if contatos_data:
+            for contato in contatos_data:
+                if contato.get('telefone'):
+                    contato_form = PessoaContatoForm(contato)
+                    if contato_form.is_valid():
+                        contato_post = contato_form.save(commit=False)
+                        contato_post.pessoa = pessoa_post
+                        contato_post.save()
+
         # Adiciona Ocorrências
         ocorrencias_data = json.loads(request.POST.get('ocorrencias'))
         if ocorrencias_data:
@@ -92,6 +103,18 @@ def armas(request):
 
 def status(request):
     items = STATUS
+    data = [
+        {
+            'value': item[0],
+            'text': item[1],
+        }
+        for item in items]
+    response = {'data': data}
+    return JsonResponse(response)
+
+
+def tipo_telefone(request):
+    items = TIPO
     data = [
         {
             'value': item[0],

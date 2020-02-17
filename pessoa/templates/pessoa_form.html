@@ -146,17 +146,57 @@
       </div>
     </div>
 
-    <!-- Veículos -->
+    <!-- Contatos -->
     <div class="card">
       <div class="card-header" id="headingFour">
         <h2 class="mb-0">
           <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
             <span><i class="fa fa-chevron-down"></i></span>
-            Veículos
+            Contatos
           </button>
         </h2>
       </div>
       <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+        <div class="card-body">
+          <div>
+            <form action="" method="POST">
+
+              <div class="form-row" v-for="contato in contatos">
+
+                <div class="form-group col-md-3">
+                  <label for="tipo">Tipo</label>
+                  <select id="tipo" class="form-control" v-model="contato.tipo">
+                    <option v-for="tipo in tipos" :key="tipo.value" :value="tipo.value">${ tipo.text }</option>
+                  </select>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label class="control-label required">Telefone</label>
+                  <input v-model="contato.telefone" class="form-control" required type="text" />
+                </div>
+
+              </div> <!-- form-row -->
+
+              <button type="button" class="btn btn-primary" @click="contatoAdd">
+                <i class="fa fa-plus"></i> Adicionar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Veículos -->
+    <div class="card">
+      <div class="card-header" id="headingFive">
+        <h2 class="mb-0">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+            <span><i class="fa fa-chevron-down"></i></span>
+            Veículos
+          </button>
+        </h2>
+      </div>
+      <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
         <div class="card-body">
           <div>
             <form action="" method="POST">
@@ -232,6 +272,13 @@
           {
             'ocorrencia': ''
           }
+        ],
+        tipos: [],
+        contatos: [
+          {
+            'tipo': '',
+            'telefone': '',
+          }
         ]
       },
       created() {
@@ -265,6 +312,11 @@
           this.ocorrencias_list = response.data.data;
         })
 
+        axios.get(endpoint + 'api/tipo_telefone/')
+        .then(response => {
+          this.tipos = response.data.data;
+        })
+
       },
       methods: {
         infracaoAdd() {
@@ -284,6 +336,14 @@
             }
           )
         },
+        contatoAdd() {
+          this.contatos.push(
+            {
+              'tipo': '',
+              'telefone': '',
+            }
+          )
+        },
         veiculoAdd() {
           this.veiculos.push(
             {
@@ -296,6 +356,7 @@
           bodyFormData.append('pessoa', JSON.stringify(this.pessoa));
           bodyFormData.append('infracoes', JSON.stringify(this.infracoes));
           bodyFormData.append('ocorrencias', JSON.stringify(this.ocorrencias));
+          bodyFormData.append('contatos', JSON.stringify(this.contatos));
           bodyFormData.append('veiculos', JSON.stringify(this.veiculos));
           axios.post(endpoint + 'api/pessoas/add/', bodyFormData)
             .then(response => {

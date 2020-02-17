@@ -11,3 +11,8 @@ STATUS = (
     ('preso', 'Preso'),
     ('solto', 'Solto')
 )
+
+TIPO = (
+    ('cel', 'Celular'),
+    ('tel', 'Telefone'),
+)

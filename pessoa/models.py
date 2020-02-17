@@ -1,6 +1,7 @@
 from django.db import models
 from core.models import TimeStampedModel, CreatedBy, Address, Document
 from veiculo.models import Veiculo
+from utils.data import TIPO
 
 
 class Pessoa(TimeStampedModel, CreatedBy, Address, Document):
@@ -65,12 +66,7 @@ class PessoaContato(TimeStampedModel):
     '''
     Telefones
     '''
-    TIPO = (
-        ('cel', 'Celular'),
-        ('tel', 'Telefone'),
-    )
-
-    pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
+    pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, blank=True)
     tipo = models.CharField(
         max_length=10,
         choices=TIPO,
