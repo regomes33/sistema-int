@@ -16,19 +16,20 @@
   <div class="accordion" id="accordionExample">
     <!-- Pessoa -->
     <div class="card">
-      <div class="card-header" id="headingOne">
+      <div class="card-header" id="heading1">
         <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
             <span><i class="fa fa-chevron-up"></i></span>
             Pessoa
           </button>
         </h2>
       </div>
-      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div id="collapse1" class="collapse show" aria-labelledby="heading1" data-parent="#accordionExample">
         <div class="card-body">
           <div>
-            <form action="" method="POST">
+            <form method="POST">
 
+              <!-- Pessoa -->
               <div class="form-group">
                 <label for="" class="control-label required">Nome</label>
                 <input id="id_nome" name="nome" v-model="pessoa.nome" class="form-control" required type="text" />
@@ -40,8 +41,126 @@
               </div>
 
               <div class="form-group">
-                <label for="" class="control-label">CPF</label>
+                <label for="" class="control-label">Apelido</label>
+                <input id="id_apelido" name="apelido" v-model="pessoa.apelido" class="form-control" type="text" />
+              </div>
+
+              <div class="form-group">
+                <label for="" class="control-label">Mãe</label>
+                <input id="id_mae" name="mae" v-model="pessoa.mae" class="form-control" type="text" />
+              </div>
+
+              <div class="form-group">
+                <label for="" class="control-label">Pai</label>
+                <input id="id_pai" name="pai" v-model="pessoa.pai" class="form-control" type="text" />
+              </div>
+
+              <div class="form-group">
+                <label for="faccao">Facção</label>
+                <select id="faccao" class="form-control" v-model="pessoa.faccao">
+                  <option selected value="">---</option>
+                  <option v-for="faccao in faccoes" :key="faccao.value" :value="faccao.value">${ faccao.text }</option>
+                </select>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Documentos -->
+    <div class="card">
+      <div class="card-header" id="heading2">
+        <h2 class="mb-0">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
+            <span><i class="fa fa-chevron-down"></i></span>
+            Documentos
+          </button>
+        </h2>
+      </div>
+      <div id="collapse1" class="collapse" aria-labelledby="heading2" data-parent="#accordionExample">
+        <div class="card-body">
+          <div>
+            <form method="POST">
+
+              <div class="form-group">
+                <label for="id_cpf" class="control-label">CPF</label>
                 <input id="id_cpf" name="cpf" v-model="pessoa.cpf" class="form-control" type="text" />
+              </div>
+
+              <div class="form-group">
+                <label for="id_rg" class="control-label">RG</label>
+                <input id="id_rg" name="rg" v-model="pessoa.rg" class="form-control" type="text" />
+              </div>
+
+              <div class="form-group">
+                <label for="id_cnh" class="control-label">CNH</label>
+                <input id="id_cnh" name="cnh" v-model="pessoa.cnh" class="form-control" type="text" />
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Endereço -->
+    <div class="card">
+      <div class="card-header" id="heading3">
+        <h2 class="mb-0">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+            <span><i class="fa fa-chevron-down"></i></span>
+            Endereço
+          </button>
+        </h2>
+      </div>
+      <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordionExample">
+        <div class="card-body">
+          <div>
+            <form method="POST">
+
+              <div class="form-group">
+                <label for="id_address" class="control-label">Endereço</label>
+                <input id="id_address" name="address" v-model="pessoa.address" class="form-control" type="text" />
+              </div>
+
+              <div class="form-group">
+                <label for="id_address_number" class="control-label">Número</label>
+                <input id="id_address_number" name="address_number" v-model="pessoa.address_number" class="form-control" type="number" />
+              </div>
+
+              <div class="form-group">
+                <label for="id_complement" class="control-label">Complemento</label>
+                <input id="id_complement" name="complement" v-model="pessoa.complement" class="form-control" type="text" />
+              </div>
+
+              <div class="form-group">
+                <label for="id_district" class="control-label">Bairro</label>
+                <input id="id_district" name="district" v-model="pessoa.district" class="form-control" type="text" />
+              </div>
+
+              <div class="form-group">
+                <label for="id_city" class="control-label">Cidade</label>
+                <input id="id_city" name="city" v-model="pessoa.city" class="form-control" type="text" />
+              </div>
+
+              <div class="form-group">
+                <label for="uf">UF</label>
+                <select id="uf" class="form-control" v-model="pessoa.uf">
+                  <option selected value="">---</option>
+                  <option v-for="uf in ufs" :key="uf.value" :value="uf.value">${ uf.text }</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="id_cep" class="control-label">CEP</label>
+                <input id="id_cep" name="cep" v-model="pessoa.cep" class="form-control" type="text" />
+              </div>
+
+              <div class="form-group">
+                <label for="id_country" class="control-label">País</label>
+                <input id="id_country" name="country" v-model="pessoa.country" class="form-control" type="text" />
               </div>
 
             </form>
@@ -52,15 +171,15 @@
 
     <!-- Infrações -->
     <div class="card">
-      <div class="card-header" id="headingTwo">
+      <div class="card-header" id="heading4">
         <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
             <span><i class="fa fa-chevron-down"></i></span>
             Infrações
           </button>
         </h2>
       </div>
-      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionExample">
         <div class="card-body">
           <div>
             <form action="" method="POST">
@@ -112,15 +231,15 @@
 
     <!-- Ocorrências -->
     <div class="card">
-      <div class="card-header" id="headingThree">
+      <div class="card-header" id="heading5">
         <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
             <span><i class="fa fa-chevron-down"></i></span>
             Ocorrências
           </button>
         </h2>
       </div>
-      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+      <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordionExample">
         <div class="card-body">
           <div>
             <form action="" method="POST">
@@ -148,15 +267,15 @@
 
     <!-- Contatos -->
     <div class="card">
-      <div class="card-header" id="headingFour">
+      <div class="card-header" id="heading6">
         <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
             <span><i class="fa fa-chevron-down"></i></span>
             Contatos
           </button>
         </h2>
       </div>
-      <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+      <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordionExample">
         <div class="card-body">
           <div>
             <form action="" method="POST">
@@ -188,15 +307,15 @@
 
     <!-- Veículos -->
     <div class="card">
-      <div class="card-header" id="headingFive">
+      <div class="card-header" id="heading7">
         <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
             <span><i class="fa fa-chevron-down"></i></span>
             Veículos
           </button>
         </h2>
       </div>
-      <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+      <div id="collapse7" class="collapse" aria-labelledby="heading7" data-parent="#accordionExample">
         <div class="card-body">
           <div>
             <form action="" method="POST">
@@ -222,7 +341,6 @@
       </div>
     </div>
 
-
   </div>
 
   <div class="float-right mt-3">
@@ -246,13 +364,29 @@
         pessoa: {
           'nome': '',
           'sobrenome': '',
+          'apelido': '',
+          'mae': '',
+          'pai': '',
+          'faccao': '',
           'cpf': '',
+          'rg': '',
+          'cnh': '',
+          'address': '',
+          'address_number': '',
+          'complement': '',
+          'district': '',
+          'city': '',
+          'uf': '',
+          'cep': '',
+          'country': 'Brasil',
         },
         pessoas: [],
+        faccoes: [],
         naturezas: [],
         qualificacoes: [],
         armas: [],
         status: [],
+        ufs: [],
         infracoes: [
           {
             'natureza': '',
@@ -287,6 +421,11 @@
           this.naturezas = response.data.data;
         })
 
+        axios.get(endpoint + 'api/faccoes/')
+        .then(response => {
+          this.faccoes = response.data.data;
+        })
+
         axios.get(endpoint + 'api/qualificacoes/')
         .then(response => {
           this.qualificacoes = response.data.data;
@@ -315,6 +454,11 @@
         axios.get(endpoint + 'api/tipo_telefone/')
         .then(response => {
           this.tipos = response.data.data;
+        })
+
+        axios.get(endpoint + 'api/ufs/')
+        .then(response => {
+          this.ufs = response.data.data;
         })
 
       },
@@ -360,7 +504,7 @@
           bodyFormData.append('veiculos', JSON.stringify(this.veiculos));
           axios.post(endpoint + 'api/pessoas/add/', bodyFormData)
             .then(response => {
-              console.log(response.data);
+              location.href = endpoint + 'pessoa/'
             })
         }
       }

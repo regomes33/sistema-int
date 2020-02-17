@@ -142,6 +142,12 @@ class Faccao(models.Model):
     def __str__(self):
         return self.nome
 
+    def to_dict(self):
+        return {
+            'value': self.pk,
+            'text': self.nome,
+        }
+
 
 class PessoaVeiculo(CreatedBy, TimeStampedModel):
     '''

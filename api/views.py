@@ -1,7 +1,8 @@
 import json
 from pprint import pprint
 from django.http import JsonResponse
-from pessoa.models import Pessoa
+from localflavor.br.br_states import STATE_CHOICES
+from pessoa.models import Pessoa, Faccao
 from pessoa.forms import PessoaForm, PessoaContatoForm, PessoaVeiculoForm
 from ocorrencia.models import Natureza, Arma, Ocorrencia
 from ocorrencia.forms import InfracaoForm, PessoaOcorrenciaForm
@@ -26,6 +27,7 @@ def pessoa_add(request):
         pessoa_post.created_by = created_by
         pessoa_post.save()
         # retorna dados serializados
+        pprint(form.data)
         data = form.data
         data['pk'] = pessoa_post.pk
 
@@ -73,6 +75,13 @@ def pessoa_add(request):
                         ocorrencia_post.save()
 
         return JsonResponse(data)
+
+
+def faccoes(request):
+    items = Faccao.objects.all()
+    data = [item.to_dict() for item in items]
+    response = {'data': data}
+    return JsonResponse(response)
 
 
 def naturezas(request):
@@ -135,5 +144,17 @@ def ocorrencias(request):
 def veiculos(request):
     items = Veiculo.objects.all()
     data = [item.to_dict() for item in items]
+    response = {'data': data}
+    return JsonResponse(response)
+
+
+def ufs(request):
+    items = STATE_CHOICES
+    data = [
+        {
+            'value': item[0],
+            'text': item[1],
+        }
+        for item in items]
     response = {'data': data}
     return JsonResponse(response)
