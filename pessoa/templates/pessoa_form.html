@@ -503,7 +503,7 @@
           bodyFormData.append('ocorrencias', JSON.stringify(this.ocorrencias));
           bodyFormData.append('contatos', JSON.stringify(this.contatos));
           bodyFormData.append('veiculos', JSON.stringify(this.veiculos));
-          axios.post(endpoint + 'api/pessoas/add/', bodyFormData)
+          axios.post(endpoint + 'pessoas/add/', bodyFormData)
             .then(response => {
               location.href = endpoint + 'pessoa/'
             })
