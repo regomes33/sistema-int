@@ -14,16 +14,17 @@
 <div class="container">
   <h4>Adicionar Pessoas</h4>
   <div class="accordion" id="accordionExample">
+    <!-- Pessoa -->
     <div class="card">
-      <div class="card-header" id="headingTwo">
+      <div class="card-header" id="headingOne">
         <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
             <span><i class="fa fa-chevron-up"></i></span>
             Pessoa
           </button>
         </h2>
       </div>
-      <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
         <div class="card-body">
           <div>
             <form action="" method="POST">
@@ -49,16 +50,17 @@
       </div>
     </div>
 
+    <!-- Infrações -->
     <div class="card">
-      <div class="card-header" id="headingThree">
+      <div class="card-header" id="headingTwo">
         <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
             <span><i class="fa fa-chevron-down"></i></span>
             Infrações
           </button>
         </h2>
       </div>
-      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
         <div class="card-body">
           <div>
             <form action="" method="POST">
@@ -66,32 +68,32 @@
               <div class="form-row" v-for="infracao in infracoes">
 
                 <div class="form-group col-md-3">
-                  <label for="inputState">Natureza</label>
-                  <select id="inputState" class="form-control" v-model="infracao.natureza">
+                  <label for="natureza">Natureza</label>
+                  <select id="natureza" class="form-control" v-model="infracao.natureza">
                     <option selected value="">---</option>
                     <option v-for="natureza in naturezas" :key="natureza.value" :value="natureza.value">${ natureza.text }</option>
                   </select>
                 </div>
 
                 <div class="form-group col-md-3">
-                  <label for="inputState">Qualificação</label>
-                  <select id="inputState" class="form-control" v-model="infracao.qualificacao">
+                  <label for="qualificacao">Qualificação</label>
+                  <select id="qualificacao" class="form-control" v-model="infracao.qualificacao">
                     <option selected value="">---</option>
                     <option v-for="qualificacao in qualificacoes" :key="qualificacao.value" :value="qualificacao.value">${ qualificacao.text }</option>
                   </select>
                 </div>
 
                 <div class="form-group col-md-3">
-                  <label for="inputState">Arma</label>
-                  <select id="inputState" class="form-control" v-model="infracao.arma">
+                  <label for="arma">Arma</label>
+                  <select id="arma" class="form-control" v-model="infracao.arma">
                     <option selected value="">---</option>
                     <option v-for="arma in armas" :key="arma.value" :value="arma.value">${ arma.text }</option>
                   </select>
                 </div>
 
                 <div class="form-group col-md-3">
-                  <label for="inputState">Status</label>
-                  <select id="inputState" class="form-control" v-model="infracao.status">
+                  <label for="status">Status</label>
+                  <select id="status" class="form-control" v-model="infracao.status">
                     <option selected value="">---</option>
                     <option v-for="status in status" :key="status.value" :value="status.value">${ status.text }</option>
                   </select>
@@ -99,7 +101,7 @@
 
               </div> <!-- form-row -->
 
-              <button type="button" class="btn btn-primary" @click="naturezaAdd">
+              <button type="button" class="btn btn-primary" @click="infracaoAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
             </form>
@@ -108,12 +110,13 @@
       </div>
     </div>
 
+    <!-- Ocorrências -->
     <div class="card">
       <div class="card-header" id="headingThree">
         <h2 class="mb-0">
           <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
             <span><i class="fa fa-chevron-down"></i></span>
-            Veículos
+            Ocorrências
           </button>
         </h2>
       </div>
@@ -122,11 +125,47 @@
           <div>
             <form action="" method="POST">
 
+              <div class="form-row" v-for="ocorrencia in ocorrencias">
+
+                <div class="form-group col-md-3">
+                  <label for="ocorrencia">Ocorrência</label>
+                  <select id="ocorrencia" class="form-control" v-model="ocorrencia.ocorrencia">
+                    <option selected value="">---</option>
+                    <option v-for="ocorrencia in ocorrencias_list" :key="ocorrencia.value" :value="ocorrencia.value">${ ocorrencia.text }</option>
+                  </select>
+                </div>
+
+              </div> <!-- form-row -->
+
+              <button type="button" class="btn btn-primary" @click="ocorrenciaAdd">
+                <i class="fa fa-plus"></i> Adicionar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Veículos -->
+    <div class="card">
+      <div class="card-header" id="headingFour">
+        <h2 class="mb-0">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            <span><i class="fa fa-chevron-down"></i></span>
+            Veículos
+          </button>
+        </h2>
+      </div>
+      <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+        <div class="card-body">
+          <div>
+            <form action="" method="POST">
+
               <div class="form-row" v-for="veiculo in veiculos">
 
                 <div class="form-group col-md-4">
-                  <label for="inputState">Veículo</label>
-                  <select id="inputState" class="form-control" v-model="veiculo.veiculo">
+                  <label for="veiculo">Veículo</label>
+                  <select id="veiculo" class="form-control" v-model="veiculo.veiculo">
                     <option selected value="">---</option>
                     <option v-for="carro in carros" :key="carro.value" :value="carro.value">${ carro.text }</option>
                   </select>
@@ -187,6 +226,12 @@
           {
             'veiculo': ''
           }
+        ],
+        ocorrencias_list: [],
+        ocorrencias: [
+          {
+            'ocorrencia': ''
+          }
         ]
       },
       created() {
@@ -215,15 +260,27 @@
           this.carros = response.data.data;
         })
 
+        axios.get(endpoint + 'api/ocorrencias/')
+        .then(response => {
+          this.ocorrencias_list = response.data.data;
+        })
+
       },
       methods: {
-        naturezaAdd() {
+        infracaoAdd() {
           this.infracoes.push(
             {
               'natureza': '',
               'qualificacao': '',
               'arma': '',
               'status': '',
+            }
+          )
+        },
+        ocorrenciaAdd() {
+          this.ocorrencias.push(
+            {
+              'ocorrencia': '',
             }
           )
         },
@@ -238,6 +295,7 @@
           let bodyFormData = new FormData();
           bodyFormData.append('pessoa', JSON.stringify(this.pessoa));
           bodyFormData.append('infracoes', JSON.stringify(this.infracoes));
+          bodyFormData.append('ocorrencias', JSON.stringify(this.ocorrencias));
           bodyFormData.append('veiculos', JSON.stringify(this.veiculos));
           axios.post(endpoint + 'api/pessoas/add/', bodyFormData)
             .then(response => {

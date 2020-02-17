@@ -91,6 +91,12 @@ class Ocorrencia(CreatedBy, TimeStampedModel):
     def __str__(self):
         return str(self.rai)
 
+    def to_dict(self):
+        return {
+            'value': self.pk,
+            'text': self.rai,
+        }
+
 
 class PessoaOcorrencia(CreatedBy, TimeStampedModel):
     '''
@@ -100,11 +106,13 @@ class PessoaOcorrencia(CreatedBy, TimeStampedModel):
         Pessoa,
         related_name='pessoas_ocorrencias',
         on_delete=models.CASCADE,
+        blank=True
     )
     ocorrencia = models.ForeignKey(
         Ocorrencia,
         related_name='ocorrencias1',
         on_delete=models.CASCADE,
+        blank=True
     )
 
     class Meta:

@@ -3,8 +3,8 @@ from pprint import pprint
 from django.http import JsonResponse
 from pessoa.models import Pessoa
 from pessoa.forms import PessoaForm, PessoaVeiculoForm
-from ocorrencia.models import Natureza, Arma
-from ocorrencia.forms import InfracaoForm
+from ocorrencia.models import Natureza, Arma, Ocorrencia
+from ocorrencia.forms import InfracaoForm, PessoaOcorrenciaForm
 from veiculo.models import Veiculo
 from utils.data import QUALIFICACAO, STATUS
 
@@ -20,11 +20,14 @@ def pessoa_add(request):
     # Adiciona Pessoa
     pessoa_data = json.loads(request.POST.get('pessoa'))
     form = PessoaForm(pessoa_data)
+    created_by = request.user
     if form.is_valid():
-        pessoa_obj = form.save()
+        pessoa_post = form.save(commit=False)
+        pessoa_post.created_by = created_by
+        pessoa_post.save()
         # retorna dados serializados
         data = form.data
-        data['pk'] = pessoa_obj.pk
+        data['pk'] = pessoa_post.pk
 
         # Adiciona Infrações
         infracoes_data = json.loads(request.POST.get('infracoes'))
@@ -33,18 +36,30 @@ def pessoa_add(request):
                 infracao_form = InfracaoForm(infracao)
                 if infracao_form.is_valid():
                     infracao_post = infracao_form.save(commit=False)
-                    infracao_post.pessoa = pessoa_obj
+                    infracao_post.pessoa = pessoa_post
                     infracao_post.save()
 
         # Adiciona Veículos
         veiculos_data = json.loads(request.POST.get('veiculos'))
         if veiculos_data:
             for veiculo in veiculos_data:
-                veiculo_form = PessoaVeiculoForm(veiculo)
-                if veiculo_form.is_valid():
-                    veiculo_post = veiculo_form.save(commit=False)
-                    veiculo_post.pessoa = pessoa_obj
-                    veiculo_post.save()
+                if veiculo.get('veiculo'):
+                    veiculo_form = PessoaVeiculoForm(veiculo)
+                    if veiculo_form.is_valid():
+                        veiculo_post = veiculo_form.save(commit=False)
+                        veiculo_post.pessoa = pessoa_post
+                        veiculo_post.save()
+
+        # Adiciona Ocorrências
+        ocorrencias_data = json.loads(request.POST.get('ocorrencias'))
+        if ocorrencias_data:
+            for ocorrencia in ocorrencias_data:
+                if ocorrencia.get('ocorrencia'):
+                    ocorrencia_form = PessoaOcorrenciaForm(ocorrencia)
+                    if ocorrencia_form.is_valid():
+                        ocorrencia_post = ocorrencia_form.save(commit=False)
+                        ocorrencia_post.pessoa = pessoa_post
+                        ocorrencia_post.save()
 
         return JsonResponse(data)
 
@@ -83,6 +98,13 @@ def status(request):
             'text': item[1],
         }
         for item in items]
+    response = {'data': data}
+    return JsonResponse(response)
+
+
+def ocorrencias(request):
+    items = Ocorrencia.objects.all()
+    data = [item.to_dict() for item in items]
     response = {'data': data}
     return JsonResponse(response)
 

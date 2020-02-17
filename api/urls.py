@@ -12,5 +12,6 @@ urlpatterns = [
     path('qualificacoes/', v.qualificacoes),
     path('armas/', v.armas),
     path('status/', v.status),
+    path('ocorrencias/', v.ocorrencias),
     path('veiculos/', v.veiculos),
 ]
