@@ -155,6 +155,7 @@ class PessoaVeiculo(CreatedBy, TimeStampedModel):
         'Pessoa',
         related_name='pessoas_veiculos',
         on_delete=models.CASCADE,
+        blank=True
     )
     veiculo = models.ForeignKey(
         Veiculo,

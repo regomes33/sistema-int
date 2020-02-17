@@ -126,7 +126,7 @@
 
                 <div class="form-group col-md-4">
                   <label for="inputState">Veículo</label>
-                  <select id="inputState" class="form-control" v-model="veiculo.carro">
+                  <select id="inputState" class="form-control" v-model="veiculo.veiculo">
                     <option selected value="">---</option>
                     <option v-for="carro in carros" :key="carro.value" :value="carro.value">${ carro.text }</option>
                   </select>
@@ -185,7 +185,7 @@
         carros: [],
         veiculos: [
           {
-            'carro': ''
+            'veiculo': ''
           }
         ]
       },
@@ -230,7 +230,7 @@
         veiculoAdd() {
           this.veiculos.push(
             {
-              'carro': '',
+              'veiculo': '',
             }
           )
         },

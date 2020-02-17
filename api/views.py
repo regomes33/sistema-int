@@ -2,7 +2,7 @@ import json
 from pprint import pprint
 from django.http import JsonResponse
 from pessoa.models import Pessoa
-from pessoa.forms import PessoaForm
+from pessoa.forms import PessoaForm, PessoaVeiculoForm
 from ocorrencia.models import Natureza, Arma
 from ocorrencia.forms import InfracaoForm
 from veiculo.models import Veiculo
@@ -37,6 +37,14 @@ def pessoa_add(request):
                     infracao_post.save()
 
         # Adiciona Veículos
+        veiculos_data = json.loads(request.POST.get('veiculos'))
+        if veiculos_data:
+            for veiculo in veiculos_data:
+                veiculo_form = PessoaVeiculoForm(veiculo)
+                if veiculo_form.is_valid():
+                    veiculo_post = veiculo_form.save(commit=False)
+                    veiculo_post.pessoa = pessoa_obj
+                    veiculo_post.save()
 
         return JsonResponse(data)
 
