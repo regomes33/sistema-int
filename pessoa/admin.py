@@ -10,6 +10,16 @@ from .models import PessoaVeiculo
 from .models import Tatuagem
 
 
+class PessoaFotoInline(admin.TabularInline):
+    model = PessoaFoto
+    extra = 0
+
+
+class TatuagemInline(admin.TabularInline):
+    model = Tatuagem
+    extra = 0
+
+
 class InfracaoInline(admin.TabularInline):
     model = Infracao
     extra = 0
@@ -39,6 +49,8 @@ class PessoaVeiculoInline(admin.TabularInline):
 @admin.register(Pessoa)
 class PessoaAdmin(admin.ModelAdmin):
     inlines = (
+        PessoaFotoInline,
+        TatuagemInline,
         InfracaoInline,
         PessoaOcorrenciaInline,
         PessoaContatoInline,
