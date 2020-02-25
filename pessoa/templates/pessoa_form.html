@@ -175,7 +175,7 @@
           </button>
         </h2>
       </div>
-      <div id="collapse8" class="collapse" aria-labelledby="heading4" data-parent="#accordionExample">
+      <div id="collapse8" class="collapse" aria-labelledby="heading8" data-parent="#accordionExample">
         <div class="card-body">
           <div>
 
@@ -189,6 +189,37 @@
               </div> <!-- form-row -->
 
               <button type="button" class="btn btn-primary" @click="fotoAdd">
+                <i class="fa fa-plus"></i> Adicionar
+              </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tatuagens -->
+    <div class="card">
+      <div class="card-header" id="heading9">
+        <h2 class="mb-0">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse9" aria-expanded="false" aria-controls="collapse9">
+            <span><i class="fa fa-chevron-down"></i></span>
+            Tatuagens
+          </button>
+        </h2>
+      </div>
+      <div id="collapse9" class="collapse" aria-labelledby="heading9" data-parent="#accordionExample">
+        <div class="card-body">
+          <div>
+
+              <div class="form-row" v-for="tattoo in tattoos">
+
+                <div class="form-group col-md-3">
+                  <label>Tatuagem</label>
+                  <input class="form-control" type="file" @change="processFileTattoo" />
+                </div>
+
+              </div> <!-- form-row -->
+
+              <button type="button" class="btn btn-primary" @click="tattooAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
           </div>
@@ -413,6 +444,12 @@
             'foto': '',
           }
         ],
+        tattoos_list: [],
+        tattoos: [
+          {
+            'tattoo': '',
+          }
+        ],
         infracoes: [
           {
             'natureza': '',
@@ -496,6 +533,13 @@
             }
           )
         },
+        tattooAdd() {
+          this.tattoos.push(
+            {
+              'tattoo': '',
+            }
+          )
+        },
         infracaoAdd() {
           this.infracoes.push(
             {
@@ -531,12 +575,19 @@
         processFile: function(e) {
           this.photos.push(e.target.files[0])
         },
+        processFileTattoo: function(e) {
+          this.tattoos_list.push(e.target.files[0])
+        },
         salvar(e) {
           let bodyFormData = new FormData();
           bodyFormData.append('pessoa', JSON.stringify(this.pessoa));
 
           this.photos.forEach((file, i) => {
             bodyFormData.append('photos[' + i + ']', file);
+          });
+
+          this.tattoos_list.forEach((file, i) => {
+            bodyFormData.append('tattoos[' + i + ']', file);
           });
 
           bodyFormData.append('infracoes', JSON.stringify(this.infracoes));

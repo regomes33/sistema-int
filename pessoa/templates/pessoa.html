@@ -80,10 +80,10 @@
             <div class="col text-left-mb-4">
               <h3 class="card-title text-left">Fotos</h3>
               <div class="card-group">
-                {% for foto in object.pessoafoto_set.all %}
-                  {% if foto.fotopessoa %}
+                {% for foto in object.foto_set.all %}
+                  {% if foto.foto %}
                     <div class="card">
-                      <img src="{{ foto.fotopessoa.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ foto.fotopessoa.name }}">
+                      <img src="{{ foto.foto.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ foto.foto.name }}">
                     </div>
                   {% endif %}
                 {% endfor %}
@@ -95,9 +95,9 @@
               <h3 class="card-title text-left">Tatuagens</h3>
               <div class="card-group">
                 {% for tatuagem in object.tatuagem_set.all %}
-                  {% if tatuagem.foto_tatuagem %}
+                  {% if tatuagem.foto %}
                     <div class="card">
-                      <img src="{{ tatuagem.foto_tatuagem.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ tatuagem.foto_tatuagem.name }}">
+                      <img src="{{ tatuagem.foto.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ tatuagem.foto.name }}">
                       <div class="card-body">
                         <p class="card-text text-left">{{ tatuagem.descricao }}</p>
                       </div>
