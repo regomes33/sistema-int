@@ -13,6 +13,8 @@
 {% block content %}
 <div class="container">
   <h4>Adicionar Pessoas</h4>
+  <form @submit.prevent="salvar">
+
   <div class="accordion" id="accordionExample">
     <!-- Pessoa -->
     <div class="card">
@@ -27,7 +29,6 @@
       <div id="collapse1" class="collapse show" aria-labelledby="heading1" data-parent="#accordionExample">
         <div class="card-body">
           <div>
-            <form method="POST">
 
               <!-- Pessoa -->
               <div class="form-group">
@@ -63,7 +64,6 @@
                 </select>
               </div>
 
-            </form>
           </div>
         </div>
       </div>
@@ -82,7 +82,6 @@
       <div id="collapse1" class="collapse" aria-labelledby="heading2" data-parent="#accordionExample">
         <div class="card-body">
           <div>
-            <form method="POST">
 
               <div class="form-group">
                 <label for="id_cpf" class="control-label">CPF</label>
@@ -99,7 +98,6 @@
                 <input id="id_cnh" name="cnh" v-model="pessoa.cnh" class="form-control" type="text" />
               </div>
 
-            </form>
           </div>
         </div>
       </div>
@@ -118,7 +116,6 @@
       <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordionExample">
         <div class="card-body">
           <div>
-            <form method="POST">
 
               <div class="form-group">
                 <label for="id_address" class="control-label">Endereço</label>
@@ -163,7 +160,37 @@
                 <input id="id_country" name="country" v-model="pessoa.country" class="form-control" type="text" />
               </div>
 
-            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fotos -->
+    <div class="card">
+      <div class="card-header" id="heading8">
+        <h2 class="mb-0">
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse8" aria-expanded="false" aria-controls="collapse8">
+            <span><i class="fa fa-chevron-down"></i></span>
+            Fotos
+          </button>
+        </h2>
+      </div>
+      <div id="collapse8" class="collapse" aria-labelledby="heading4" data-parent="#accordionExample">
+        <div class="card-body">
+          <div>
+
+              <div class="form-row" v-for="foto in fotos">
+
+                <div class="form-group col-md-3">
+                  <label for="natureza">Foto</label>
+                  <input class="form-control" type="file" @change="processFile" />
+                </div>
+
+              </div> <!-- form-row -->
+
+              <button type="button" class="btn btn-primary" @click="fotoAdd">
+                <i class="fa fa-plus"></i> Adicionar
+              </button>
           </div>
         </div>
       </div>
@@ -182,7 +209,6 @@
       <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionExample">
         <div class="card-body">
           <div>
-            <form action="" method="POST">
 
               <div class="form-row" v-for="infracao in infracoes">
 
@@ -223,7 +249,6 @@
               <button type="button" class="btn btn-primary" @click="infracaoAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
-            </form>
           </div>
         </div>
       </div>
@@ -242,8 +267,6 @@
       <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordionExample">
         <div class="card-body">
           <div>
-            <form action="" method="POST">
-
               <div class="form-row" v-for="ocorrencia in ocorrencias">
 
                 <div class="form-group col-md-3">
@@ -259,7 +282,6 @@
               <button type="button" class="btn btn-primary" @click="ocorrenciaAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
-            </form>
           </div>
         </div>
       </div>
@@ -278,7 +300,6 @@
       <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordionExample">
         <div class="card-body">
           <div>
-            <form action="" method="POST">
 
               <div class="form-row" v-for="contato in contatos">
 
@@ -291,7 +312,7 @@
 
                 <div class="form-group col-md-3">
                   <label class="control-label required">Telefone</label>
-                  <input v-model="contato.telefone" class="form-control" required type="text" />
+                  <input v-model="contato.telefone" class="form-control" type="text" />
                 </div>
 
               </div> <!-- form-row -->
@@ -299,7 +320,6 @@
               <button type="button" class="btn btn-primary" @click="contatoAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
-            </form>
           </div>
         </div>
       </div>
@@ -318,8 +338,6 @@
       <div id="collapse7" class="collapse" aria-labelledby="heading7" data-parent="#accordionExample">
         <div class="card-body">
           <div>
-            <form action="" method="POST">
-
               <div class="form-row" v-for="veiculo in veiculos">
 
                 <div class="form-group col-md-4">
@@ -335,7 +353,6 @@
               <button type="button" class="btn btn-primary" @click="veiculoAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
-            </form>
           </div>
         </div>
       </div>
@@ -344,9 +361,10 @@
   </div>
 
   <div class="float-right mt-3">
-    <button class="btn btn-lg btn-success" @click="salvar">Salvar</button>
+    <button class="btn btn-lg btn-success" type="submit">Salvar</button>
   </div>
 
+</form>
 </div>
 {% endblock content %}
 
@@ -389,6 +407,12 @@
         armas: [],
         status: [],
         ufs: [],
+        photos: [],
+        fotos: [
+          {
+            'foto': '',
+          }
+        ],
         infracoes: [
           {
             'natureza': '',
@@ -465,6 +489,13 @@
 
       },
       methods: {
+        fotoAdd() {
+          this.fotos.push(
+            {
+              'foto': '',
+            }
+          )
+        },
         infracaoAdd() {
           this.infracoes.push(
             {
@@ -497,14 +528,28 @@
             }
           )
         },
-        salvar() {
+        processFile: function(e) {
+          this.photos.push(e.target.files[0])
+          console.log(this.photos);
+        },
+        salvar(e) {
           let bodyFormData = new FormData();
           bodyFormData.append('pessoa', JSON.stringify(this.pessoa));
+
+          this.photos.forEach((file, i) => {
+            bodyFormData.append('photos[' + i + ']', file);
+          });
+
           bodyFormData.append('infracoes', JSON.stringify(this.infracoes));
           bodyFormData.append('ocorrencias', JSON.stringify(this.ocorrencias));
           bodyFormData.append('contatos', JSON.stringify(this.contatos));
           bodyFormData.append('veiculos', JSON.stringify(this.veiculos));
-          axios.post(endpoint + 'api/pessoas/add/', bodyFormData)
+
+          axios.post(endpoint + 'api/pessoas/add/', bodyFormData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          })
             .then(response => {
               location.href = endpoint + 'pessoa/'
             })

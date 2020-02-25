@@ -50,7 +50,7 @@ class Pessoa(TimeStampedModel, CreatedBy, Address, Document):
 
 
 class PessoaFoto(TimeStampedModel):
-    pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT)
+    pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT, blank=True)
     fotopessoa = models.ImageField('Imagem da Pessoa', upload_to="pessoa")
 
     class Meta:
