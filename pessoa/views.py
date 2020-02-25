@@ -2,6 +2,7 @@
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.conf import settings
 from .models import Pessoa
 from ocorrencia.models import PessoaOcorrencia
 
@@ -26,7 +27,8 @@ def pessoa(request, pk):
 
 def pessoa_create(request):
     template_name = 'pessoa_form.html'
-    return render(request, template_name)
+    context = {'endpoint': settings.ENDPOINT}
+    return render(request, template_name, context)
 
 
 # def validate_cpf(request):

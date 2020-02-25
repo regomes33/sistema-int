@@ -17,3 +17,15 @@ python contrib/env_gen.py
 python manage.py migrate
 python manage.py create_data
 ```
+
+### Variáveis de ambiente
+
+Defina suas variáveis de ambiente em `.env`
+
+```
+DEBUG=True
+SECRET_KEY=...
+ALLOWED_HOSTS=127.0.0.1,.localhost
+ENDPOINT=http://localhost:8000/
+...
+```
