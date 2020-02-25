@@ -49,14 +49,32 @@ class Pessoa(TimeStampedModel, CreatedBy, Address, Document):
         }
 
 
-class PessoaFoto(TimeStampedModel):
+class Foto(TimeStampedModel):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT, blank=True)
-    fotopessoa = models.ImageField('Imagem da Pessoa', upload_to="pessoa")
+    foto = models.ImageField('Imagem da Pessoa', upload_to="pessoa")
 
     class Meta:
         ordering = ('-created',)
         verbose_name = 'foto'
         verbose_name_plural = 'fotos'
+
+    def __str__(self):
+        return f'{self.pk} - {self.pessoa}'
+
+
+class Tatuagem(TimeStampedModel):
+    pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT, blank=True)
+    foto = models.ImageField('Imagem da Tatuagem', upload_to="tatuagem")
+    descricao = models.TextField(
+        'Descrição da Tatuagem',
+        null=True,
+        blank=True
+    )
+
+    class Meta:
+        ordering = ('pessoa', '-created')
+        verbose_name = 'tatuagem'
+        verbose_name_plural = 'tatuagens'
 
     def __str__(self):
         return f'{self.pk} - {self.pessoa}'
@@ -98,27 +116,6 @@ class Comparsa(TimeStampedModel, Document):
 
     def __str__(self):
         return self.nome
-
-
-class Tatuagem(TimeStampedModel):
-    pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT)
-    foto_tatuagem = models.ImageField(
-        'Imagem da Tatuagem',
-        upload_to="tatuagem"
-    )
-    descricao = models.TextField(
-        'Descrição da Tatuagem',
-        null=True,
-        blank=True
-    )
-
-    class Meta:
-        ordering = ('pessoa', '-created')
-        verbose_name = 'tatuagem'
-        verbose_name_plural = 'tatuagens'
-
-    def __str__(self):
-        return f'{self.pk} - {self.pessoa}'
 
 
 class Faccao(models.Model):

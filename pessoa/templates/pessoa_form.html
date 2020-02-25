@@ -182,7 +182,7 @@
               <div class="form-row" v-for="foto in fotos">
 
                 <div class="form-group col-md-3">
-                  <label for="natureza">Foto</label>
+                  <label>Foto</label>
                   <input class="form-control" type="file" @change="processFile" />
                 </div>
 
@@ -311,7 +311,7 @@
                 </div>
 
                 <div class="form-group col-md-3">
-                  <label class="control-label required">Telefone</label>
+                  <label class="control-label">Telefone</label>
                   <input v-model="contato.telefone" class="form-control" type="text" />
                 </div>
 
@@ -530,7 +530,6 @@
         },
         processFile: function(e) {
           this.photos.push(e.target.files[0])
-          console.log(this.photos);
         },
         salvar(e) {
           let bodyFormData = new FormData();

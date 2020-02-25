@@ -2,7 +2,7 @@ import json
 from pprint import pprint
 from django.http import JsonResponse
 from localflavor.br.br_states import STATE_CHOICES
-from pessoa.models import Pessoa, Faccao, PessoaFoto
+from pessoa.models import Pessoa, Faccao, Foto
 from pessoa.forms import PessoaForm, PessoaContatoForm, PessoaVeiculoForm
 from ocorrencia.models import Natureza, Arma, Ocorrencia
 from ocorrencia.forms import InfracaoForm, PessoaOcorrenciaForm
@@ -32,7 +32,7 @@ def pessoa_add(request):
 
         # Adiciona Fotos
         for photo in request.FILES.values():
-            PessoaFoto.objects.create(pessoa=pessoa_post, fotopessoa=photo)
+            Foto.objects.create(pessoa=pessoa_post, foto=photo)
 
         # Adiciona Infrações
         infracoes_data = json.loads(request.POST.get('infracoes'))

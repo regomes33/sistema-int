@@ -4,14 +4,14 @@ from .models import Faccao
 from ocorrencia.models import Infracao
 from .models import Pessoa
 from .models import PessoaContato
-from .models import PessoaFoto
+from .models import Foto
 from ocorrencia.models import PessoaOcorrencia
 from .models import PessoaVeiculo
 from .models import Tatuagem
 
 
-class PessoaFotoInline(admin.TabularInline):
-    model = PessoaFoto
+class FotoInline(admin.TabularInline):
+    model = Foto
     extra = 0
 
 
@@ -49,7 +49,7 @@ class PessoaVeiculoInline(admin.TabularInline):
 @admin.register(Pessoa)
 class PessoaAdmin(admin.ModelAdmin):
     inlines = (
-        PessoaFotoInline,
+        FotoInline,
         TatuagemInline,
         InfracaoInline,
         PessoaOcorrenciaInline,
@@ -100,4 +100,4 @@ class PessoaVeiculoAdmin(admin.ModelAdmin):
     date_hierarchy = 'created'
 
 
-admin.site.register(PessoaFoto)
+admin.site.register(Foto)
