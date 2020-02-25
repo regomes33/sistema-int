@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'bootstrapform',
     'django_extensions',
+    'corsheaders',
     # my apps
     'api',
     'core',
@@ -32,9 +33,12 @@ INSTALLED_APPS = [
     'veiculo.apps.VeiculoConfig',
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -43,6 +47,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'ari.urls'
+
 
 TEMPLATES = [
     {
