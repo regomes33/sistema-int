@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -8,6 +9,15 @@ from .models import Veiculo, Modelo
 def veiculos(request):
     template_name = 'veiculos.html'
     object_list = Veiculo.objects.all()
+
+    search = request.GET.get('search')
+    if search:
+        object_list = object_list.filter(
+            Q(placa__icontains=search) |
+            Q(modelo__modelo__icontains=search) |
+            Q(cor__cor__icontains=search)
+        )
+
     context = {
         'object_list': object_list,
         'model_name_plural': 'Veículos',
@@ -35,6 +45,11 @@ def veiculo_create(request):
 def modelos(request):
     template_name = 'modelos.html'
     object_list = Modelo.objects.all()
+
+    search = request.GET.get('search')
+    if search:
+        object_list = object_list.filter(modelo__icontains=search)
+
     context = {
         'object_list': object_list,
         'model_name_plural': 'Modelos',

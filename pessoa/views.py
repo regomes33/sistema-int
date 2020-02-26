@@ -1,8 +1,9 @@
 # import xhtml2pdf.pisa as pisa
+from django.conf import settings
+from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.conf import settings
 from .models import Pessoa
 from ocorrencia.models import PessoaOcorrencia
 
@@ -10,6 +11,15 @@ from ocorrencia.models import PessoaOcorrencia
 def pessoas(request):
     template_name = 'pessoas.html'
     object_list = Pessoa.objects.all()
+
+    search = request.GET.get('search')
+    if search:
+        object_list = object_list.filter(
+            Q(nome__icontains=search) |
+            Q(sobrenome__icontains=search) |
+            Q(apelido__icontains=search)
+        )
+
     context = {
         'object_list': object_list,
         'model_name_plural': 'Pessoas',

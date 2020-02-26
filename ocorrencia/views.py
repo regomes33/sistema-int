@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -8,6 +9,14 @@ from .models import Ocorrencia, Infracao, Natureza, Homicidio
 def ocorrencias(request):
     template_name = 'ocorrencias.html'
     object_list = Ocorrencia.objects.all()
+
+    search = request.GET.get('search')
+    if search:
+        object_list = object_list.filter(
+            Q(rai__icontains=search) |
+            Q(descricao__icontains=search)
+        )
+
     context = {
         'object_list': object_list,
         'model_name_plural': 'Ocorrências',
@@ -46,6 +55,13 @@ def ocorrencia_create(request):
 def infracoes(request):
     template_name = 'infracoes.html'
     object_list = Infracao.objects.all()
+
+    search = request.GET.get('search')
+    if search:
+        object_list = object_list.filter(
+            Q(natureza__natureza__icontains=search)
+        )
+
     context = {
         'object_list': object_list,
         'model_name_plural': 'Infrações',
@@ -73,6 +89,11 @@ def infracao_create(request):
 def naturezas(request):
     template_name = 'naturezas.html'
     object_list = Natureza.objects.all()
+
+    search = request.GET.get('search')
+    if search:
+        object_list = object_list.filter(natureza__icontains=search)
+
     context = {
         'object_list': object_list,
         'model_name_plural': 'Naturezas',
@@ -100,6 +121,13 @@ def natureza_create(request):
 def homicidios(request):
     template_name = 'homicidios.html'
     object_list = Homicidio.objects.all()
+
+    # search = request.GET.get('search')
+    # if search:
+    #     object_list = object_list.filter(
+    #         Q(forma__icontains=search)
+    #     )
+
     context = {
         'object_list': object_list,
         'model_name_plural': 'Homicidios',
