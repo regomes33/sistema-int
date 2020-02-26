@@ -57,7 +57,18 @@ var app = new Vue({
     contatos: [{
       'tipo': '',
       'telefone': '',
-    }]
+    }],
+    v: [
+      { 'v1': false },
+      { 'v2': false },
+      { 'v3': false },
+      { 'v4': false },
+      { 'v5': false },
+      { 'v6': false },
+      { 'v7': false },
+      { 'v8': false },
+      { 'v9': false },
+    ]
   },
   created() {
     axios.get(endpoint + 'api/naturezas/')
@@ -172,6 +183,36 @@ var app = new Vue({
         .then(response => {
           location.href = endpoint + 'pessoa/'
         })
+    },
+    toggleCollapse(v) {
+      console.log(v);
+      if (v == 1) {
+        this.v1 = !this.v1;
+      }
+      if (v == 2) {
+        this.v2 = !this.v2;
+      }
+      if (v == 3) {
+        this.v3 = !this.v3;
+      }
+      if (v == 4) {
+        this.v4 = !this.v4;
+      }
+      if (v == 5) {
+        this.v5 = !this.v5;
+      }
+      if (v == 6) {
+        this.v6 = !this.v6;
+      }
+      if (v == 7) {
+        this.v7 = !this.v7;
+      }
+      if (v == 8) {
+        this.v8 = !this.v8;
+      }
+      if (v == 9) {
+        this.v9 = !this.v9;
+      }
     }
   }
 });
