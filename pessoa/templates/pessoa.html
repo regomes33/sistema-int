@@ -8,17 +8,17 @@
 
 {% block content %}
 <div class="container">
-  <div class="accordion" id="accordionExample">
+  <div class="accordion accordion-icons" id="accordionExample">
     <div class="card">
-      <div class="card-header" id="headingOne">
+      <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
         <h2 class="mb-0">
-          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <button class="btn btn-link" type="button">
             <span><i class="fa fa-chevron-up"></i></span>
             Detalhes
           </button>
         </h2>
       </div>
-      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div id="collapseOne" class="my-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
         <div class="card-body">
           <div class="row row-cols-1 row-cols-md-3">
             <div class="col text-left mb-4">
@@ -117,15 +117,15 @@
       </div>
     </div>
     <div class="card">
-      <div class="card-header" id="headingTwo">
+      <div class="card-header" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
         <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          <button class="btn btn-link collapsed" type="button">
             <span><i class="fa fa-chevron-down"></i></span>
             Ocorrências
           </button>
         </h2>
       </div>
-      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div id="collapseTwo" class="my-collapse collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
         <div class="card-body">
           <table class="table">
             <thead>
@@ -149,15 +149,15 @@
       </div>
     </div>
     <div class="card">
-      <div class="card-header" id="headingThree">
+      <div class="card-header" id="headingThree" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
         <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          <button class="btn btn-link collapsed" type="button">
             <span><i class="fa fa-chevron-down"></i></span>
             Infrações
           </button>
         </h2>
       </div>
-      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+      <div id="collapseThree" class="my-collapse collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
         <div class="card-body">
           <table class="table">
             <thead>
@@ -185,3 +185,15 @@
   </div>
 </div>
 {% endblock content %}
+
+{% block js %}
+  <script>
+    $('.my-collapse').on('shown.bs.collapse', function() {
+      $(this).prev().find(".fa").addClass('fa-chevron-up').removeClass('fa-chevron-down');
+    });
+
+    $('.my-collapse').on('hidden.bs.collapse', function() {
+      $(this).prev().find(".fa").addClass('fa-chevron-down').removeClass('fa-chevron-up');
+    });
+  </script>
+{% endblock js %}
