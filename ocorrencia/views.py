@@ -8,14 +8,21 @@ from .models import Ocorrencia, Infracao, Natureza, Homicidio
 def ocorrencias(request):
     template_name = 'ocorrencias.html'
     object_list = Ocorrencia.objects.all()
-    context = {'object_list': object_list}
+    context = {
+        'object_list': object_list,
+        'model_name_plural': 'Ocorrências',
+    }
     return render(request, template_name, context)
 
 
 def ocorrencia(request, pk):
     template_name = 'ocorrencia.html'
     obj = Ocorrencia.objects.get(pk=pk)
-    context = {'object': obj}
+    context = {
+        'object': obj,
+        'model_name_plural': 'Ocorrências',
+        'url': reverse('ocorrencia:ocorrencias'),
+    }
     return render(request, template_name, context)
 
 
@@ -28,14 +35,21 @@ def ocorrencia_create(request):
             form.save()
             return HttpResponseRedirect(reverse('ocorrencia:ocorrencias'))
 
-    context = {'form': form}
+    context = {
+        'form': form,
+        'model_name_plural': 'Ocorrências',
+        'url': reverse('ocorrencia:ocorrencias'),
+    }
     return render(request, template_name, context)
 
 
 def infracoes(request):
     template_name = 'infracoes.html'
     object_list = Infracao.objects.all()
-    context = {'object_list': object_list}
+    context = {
+        'object_list': object_list,
+        'model_name_plural': 'Infrações',
+    }
     return render(request, template_name, context)
 
 
@@ -48,14 +62,21 @@ def infracao_create(request):
             form.save()
             return HttpResponseRedirect(reverse('ocorrencia:infracoes'))
 
-    context = {'form': form}
+    context = {
+        'form': form,
+        'model_name_plural': 'Infrações',
+        'url': reverse('ocorrencia:infracoes'),
+    }
     return render(request, template_name, context)
 
 
 def naturezas(request):
     template_name = 'naturezas.html'
     object_list = Natureza.objects.all()
-    context = {'object_list': object_list}
+    context = {
+        'object_list': object_list,
+        'model_name_plural': 'Naturezas',
+    }
     return render(request, template_name, context)
 
 
@@ -68,14 +89,21 @@ def natureza_create(request):
             form.save()
             return HttpResponseRedirect(reverse('ocorrencia:naturezas'))
 
-    context = {'form': form}
+    context = {
+        'form': form,
+        'model_name_plural': 'Naturezas',
+        'url': reverse('ocorrencia:naturezas'),
+    }
     return render(request, template_name, context)
 
 
 def homicidios(request):
     template_name = 'homicidios.html'
     object_list = Homicidio.objects.all()
-    context = {'object_list': object_list}
+    context = {
+        'object_list': object_list,
+        'model_name_plural': 'Homicidios',
+    }
     return render(request, template_name, context)
 
 
@@ -88,5 +116,9 @@ def homicidio_create(request):
             form.save()
             return HttpResponseRedirect(reverse('ocorrencia:homicidios'))
 
-    context = {'form': form}
+    context = {
+        'form': form,
+        'model_name_plural': 'Homicidios',
+        'url': reverse('ocorrencia:homicidios'),
+    }
     return render(request, template_name, context)

@@ -31,18 +31,32 @@
 
 <body>
   <div id="app">
+
     <div class="container-fluid">
       {% block nav %}
         {% include "nav.html" %}
       {% endblock nav %}
+
+      <!-- Breadcrumb-->
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+              <a href="{% url 'core:index' %}">Início</a>
+          </li>
+          {% block breadcrumbs %}{% endblock %}
+      </ol>
+    
       {% block content %}{% endblock content %}
       <!-- <footer class="footer mt-auto py-3">
         <p>Sistema ARI</p>
       </footer> -->
     </div>
+
   {% block js %}{% endblock js %}
+
   </div>
+
   {% block vuejs %}{% endblock vuejs %}
+
 </body>
 
 </html>

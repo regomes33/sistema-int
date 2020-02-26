@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% load bootstrap %}
+
 {% block title %}| Adicionar Veículo{%endblock%}
+
+{% block breadcrumbs %}
+  {% include "breadcrumb/_include_breadcrumb_base_add.html" %}
+{% endblock %}
 
 {% block content %}
 <div class="container">

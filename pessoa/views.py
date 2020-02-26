@@ -10,7 +10,10 @@ from ocorrencia.models import PessoaOcorrencia
 def pessoas(request):
     template_name = 'pessoas.html'
     object_list = Pessoa.objects.all()
-    context = {'object_list': object_list}
+    context = {
+        'object_list': object_list,
+        'model_name_plural': 'Pessoas',
+    }
     return render(request, template_name, context)
 
 
@@ -20,14 +23,20 @@ def pessoa(request, pk):
     ocorrencias = PessoaOcorrencia.objects.filter(pessoa=pk)
     context = {
         'object': obj,
-        'ocorrencias': ocorrencias
+        'ocorrencias': ocorrencias,
+        'model_name_plural': 'Pessoas',
+        'url': reverse('pessoa:pessoas'),
     }
     return render(request, template_name, context)
 
 
 def pessoa_create(request):
     template_name = 'pessoa_form.html'
-    context = {'endpoint': settings.ENDPOINT}
+    context = {
+        'endpoint': settings.ENDPOINT,
+        'model_name_plural': 'Pessoas',
+        'url': reverse('pessoa:pessoas'),
+    }
     return render(request, template_name, context)
 
 

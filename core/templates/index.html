@@ -1,6 +1,8 @@
 {% extends 'base.html'%}
 {% load bootstrap %}
+
 {% block title %}| Usuários{%endblock%}
+
 {%block content%}
 <div class="col mb-5">
   ola {{ request.user.first_name }}
@@ -107,3 +109,11 @@
 </div> -->
 </div>
 {%endblock%}
+
+{% block js %}
+  <script>
+    $(document).ready(function() {
+      $('.breadcrumb').remove();
+    });
+  </script>
+{% endblock js %}
