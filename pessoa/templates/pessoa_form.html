@@ -28,8 +28,7 @@
         <h2 class="mb-0">
           <button class="btn btn-link collapsed" type="button">
             <span>
-              <i class="fa fa-chevron-up" v-if="v.v1"></i>
-              <i class="fa fa-chevron-down" v-else></i>
+              <i class="fa" :class="v.v1 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
             </span>
             Pessoa
           </button>
@@ -84,14 +83,13 @@
         <h2 class="mb-0">
           <button class="btn btn-link collapsed" type="button">
             <span>
-              <i class="fa fa-chevron-up" v-if="v.v2"></i>
-              <i class="fa fa-chevron-down" v-else></i>
+              <i class="fa" :class="v.v2 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
             </span>
             Documentos
           </button>
         </h2>
       </div>
-      <div id="collapse1" class="my-collapse collapse" aria-labelledby="heading2" data-parent="#accordionExample">
+      <div id="collapse2" class="my-collapse collapse" aria-labelledby="heading2" data-parent="#accordionExample">
         <div class="card-body">
           <div>
 
@@ -121,8 +119,7 @@
         <h2 class="mb-0">
           <button class="btn btn-link collapsed" type="button">
             <span>
-              <i class="fa fa-chevron-up" v-if="v.v3"></i>
-              <i class="fa fa-chevron-down" v-else></i>
+              <i class="fa" :class="v.v3 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
             </span>
             Endereço
           </button>
@@ -186,8 +183,7 @@
         <h2 class="mb-0">
           <button class="btn btn-link collapsed" type="button">
             <span>
-              <i class="fa fa-chevron-up" v-if="v.v4"></i>
-              <i class="fa fa-chevron-down" v-else></i>
+              <i class="fa" :class="v.v4 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
             </span>
             Fotos
           </button>
@@ -220,8 +216,7 @@
         <h2 class="mb-0">
           <button class="btn btn-link collapsed" type="button">
             <span>
-              <i class="fa fa-chevron-up" v-if="v.v5"></i>
-              <i class="fa fa-chevron-down" v-else></i>
+              <i class="fa" :class="v.v5 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
             </span>
             Tatuagens
           </button>
@@ -254,8 +249,7 @@
         <h2 class="mb-0">
           <button class="btn btn-link collapsed" type="button">
             <span>
-              <i class="fa fa-chevron-up" v-if="v.v6"></i>
-              <i class="fa fa-chevron-down" v-else></i>
+              <i class="fa" :class="v.v6 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
             </span>
             Infrações
           </button>
@@ -315,8 +309,7 @@
         <h2 class="mb-0">
           <button class="btn btn-link collapsed" type="button">
             <span>
-              <i class="fa fa-chevron-up" v-if="v.v7"></i>
-              <i class="fa fa-chevron-down" v-else></i>
+              <i class="fa" :class="v.v7 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
             </span>
             Ocorrências
           </button>
@@ -351,8 +344,7 @@
         <h2 class="mb-0">
           <button class="btn btn-link collapsed" type="button">
             <span>
-              <i class="fa fa-chevron-up" v-if="v.v8"></i>
-              <i class="fa fa-chevron-down" v-else></i>
+              <i class="fa" :class="v.v8 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
             </span>
             Contatos
           </button>
@@ -392,8 +384,7 @@
         <h2 class="mb-0">
           <button class="btn btn-link collapsed" type="button">
             <span>
-              <i class="fa fa-chevron-up" v-if="v.v9"></i>
-              <i class="fa fa-chevron-down" v-else></i>
+              <i class="fa" :class="v.v9 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
             </span>
             Veículos
           </button>

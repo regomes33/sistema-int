@@ -185,34 +185,13 @@ var app = new Vue({
         })
     },
     toggleCollapse(v) {
-      console.log(v);
-      if (v == 1) {
-        this.v1 = !this.v1;
-      }
-      if (v == 2) {
-        this.v2 = !this.v2;
-      }
-      if (v == 3) {
-        this.v3 = !this.v3;
-      }
-      if (v == 4) {
-        this.v4 = !this.v4;
-      }
-      if (v == 5) {
-        this.v5 = !this.v5;
-      }
-      if (v == 6) {
-        this.v6 = !this.v6;
-      }
-      if (v == 7) {
-        this.v7 = !this.v7;
-      }
-      if (v == 8) {
-        this.v8 = !this.v8;
-      }
-      if (v == 9) {
-        this.v9 = !this.v9;
-      }
+      Object.keys(this.v).forEach(item => { 
+        if (item != 'v' + v) {
+          Vue.set(this.v, item, false);
+        }
+      });
+
+      Vue.set(this.v, 'v' + v, !this.v['v' + v]);
     }
   }
 });
