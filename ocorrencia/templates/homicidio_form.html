@@ -21,3 +21,12 @@
   </form>
 </div>
 {% endblock content %}
+
+{% block js %}
+  <script>
+    $('#id_data_do_homicidio').datepicker({
+      uiLibrary: 'bootstrap4',
+      format: 'dd/mm/yyyy',
+    });
+  </script>
+{% endblock js %}
