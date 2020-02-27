@@ -15,6 +15,7 @@ ocorrencia_patterns = [
 infracao_patterns = [
     path('', v.infracoes, name="infracoes"),
     path('add/', v.infracao_create, name="infracao_create"),
+    path('<int:pk>/upate/', v.InfracaoUpdate.as_view(), name="infracao_update"),
 ]
 
 natureza_patterns = [

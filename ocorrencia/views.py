@@ -97,6 +97,12 @@ def infracao_create(request):
     return render(request, template_name, context)
 
 
+class InfracaoUpdate(UpdateView):
+    model = Infracao
+    template_name = 'infracao_form.html'
+    form_class = InfracaoForm
+
+
 def naturezas(request):
     template_name = 'naturezas.html'
     object_list = Natureza.objects.all()

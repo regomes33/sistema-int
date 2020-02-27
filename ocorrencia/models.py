@@ -78,6 +78,9 @@ class Infracao(CreatedBy, TimeStampedModel):
     def __str__(self):
         return f'{self.pk} - {self.pessoa}'
 
+    def get_absolute_url(self):
+        return reverse_lazy('ocorrencia:infracoes')
+
 
 class Ocorrencia(CreatedBy, TimeStampedModel):
     rai = models.IntegerField(null=True, blank=True)

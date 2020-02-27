@@ -38,6 +38,7 @@
         <th>Qualificação</th>
         <th>Arma de fogo</th>
         <th>Status</th>
+        <th>Ações</th>
       </tr>
     </thead>
     <tbody>
@@ -48,6 +49,9 @@
           <td>{{ object.get_qualificacao_display }}</td>
           <td>{{ object.arma }}</td>
           <td>{{ object.get_status_display }}</td>
+          <td>
+            <a class="btn btn-info" href="{% url 'ocorrencia:infracao_update' object.pk %}">Editar</a>
+          </td>
         </tr>
       {% endfor %}
     </tbody>
