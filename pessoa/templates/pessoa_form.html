@@ -36,9 +36,9 @@
       </div>
       <div id="collapse1" class="my-collapse collapse show" aria-labelledby="heading1" data-parent="#accordionExample">
         <div class="card-body">
+          <!-- Pessoa -->
           <div>
 
-              <!-- Pessoa -->
               <div class="form-group">
                 <label for="" class="control-label required">Nome</label>
                 <input id="id_nome" name="nome" v-model="pessoa.nome" class="form-control" required type="text" />
@@ -72,6 +72,72 @@
                 </select>
               </div>
 
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fotos -->
+    <div class="card">
+      <div class="card-header" id="heading4" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4" @click="toggleCollapse(4)">
+        <h2 class="mb-0">
+          <button class="btn btn-link collapsed" type="button">
+            <span>
+              <i class="fa" :class="v.v4 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+            </span>
+            Fotos
+          </button>
+        </h2>
+      </div>
+      <div id="collapse4" class="my-collapse collapse" aria-labelledby="heading4" data-parent="#accordionExample">
+        <div class="card-body">
+          <div>
+
+              <div class="form-row" v-for="foto in fotos">
+
+                <div class="form-group col-md-3">
+                  <label>Foto</label>
+                  <input class="form-control" type="file" @change="processFile" />
+                </div>
+
+              </div> <!-- form-row -->
+
+              <button type="button" class="btn btn-primary" @click="fotoAdd">
+                <i class="fa fa-plus"></i> Adicionar
+              </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tatuagens -->
+    <div class="card">
+      <div class="card-header" id="heading5" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5" @click="toggleCollapse(5)">
+        <h2 class="mb-0">
+          <button class="btn btn-link collapsed" type="button">
+            <span>
+              <i class="fa" :class="v.v5 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+            </span>
+            Tatuagens
+          </button>
+        </h2>
+      </div>
+      <div id="collapse5" class="my-collapse collapse" aria-labelledby="heading5" data-parent="#accordionExample">
+        <div class="card-body">
+          <div>
+
+              <div class="form-row" v-for="tattoo in tattoos">
+
+                <div class="form-group col-md-3">
+                  <label>Tatuagem</label>
+                  <input class="form-control" type="file" @change="processFileTattoo" />
+                </div>
+
+              </div> <!-- form-row -->
+
+              <button type="button" class="btn btn-primary" @click="tattooAdd">
+                <i class="fa fa-plus"></i> Adicionar
+              </button>
           </div>
         </div>
       </div>
@@ -172,72 +238,6 @@
                 <input id="id_country" name="country" v-model="pessoa.country" class="form-control" type="text" />
               </div>
 
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Fotos -->
-    <div class="card">
-      <div class="card-header" id="heading4" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4" @click="toggleCollapse(4)">
-        <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button">
-            <span>
-              <i class="fa" :class="v.v4 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </span>
-            Fotos
-          </button>
-        </h2>
-      </div>
-      <div id="collapse4" class="my-collapse collapse" aria-labelledby="heading4" data-parent="#accordionExample">
-        <div class="card-body">
-          <div>
-
-              <div class="form-row" v-for="foto in fotos">
-
-                <div class="form-group col-md-3">
-                  <label>Foto</label>
-                  <input class="form-control" type="file" @change="processFile" />
-                </div>
-
-              </div> <!-- form-row -->
-
-              <button type="button" class="btn btn-primary" @click="fotoAdd">
-                <i class="fa fa-plus"></i> Adicionar
-              </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Tatuagens -->
-    <div class="card">
-      <div class="card-header" id="heading5" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5" @click="toggleCollapse(5)">
-        <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button">
-            <span>
-              <i class="fa" :class="v.v5 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </span>
-            Tatuagens
-          </button>
-        </h2>
-      </div>
-      <div id="collapse5" class="my-collapse collapse" aria-labelledby="heading5" data-parent="#accordionExample">
-        <div class="card-body">
-          <div>
-
-              <div class="form-row" v-for="tattoo in tattoos">
-
-                <div class="form-group col-md-3">
-                  <label>Tatuagem</label>
-                  <input class="form-control" type="file" @change="processFileTattoo" />
-                </div>
-
-              </div> <!-- form-row -->
-
-              <button type="button" class="btn btn-primary" @click="tattooAdd">
-                <i class="fa fa-plus"></i> Adicionar
-              </button>
           </div>
         </div>
       </div>
