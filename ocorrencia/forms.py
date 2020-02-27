@@ -6,28 +6,36 @@ class OcorrenciaForm(forms.ModelForm):
 
     class Meta:
         model = Ocorrencia
-        fields = '__all__'
+        fields = ('rai', 'data_do_fato', 'descricao')
 
 
 class InfracaoForm(forms.ModelForm):
 
     class Meta:
         model = Infracao
-        fields = '__all__'
+        fields = ('pessoa', 'natureza', 'qualificacao', 'arma', 'status')
 
 
 class NaturezaForm(forms.ModelForm):
 
     class Meta:
         model = Natureza
-        fields = '__all__'
+        fields = ('natureza',)
 
 
 class HomicidioForm(forms.ModelForm):
 
     class Meta:
         model = Homicidio
-        fields = '__all__'
+        fields = (
+            'rai',
+            'data_do_homicidio',
+            'forma',
+            'area_upm',
+            'vitima',
+            'instrumento',
+            'motivacao',
+        )
 
 
 class PessoaOcorrenciaForm(forms.ModelForm):

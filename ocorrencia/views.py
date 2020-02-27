@@ -41,7 +41,9 @@ def ocorrencia_create(request):
 
     if request.method == 'POST':
         if form.is_valid():
-            form.save()
+            new_form = form.save(commit=False)
+            new_form.created_by = request.user
+            new_form.save()
             return HttpResponseRedirect(reverse('ocorrencia:ocorrencias'))
 
     context = {
@@ -75,7 +77,9 @@ def infracao_create(request):
 
     if request.method == 'POST':
         if form.is_valid():
-            form.save()
+            new_form = form.save(commit=False)
+            new_form.created_by = request.user
+            new_form.save()
             return HttpResponseRedirect(reverse('ocorrencia:infracoes'))
 
     context = {
@@ -141,7 +145,9 @@ def homicidio_create(request):
 
     if request.method == 'POST':
         if form.is_valid():
-            form.save()
+            new_form = form.save(commit=False)
+            new_form.created_by = request.user
+            new_form.save()
             return HttpResponseRedirect(reverse('ocorrencia:homicidios'))
 
     context = {
