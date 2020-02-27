@@ -37,7 +37,7 @@ class PessoaContatoInline(admin.TabularInline):
 
 class ComparsaInline(admin.TabularInline):
     model = Comparsa
-    fields = ('nome', 'rg', 'cpf', 'cnh')
+    # fields = ('nome', 'rg', 'cpf', 'cnh')
     extra = 0
 
 
@@ -72,7 +72,7 @@ class PessoaContatoAdmin(admin.ModelAdmin):
 @admin.register(Comparsa)
 class ComparsaAdmin(admin.ModelAdmin):
     list_display = ('__str__',)
-    search_fields = ('nome_comparsa',)
+    # search_fields = ('nome',)
 
 
 @admin.register(Tatuagem)

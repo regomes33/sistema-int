@@ -16,9 +16,7 @@ from pessoa.models import Comparsa
 from pessoa.models import Faccao
 from pessoa.models import Pessoa
 from pessoa.models import PessoaContato
-from pessoa.models import PessoaFoto
 from pessoa.models import PessoaVeiculo
-from pessoa.models import Tatuagem
 from veiculo.models import Cor
 from veiculo.models import Modelo
 from veiculo.models import Veiculo
