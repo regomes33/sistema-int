@@ -2,6 +2,7 @@ from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.views.generic import UpdateView
 from .forms import VeiculoForm, ModeloForm
 from .models import Veiculo, Modelo
 
@@ -40,6 +41,12 @@ def veiculo_create(request):
         'url': reverse('veiculo:veiculos'),
     }
     return render(request, template_name, context)
+
+
+class VeiculoUpdate(UpdateView):
+    model = Veiculo
+    template_name = 'veiculo_form.html'
+    form_class = VeiculoForm
 
 
 def modelos(request):

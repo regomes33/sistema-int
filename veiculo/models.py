@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse_lazy
 from core.models import TimeStampedModel
 
 
@@ -22,6 +23,9 @@ class Veiculo(TimeStampedModel):
 
     def __str__(self):
         return f'{self.placa} - {self.modelo} - {self.cor}'
+
+    def get_absolute_url(self):
+        return reverse_lazy('veiculo:veiculos')
 
     def to_dict(self):
         return {

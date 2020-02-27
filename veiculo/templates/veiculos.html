@@ -37,6 +37,7 @@
         <th>Placa</th>
         <th>Modelo</th>
         <th>Cor</th>
+        <th>Ações</th>
       </tr>
     </thead>
     <tbody>
@@ -45,6 +46,9 @@
           <td>{{ object.placa }}</td>
           <td>{{ object.modelo }}</td>
           <td>{{ object.cor }}</td>
+          <td>
+            <a class="btn btn-info" href="{% url 'veiculo:veiculo_update' object.pk %}">Editar</a>
+          </td>
         </tr>
       {% endfor %}
     </tbody>
