@@ -135,6 +135,12 @@ def natureza_create(request):
     return render(request, template_name, context)
 
 
+class NaturezaUpdate(UpdateView):
+    model = Natureza
+    template_name = 'natureza_form.html'
+    form_class = NaturezaForm
+
+
 def homicidios(request):
     template_name = 'homicidios.html'
     object_list = Homicidio.objects.all()

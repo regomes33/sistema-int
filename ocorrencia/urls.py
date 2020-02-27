@@ -21,6 +21,7 @@ infracao_patterns = [
 natureza_patterns = [
     path('', v.naturezas, name="naturezas"),
     path('add/', v.natureza_create, name="natureza_create"),
+    path('<int:pk>/upate/', v.NaturezaUpdate.as_view(), name="natureza_update"),
 ]
 
 homicidio_patterns = [

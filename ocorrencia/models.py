@@ -16,6 +16,9 @@ class Natureza(models.Model):
     def __str__(self):
         return self.natureza
 
+    def get_absolute_url(self):
+        return reverse_lazy('ocorrencia:naturezas')
+
     def to_dict(self):
         return {
             'value': self.pk,
