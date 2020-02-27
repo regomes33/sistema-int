@@ -51,6 +51,15 @@
           <td>{{ object.district }}</td>
           <td>{{ object.city }}</td>
         </tr>
+        <tr>
+          {% for photo in object.foto_set.all %}
+            {% if photo.foto %}
+              <td>
+                <img src="{{ photo.foto.url }}" width="100px">
+              </td>
+            {% endif %}
+          {% endfor %}
+        </tr>
       {% endfor %}
     </tbody>
   </table>
