@@ -21,6 +21,17 @@ def pessoa_add(request):
     # Adiciona Pessoa
     pessoa_data = json.loads(request.POST.get('pessoa'))
     form = PessoaForm(pessoa_data)
+
+    cpf = form.data.get('cpf')
+    if cpf:
+        cpf_exists = Pessoa.objects.filter(cpf=cpf)
+        if cpf_exists:
+            data = {
+                'message': 'CPF já cadastrado!',
+                'status_code': 900
+            }
+            return JsonResponse(data)
+
     created_by = request.user
     if form.is_valid():
         pessoa_post = form.save(commit=False)

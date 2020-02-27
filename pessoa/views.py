@@ -50,13 +50,6 @@ def pessoa_create(request):
     return render(request, template_name, context)
 
 
-# def validate_cpf(request):
-#     cpf = request.GET.get('cpf', None)
-#     data = {
-#         'is_taken': Pessoa.objects.filter(cpf__iexact=cpf).exists()
-#     }
-#     return JsonResponse(data)
-
 # class Render:
 
 #     @staticmethod

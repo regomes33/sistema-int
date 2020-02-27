@@ -118,6 +118,28 @@ var app = new Vue({
 
   },
   methods: {
+    notifyError(message) {
+      $.notify({
+        message: message
+      }, {
+        element: 'body',
+        type: 'error',
+        allow_dismiss: true,
+        newest_on_top: true,
+        placement: {
+          align: 'right'
+        },
+        offset: 20,
+        spacing: 10,
+        z_index: 9999,
+        delay: 5000,
+        timer: 1300,
+        animate: {
+          enter: 'animated fadeIn',
+          exit: 'animated fadeOutDown'
+        }
+      });
+    },
     fotoAdd() {
       this.fotos.push({
         'foto': '',
@@ -181,6 +203,10 @@ var app = new Vue({
           }
         })
         .then(response => {
+          if (response.data.status_code == 900) {
+            this.notifyError(response.data.message)
+            return
+          }
           location.href = endpoint + 'pessoa/'
         })
     },
