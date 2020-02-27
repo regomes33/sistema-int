@@ -79,3 +79,9 @@ def modelo_create(request):
         'url': reverse('veiculo:modelos'),
     }
     return render(request, template_name, context)
+
+
+class ModeloUpdate(UpdateView):
+    model = Modelo
+    template_name = 'modelo_form.html'
+    form_class = ModeloForm

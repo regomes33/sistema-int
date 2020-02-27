@@ -45,6 +45,9 @@ class Modelo(models.Model):
     def __str__(self):
         return self.modelo
 
+    def get_absolute_url(self):
+        return reverse_lazy('veiculo:modelos')
+
 
 class Cor(models.Model):
     cor = models.CharField(max_length=50, unique=True)

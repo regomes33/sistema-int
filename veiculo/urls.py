@@ -14,6 +14,7 @@ veiculo_patterns = [
 modelo_patterns = [
     path('', v.modelos, name="modelos"),
     path('add/', v.modelo_create, name="modelo_create"),
+    path('<int:pk>/upate/', v.ModeloUpdate.as_view(), name="modelo_update"),
 ]
 
 

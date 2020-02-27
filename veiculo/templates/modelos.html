@@ -34,12 +34,16 @@
     <thead>
       <tr>
         <th>Modelo</th>
+        <th>Ações</th>
       </tr>
     </thead>
     <tbody>
       {% for object in object_list %}
         <tr>
           <td>{{ object }}</td>
+          <td>
+            <a class="btn btn-info" href="{% url 'veiculo:modelo_update' object.pk %}">Editar</a>
+          </td>
         </tr>
       {% endfor %}
     </tbody>
