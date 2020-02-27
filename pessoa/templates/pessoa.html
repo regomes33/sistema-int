@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load easy_mask %}
 
 {% block title %}| Pessoa{%endblock%}
 
@@ -37,7 +38,7 @@
                   <li class="list-group-item">
                     <h5>Documentos</h5>
                     <p class="card-text">RG: {{ object.rg }}</p>
-                    <p class="card-text">CPF: {{ object.cpf }}</p>
+                    <p class="card-text">CPF: {{ object.cpf|cpf_mask }}</p>
                     <p class="card-text">CNH: {{ object.cnh }}</p>
                   </li>
                   <li class="list-group-item">
