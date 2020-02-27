@@ -169,3 +169,9 @@ def homicidio_create(request):
         'url': reverse('ocorrencia:homicidios'),
     }
     return render(request, template_name, context)
+
+
+class HomicidioUpdate(UpdateView):
+    model = Homicidio
+    template_name = 'homicidio_form.html'
+    form_class = HomicidioForm

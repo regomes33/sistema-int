@@ -209,3 +209,6 @@ class Homicidio(Address, CreatedBy, TimeStampedModel):
 
     def __str__(self):
         return str(self.rai)
+
+    def get_absolute_url(self):
+        return reverse_lazy('ocorrencia:homicidios')

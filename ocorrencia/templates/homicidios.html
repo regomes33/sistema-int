@@ -41,6 +41,7 @@
         <th>Vítima</th>
         <th>Instrumento</th>
         <th>Motivação</th>
+        <th>Ações</th>
       </tr>
     </thead>
     <tbody>
@@ -54,6 +55,9 @@
           <td>{{ object.vitima }}</td>
           <td>{{ object.instrumento }}</td>
           <td>{{ object.motivacao }}</td>
+          <td>
+            <a class="btn btn-info" href="{% url 'ocorrencia:homicidio_update' object.pk %}">Editar</a>
+          </td>
         </tr>
       {% endfor %}
     </tbody>

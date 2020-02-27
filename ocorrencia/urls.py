@@ -26,6 +26,7 @@ natureza_patterns = [
 homicidio_patterns = [
     path('', v.homicidios, name="homicidios"),
     path('add/', v.homicidio_create, name="homicidio_create"),
+    path('<int:pk>/upate/', v.HomicidioUpdate.as_view(), name="homicidio_update"),
 ]
 
 urlpatterns = [
