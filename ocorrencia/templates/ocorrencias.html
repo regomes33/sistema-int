@@ -36,6 +36,7 @@
         <th>RAI</th>
         <th>Data do fato</th>
         <th>Descrição</th>
+        <th>Ações</th>
       </tr>
     </thead>
     <tbody>
@@ -46,6 +47,9 @@
           </td>
           <td>{{ object.data_do_fato }}</td>
           <td>{{ object.descricao }}</td>
+          <td>
+            <a class="btn btn-info" href="{% url 'ocorrencia:ocorrencia_update' object.pk %}">Editar</a>
+          </td>
         </tr>
       {% endfor %}
     </tbody>

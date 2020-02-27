@@ -9,6 +9,7 @@ ocorrencia_patterns = [
     path('', v.ocorrencias, name="ocorrencias"),
     path('<int:pk>/', v.ocorrencia, name="ocorrencia"),
     path('add/', v.ocorrencia_create, name="ocorrencia_create"),
+    path('<int:pk>/upate/', v.OcorrenciaUpdate.as_view(), name="ocorrencia_update"),
 ]
 
 infracao_patterns = [

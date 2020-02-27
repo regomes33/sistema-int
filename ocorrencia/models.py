@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse_lazy
 from core.models import TimeStampedModel, CreatedBy, Address
 from pessoa.models import Pessoa, Veiculo
 from utils.data import QUALIFICACAO, STATUS
@@ -90,6 +91,9 @@ class Ocorrencia(CreatedBy, TimeStampedModel):
 
     def __str__(self):
         return str(self.rai)
+
+    def get_absolute_url(self):
+        return reverse_lazy('ocorrencia:ocorrencia', kwargs={'pk': self.pk})
 
     def to_dict(self):
         return {

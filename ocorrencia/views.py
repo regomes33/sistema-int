@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.views.generic import UpdateView
 from django.urls import reverse
 from .forms import OcorrenciaForm, InfracaoForm, NaturezaForm, HomicidioForm
 from .models import Ocorrencia, Infracao, Natureza, Homicidio
@@ -52,6 +53,12 @@ def ocorrencia_create(request):
         'url': reverse('ocorrencia:ocorrencias'),
     }
     return render(request, template_name, context)
+
+
+class OcorrenciaUpdate(UpdateView):
+    model = Ocorrencia
+    template_name = 'ocorrencia_form.html'
+    form_class = OcorrenciaForm
 
 
 def infracoes(request):
