@@ -31,6 +31,14 @@ class Pessoa(TimeStampedModel, CreatedBy, Address, Document):
     def get_address_complement(self):
         return ' - '.join(filter(None, [self.district, self.city, self.uf]))
 
+    def get_first_photo(self):
+        '''
+        Retorna somente a primeira foto.
+        '''
+        photos = self.foto_set.all()
+        if photos:
+            return photos[0]
+
     def to_dict(self):
         # document_dict = Document.to_dict_base(self)
         # address_dict = Address.to_dict_base(self)

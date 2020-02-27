@@ -34,6 +34,7 @@
     <thead>
       <tr>
         <th>Nome completo</th>
+        <th>Foto</th>
         <th>Apelido</th>
         <th>Facção</th>
         <th>Bairro</th>
@@ -46,19 +47,15 @@
           <td>
             <a href="{% url 'pessoa:pessoa' object.pk %}">{{ object }}</a>
           </td>
+          <td>
+            {% if object.get_first_photo %}
+              <img src="{{ object.get_first_photo.foto.url }}" width="100px">
+            {% endif %}
+          </td>
           <td>{{ object.apelido }}</td>
           <td>{{ object.faccao }}</td>
           <td>{{ object.district }}</td>
           <td>{{ object.city }}</td>
-        </tr>
-        <tr>
-          {% for photo in object.foto_set.all %}
-            {% if photo.foto %}
-              <td>
-                <img src="{{ photo.foto.url }}" width="100px">
-              </td>
-            {% endif %}
-          {% endfor %}
         </tr>
       {% endfor %}
     </tbody>
