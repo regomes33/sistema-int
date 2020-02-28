@@ -74,9 +74,9 @@
                   {% for comparsa in object.comparsa_set.all %}
                   <p class="card-text">{{ comparsa }}</p>
                   <ul class="list-group list-group-flush mb-4">
-                    <li class="list-group-item">{{ comparsa.rg }}</li>
-                    <li class="list-group-item">{{ comparsa.cpf }}</li>
-                    <li class="list-group-item">{{ comparsa.cnh }}</li>
+                    <li class="list-group-item">RG: {{ comparsa.rg }}</li>
+                    <li class="list-group-item">CPF: {{ comparsa.cpf }}</li>
+                    <li class="list-group-item">CNH: {{ comparsa.cnh }}</li>
                   </ul>
                   {% endfor %}
                 </div>

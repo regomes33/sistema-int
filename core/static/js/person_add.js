@@ -58,6 +58,12 @@ var app = new Vue({
       'tipo': '',
       'telefone': '',
     }],
+    comparsas: [{
+      'nome': '',
+      'cpf': '',
+      'rg': '',
+      'cnh': '',
+    }],
     v: [
       { 'v1': false },
       { 'v2': false },
@@ -68,6 +74,7 @@ var app = new Vue({
       { 'v7': false },
       { 'v8': false },
       { 'v9': false },
+      { 'v10': false },
     ]
   },
   created() {
@@ -169,6 +176,14 @@ var app = new Vue({
         'telefone': '',
       })
     },
+    comparsaAdd() {
+      this.comparsas.push({
+        'nome': '',
+        'cpf': '',
+        'rg': '',
+        'cnh': '',
+      })
+    },
     veiculoAdd() {
       this.veiculos.push({
         'veiculo': '',
@@ -195,6 +210,7 @@ var app = new Vue({
       bodyFormData.append('infracoes', JSON.stringify(this.infracoes));
       bodyFormData.append('ocorrencias', JSON.stringify(this.ocorrencias));
       bodyFormData.append('contatos', JSON.stringify(this.contatos));
+      bodyFormData.append('comparsas', JSON.stringify(this.comparsas));
       bodyFormData.append('veiculos', JSON.stringify(this.veiculos));
 
       axios.post(endpoint + 'api/pessoas/add/', bodyFormData, {

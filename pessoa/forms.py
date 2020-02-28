@@ -1,5 +1,5 @@
 from django import forms
-from .models import Pessoa, PessoaContato, PessoaVeiculo
+from .models import Pessoa, Comparsa, PessoaContato, PessoaVeiculo
 
 
 class PessoaForm(forms.ModelForm):
@@ -32,6 +32,13 @@ class PessoaContatoForm(forms.ModelForm):
     class Meta:
         model = PessoaContato
         fields = ('pessoa', 'tipo', 'telefone')
+
+
+class PessoaComparsaForm(forms.ModelForm):
+
+    class Meta:
+        model = Comparsa
+        fields = ('pessoa', 'nome', 'cpf', 'rg', 'cnh')
 
 
 class PessoaVeiculoForm(forms.ModelForm):

@@ -110,7 +110,7 @@ class PessoaContato(TimeStampedModel):
 
 
 class Comparsa(TimeStampedModel, Document):
-    pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
+    pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, blank=True)
     nome = models.CharField(
         max_length=100,
         null=True,

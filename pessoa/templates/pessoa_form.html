@@ -378,7 +378,7 @@
       </div>
     </div>
 
-    <!-- Veículos -->
+    <!-- Comparsas -->
     <div class="card">
       <div class="card-header" id="heading9" data-toggle="collapse" data-target="#collapse9" aria-expanded="false" aria-controls="collapse9" @click="toggleCollapse(9)">
         <h2 class="mb-0">
@@ -386,11 +386,59 @@
             <span>
               <i class="fa" :class="v.v9 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
             </span>
-            Veículos
+            Comparsas
           </button>
         </h2>
       </div>
       <div id="collapse9" class="my-collapse collapse" aria-labelledby="heading9" data-parent="#accordionExample">
+        <div class="card-body">
+          <div>
+
+              <div class="form-row" v-for="comparsa in comparsas">
+
+                <div class="form-group col-md-3">
+                  <label class="control-label">Nome</label>
+                  <input v-model="comparsa.nome" class="form-control" type="text" />
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label class="control-label">CPF</label>
+                  <input v-model="comparsa.cpf" class="form-control" type="text" />
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label class="control-label">RG</label>
+                  <input v-model="comparsa.rg" class="form-control" type="text" />
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label class="control-label">CNH</label>
+                  <input v-model="comparsa.cnh" class="form-control" type="text" />
+                </div>
+
+              </div> <!-- form-row -->
+
+              <button type="button" class="btn btn-primary" @click="comparsaAdd">
+                <i class="fa fa-plus"></i> Adicionar
+              </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Veículos -->
+    <div class="card">
+      <div class="card-header" id="heading10" data-toggle="collapse" data-target="#collapse10" aria-expanded="false" aria-controls="collapse10" @click="toggleCollapse(10)">
+        <h2 class="mb-0">
+          <button class="btn btn-link collapsed" type="button">
+            <span>
+              <i class="fa" :class="v.v10 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+            </span>
+            Veículos
+          </button>
+        </h2>
+      </div>
+      <div id="collapse10" class="my-collapse collapse" aria-labelledby="heading10" data-parent="#accordionExample">
         <div class="card-body">
           <div>
               <div class="form-row" v-for="veiculo in veiculos">

@@ -3,7 +3,8 @@ from pprint import pprint
 from django.http import JsonResponse
 from localflavor.br.br_states import STATE_CHOICES
 from pessoa.models import Pessoa, Faccao, Foto, Tatuagem
-from pessoa.forms import PessoaForm, PessoaContatoForm, PessoaVeiculoForm
+from pessoa.forms import PessoaForm, PessoaContatoForm, PessoaComparsaForm
+from pessoa.forms import PessoaVeiculoForm
 from ocorrencia.models import Natureza, Arma, Ocorrencia
 from ocorrencia.forms import InfracaoForm, PessoaOcorrenciaForm
 from veiculo.models import Veiculo
@@ -89,6 +90,17 @@ def pessoa_add(request):
                         contato_post = contato_form.save(commit=False)
                         contato_post.pessoa = pessoa_post
                         contato_post.save()
+
+        # Adiciona Comparsas
+        comparsas_data = json.loads(request.POST.get('comparsas'))
+        if comparsas_data:
+            for comparsa in comparsas_data:
+                if comparsa.get('nome'):
+                    comparsa_form = PessoaComparsaForm(comparsa)
+                    if comparsa_form.is_valid():
+                        comparsa_post = comparsa_form.save(commit=False)
+                        comparsa_post.pessoa = pessoa_post
+                        comparsa_post.save()
 
         # Adiciona Ocorrências
         ocorrencias_data = json.loads(request.POST.get('ocorrencias'))
