@@ -1,0 +1,22 @@
+{
+  "name": "sistema-int",
+  "version": "1.0.0",
+  "description": "* Clone esse repositório. * Crie um virtualenv com Python 3. * Ative o virtualenv. * Instale as dependências. * Rode as migrações.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/regomes33/sistema-int.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/regomes33/sistema-int/issues"
+  },
+  "homepage": "https://github.com/regomes33/sistema-int#readme",
+  "devDependencies": {
+    "cypress": "^4.0.2"
+  }
+}

@@ -39,26 +39,36 @@ var app = new Vue({
     tattoos: [{
       'tattoo': '',
     }],
+    infracao_id: 1,
     infracoes: [{
+      'id': 1,
       'natureza': '',
       'qualificacao': '',
       'arma': '',
       'status': '',
     }],
     carros: [],
+    veiculo_id: 1,
     veiculos: [{
+      'id': 1,
       'veiculo': ''
     }],
     ocorrencias_list: [],
+    ocorrencia_id: 1,
     ocorrencias: [{
+      'id': 1,
       'ocorrencia': ''
     }],
     tipos: [],
+    contato_id: 1,
     contatos: [{
+      'id': 1,
       'tipo': '',
       'telefone': '',
     }],
+    comparsa_id: 1,
     comparsas: [{
+      'id': 1,
       'nome': '',
       'cpf': '',
       'rg': '',
@@ -158,7 +168,9 @@ var app = new Vue({
       })
     },
     infracaoAdd() {
+      this.infracao_id++;
       this.infracoes.push({
+        'id': this.infracao_id,
         'natureza': '',
         'qualificacao': '',
         'arma': '',
@@ -166,18 +178,24 @@ var app = new Vue({
       })
     },
     ocorrenciaAdd() {
+      this.ocorrencia_id++;
       this.ocorrencias.push({
+        'id': this.ocorrencia_id,
         'ocorrencia': '',
       })
     },
     contatoAdd() {
+      this.contato_id++;
       this.contatos.push({
+        'id': this.contato_id,
         'tipo': '',
         'telefone': '',
       })
     },
     comparsaAdd() {
+      this.comparsa_id++;
       this.comparsas.push({
+        'id': this.comparsa_id,
         'nome': '',
         'cpf': '',
         'rg': '',
@@ -185,7 +203,9 @@ var app = new Vue({
       })
     },
     veiculoAdd() {
+      this.veiculo_id++;
       this.veiculos.push({
+        'id': this.veiculo_id,
         'veiculo': '',
       })
     },

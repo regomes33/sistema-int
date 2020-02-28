@@ -107,3 +107,4 @@ venv.bak/
 .idea
 .settings
 .vscode
+node_modules

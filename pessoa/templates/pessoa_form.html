@@ -229,7 +229,7 @@
               </div>
 
               <div class="form-group">
-                <label for="id_cep" class="control-label">CEP</label>
+                <label for="id_cep" class="control-label">CEP (sem pontuação)</label>
                 <input id="id_cep" name="cep" v-model="pessoa.cep" class="form-control" type="text" />
               </div>
 
@@ -259,11 +259,11 @@
         <div class="card-body">
           <div>
 
-              <div class="form-row" v-for="infracao in infracoes">
+              <div class="form-row" v-for="infracao in infracoes" :key="infracao.id">
 
                 <div class="form-group col-md-3">
                   <label for="natureza">Natureza</label>
-                  <select id="natureza" class="form-control" v-model="infracao.natureza">
+                  <select :id="'natureza'+infracao.id" class="form-control" v-model="infracao.natureza">
                     <option selected value="">---</option>
                     <option v-for="natureza in naturezas" :key="natureza.value" :value="natureza.value">${ natureza.text }</option>
                   </select>
@@ -271,7 +271,7 @@
 
                 <div class="form-group col-md-3">
                   <label for="qualificacao">Qualificação</label>
-                  <select id="qualificacao" class="form-control" v-model="infracao.qualificacao">
+                  <select :id="'qualificacao'+infracao.id" class="form-control" v-model="infracao.qualificacao">
                     <option selected value="">---</option>
                     <option v-for="qualificacao in qualificacoes" :key="qualificacao.value" :value="qualificacao.value">${ qualificacao.text }</option>
                   </select>
@@ -279,7 +279,7 @@
 
                 <div class="form-group col-md-3">
                   <label for="arma">Arma</label>
-                  <select id="arma" class="form-control" v-model="infracao.arma">
+                  <select :id="'arma'+infracao.id" class="form-control" v-model="infracao.arma">
                     <option selected value="">---</option>
                     <option v-for="arma in armas" :key="arma.value" :value="arma.value">${ arma.text }</option>
                   </select>
@@ -287,7 +287,7 @@
 
                 <div class="form-group col-md-3">
                   <label for="status">Status</label>
-                  <select id="status" class="form-control" v-model="infracao.status">
+                  <select :id="'status'+infracao.id" class="form-control" v-model="infracao.status">
                     <option selected value="">---</option>
                     <option v-for="status in status" :key="status.value" :value="status.value">${ status.text }</option>
                   </select>
@@ -295,7 +295,7 @@
 
               </div> <!-- form-row -->
 
-              <button type="button" class="btn btn-primary" @click="infracaoAdd">
+              <button id="btnInfracao" type="button" class="btn btn-primary" @click="infracaoAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
           </div>
@@ -318,11 +318,11 @@
       <div id="collapse7" class="my-collapse collapse" aria-labelledby="heading7" data-parent="#accordionExample">
         <div class="card-body">
           <div>
-              <div class="form-row" v-for="ocorrencia in ocorrencias">
+              <div class="form-row" v-for="ocorrencia in ocorrencias" :key="ocorrencia.id">
 
                 <div class="form-group col-md-3">
                   <label for="ocorrencia">Ocorrência</label>
-                  <select id="ocorrencia" class="form-control" v-model="ocorrencia.ocorrencia">
+                  <select :id="'ocorrencia'+ocorrencia.id" class="form-control" v-model="ocorrencia.ocorrencia">
                     <option selected value="">---</option>
                     <option v-for="ocorrencia in ocorrencias_list" :key="ocorrencia.value" :value="ocorrencia.value">${ ocorrencia.text }</option>
                   </select>
@@ -330,7 +330,7 @@
 
               </div> <!-- form-row -->
 
-              <button type="button" class="btn btn-primary" @click="ocorrenciaAdd">
+              <button id="btnOcorrencia" type="button" class="btn btn-primary" @click="ocorrenciaAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
           </div>
@@ -354,23 +354,23 @@
         <div class="card-body">
           <div>
 
-              <div class="form-row" v-for="contato in contatos">
+              <div class="form-row" v-for="contato in contatos" :key="contato.id">
 
                 <div class="form-group col-md-3">
-                  <label for="tipo">Tipo</label>
-                  <select id="tipo" class="form-control" v-model="contato.tipo">
+                  <label for="tipo">Tipo - ${ contato.id }</label>
+                  <select :id="'tipo'+contato.id" class="form-control" v-model="contato.tipo">
                     <option v-for="tipo in tipos" :key="tipo.value" :value="tipo.value">${ tipo.text }</option>
                   </select>
                 </div>
 
                 <div class="form-group col-md-3">
                   <label class="control-label">Telefone</label>
-                  <input v-model="contato.telefone" class="form-control" type="text" />
+                  <input :id="'telefone'+contato.id" v-model="contato.telefone" class="form-control" type="text" />
                 </div>
 
               </div> <!-- form-row -->
 
-              <button type="button" class="btn btn-primary" @click="contatoAdd">
+              <button id="btnContato" type="button" class="btn btn-primary" @click="contatoAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
           </div>
@@ -394,31 +394,31 @@
         <div class="card-body">
           <div>
 
-              <div class="form-row" v-for="comparsa in comparsas">
+              <div class="form-row" v-for="comparsa in comparsas" :key="comparsa.id">
 
                 <div class="form-group col-md-3">
                   <label class="control-label">Nome</label>
-                  <input v-model="comparsa.nome" class="form-control" type="text" />
+                  <input :id="'comparsa_nome'+comparsa.id" v-model="comparsa.nome" class="form-control" type="text" />
                 </div>
 
                 <div class="form-group col-md-3">
                   <label class="control-label">CPF</label>
-                  <input v-model="comparsa.cpf" class="form-control" type="text" />
+                  <input :id="'comparsa_cpf'+comparsa.id" v-model="comparsa.cpf" class="form-control" type="text" />
                 </div>
 
                 <div class="form-group col-md-3">
                   <label class="control-label">RG</label>
-                  <input v-model="comparsa.rg" class="form-control" type="text" />
+                  <input :id="'comparsa_rg'+comparsa.id" v-model="comparsa.rg" class="form-control" type="text" />
                 </div>
 
                 <div class="form-group col-md-3">
                   <label class="control-label">CNH</label>
-                  <input v-model="comparsa.cnh" class="form-control" type="text" />
+                  <input :id="'comparsa_cnh'+comparsa.id" v-model="comparsa.cnh" class="form-control" type="text" />
                 </div>
 
               </div> <!-- form-row -->
 
-              <button type="button" class="btn btn-primary" @click="comparsaAdd">
+              <button id="btnComparsa" type="button" class="btn btn-primary" @click="comparsaAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
           </div>
@@ -441,11 +441,11 @@
       <div id="collapse10" class="my-collapse collapse" aria-labelledby="heading10" data-parent="#accordionExample">
         <div class="card-body">
           <div>
-              <div class="form-row" v-for="veiculo in veiculos">
+              <div class="form-row" v-for="veiculo in veiculos" :key="veiculo.id">
 
                 <div class="form-group col-md-4">
                   <label for="veiculo">Veículo</label>
-                  <select id="veiculo" class="form-control" v-model="veiculo.veiculo">
+                  <select :id="'veiculo'+veiculo.id" class="form-control" v-model="veiculo.veiculo">
                     <option selected value="">---</option>
                     <option v-for="carro in carros" :key="carro.value" :value="carro.value">${ carro.text }</option>
                   </select>
@@ -453,7 +453,7 @@
 
               </div> <!-- form-row -->
 
-              <button type="button" class="btn btn-primary" @click="veiculoAdd">
+              <button id="btnVeiculo" type="button" class="btn btn-primary" @click="veiculoAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
           </div>
