@@ -20,7 +20,7 @@ describe('Input form', () => {
     cy.get('.btn-primary').click()
     cy.wait(500)
 
-    cy.get('input[name="nome"]').type('Cicero')
+    cy.get('input[name="nome"]').type('João')
     cy.get('input[name="sobrenome"]').type('Santos')
     cy.get('input[name="apelido"]').type('Cidão')
     cy.get('input[name="mae"]').type('Ivonete Santos')
@@ -29,7 +29,7 @@ describe('Input form', () => {
     cy.wait(500)
 
     cy.get('#heading2').click()
-    rand_cpf = Math.floor(Math.random() * 10000000000000)
+    rand_cpf = Math.floor(Math.random() * 10000000000)
     cy.get('#id_cpf').type(rand_cpf)
     rand_rg = Math.floor(Math.random() * 100000000000)
     cy.get('#id_rg').type(rand_rg)
@@ -77,7 +77,7 @@ describe('Input form', () => {
 
     cy.get('#heading9').click()
     cy.get('#comparsa_nome1').type('André')
-    rand_cpf = Math.floor(Math.random() * 10000000000000)
+    rand_cpf = Math.floor(Math.random() * 10000000000)
     cy.get('#comparsa_cpf1').type(rand_cpf)
     rand_rg = Math.floor(Math.random() * 100000000000)
     cy.get('#comparsa_rg1').type(rand_rg)
@@ -85,7 +85,7 @@ describe('Input form', () => {
     cy.get('#comparsa_cnh1').type(rand_cnh)
     cy.get('#btnComparsa').click()
     cy.get('#comparsa_nome2').type('Pedro')
-    rand_cpf = Math.floor(Math.random() * 10000000000000)
+    rand_cpf = Math.floor(Math.random() * 10000000000)
     cy.get('#comparsa_cpf2').type(rand_cpf)
     rand_rg = Math.floor(Math.random() * 100000000000)
     cy.get('#comparsa_rg2').type(rand_rg)
