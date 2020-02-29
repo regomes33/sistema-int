@@ -1,5 +1,5 @@
+import re
 import json
-from pprint import pprint
 from django.http import JsonResponse
 from localflavor.br.br_states import STATE_CHOICES
 from pessoa.models import Pessoa, Faccao, Foto, Tatuagem
@@ -18,19 +18,37 @@ def pessoas(request):
     return JsonResponse(response)
 
 
+def cpf_validate(cpf, data):
+    # Retorna somente os números do CPF
+    if not cpf.isdigit():
+        cpf = re.sub("[-\.]", "", cpf)
+    # Verifica se o CPF contém exatamente 11 digitos.
+    if len(cpf) != 11:
+        data = {
+            'message': 'CPF deve conter 11 dígitos!',
+            'status_code': 900
+        }
+    # Verifica se CPF já existe.
+    cpf_exists = Pessoa.objects.filter(cpf=cpf)
+    if cpf_exists:
+        data = {
+            'message': 'CPF já cadastrado!',
+            'status_code': 900
+        }
+    return cpf, data
+
+
 def pessoa_add(request):
     # Adiciona Pessoa
     pessoa_data = json.loads(request.POST.get('pessoa'))
     form = PessoaForm(pessoa_data)
 
-    cpf = form.data.get('cpf')
-    if cpf:
-        cpf_exists = Pessoa.objects.filter(cpf=cpf)
-        if cpf_exists:
-            data = {
-                'message': 'CPF já cadastrado!',
-                'status_code': 900
-            }
+    data = {}
+
+    _cpf = form.data.get('cpf')
+    if _cpf:
+        cpf, data = cpf_validate(_cpf, data)
+        if data.get('status_code') == 900:
             return JsonResponse(data)
 
     created_by = request.user
@@ -41,6 +59,7 @@ def pessoa_add(request):
         # retorna dados serializados
         data = form.data
         data['pk'] = pessoa_post.pk
+        data['status_code'] = 200
 
         files = request.FILES.items()
         photos, tattoos = [], []
@@ -112,8 +131,12 @@ def pessoa_add(request):
                         ocorrencia_post = ocorrencia_form.save(commit=False)
                         ocorrencia_post.pessoa = pessoa_post
                         ocorrencia_post.save()
+    else:
+        # data = {'message': 'Erro'}
+        data = form.errors
+        data['status_code'] = 500
 
-        return JsonResponse(data)
+    return JsonResponse(data)
 
 
 def faccoes(request):

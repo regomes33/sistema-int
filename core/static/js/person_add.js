@@ -135,8 +135,9 @@ var app = new Vue({
 
   },
   methods: {
-    notifyError(message) {
+    notifyError(title, message) {
       $.notify({
+        title: title,
         message: message
       }, {
         element: 'body',
@@ -239,10 +240,19 @@ var app = new Vue({
           }
         })
         .then(response => {
-          if (response.data.status_code == 900) {
-            this.notifyError(response.data.message)
+          if (response.data.status_code == 500) {
+            Object.keys(response.data).forEach(key => {
+              if (key == 'status_code') return;
+              this.notifyError(key, response.data[key][0]);
+            });
             return
           }
+
+          if (response.data.status_code == 900) {
+            this.notifyError('Erro', response.data.message)
+            return
+          }
+
           location.href = endpoint + 'pessoa/'
         })
     },
