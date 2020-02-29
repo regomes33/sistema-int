@@ -87,7 +87,7 @@ class Address(models.Model):
 class Document(models.Model):
     cpf = models.CharField(
         'CPF',
-        max_length=14,
+        max_length=11,
         unique=True,
         null=True,
         blank=True
