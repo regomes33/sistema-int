@@ -8,5 +8,5 @@ app_name = 'core'
 urlpatterns = [
     path('', v.index, name="index"),
     path('registrar/', v.registrarusuario, name='registrar'),
-    path('accounts/', include('django.contrib.auth.urls')),
+    # path('accounts/', include('django.contrib.auth.urls')),
 ]

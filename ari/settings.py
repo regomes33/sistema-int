@@ -116,7 +116,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 
-LOGIN_REDIRECT_URL = 'index'
+LOGIN_REDIRECT_URL = 'core:index'
 LOGOUT_REDIRECT_URL = 'login'
 
 MEDIA_URL = '/media/'
