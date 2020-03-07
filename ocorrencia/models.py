@@ -68,9 +68,9 @@ class Infracao(CreatedBy, TimeStampedModel):
         blank=True
     )
     status = models.CharField(
-        max_length=5,
+        max_length=8,
         choices=STATUS,
-        default='vivo'
+        default='foragido'
     )
 
     class Meta:

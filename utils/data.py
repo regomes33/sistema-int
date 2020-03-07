@@ -6,7 +6,7 @@ QUALIFICACAO = (
 )
 
 STATUS = (
-    ('vivo', 'Vivo'),
+    ('foragido', 'Foragido'),
     ('morto', 'Morto'),
     ('preso', 'Preso'),
     ('solto', 'Solto')
