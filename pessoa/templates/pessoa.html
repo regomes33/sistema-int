@@ -7,6 +7,18 @@
   {% include "breadcrumb/_include_breadcrumb_base_detail.html" %}
 {% endblock %}
 
+{% block style %}
+  <style>
+    .glyphicon {  margin-bottom: 10px;margin-right: 10px;}
+
+    small {
+      display: block;
+      line-height: 1.428571429;
+      color: #999;
+    }
+  </style>
+{% endblock style %}
+
 {% block content %}
 <div class="container">
   <div class="accordion accordion-icons" id="accordionExample">
@@ -22,12 +34,25 @@
       <div id="collapseOne" class="my-collapse collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
         <div class="card-body">
           <div class="row row-cols-1 row-cols-md-3">
-            <div class="col text-left mb-4">
+            <div class="col-sm-6 text-left mb-4">
               <div class="card">
                 <div class="card-body">
-                  <h2 class="card-title">{{ object }}</h2>
-                  <p class="card-text">Apelido: {{ object.apelido }}</p>
-                  <h5 class="card-title">Facção: {{ object.faccao }}</h5>
+
+                  <div class="well well-sm">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                          {% if object.get_first_photo %}
+                            <img src="{{ object.get_first_photo.foto.url }}" width="200px" class="img-rounded img-responsive">
+                          {% endif %}
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                          <h2>{{ object }}</h2>
+                          <p class="card-text">Apelido: {{ object.apelido }}</p>
+                          <h5 class="card-title">Facção: {{ object.faccao }}</h5>
+                        </div>
+                    </div>
+                  </div>
+
                 </div>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">
@@ -49,7 +74,7 @@
                 </ul>
               </div>
             </div>
-            <div class="col text-left mb-4">
+            <div class="col-sm-3 text-left mb-4">
               <div class="card">
                 <div class="card-body">
                   <h3 class="card-title">Contatos</h3>
@@ -67,7 +92,7 @@
                 </div>
               </div>
             </div>
-            <div class="col text-left mb-4">
+            <div class="col-sm-3 text-left mb-4">
               <div class="card">
                 <div class="card-body">
                   <h3 class="card-title">Comparsas</h3>
@@ -88,10 +113,12 @@
               <h3 class="card-title text-left">Fotos</h3>
               <div class="card-group">
                 {% for foto in object.foto_set.all %}
-                  {% if foto.foto %}
-                    <div class="card">
-                      <img src="{{ foto.foto.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ foto.foto.name }}">
-                    </div>
+                  {% if foto != object.get_first_photo %}
+                    {% if foto.foto %}
+                      <div class="card">
+                        <img src="{{ foto.foto.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ foto.foto.name }}">
+                      </div>
+                    {% endif %}
                   {% endif %}
                 {% endfor %}
               </div>
