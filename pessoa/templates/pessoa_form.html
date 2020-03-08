@@ -365,7 +365,7 @@
 
                 <div class="form-group col-md-3">
                   <label class="control-label">Telefone</label>
-                  <input :id="'telefone'+contato.id" v-model="contato.telefone" class="form-control" type="text" maxlength="20" />
+                  <input :id="'telefone'+contato.id" v-model="contato.telefone" class="form-control phone-mask" type="text" maxlength="20" />
                 </div>
 
               </div> <!-- form-row -->
@@ -474,6 +474,14 @@
 {% block vuejs %}
   <script>
     const endpoint = '{{ endpoint }}';
+
+    $(document).ready(function(){
+      $('#telefone1').mask('(00) 00000-0000');
+    });
+
+    $(document).on('click', '#btnContato', function(id) {
+      $('.phone-mask').mask('(00) 00000-0000');
+    });
   </script>
 
   <script src="{% static 'js/person_add.js' %}"></script>
