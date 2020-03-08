@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import admin
 from .models import Cor
 from .models import Modelo
@@ -10,14 +11,26 @@ class VeiculoAdmin(admin.ModelAdmin):
     search_fields = ('placa', 'modelo__modelo', 'cor')
     list_filter = ('modelo', 'cor')
 
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
+
 
 @admin.register(Modelo)
 class ModeloAdmin(admin.ModelAdmin):
     list_display = ('__str__',)
     search_fields = ('modelo',)
 
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
+
 
 @admin.register(Cor)
 class CorAdmin(admin.ModelAdmin):
     list_display = ('__str__',)
     search_fields = ('cor',)
+
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False

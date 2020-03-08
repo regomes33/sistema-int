@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import admin
 from .models import Arma
 from .models import Infracao
@@ -14,11 +15,19 @@ class ArmaAdmin(admin.ModelAdmin):
     list_display = ('__str__',)
     search_fields = ('arma',)
 
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
+
 
 @admin.register(Natureza)
 class NaturezaAdmin(admin.ModelAdmin):
     list_display = ('__str__',)
     search_fields = ('natureza',)
+
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 class OcorrenciaVeiculoInline(admin.TabularInline):
@@ -33,12 +42,20 @@ class OcorrenciaAdmin(admin.ModelAdmin):
     search_fields = ('rai', 'descricao')
     date_hierarchy = 'created'
 
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
+
 
 @admin.register(Infracao)
 class InfracaoAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'qualificacao', 'arma', 'status',)
     list_filter = ('qualificacao', 'arma', 'status',)
     date_hierarchy = 'created'
+
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 @admin.register(AreaUpm)
@@ -47,12 +64,20 @@ class AreaUpmAdmin(admin.ModelAdmin):
     # list_filter = ('qualificacao', 'arma', 'status',)
     # date_hierarchy = 'created'
 
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
+
 
 @admin.register(Motivacao)
 class MotivacaoAdmin(admin.ModelAdmin):
     list_display = ('__str__',)
     # list_filter = ('qualificacao', 'arma', 'status',)
     # date_hierarchy = 'created'
+
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 @admin.register(Homicidio)
@@ -61,3 +86,7 @@ class HomicidioAdmin(admin.ModelAdmin):
                     'forma', 'uf', 'area_upm', 'vitima', 'motivacao')
     list_filter = ('forma', 'uf', 'area_upm', 'motivacao')
     date_hierarchy = 'created'
+
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False

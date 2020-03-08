@@ -1,11 +1,12 @@
+from django.conf import settings
 from django.contrib import admin
+from ocorrencia.models import Infracao
+from ocorrencia.models import PessoaOcorrencia
 from .models import Comparsa
 from .models import Faccao
-from ocorrencia.models import Infracao
+from .models import Foto
 from .models import Pessoa
 from .models import PessoaContato
-from .models import Foto
-from ocorrencia.models import PessoaOcorrencia
 from .models import PessoaVeiculo
 from .models import Tatuagem
 
@@ -62,17 +63,29 @@ class PessoaAdmin(admin.ModelAdmin):
     list_filter = ('faccao',)
     date_hierarchy = 'created'
 
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
+
 
 @admin.register(PessoaContato)
 class PessoaContatoAdmin(admin.ModelAdmin):
     list_display = ('telefone', 'pessoa')
     search_fields = ('pessoa__nome', 'telefone')
 
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
+
 
 @admin.register(Comparsa)
 class ComparsaAdmin(admin.ModelAdmin):
     list_display = ('__str__',)
     # search_fields = ('nome',)
+
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 @admin.register(Tatuagem)
@@ -85,12 +98,20 @@ class TatuagemAdmin(admin.ModelAdmin):
         'descricao'
     )
 
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
+
 
 @admin.register(Faccao)
 class FaccaoAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'funcao')
     search_fields = ('nome',)
     list_filter = ('funcao',)
+
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 @admin.register(PessoaVeiculo)
@@ -99,5 +120,15 @@ class PessoaVeiculoAdmin(admin.ModelAdmin):
     # search_fields = ('',)
     date_hierarchy = 'created'
 
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
 
-admin.site.register(Foto)
+
+@admin.register(Foto)
+class FotoAdmin(admin.ModelAdmin):
+    list_display = ('__str__',)
+
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
