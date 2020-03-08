@@ -1,5 +1,6 @@
 # import xhtml2pdf.pisa as pisa
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -8,6 +9,7 @@ from .models import Pessoa
 from ocorrencia.models import PessoaOcorrencia
 
 
+@login_required
 def pessoas(request):
     template_name = 'pessoas.html'
     object_list = Pessoa.objects.all()
@@ -27,6 +29,7 @@ def pessoas(request):
     return render(request, template_name, context)
 
 
+@login_required
 def pessoa(request, pk):
     template_name = 'pessoa.html'
     obj = Pessoa.objects.get(pk=pk)
@@ -40,6 +43,7 @@ def pessoa(request, pk):
     return render(request, template_name, context)
 
 
+@login_required
 def pessoa_create(request):
     template_name = 'pessoa_form.html'
     context = {

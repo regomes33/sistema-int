@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -7,6 +9,7 @@ from .forms import VeiculoForm, ModeloForm
 from .models import Veiculo, Modelo
 
 
+@login_required
 def veiculos(request):
     template_name = 'veiculos.html'
     object_list = Veiculo.objects.all()
@@ -26,6 +29,7 @@ def veiculos(request):
     return render(request, template_name, context)
 
 
+@login_required
 def veiculo_create(request):
     form = VeiculoForm(request.POST or None)
     template_name = 'veiculo_form.html'
@@ -43,12 +47,13 @@ def veiculo_create(request):
     return render(request, template_name, context)
 
 
-class VeiculoUpdate(UpdateView):
+class VeiculoUpdate(LRM, UpdateView):
     model = Veiculo
     template_name = 'veiculo_form.html'
     form_class = VeiculoForm
 
 
+@login_required
 def modelos(request):
     template_name = 'modelos.html'
     object_list = Modelo.objects.all()
@@ -64,6 +69,7 @@ def modelos(request):
     return render(request, template_name, context)
 
 
+@login_required
 def modelo_create(request):
     form = ModeloForm(request.POST or None)
     template_name = 'modelo_form.html'
@@ -81,7 +87,7 @@ def modelo_create(request):
     return render(request, template_name, context)
 
 
-class ModeloUpdate(UpdateView):
+class ModeloUpdate(LRM, UpdateView):
     model = Modelo
     template_name = 'modelo_form.html'
     form_class = ModeloForm

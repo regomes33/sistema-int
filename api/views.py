@@ -1,16 +1,18 @@
-import re
 import json
+import re
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from localflavor.br.br_states import STATE_CHOICES
-from pessoa.models import Pessoa, Faccao, Foto, Tatuagem
+from ocorrencia.forms import InfracaoForm, PessoaOcorrenciaForm
+from ocorrencia.models import Natureza, Arma, Ocorrencia
 from pessoa.forms import PessoaForm, PessoaContatoForm, PessoaComparsaForm
 from pessoa.forms import PessoaVeiculoForm
-from ocorrencia.models import Natureza, Arma, Ocorrencia
-from ocorrencia.forms import InfracaoForm, PessoaOcorrenciaForm
-from veiculo.models import Veiculo
+from pessoa.models import Pessoa, Faccao, Foto, Tatuagem
 from utils.data import QUALIFICACAO, STATUS, TIPO
+from veiculo.models import Veiculo
 
 
+@login_required
 def pessoas(request):
     items = Pessoa.objects.all()
     data = [item.to_dict() for item in items]
@@ -38,6 +40,7 @@ def cpf_validate(cpf, data):
     return cpf, data
 
 
+@login_required
 def pessoa_add(request):
     # Adiciona Pessoa
     pessoa_data = json.loads(request.POST.get('pessoa'))
@@ -139,6 +142,7 @@ def pessoa_add(request):
     return JsonResponse(data)
 
 
+@login_required
 def faccoes(request):
     items = Faccao.objects.all()
     data = [item.to_dict() for item in items]
@@ -146,6 +150,7 @@ def faccoes(request):
     return JsonResponse(response)
 
 
+@login_required
 def naturezas(request):
     items = Natureza.objects.all()
     data = [item.to_dict() for item in items]
@@ -153,6 +158,7 @@ def naturezas(request):
     return JsonResponse(response)
 
 
+@login_required
 def qualificacoes(request):
     items = QUALIFICACAO
     data = [
@@ -165,6 +171,7 @@ def qualificacoes(request):
     return JsonResponse(response)
 
 
+@login_required
 def armas(request):
     items = Arma.objects.all()
     data = [item.to_dict() for item in items]
@@ -172,6 +179,7 @@ def armas(request):
     return JsonResponse(response)
 
 
+@login_required
 def status(request):
     items = STATUS
     data = [
@@ -184,6 +192,7 @@ def status(request):
     return JsonResponse(response)
 
 
+@login_required
 def tipo_telefone(request):
     items = TIPO
     data = [
@@ -196,6 +205,7 @@ def tipo_telefone(request):
     return JsonResponse(response)
 
 
+@login_required
 def ocorrencias(request):
     items = Ocorrencia.objects.all()
     data = [item.to_dict() for item in items]
@@ -203,6 +213,7 @@ def ocorrencias(request):
     return JsonResponse(response)
 
 
+@login_required
 def veiculos(request):
     items = Veiculo.objects.all()
     data = [item.to_dict() for item in items]
@@ -210,6 +221,7 @@ def veiculos(request):
     return JsonResponse(response)
 
 
+@login_required
 def ufs(request):
     items = STATE_CHOICES
     data = [

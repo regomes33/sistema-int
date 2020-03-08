@@ -1,12 +1,15 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import UpdateView
 from django.urls import reverse
+from django.views.generic import UpdateView
 from .forms import OcorrenciaForm, InfracaoForm, NaturezaForm, HomicidioForm
 from .models import Ocorrencia, Infracao, Natureza, Homicidio
 
 
+@login_required
 def ocorrencias(request):
     template_name = 'ocorrencias.html'
     object_list = Ocorrencia.objects.all()
@@ -25,6 +28,7 @@ def ocorrencias(request):
     return render(request, template_name, context)
 
 
+@login_required
 def ocorrencia(request, pk):
     template_name = 'ocorrencia.html'
     obj = Ocorrencia.objects.get(pk=pk)
@@ -36,6 +40,7 @@ def ocorrencia(request, pk):
     return render(request, template_name, context)
 
 
+@login_required
 def ocorrencia_create(request):
     form = OcorrenciaForm(request.POST or None)
     template_name = 'ocorrencia_form.html'
@@ -55,12 +60,13 @@ def ocorrencia_create(request):
     return render(request, template_name, context)
 
 
-class OcorrenciaUpdate(UpdateView):
+class OcorrenciaUpdate(LRM, UpdateView):
     model = Ocorrencia
     template_name = 'ocorrencia_form.html'
     form_class = OcorrenciaForm
 
 
+@login_required
 def infracoes(request):
     template_name = 'infracoes.html'
     object_list = Infracao.objects.all()
@@ -78,6 +84,7 @@ def infracoes(request):
     return render(request, template_name, context)
 
 
+@login_required
 def infracao_create(request):
     form = InfracaoForm(request.POST or None)
     template_name = 'infracao_form.html'
@@ -97,12 +104,13 @@ def infracao_create(request):
     return render(request, template_name, context)
 
 
-class InfracaoUpdate(UpdateView):
+class InfracaoUpdate(LRM, UpdateView):
     model = Infracao
     template_name = 'infracao_form.html'
     form_class = InfracaoForm
 
 
+@login_required
 def naturezas(request):
     template_name = 'naturezas.html'
     object_list = Natureza.objects.all()
@@ -118,6 +126,7 @@ def naturezas(request):
     return render(request, template_name, context)
 
 
+@login_required
 def natureza_create(request):
     form = NaturezaForm(request.POST or None)
     template_name = 'natureza_form.html'
@@ -135,12 +144,13 @@ def natureza_create(request):
     return render(request, template_name, context)
 
 
-class NaturezaUpdate(UpdateView):
+class NaturezaUpdate(LRM, UpdateView):
     model = Natureza
     template_name = 'natureza_form.html'
     form_class = NaturezaForm
 
 
+@login_required
 def homicidios(request):
     template_name = 'homicidios.html'
     object_list = Homicidio.objects.all()
@@ -158,6 +168,7 @@ def homicidios(request):
     return render(request, template_name, context)
 
 
+@login_required
 def homicidio_create(request):
     form = HomicidioForm(request.POST or None)
     template_name = 'homicidio_form.html'
@@ -177,7 +188,7 @@ def homicidio_create(request):
     return render(request, template_name, context)
 
 
-class HomicidioUpdate(UpdateView):
+class HomicidioUpdate(LRM, UpdateView):
     model = Homicidio
     template_name = 'homicidio_form.html'
     form_class = HomicidioForm
