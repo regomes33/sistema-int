@@ -58,7 +58,8 @@ class PessoaAdmin(admin.ModelAdmin):
         ComparsaInline,
         PessoaVeiculoInline
     )
-    list_display = ('__str__', 'nome', 'sobrenome', 'apelido', 'faccao')
+    list_display = ('__str__', 'slug', 'nome',
+                    'sobrenome', 'apelido', 'faccao')
     search_fields = ('nome', 'sobrenome', 'apelido', 'mae', 'pai')
     list_filter = ('faccao',)
     date_hierarchy = 'created'
@@ -70,7 +71,7 @@ class PessoaAdmin(admin.ModelAdmin):
 
 @admin.register(PessoaContato)
 class PessoaContatoAdmin(admin.ModelAdmin):
-    list_display = ('telefone', 'pessoa')
+    list_display = ('telefone', 'slug', 'pessoa')
     search_fields = ('pessoa__nome', 'telefone')
 
     # if not settings.DEBUG:
@@ -80,7 +81,7 @@ class PessoaContatoAdmin(admin.ModelAdmin):
 
 @admin.register(Comparsa)
 class ComparsaAdmin(admin.ModelAdmin):
-    list_display = ('__str__',)
+    list_display = ('__str__', 'slug',)
     # search_fields = ('nome',)
 
     # if not settings.DEBUG:
@@ -90,7 +91,7 @@ class ComparsaAdmin(admin.ModelAdmin):
 
 @admin.register(Tatuagem)
 class TatuagemAdmin(admin.ModelAdmin):
-    list_display = ('__str__',)
+    list_display = ('__str__', 'slug',)
     search_fields = (
         'pessoa__nome',
         'pessoa__sobrenome',
@@ -105,7 +106,7 @@ class TatuagemAdmin(admin.ModelAdmin):
 
 @admin.register(Faccao)
 class FaccaoAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'funcao')
+    list_display = ('__str__', 'slug', 'funcao')
     search_fields = ('nome',)
     list_filter = ('funcao',)
 
@@ -116,7 +117,7 @@ class FaccaoAdmin(admin.ModelAdmin):
 
 @admin.register(PessoaVeiculo)
 class PessoaVeiculoAdmin(admin.ModelAdmin):
-    list_display = ('__str__',)
+    list_display = ('__str__', 'slug')
     # search_fields = ('',)
     date_hierarchy = 'created'
 
@@ -127,7 +128,7 @@ class PessoaVeiculoAdmin(admin.ModelAdmin):
 
 @admin.register(Foto)
 class FotoAdmin(admin.ModelAdmin):
-    list_display = ('__str__',)
+    list_display = ('__str__', 'slug')
 
     # if not settings.DEBUG:
     def has_delete_permission(self, request, obj=None):

@@ -45,7 +45,7 @@
       {% for object in object_list %}
         <tr>
           <td>
-            <a href="{% url 'pessoa:pessoa' object.pk %}">{{ object }}</a>
+            <a href="{% url 'pessoa:pessoa' object.slug %}">{{ object }}</a>
           </td>
           <td>
             {% if object.get_first_photo %}

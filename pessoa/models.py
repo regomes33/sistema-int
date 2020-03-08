@@ -1,10 +1,10 @@
 from django.db import models
-from core.models import TimeStampedModel, CreatedBy, Address, Document
+from core.models import UuidModel, TimeStampedModel, CreatedBy, Address, Document
 from veiculo.models import Veiculo
 from utils.data import TIPO
 
 
-class Pessoa(TimeStampedModel, CreatedBy, Address, Document):
+class Pessoa(UuidModel, TimeStampedModel, CreatedBy, Address, Document):
     nome = models.CharField('nome', max_length=50)
     sobrenome = models.CharField('sobrenome', max_length=100)
     apelido = models.CharField(max_length=50, null=True, blank=True)
@@ -57,7 +57,7 @@ class Pessoa(TimeStampedModel, CreatedBy, Address, Document):
         }
 
 
-class Foto(TimeStampedModel):
+class Foto(UuidModel, TimeStampedModel):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT, blank=True)
     foto = models.ImageField('Imagem da Pessoa', upload_to="pessoa")
 
@@ -70,7 +70,7 @@ class Foto(TimeStampedModel):
         return f'{self.pk} - {self.pessoa}'
 
 
-class Tatuagem(TimeStampedModel):
+class Tatuagem(UuidModel, TimeStampedModel):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT, blank=True)
     foto = models.ImageField('Imagem da Tatuagem', upload_to="tatuagem")
     descricao = models.TextField(
@@ -88,7 +88,7 @@ class Tatuagem(TimeStampedModel):
         return f'{self.pk} - {self.pessoa}'
 
 
-class PessoaContato(TimeStampedModel):
+class PessoaContato(UuidModel, TimeStampedModel):
     '''
     Telefones
     '''
@@ -109,7 +109,7 @@ class PessoaContato(TimeStampedModel):
         return f'{self.pessoa} - {self.telefone}'
 
 
-class Comparsa(TimeStampedModel, Document):
+class Comparsa(UuidModel, TimeStampedModel, Document):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, blank=True)
     nome = models.CharField(
         max_length=100,
@@ -126,7 +126,7 @@ class Comparsa(TimeStampedModel, Document):
         return self.nome
 
 
-class Faccao(models.Model):
+class Faccao(UuidModel):
     FUNCAO_CHOICES = (
         ('chefe', 'Chefe'),
         ('membro', 'Membro'),
@@ -154,7 +154,7 @@ class Faccao(models.Model):
         }
 
 
-class PessoaVeiculo(CreatedBy, TimeStampedModel):
+class PessoaVeiculo(UuidModel, CreatedBy, TimeStampedModel):
     '''
     Uma pessoa pode ter vários veículos.
     '''

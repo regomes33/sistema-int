@@ -1,11 +1,11 @@
 from django.db import models
 from django.urls import reverse_lazy
-from core.models import TimeStampedModel, CreatedBy, Address
+from core.models import UuidModel, TimeStampedModel, CreatedBy, Address
 from pessoa.models import Pessoa, Veiculo
 from utils.data import QUALIFICACAO, STATUS
 
 
-class Natureza(models.Model):
+class Natureza(UuidModel):
     natureza = models.TextField(unique=True)
 
     class Meta:
@@ -26,7 +26,7 @@ class Natureza(models.Model):
         }
 
 
-class Arma(models.Model):
+class Arma(UuidModel):
     arma = models.CharField(max_length=50, unique=True)
 
     class Meta:
@@ -44,7 +44,7 @@ class Arma(models.Model):
         }
 
 
-class Infracao(CreatedBy, TimeStampedModel):
+class Infracao(UuidModel, CreatedBy, TimeStampedModel):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT, blank=True)
     natureza = models.ForeignKey(
         Natureza,
@@ -79,13 +79,13 @@ class Infracao(CreatedBy, TimeStampedModel):
         verbose_name_plural = 'infrações'
 
     def __str__(self):
-        return f'{self.pk} - {self.pessoa}'
+        return f'{self.slug}'
 
     def get_absolute_url(self):
         return reverse_lazy('ocorrencia:infracoes')
 
 
-class Ocorrencia(CreatedBy, TimeStampedModel):
+class Ocorrencia(UuidModel, CreatedBy, TimeStampedModel):
     rai = models.IntegerField(null=True, blank=True)
     data_do_fato = models.DateField('Data do Fato')
     descricao = models.TextField('descrição', null=True, blank=True)
@@ -108,7 +108,7 @@ class Ocorrencia(CreatedBy, TimeStampedModel):
         }
 
 
-class PessoaOcorrencia(CreatedBy, TimeStampedModel):
+class PessoaOcorrencia(UuidModel, CreatedBy, TimeStampedModel):
     '''
     Uma pessoa pode ter várias ocorrências.
     '''
@@ -132,7 +132,7 @@ class PessoaOcorrencia(CreatedBy, TimeStampedModel):
         return f'{self.pessoa} - {self.ocorrencia}'
 
 
-class OcorrenciaVeiculo(CreatedBy, TimeStampedModel):
+class OcorrenciaVeiculo(UuidModel, CreatedBy, TimeStampedModel):
     '''
     Uma ocorrência pode ter vários veículos.
     '''
@@ -156,7 +156,7 @@ class OcorrenciaVeiculo(CreatedBy, TimeStampedModel):
         return f'{self.ocorrencia} - {self.veiculo}'
 
 
-class AreaUpm(models.Model):
+class AreaUpm(UuidModel, models.Model):
     area_upm = models.CharField('área UPM', max_length=50, unique=True)
 
     class Meta:
@@ -168,7 +168,7 @@ class AreaUpm(models.Model):
         return self.area_upm
 
 
-class Motivacao(models.Model):
+class Motivacao(UuidModel, models.Model):
     titulo = models.CharField('título', max_length=50, unique=True)
 
     class Meta:
@@ -186,7 +186,7 @@ FORMA = (
 )
 
 
-class Homicidio(Address, CreatedBy, TimeStampedModel):
+class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
     rai = models.ForeignKey(
         Ocorrencia,
         on_delete=models.SET_NULL,

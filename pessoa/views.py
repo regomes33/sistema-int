@@ -30,10 +30,10 @@ def pessoas(request):
 
 
 @login_required
-def pessoa(request, pk):
+def pessoa(request, slug):
     template_name = 'pessoa.html'
-    obj = Pessoa.objects.get(pk=pk)
-    ocorrencias = PessoaOcorrencia.objects.filter(pessoa=pk)
+    obj = Pessoa.objects.get(slug=slug)
+    ocorrencias = PessoaOcorrencia.objects.filter(pessoa__slug=slug)
     context = {
         'object': obj,
         'ocorrencias': ocorrencias,

@@ -1,6 +1,14 @@
+import uuid
 from django.contrib.auth.models import User
 from django.db import models
 from localflavor.br.br_states import STATE_CHOICES
+
+
+class UuidModel(models.Model):
+    slug = models.UUIDField(unique=True, editable=False, default=uuid.uuid4)
+
+    class Meta:
+        abstract = True
 
 
 class TimeStampedModel(models.Model):

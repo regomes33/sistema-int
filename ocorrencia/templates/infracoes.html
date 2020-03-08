@@ -50,7 +50,7 @@
           <td>{{ object.arma }}</td>
           <td>{{ object.get_status_display }}</td>
           <td>
-            <a class="btn btn-info" href="{% url 'ocorrencia:infracao_update' object.pk %}">Editar</a>
+            <a class="btn btn-info" href="{% url 'ocorrencia:infracao_update' object.slug %}">Editar</a>
           </td>
         </tr>
       {% endfor %}

@@ -29,9 +29,9 @@ def ocorrencias(request):
 
 
 @login_required
-def ocorrencia(request, pk):
+def ocorrencia(request, slug):
     template_name = 'ocorrencia.html'
-    obj = Ocorrencia.objects.get(pk=pk)
+    obj = Ocorrencia.objects.get(slug=slug)
     context = {
         'object': obj,
         'model_name_plural': 'Ocorrências',

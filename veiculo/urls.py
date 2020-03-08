@@ -8,13 +8,13 @@ app_name = 'veiculo'
 veiculo_patterns = [
     path('', v.veiculos, name="veiculos"),
     path('add/', v.veiculo_create, name="veiculo_create"),
-    path('<int:pk>/upate/', v.VeiculoUpdate.as_view(), name="veiculo_update"),
+    path('<slug>/upate/', v.VeiculoUpdate.as_view(), name="veiculo_update"),
 ]
 
 modelo_patterns = [
     path('', v.modelos, name="modelos"),
     path('add/', v.modelo_create, name="modelo_create"),
-    path('<int:pk>/upate/', v.ModeloUpdate.as_view(), name="modelo_update"),
+    path('<slug>/upate/', v.ModeloUpdate.as_view(), name="modelo_update"),
 ]
 
 

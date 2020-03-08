@@ -12,7 +12,7 @@ from .models import Homicidio
 
 @admin.register(Arma)
 class ArmaAdmin(admin.ModelAdmin):
-    list_display = ('__str__',)
+    list_display = ('__str__', 'slug')
     search_fields = ('arma',)
 
     # if not settings.DEBUG:
@@ -22,7 +22,7 @@ class ArmaAdmin(admin.ModelAdmin):
 
 @admin.register(Natureza)
 class NaturezaAdmin(admin.ModelAdmin):
-    list_display = ('__str__',)
+    list_display = ('__str__', 'slug')
     search_fields = ('natureza',)
 
     # if not settings.DEBUG:
@@ -38,7 +38,7 @@ class OcorrenciaVeiculoInline(admin.TabularInline):
 @admin.register(Ocorrencia)
 class OcorrenciaAdmin(admin.ModelAdmin):
     inlines = (OcorrenciaVeiculoInline,)
-    list_display = ('__str__', 'data_do_fato')
+    list_display = ('__str__', 'slug', 'data_do_fato')
     search_fields = ('rai', 'descricao')
     date_hierarchy = 'created'
 
@@ -49,7 +49,7 @@ class OcorrenciaAdmin(admin.ModelAdmin):
 
 @admin.register(Infracao)
 class InfracaoAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'qualificacao', 'arma', 'status',)
+    list_display = ('__str__', 'slug', 'qualificacao', 'arma', 'status',)
     list_filter = ('qualificacao', 'arma', 'status',)
     date_hierarchy = 'created'
 
@@ -60,7 +60,7 @@ class InfracaoAdmin(admin.ModelAdmin):
 
 @admin.register(AreaUpm)
 class AreaUpmAdmin(admin.ModelAdmin):
-    list_display = ('__str__',)
+    list_display = ('__str__', 'slug')
     # list_filter = ('qualificacao', 'arma', 'status',)
     # date_hierarchy = 'created'
 
@@ -71,7 +71,7 @@ class AreaUpmAdmin(admin.ModelAdmin):
 
 @admin.register(Motivacao)
 class MotivacaoAdmin(admin.ModelAdmin):
-    list_display = ('__str__',)
+    list_display = ('__str__', 'slug')
     # list_filter = ('qualificacao', 'arma', 'status',)
     # date_hierarchy = 'created'
 
@@ -82,7 +82,7 @@ class MotivacaoAdmin(admin.ModelAdmin):
 
 @admin.register(Homicidio)
 class HomicidioAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'data_do_homicidio',
+    list_display = ('__str__', 'slug', 'data_do_homicidio',
                     'forma', 'uf', 'area_upm', 'vitima', 'motivacao')
     list_filter = ('forma', 'uf', 'area_upm', 'motivacao')
     date_hierarchy = 'created'

@@ -43,12 +43,12 @@
       {% for object in object_list %}
         <tr>
           <td>
-            <a href="{% url 'ocorrencia:ocorrencia' object.pk %}">{{ object.rai }}</a>
+            <a href="{% url 'ocorrencia:ocorrencia' object.slug %}">{{ object.rai }}</a>
           </td>
           <td>{{ object.data_do_fato }}</td>
           <td>{{ object.descricao }}</td>
           <td>
-            <a class="btn btn-info" href="{% url 'ocorrencia:ocorrencia_update' object.pk %}">Editar</a>
+            <a class="btn btn-info" href="{% url 'ocorrencia:ocorrencia_update' object.slug %}">Editar</a>
           </td>
         </tr>
       {% endfor %}

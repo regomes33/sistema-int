@@ -42,7 +42,7 @@
         <tr>
           <td>{{ object }}</td>
           <td>
-            <a class="btn btn-info" href="{% url 'ocorrencia:natureza_update' object.pk %}">Editar</a>
+            <a class="btn btn-info" href="{% url 'ocorrencia:natureza_update' object.slug %}">Editar</a>
           </td>
         </tr>
       {% endfor %}

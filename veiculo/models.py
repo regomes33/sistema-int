@@ -1,9 +1,9 @@
 from django.db import models
 from django.urls import reverse_lazy
-from core.models import TimeStampedModel
+from core.models import UuidModel, TimeStampedModel
 
 
-class Veiculo(TimeStampedModel):
+class Veiculo(UuidModel, TimeStampedModel):
     placa = models.CharField(max_length=100, null=True, blank=True)
     modelo = models.ForeignKey(
         'Modelo',
@@ -34,7 +34,7 @@ class Veiculo(TimeStampedModel):
         }
 
 
-class Modelo(models.Model):
+class Modelo(UuidModel):
     modelo = models.CharField(max_length=70, unique=True)
 
     class Meta:
@@ -49,7 +49,7 @@ class Modelo(models.Model):
         return reverse_lazy('veiculo:modelos')
 
 
-class Cor(models.Model):
+class Cor(UuidModel):
     cor = models.CharField(max_length=50, unique=True)
 
     class Meta:
