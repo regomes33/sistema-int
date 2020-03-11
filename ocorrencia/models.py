@@ -79,7 +79,7 @@ class Infracao(UuidModel, CreatedBy, TimeStampedModel):
         verbose_name_plural = 'infrações'
 
     def __str__(self):
-        return f'{self.slug}'
+        return f'{self.pessoa} - {self.natureza}'
 
     def get_absolute_url(self):
         return reverse_lazy('ocorrencia:infracoes')
