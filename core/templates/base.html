@@ -44,6 +44,10 @@
       word-wrap: break-word;
       box-sizing: border-box;
     }
+    label.required:after {
+      content: '*';
+      color: red;
+    }
   </style>
 
   {% block style %}{% endblock style %}
