@@ -20,7 +20,7 @@ class NaturezaForm(forms.ModelForm):
 
     class Meta:
         model = Natureza
-        fields = ('natureza',)
+        fields = ('artigo', 'natureza')
 
 
 class HomicidioForm(forms.ModelForm):
