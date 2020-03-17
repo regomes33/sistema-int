@@ -22,7 +22,8 @@ class ArmaAdmin(admin.ModelAdmin):
 
 @admin.register(Natureza)
 class NaturezaAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'slug')
+    list_display = ('artigo', '__str__', 'slug')
+    list_display_links = ('__str__',)
     search_fields = ('natureza',)
 
     # if not settings.DEBUG:
