@@ -6,6 +6,15 @@
   {% include "breadcrumb/_include_breadcrumb_base.html" %}
 {% endblock %}
 
+{% block style %}
+  <style>
+    .badge-article {
+      border-radius: 0;
+      font-size: .85rem;
+    }
+  </style>
+{% endblock style %}
+
 {% block content %}
 
 <div class="container">
@@ -37,9 +46,9 @@
         <th>Foto</th>
         <th>Apelido</th>
         <th>Facção</th>
-        <th>Infrações</th>
         <th>Bairro</th>
         <th>Cidade</th>
+        <th>Infrações</th>
       </tr>
     </thead>
     <tbody>
@@ -55,13 +64,13 @@
           </td>
           <td>{{ object.apelido }}</td>
           <td>{{ object.faccao }}</td>
-          <td>
-            {% for infracao in object.infracao_set.all %}
-              {{ infracao }}
-            {% endfor %}
-          </td>
           <td>{{ object.district }}</td>
           <td>{{ object.city }}</td>
+          <td>
+            {% for infracao in object.infracao_set.all %}
+              <span class="badge badge-info badge-article" data-toggle="tooltip" data-placement="top" title="{{ infracao.natureza }}">{{ infracao.natureza.artigo }}</span>
+            {% endfor %}
+          </td>
         </tr>
       {% endfor %}
     </tbody>
@@ -69,3 +78,11 @@
 </div>
 
 {% endblock content %}
+
+{% block js %}
+  <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    });
+  </script>
+{% endblock js %}

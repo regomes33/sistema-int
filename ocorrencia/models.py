@@ -6,6 +6,7 @@ from utils.data import QUALIFICACAO, STATUS
 
 
 class Natureza(UuidModel):
+    artigo = models.CharField(max_length=15, help_text='Número do artigo')
     natureza = models.TextField(unique=True)
 
     class Meta:
