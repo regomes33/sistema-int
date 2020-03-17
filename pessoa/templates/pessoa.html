@@ -47,8 +47,8 @@
                         </div>
                         <div class="col-sm-6 col-md-6">
                           <h2>{{ object }}</h2>
-                          <p class="card-text">Apelido: {{ object.apelido }}</p>
-                          <h5 class="card-title">Facção: {{ object.faccao }}</h5>
+                          <p class="card-text">Apelido: {{ object.apelido|default:"---" }}</p>
+                          <h5 class="card-title">Facção: {{ object.faccao|default:"---" }}</h5>
                         </div>
                     </div>
                   </div>
@@ -57,18 +57,18 @@
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">
                     <h5>Filiação</h5>
-                    <p class="card-text">Mãe: {{ object.mae }}</p>
-                    <p class="card-text">Pai: {{ object.pai }}</p>
+                    <p class="card-text">Mãe: {{ object.mae|default:"---" }}</p>
+                    <p class="card-text">Pai: {{ object.pai|default:"---" }}</p>
                   </li>
                   <li class="list-group-item">
                     <h5>Documentos</h5>
-                    <p class="card-text">RG: {{ object.rg }}</p>
-                    <p class="card-text">CPF: {{ object.cpf|cpf_mask }}</p>
-                    <p class="card-text">CNH: {{ object.cnh }}</p>
+                    <p class="card-text">RG: {{ object.rg|default:"---" }}</p>
+                    <p class="card-text">CPF: {{ object.cpf|cpf_mask|default:"---" }}</p>
+                    <p class="card-text">CNH: {{ object.cnh|default:"---" }}</p>
                   </li>
                   <li class="list-group-item">
                     <h5>Endereço</h5>
-                    <p class="card-text">{{ object.get_address }}</p>
+                    <p class="card-text">{{ object.get_address|default:"---" }}</p>
                     <p class="card-text">{{ object.get_address_complement }}</p>
                   </li>
                 </ul>

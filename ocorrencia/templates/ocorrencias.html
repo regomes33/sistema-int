@@ -43,7 +43,7 @@
       {% for object in object_list %}
         <tr>
           <td>
-            <a href="{% url 'ocorrencia:ocorrencia' object.slug %}">{{ object.rai }}</a>
+            <a href="{% url 'ocorrencia:ocorrencia' object.slug %}">{{ object.rai|default:"---" }}</a>
           </td>
           <td>{{ object.data_do_fato }}</td>
           <td>{{ object.descricao }}</td>

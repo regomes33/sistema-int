@@ -50,7 +50,7 @@
           <td>{{ object.rai }}</td>
           <td>{{ object.data_do_homicidio }}</td>
           <td>{{ object.get_forma_display }}</td>
-          <td>{{ object.uf }}</td>
+          <td>{{ object.uf|default:"---" }}</td>
           <td>{{ object.area_upm }}</td>
           <td>{{ object.vitima }}</td>
           <td>{{ object.instrumento }}</td>

@@ -43,7 +43,7 @@
     <tbody>
       {% for object in object_list %}
         <tr>
-          <td>{{ object.placa }}</td>
+          <td>{{ object.placa|default:"---" }}</td>
           <td>{{ object.modelo }}</td>
           <td>{{ object.cor }}</td>
           <td>

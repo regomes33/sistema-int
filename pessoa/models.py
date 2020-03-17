@@ -26,7 +26,8 @@ class Pessoa(UuidModel, TimeStampedModel, CreatedBy, Address, Document):
         return ' '.join(filter(None, [self.nome, self.sobrenome]))
 
     def get_address(self):
-        return '{}, {} {}'.format(self.address, self.address_number, self.complement or '')
+        if self.address:
+            return f'{self.address}, {self.address_number or ""} {self.complement or ""}'
 
     def get_address_complement(self):
         return ' - '.join(filter(None, [self.district, self.city, self.uf]))

@@ -45,9 +45,9 @@
       {% for object in object_list %}
         <tr>
           <td>{{ object.pessoa }}</td>
-          <td>{{ object.natureza }}</td>
+          <td>{{ object.natureza|default:"---" }}</td>
           <td>{{ object.get_qualificacao_display }}</td>
-          <td>{{ object.arma }}</td>
+          <td>{{ object.arma|default:"---" }}</td>
           <td>{{ object.get_status_display }}</td>
           <td>
             <a class="btn btn-info" href="{% url 'ocorrencia:infracao_update' object.slug %}">Editar</a>
