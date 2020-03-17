@@ -76,7 +76,14 @@
     </tbody>
   </table>
 
-  {% include "includes/pagination.html" %}
+  <div class="row">
+    <div class="col">
+      {% include "includes/pagination.html" %}
+    </div>
+    <div class="col">
+      <span class="float-right lead"><b>Total:</b> {{ pessoas_total }}</span>
+    </div>
+  </div>
 
 </div>
 
