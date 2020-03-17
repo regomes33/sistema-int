@@ -6,7 +6,7 @@ app_name = 'pessoa'
 
 
 pessoa_patterns = [
-    path('', v.pessoas, name="pessoas"),
+    path('', v.PessoasList.as_view(), name="pessoas"),
     path('<slug>/detail/', v.pessoa, name="pessoa"),
     path('add/', v.pessoa_create, name="pessoa_create"),
 ]

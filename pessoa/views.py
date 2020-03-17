@@ -1,32 +1,26 @@
 # import xhtml2pdf.pisa as pisa
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.views.generic import ListView
 from .models import Pessoa
+from .mixins import SearchMixin
 from ocorrencia.models import PessoaOcorrencia
 
 
-@login_required
-def pessoas(request):
+class PessoasList(LRM, SearchMixin, ListView):
+    model = Pessoa
     template_name = 'pessoas.html'
-    object_list = Pessoa.objects.all()
+    paginate_by = 10
 
-    search = request.GET.get('search')
-    if search:
-        object_list = object_list.filter(
-            Q(nome__icontains=search) |
-            Q(sobrenome__icontains=search) |
-            Q(apelido__icontains=search)
-        )
-
-    context = {
-        'object_list': object_list,
-        'model_name_plural': 'Pessoas',
-    }
-    return render(request, template_name, context)
+    def get_context_data(self, **kwargs):
+        context = super(PessoasList, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Pessoas'
+        return context
 
 
 @login_required
