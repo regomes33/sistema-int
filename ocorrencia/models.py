@@ -203,7 +203,11 @@ class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
         verbose_name='área UPM',
         on_delete=models.CASCADE
     )
-    vitima = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
+    vitima = models.ForeignKey(
+        Pessoa,
+        verbose_name='vítima',
+        on_delete=models.CASCADE
+    )
     instrumento = models.ForeignKey(
         Arma,
         on_delete=models.SET_NULL,
@@ -212,7 +216,7 @@ class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
     )
     motivacao = models.ForeignKey(
         Motivacao,
-        verbose_name='homicídio',
+        verbose_name='motivação',
         on_delete=models.CASCADE
     )
 
