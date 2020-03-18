@@ -56,6 +56,7 @@ class Infracao(UuidModel, CreatedBy, TimeStampedModel):
         blank=True
     )
     qualificacao = models.CharField(
+        'qualificação',
         max_length=5,
         choices=QUALIFICACAO,
         default='aut',
@@ -196,7 +197,11 @@ class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
     )
     data_do_homicidio = models.DateField('Data do Homicídio')
     forma = models.CharField(max_length=10, choices=FORMA, default='tentado')
-    area_upm = models.ForeignKey(AreaUpm, on_delete=models.CASCADE)
+    area_upm = models.ForeignKey(
+        AreaUpm,
+        verbose_name='área UPM',
+        on_delete=models.CASCADE
+    )
     vitima = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
     instrumento = models.ForeignKey(
         Arma,
@@ -204,7 +209,11 @@ class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
         null=True,
         blank=True
     )
-    motivacao = models.ForeignKey(Motivacao, on_delete=models.CASCADE)
+    motivacao = models.ForeignKey(
+        Motivacao,
+        verbose_name='homicídio',
+        on_delete=models.CASCADE
+    )
 
     class Meta:
         ordering = ('-data_do_homicidio',)

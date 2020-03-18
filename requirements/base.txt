@@ -5,7 +5,6 @@ cloudinary==1.19.1
 colorama==0.4.1
 dj-database-url==0.5.0
 dj-static==0.0.6
-django-bootstrap-form==3.4
 django-cloudinary-storage==0.2.3
 django-cors-headers==3.2.1
 django-extensions==2.2.5

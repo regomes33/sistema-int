@@ -22,7 +22,6 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'cloudinary',
     'widget_tweaks',
-    'bootstrapform',
     'django_extensions',
     'corsheaders',
     # my apps
