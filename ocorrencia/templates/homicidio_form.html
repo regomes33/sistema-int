@@ -7,11 +7,21 @@
   {% include "breadcrumb/_include_breadcrumb_base_add.html" %}
 {% endblock %}
 
+{% block style %}
+  <style>
+    .add-item {
+      color: green;
+      padding-left: 5px;
+      cursor: pointer;
+    }
+  </style>
+{% endblock style %}
+
 {% block content %}
 <div class="container">
   <h4>Adicionar</h4>
   <div>
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST">
       {% csrf_token %}
 
       {% for field in form.visible_fields %}
@@ -21,6 +31,10 @@
               <span class="required">{{ field.label }}</span>
             {% else %}
               {{ field.label }}
+            {% endif %}
+
+            {% if field.label == 'Rai da Ocorrência' %}
+              <i class="fa fa-plus add-item" data-toggle="modal" data-target="#modalOcorrencia"></i>
             {% endif %}
           </label>
           {% render_field field class="form-control" %}
@@ -36,6 +50,45 @@
   </div>
   </form>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalOcorrencia" tabindex="-1" role="dialog" aria-labelledby="modalOcorrenciaLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalOcorrenciaLabel">Adicionar Ocorrência</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form id="formOcorrencia" action="{% url 'ocorrencia:ocorrencia_create_ajax' %}" method="POST">
+        <div class="modal-body">
+          {% csrf_token %}
+
+          {% for field in form_ocorrencia.visible_fields %}
+            <div class="form-group{% if field.errors %} has-error {% endif %}">
+              <label for="{{ field.id_for_label }}">
+                {% if field.field.required %}
+                  <span class="required">{{ field.label }}</span>
+                {% else %}
+                  {{ field.label }}
+                {% endif %}
+              </label>
+              {% render_field field class="form-control modal-field" %}
+              {% for error in field.errors %}
+                <span class="text-muted">{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% endfor %}
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button id="btnSubmitOcorrencia" type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 {% endblock content %}
 
 {% block js %}
@@ -44,5 +97,34 @@
       uiLibrary: 'bootstrap4',
       format: 'dd/mm/yyyy',
     });
+
+    $('#id_data_do_fato').datepicker({
+      uiLibrary: 'bootstrap4',
+      format: 'dd/mm/yyyy',
+    });
+
+    $('#modalOcorrencia').on('shown.bs.modal', function (e) {
+      // Clear fields
+      $('.modal-field').val('');
+    });
+
+
+    $('#formOcorrencia').on('submit', function(e) {
+      e.preventDefault();
+      let url = $(this).attr('action');
+      let postData = $(this).serialize();
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: postData,
+        success: function(response) {
+          $('#id_rai').append('<option value="' + response.pk + '" selected>' + response.rai + '</option>');
+          // Fecha o modal
+          $('#modalOcorrencia').modal('hide');
+        }
+      })
+    });
+
+
   </script>
 {% endblock js %}

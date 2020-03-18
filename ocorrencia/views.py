@@ -1,3 +1,4 @@
+import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 from django.db.models import Q
@@ -58,6 +59,21 @@ def ocorrencia_create(request):
         'url': reverse('ocorrencia:ocorrencias'),
     }
     return render(request, template_name, context)
+
+
+def ocorrencia_create_ajax(request):
+    form = OcorrenciaForm(request.POST or None)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form_post = form.save(commit=False)
+            form_post.save()
+            data = form.data
+            # Turn QueryDict instance is immutable.
+            data._mutable = True
+            data['pk'] = form_post.pk
+            print(data)
+            return JsonResponse(data)
 
 
 class OcorrenciaUpdate(LRM, UpdateView):
@@ -171,6 +187,7 @@ def homicidios(request):
 @login_required
 def homicidio_create(request):
     form = HomicidioForm(request.POST or None)
+    form_ocorrencia = OcorrenciaForm(request.POST or None)
     template_name = 'homicidio_form.html'
 
     if request.method == 'POST':
@@ -182,6 +199,7 @@ def homicidio_create(request):
 
     context = {
         'form': form,
+        'form_ocorrencia': form_ocorrencia,
         'model_name_plural': 'Homicidios',
         'url': reverse('ocorrencia:homicidios'),
     }

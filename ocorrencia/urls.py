@@ -9,6 +9,7 @@ ocorrencia_patterns = [
     path('', v.ocorrencias, name="ocorrencias"),
     path('<slug>/detail/', v.ocorrencia, name="ocorrencia"),
     path('add/', v.ocorrencia_create, name="ocorrencia_create"),
+    path('add/ajax/', v.ocorrencia_create_ajax, name="ocorrencia_create_ajax"),
     path('<slug>/upate/', v.OcorrenciaUpdate.as_view(),
          name="ocorrencia_update"),
 ]

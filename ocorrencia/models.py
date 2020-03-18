@@ -88,7 +88,7 @@ class Infracao(UuidModel, CreatedBy, TimeStampedModel):
 
 
 class Ocorrencia(UuidModel, CreatedBy, TimeStampedModel):
-    rai = models.IntegerField(null=True, blank=True)
+    rai = models.IntegerField('RAI', null=True, blank=True)
     data_do_fato = models.DateField('Data do Fato')
     descricao = models.TextField('descrição', null=True, blank=True)
 
