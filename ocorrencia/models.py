@@ -191,6 +191,7 @@ FORMA = (
 class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
     rai = models.ForeignKey(
         Ocorrencia,
+        verbose_name='rai da Ocorrência',
         on_delete=models.SET_NULL,
         null=True,
         blank=True
