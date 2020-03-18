@@ -27,6 +27,16 @@ class PessoaForm(forms.ModelForm):
         )
 
 
+class PessoaMinimalForm(forms.ModelForm):
+
+    class Meta:
+        model = Pessoa
+        fields = (
+            'nome',
+            'sobrenome',
+        )
+
+
 class PessoaContatoForm(forms.ModelForm):
 
     class Meta:

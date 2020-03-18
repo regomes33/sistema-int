@@ -6,6 +6,7 @@ from localflavor.br.br_states import STATE_CHOICES
 from ocorrencia.forms import InfracaoForm, PessoaOcorrenciaForm
 from ocorrencia.models import Natureza, Arma, Ocorrencia
 from pessoa.forms import PessoaForm, PessoaContatoForm, PessoaComparsaForm
+from pessoa.forms import PessoaMinimalForm
 from pessoa.forms import PessoaVeiculoForm
 from pessoa.models import Pessoa, Faccao, Foto, Tatuagem
 from utils.data import QUALIFICACAO, STATUS, TIPO
@@ -140,6 +141,27 @@ def pessoa_add(request):
         data['status_code'] = 500
 
     return JsonResponse(data)
+
+
+def pessoa_create_ajax(request):
+    '''
+    Adiciona pessoa via Ajax.
+    Usado na tela ao criar Homicidio.
+    '''
+    form = PessoaMinimalForm(request.POST or None)
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form_post = form.save(commit=False)
+            form_post.save()
+            data = form.data
+            # Turn QueryDict instance is immutable.
+            data._mutable = True
+            data['pk'] = form_post.pk
+            data['full_name'] = ' '.join(
+                filter(None, [form_post.nome, form_post.sobrenome])
+            )
+            return JsonResponse(data)
 
 
 @login_required

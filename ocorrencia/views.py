@@ -6,6 +6,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import UpdateView
+from pessoa.forms import PessoaMinimalForm
 from .forms import OcorrenciaForm, InfracaoForm, NaturezaForm, HomicidioForm
 from .models import Ocorrencia, Infracao, Natureza, Homicidio
 
@@ -72,7 +73,6 @@ def ocorrencia_create_ajax(request):
             # Turn QueryDict instance is immutable.
             data._mutable = True
             data['pk'] = form_post.pk
-            print(data)
             return JsonResponse(data)
 
 
@@ -188,6 +188,7 @@ def homicidios(request):
 def homicidio_create(request):
     form = HomicidioForm(request.POST or None)
     form_ocorrencia = OcorrenciaForm(request.POST or None)
+    form_pessoa = PessoaMinimalForm(request.POST or None)
     template_name = 'homicidio_form.html'
 
     if request.method == 'POST':
@@ -200,6 +201,7 @@ def homicidio_create(request):
     context = {
         'form': form,
         'form_ocorrencia': form_ocorrencia,
+        'form_pessoa': form_pessoa,
         'model_name_plural': 'Homicidios',
         'url': reverse('ocorrencia:homicidios'),
     }

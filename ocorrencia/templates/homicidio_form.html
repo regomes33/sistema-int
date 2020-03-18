@@ -36,6 +36,10 @@
             {% if field.label == 'Rai da Ocorrência' %}
               <i class="fa fa-plus add-item" data-toggle="modal" data-target="#modalOcorrencia"></i>
             {% endif %}
+
+            {% if field.label == 'Vítima' %}
+              <i class="fa fa-plus add-item" data-toggle="modal" data-target="#modalPessoa"></i>
+            {% endif %}
           </label>
           {% render_field field class="form-control" %}
           {% for error in field.errors %}
@@ -51,7 +55,7 @@
   </form>
 </div>
 
-<!-- Modal -->
+<!-- Modal Ocorrencia -->
 <div class="modal fade" id="modalOcorrencia" tabindex="-1" role="dialog" aria-labelledby="modalOcorrenciaLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -89,6 +93,44 @@
   </div>
 </div>
 
+<!-- Modal Pessoa (Vitima) -->
+<div class="modal fade" id="modalPessoa" tabindex="-1" role="dialog" aria-labelledby="modalPessoaLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalPessoaLabel">Adicionar Pessoa</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form id="formPessoa" action="{% url 'api:pessoa_create_ajax' %}" method="POST">
+        <div class="modal-body">
+          {% csrf_token %}
+
+          {% for field in form_pessoa.visible_fields %}
+            <div class="form-group{% if field.errors %} has-error {% endif %}">
+              <label for="{{ field.id_for_label }}">
+                {% if field.field.required %}
+                  <span class="required">{{ field.label }}</span>
+                {% else %}
+                  {{ field.label }}
+                {% endif %}
+              </label>
+              {% render_field field class="form-control modal-field" %}
+              {% for error in field.errors %}
+                <span class="text-muted">{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% endfor %}
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button id="btnSubmitPessoa" type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 {% endblock content %}
 
 {% block js %}
@@ -104,6 +146,11 @@
     });
 
     $('#modalOcorrencia').on('shown.bs.modal', function (e) {
+      // Clear fields
+      $('.modal-field').val('');
+    });
+
+    $('#modalPessoa').on('shown.bs.modal', function (e) {
       // Clear fields
       $('.modal-field').val('');
     });
@@ -125,6 +172,21 @@
       })
     });
 
+    $('#formPessoa').on('submit', function(e) {
+      e.preventDefault();
+      let url = $(this).attr('action');
+      let postData = $(this).serialize();
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: postData,
+        success: function(response) {
+          $('#id_vitima').append('<option value="' + response.pk + '" selected>' + response.full_name + '</option>');
+          // Fecha o modal
+          $('#modalPessoa').modal('hide');
+        }
+      })
+    });
 
   </script>
 {% endblock js %}
