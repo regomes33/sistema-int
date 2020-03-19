@@ -92,7 +92,7 @@
               {% if selected_natureza == natureza.0 %}
                 <option value="{{ natureza.0 }}" selected>{{ natureza.1 }}</option>
               {% else %}
-                <option value="{{ natureza.0 }}">{{ selected_natureza }} - {{ natureza.0 }}- {{ natureza.1 }}</option>
+                <option value="{{ natureza.0 }}">{{ natureza.1 }}</option>
               {% endif %}
             {% endfor %}
           </select>
