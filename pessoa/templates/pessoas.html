@@ -108,6 +108,15 @@
           </select>
           <br>
 
+          <h6>Filtrar por Cidade</h6>
+
+          <select id="filterCidade" name="filter_cidade" class="form-control">
+            <option value="">Todos</option>
+            {% for cidade in cidades %}
+              <option value="{{ cidade }}">{{ cidade }}</option>
+            {% endfor %}
+          </select>
+
           <h6>Filtrar por Facção</h6>
 
           <select id="filterFaccao" name="filter_faccao" class="form-control">
@@ -117,15 +126,6 @@
             {% endfor %}
           </select>
           <br>
-
-          <h6>Filtrar por Cidade</h6>
-
-          <select id="filterCidade" name="filter_cidade" class="form-control">
-            <option value="">Todos</option>
-            {% for cidade in cidades %}
-              <option value="{{ cidade }}">{{ cidade }}</option>
-            {% endfor %}
-          </select>
 
         </form>
 
