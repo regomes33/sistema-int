@@ -34,6 +34,9 @@
   <script src="{% static '/js/axios.min.js' %}"></script>
 
   <style>
+    .breadcrumb-mt {
+      margin-top: 55px;
+    }
     .alert-error {
       font-size: 0.875rem;
       font-weight: 400;
@@ -62,7 +65,7 @@
       {% endblock nav %}
 
       <!-- Breadcrumb-->
-      <ol class="breadcrumb">
+      <ol class="breadcrumb breadcrumb-mt">
           <li class="breadcrumb-item">
               <a href="{% url 'core:index' %}">Início</a>
           </li>
