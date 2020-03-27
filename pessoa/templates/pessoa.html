@@ -188,6 +188,13 @@
                   {% if tatuagem.foto %}
                     <div class="card">
                       <img src="{{ tatuagem.foto.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ tatuagem.foto.name }}">
+                      <br>
+                      <span class="span-is-link"
+                          data-toggle="modal" 
+                          data-target="#modalEditarTatuagem" 
+                          @click="getTattoo('{{ tatuagem.pk }}', '{{ tatuagem.foto.url }}')">
+                        <i class="fa fa-edit" style="margin-left: 10px; margin-top: 10px;"></i> Editar
+                      </span>
                       <div class="card-body">
                         <p class="card-text text-left">{{ tatuagem.descricao }}</p>
                       </div>
@@ -476,6 +483,35 @@
   </div>
 </div>
 
+<!-- Modal Tatuagem -->
+<div class="modal fade" id="modalEditarTatuagem" tabindex="-1" role="dialog" aria-labelledby="modalEditarTatuagemLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalEditarTatuagemLabel">Editar Tatuagem</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form method="POST" @submit.prevent="salvarTatuagem">
+        <div class="modal-body">
+          {% csrf_token %}
+          <div class="form-group">
+            <img id="imgTatuagem" :src="tattoo.url" width="200px" class="img-rounded img-responsive">
+          </div>
+
+          <div class="form-group">
+            <input type="file" @change="processFileTattoo">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 </div>
 {% endblock content %}
 
@@ -527,6 +563,11 @@
           'photo': null,
           'url': '',
         },
+        tattoo: {
+          'pk': '',
+          'photo': null,
+          'url': '',
+        },
       },
       methods: {
         getContato(url) {
@@ -558,6 +599,11 @@
         getPhoto2(pk, url) {
           this.photo2.pk = pk
           this.photo2.url = url
+        },
+        getTattoo(pk, url) {
+          this.tattoo.pk = pk
+          this.tattoo.url = url
+          console.log(this.tattoo.url);
         },
         salvarContato() {
           let bodyFormData = new FormData();
@@ -596,6 +642,9 @@
         processFile2: function(e) {
           this.photo2.photo = e.target.files[0]
         },
+        processFileTattoo: function(e) {
+          this.tattoo.photo = e.target.files[0]
+        },
         salvarFoto() {
           let bodyFormData = new FormData();
           bodyFormData.append('photo', this.photo.photo);
@@ -613,6 +662,19 @@
           let bodyFormData = new FormData();
           bodyFormData.append('photo', this.photo2.photo);
           let url = endpoint + 'api/pessoas/' + this.photo2.pk + '/photo/edit/'
+          axios.post(url, bodyFormData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            })
+            .then(response => {
+              location.reload();
+            })
+        },
+        salvarTatuagem() {
+          let bodyFormData = new FormData();
+          bodyFormData.append('tattoo', this.tattoo.photo);
+          let url = endpoint + 'api/pessoas/' + this.tattoo.pk + '/tattoo/edit/'
           axios.post(url, bodyFormData, {
               headers: {
                 'Content-Type': 'multipart/form-data'

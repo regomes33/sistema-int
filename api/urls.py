@@ -13,6 +13,7 @@ pessoas_patterns = [
     path('<int:pk>/veiculo/edit/', v.veiculo_update, name="veiculo_update"),
     path('<int:pk>/comparsa/edit/', v.comparsa_update, name="comparsa_update"),
     path('<int:pk>/photo/edit/', v.photo_update, name="photo_update"),
+    path('<int:pk>/tattoo/edit/', v.tattoo_update, name="tattoo_update"),
 ]
 
 urlpatterns = [

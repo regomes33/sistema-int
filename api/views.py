@@ -337,17 +337,21 @@ def comparsa_update(request, pk):
 def photo_update(request, pk):
     photo = Foto.objects.get(pk=pk)
 
-    # data = {
-    #     'pk': comparsa.pk,
-    #     'nome': comparsa.nome,
-    #     'rg': comparsa.rg,
-    #     'cpf': comparsa.cpf,
-    #     'cnh': comparsa.cnh,
-    # }
-
     if request.method == 'POST':
         photo.foto = request.FILES.get('photo')
         photo.save()
         return JsonResponse({'data': 'OK'})
 
-    # return JsonResponse(data)
+    return JsonResponse({})
+
+
+@login_required
+def tattoo_update(request, pk):
+    tattoo = Tatuagem.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        tattoo.foto = request.FILES.get('tattoo')
+        tattoo.save()
+        return JsonResponse({'data': 'OK'})
+
+    return JsonResponse({})
