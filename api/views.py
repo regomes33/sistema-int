@@ -1,5 +1,6 @@
 import json
 import re
+from pprint import pprint
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from localflavor.br.br_states import STATE_CHOICES
@@ -9,7 +10,7 @@ from pessoa.forms import PessoaForm, PessoaContatoForm, PessoaComparsaForm
 from pessoa.forms import PessoaMinimalForm
 from pessoa.forms import PessoaVeiculoForm
 from pessoa.models import Pessoa, Faccao, Foto, Tatuagem
-from pessoa.models import PessoaContato
+from pessoa.models import PessoaContato, PessoaVeiculo
 from utils.data import QUALIFICACAO, STATUS, TIPO
 from veiculo.models import Veiculo
 
@@ -271,6 +272,39 @@ def contato_update(request, pk):
         contato.tipo = request.POST.get('tipo')
         contato.telefone = request.POST.get('telefone')
         contato.save()
+        return JsonResponse({'data': 'OK'})
+
+    return JsonResponse(data)
+
+
+@login_required
+def pessoa_veiculos(request):
+    veiculos = Veiculo.objects.all()
+    data = [
+        {
+            'pk': veiculo.pk,
+            'veiculo': veiculo.placa,
+        }
+        for veiculo in veiculos
+    ]
+    return JsonResponse({'data': data})
+
+
+@login_required
+def veiculo_update(request, pk):
+    veiculo = PessoaVeiculo.objects.get(pk=pk)
+
+    data = {
+        'pk': veiculo.pk,
+        'veiculo_pk': veiculo.veiculo.pk,
+        'veiculo': veiculo.veiculo.placa,
+    }
+
+    if request.method == 'POST':
+        veiculo_pk = request.POST.get('veiculo_pk')
+        veiculo_obj = Veiculo.objects.get(pk=veiculo_pk)
+        veiculo.veiculo = veiculo_obj
+        veiculo.save()
         return JsonResponse({'data': 'OK'})
 
     return JsonResponse(data)

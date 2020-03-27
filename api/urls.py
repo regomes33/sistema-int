@@ -9,6 +9,8 @@ pessoas_patterns = [
     path('add/', v.pessoa_add),
     path('add/ajax/', v.pessoa_create_ajax, name="pessoa_create_ajax"),
     path('<int:pk>/contato/edit/', v.contato_update, name="contato_update"),
+    path('veiculos/', v.pessoa_veiculos, name="pessoa_veiculos"),
+    path('<int:pk>/veiculo/edit/', v.veiculo_update, name="veiculo_update"),
 ]
 
 urlpatterns = [

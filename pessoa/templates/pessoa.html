@@ -89,7 +89,7 @@
                   {% for contato in object.pessoacontato_set.all %}
                   <p class="card-text">
                     <span class="badge badge-info">{{ contato.tipo }}</span> {{ contato.telefone }}
-                    <span class="editContato span-is-link"
+                    <span class="span-is-link"
                           data-toggle="modal" 
                           data-target="#modalEditarContato" 
                           @click="getContato('{% url 'api:contato_update' contato.pk %}')">
@@ -102,9 +102,26 @@
               <div class="card mt-4">
                 <div class="card-body">
                   <h3 class="card-title">Veículos</h3>
-                  {% for veiculo in object.pessoas_veiculos.all %}
-                  <p class="card-text">{{ veiculo.get_veiculo }}</p>
-                  {% endfor %}
+                    <table class="table">
+                      <tbody>
+                        {% for veiculo in object.pessoas_veiculos.all %}
+                          <tr>
+                            <td>
+                              {{ veiculo.veiculo.placa }}
+                              <small>{{ veiculo.pk }} - {{ veiculo.veiculo.pk }} - {{ veiculo.veiculo.modelo }} {{ veiculo.veiculo.cor }}</small>
+                            </td>
+                            <td>
+                              <span class="span-is-link"
+                                    data-toggle="modal" 
+                                    data-target="#modalEditarVeiculo" 
+                                    @click="getVeiculo('{% url 'api:veiculo_update' veiculo.pk %}')">
+                                <i class="fa fa-edit" style="margin-left: 10px;"></i>
+                              </span>
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
                 </div>
               </div>
             </div>
@@ -278,6 +295,7 @@
         <div class="modal-body">
             {% csrf_token %}
             <input id="id_contato_pk" type="hidden" v-model="contato.pk" />
+
             <div class="form-group">
               <label for="id_tipo">Tipo</label>
               <select id="id_tipo" name="tipo" class="form-control" v-model="contato.tipo">
@@ -289,6 +307,37 @@
             <div class="form-group">
               <label for="id_telefone">Telefone</label>
               <input id="id_telefone" name="telefone" type="tel" class="form-control" v-model="contato.telefone">
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Veiculo -->
+<div class="modal fade" id="modalEditarVeiculo" tabindex="-1" role="dialog" aria-labelledby="modalEditarVeiculoLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalEditarVeiculoLabel">Editar Veículo</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form method="POST" @submit.prevent="salvarVeiculo">
+        <div class="modal-body">
+            {% csrf_token %}
+            <input id="id_veiculo_pk" type="text" v-model="veiculo.pk" />
+
+            <div class="form-group">
+              <label for="id_veiculo">Veículo</label>
+              <select id="id_veiculo" name="veiculo" class="form-control" v-model="veiculo.veiculo_pk">
+                <option value="">---</option>
+                <option v-for="veiculo in veiculos" :key="veiculo.pk" :value="veiculo.pk">${ veiculo.veiculo }</option>
+              </select>
             </div>
 
           </div>
@@ -330,7 +379,13 @@
           'pk': '',
           'tipo': '',
           'telefone': '',
-        }
+        },
+        veiculos: [],
+        veiculo: {
+          'pk': '',
+          'veiculo_pk': '',
+          'veiculo': '',
+        },
       },
       methods: {
         getContato(url) {
@@ -341,17 +396,34 @@
             this.contato.telefone=response.data.telefone
           })
         },
+        getVeiculo(url) {
+          axios.get(url)
+          .then(response => {
+            this.veiculo.pk=response.data.pk
+            this.veiculo.veiculo_pk=response.data.veiculo_pk
+            this.veiculo.veiculo=response.data.veiculo
+          })
+          // Pega todos os veiculos de todas as pessoas.
+          axios.get(endpoint + 'api/pessoas/veiculos/')
+          .then(response => {
+            this.veiculos=response.data.data;
+          })
+        },
         salvarContato() {
           let bodyFormData = new FormData();
           bodyFormData.append('tipo', this.contato.tipo);
           bodyFormData.append('telefone', this.contato.telefone);
-
-
-          axios.post(endpoint + 'api/pessoas/' + this.contato.pk + '/contato/edit/', bodyFormData, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
+          let url = endpoint + 'api/pessoas/' + this.contato.pk + '/contato/edit/'
+          axios.post(url, bodyFormData)
+            .then(response => {
+              location.reload();
             })
+        },
+        salvarVeiculo() {
+          let bodyFormData = new FormData();
+          bodyFormData.append('veiculo_pk', this.veiculo.veiculo_pk);
+          let url = endpoint + 'api/pessoas/' + this.veiculo.pk + '/veiculo/edit/'
+          axios.post(url, bodyFormData)
             .then(response => {
               location.reload();
             })
