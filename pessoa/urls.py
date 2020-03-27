@@ -10,7 +10,6 @@ pessoa_patterns = [
     path('<slug>/detail/', v.pessoa, name="pessoa"),
     path('add/', v.pessoa_create, name="pessoa_create"),
     path('<slug>/edit/', v.pessoa_update, name="pessoa_update"),
-    path('<int:pk>/contato/edit/', v.contato_update, name="contato_update"),
 ]
 
 urlpatterns = [

@@ -1,13 +1,12 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
-from django.db.models import Q
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, resolve_url
 from django.urls import reverse
 from django.views.generic import ListView
-from .forms import PessoaForm, PessoaContatoForm
-from .models import Pessoa, Faccao, PessoaContato
+from .forms import PessoaForm
+from .models import Pessoa, Faccao
 from .mixins import SearchMixin
 from ocorrencia.models import PessoaOcorrencia, Natureza
 
@@ -92,22 +91,3 @@ def pessoa_update(request, slug):
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(resolve_url('pessoa:pessoa', pessoa.slug))
-
-
-@login_required
-def contato_update(request, pk):
-    contato = PessoaContato.objects.get(pk=pk)
-
-    data = {
-        'pk': contato.pk,
-        'tipo': contato.tipo,
-        'telefone': contato.telefone,
-    }
-
-    if request.method == 'POST':
-        contato.tipo = request.POST.get('tipo')
-        contato.telefone = request.POST.get('telefone')
-        contato.save()
-        return JsonResponse({'data': 'OK'})
-
-    return JsonResponse(data)

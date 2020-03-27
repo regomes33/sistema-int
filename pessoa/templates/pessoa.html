@@ -92,7 +92,7 @@
                     <span class="editContato span-is-link"
                           data-toggle="modal" 
                           data-target="#modalEditarContato" 
-                          @click="getContato('{% url 'pessoa:contato_update' contato.pk %}')">
+                          @click="getContato('{% url 'api:contato_update' contato.pk %}')">
                       <i class="fa fa-edit" style="margin-left: 10px;"></i>
                     </span>
                   </p>
@@ -347,7 +347,7 @@
           bodyFormData.append('telefone', this.contato.telefone);
 
 
-          axios.post(endpoint + 'pessoa/' + this.contato.pk + '/contato/edit/', bodyFormData, {
+          axios.post(endpoint + 'api/pessoas/' + this.contato.pk + '/contato/edit/', bodyFormData, {
               headers: {
                 'Content-Type': 'multipart/form-data'
               }

@@ -9,6 +9,7 @@ from pessoa.forms import PessoaForm, PessoaContatoForm, PessoaComparsaForm
 from pessoa.forms import PessoaMinimalForm
 from pessoa.forms import PessoaVeiculoForm
 from pessoa.models import Pessoa, Faccao, Foto, Tatuagem
+from pessoa.models import PessoaContato
 from utils.data import QUALIFICACAO, STATUS, TIPO
 from veiculo.models import Veiculo
 
@@ -254,3 +255,22 @@ def ufs(request):
         for item in items]
     response = {'data': data}
     return JsonResponse(response)
+
+
+@login_required
+def contato_update(request, pk):
+    contato = PessoaContato.objects.get(pk=pk)
+
+    data = {
+        'pk': contato.pk,
+        'tipo': contato.tipo,
+        'telefone': contato.telefone,
+    }
+
+    if request.method == 'POST':
+        contato.tipo = request.POST.get('tipo')
+        contato.telefone = request.POST.get('telefone')
+        contato.save()
+        return JsonResponse({'data': 'OK'})
+
+    return JsonResponse(data)
