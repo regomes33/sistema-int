@@ -114,7 +114,7 @@
                           <tr>
                             <td>
                               {{ veiculo.veiculo.placa }}
-                              <small>{{ veiculo.pk }} - {{ veiculo.veiculo.pk }} - {{ veiculo.veiculo.modelo }} {{ veiculo.veiculo.cor }}</small>
+                              <small>{{ veiculo.veiculo.modelo }} {{ veiculo.veiculo.cor }}</small>
                             </td>
                             <td>
                               <span class="span-is-link"
@@ -169,7 +169,7 @@
                           <span class="span-is-link"
                               data-toggle="modal" 
                               data-target="#modalEditarFoto2" 
-                              click="getPhoto('{{ foto.pk }}')">
+                              @click="getPhoto2('{{ foto.pk }}', '{{ foto.foto.url }}')">
                             <i class="fa fa-edit" style="margin-left: 10px; margin-top: 10px;"></i> Editar
                           </span>
                         </div>
@@ -353,7 +353,7 @@
       <form method="POST" @submit.prevent="salvarVeiculo">
         <div class="modal-body">
           {% csrf_token %}
-          <input id="id_veiculo_pk" type="text" v-model="veiculo.pk" />
+          <input id="id_veiculo_pk" type="hidden" v-model="veiculo.pk" />
 
           <div class="form-group">
             <label for="id_veiculo">Veículo</label>
@@ -427,8 +427,6 @@
       <form method="POST" @submit.prevent="salvarFoto">
         <div class="modal-body">
           {% csrf_token %}
-          <input id="id_foto_pk" type="hidden" gv-model="foto.pk" />
-
           <div class="form-group">
             {% if object.get_first_photo %}
               <img src="{{ object.get_first_photo.foto.url }}" width="200px" class="img-rounded img-responsive">
@@ -437,6 +435,35 @@
 
           <div class="form-group">
             <input id="id_foto" name="foto" type="file" @change="processFile">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Foto2 -->
+<div class="modal fade" id="modalEditarFoto2" tabindex="-1" role="dialog" aria-labelledby="modalEditarFotoLabel2">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalEditarFotoLabel2">Editar Foto</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form method="POST" @submit.prevent="salvarFoto2">
+        <div class="modal-body">
+          {% csrf_token %}
+          <div class="form-group">
+            <img id="imgPhoto" :src="photo2.url" width="200px" class="img-rounded img-responsive">
+          </div>
+
+          <div class="form-group">
+            <input type="file" @change="processFile2">
           </div>
 
         </div>
@@ -495,6 +522,11 @@
           'pk': '',
           'photo': null,
         },
+        photo2: {
+          'pk': '',
+          'photo': null,
+          'url': '',
+        },
       },
       methods: {
         getContato(url) {
@@ -522,6 +554,10 @@
         },
         getPhoto(pk) {
           this.photo.pk = pk
+        },
+        getPhoto2(pk, url) {
+          this.photo2.pk = pk
+          this.photo2.url = url
         },
         salvarContato() {
           let bodyFormData = new FormData();
@@ -557,10 +593,26 @@
         processFile: function(e) {
           this.photo.photo = e.target.files[0]
         },
+        processFile2: function(e) {
+          this.photo2.photo = e.target.files[0]
+        },
         salvarFoto() {
           let bodyFormData = new FormData();
           bodyFormData.append('photo', this.photo.photo);
           let url = endpoint + 'api/pessoas/' + this.photo.pk + '/photo/edit/'
+          axios.post(url, bodyFormData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            })
+            .then(response => {
+              location.reload();
+            })
+        },
+        salvarFoto2() {
+          let bodyFormData = new FormData();
+          bodyFormData.append('photo', this.photo2.photo);
+          let url = endpoint + 'api/pessoas/' + this.photo2.pk + '/photo/edit/'
           axios.post(url, bodyFormData, {
               headers: {
                 'Content-Type': 'multipart/form-data'
