@@ -4,9 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, resolve_url
 from django.urls import reverse
 from django.views.generic import ListView
+from .forms import PessoaForm
 from .models import Pessoa, Faccao
 from .mixins import SearchMixin
 from ocorrencia.models import PessoaOcorrencia, Natureza
@@ -60,11 +61,14 @@ def pessoa(request, slug):
     template_name = 'pessoa.html'
     obj = Pessoa.objects.get(slug=slug)
     ocorrencias = PessoaOcorrencia.objects.filter(pessoa__slug=slug)
+
+    form_pessoa = PessoaForm(request.POST or None, instance=obj)
     context = {
         'object': obj,
         'ocorrencias': ocorrencias,
         'model_name_plural': 'Pessoas',
         'url': reverse('pessoa:pessoas'),
+        'form_pessoa': form_pessoa,
     }
     return render(request, template_name, context)
 
@@ -78,6 +82,16 @@ def pessoa_create(request):
         'url': reverse('pessoa:pessoas'),
     }
     return render(request, template_name, context)
+
+
+@login_required
+def pessoa_update(request, slug):
+    pessoa = Pessoa.objects.get(slug=slug)
+    form = PessoaForm(request.POST or None, instance=pessoa)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(resolve_url('pessoa:pessoa', pessoa.slug))
 
 
 # class Render:

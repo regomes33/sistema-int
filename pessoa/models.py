@@ -8,11 +8,12 @@ class Pessoa(UuidModel, TimeStampedModel, CreatedBy, Address, Document):
     nome = models.CharField('nome', max_length=50)
     sobrenome = models.CharField('sobrenome', max_length=100)
     apelido = models.CharField(max_length=50, null=True, blank=True)
-    mae = models.CharField(max_length=50, null=True, blank=True)
+    mae = models.CharField('mãe', max_length=50, null=True, blank=True)
     pai = models.CharField(max_length=50, null=True, blank=True)
     faccao = models.ForeignKey(
         'Faccao',
         on_delete=models.SET_NULL,
+        verbose_name='facção',
         null=True,
         blank=True
     )

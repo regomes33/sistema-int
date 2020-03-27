@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load easy_mask %}
+{% load widget_tweaks %}
 
 {% block title %}| Pessoa{%endblock%}
 
@@ -49,6 +50,13 @@
                           <h2>{{ object }}</h2>
                           <p class="card-text">Apelido: {{ object.apelido|default:"---" }}</p>
                           <h5 class="card-title">Facção: {{ object.faccao|default:"---" }}</h5>
+
+                          <div class="pull-right">
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarPessoa">
+                              Editar
+                            </button>
+                          </div>
+
                         </div>
                     </div>
                   </div>
@@ -211,6 +219,46 @@
       </div>
     </div>
   </div>
+
+<!-- Modal Pessoa -->
+<div class="modal fade" id="modalEditarPessoa" tabindex="-1" role="dialog" aria-labelledby="modalEditarPessoaLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalEditarPessoaLabel">Editar Pessoa</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form action="{% url 'pessoa:pessoa_update' object.slug %}" method="POST">
+        <div class="modal-body">
+            {% csrf_token %}
+
+            {% for field in form_pessoa.visible_fields %}
+              <div class="form-group{% if field.errors %} has-error {% endif %}">
+                <label for="{{ field.id_for_label }}">
+                  {% if field.field.required %}
+                    <span class="required">{{ field.label }}</span>
+                  {% else %}
+                    {{ field.label }}
+                  {% endif %}
+                </label>
+                {% render_field field class="form-control" %}
+                {% for error in field.errors %}
+                  <span class="text-muted">{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% endfor %}
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
 </div>
 {% endblock content %}
 
