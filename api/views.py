@@ -10,7 +10,7 @@ from pessoa.forms import PessoaForm, PessoaContatoForm, PessoaComparsaForm
 from pessoa.forms import PessoaMinimalForm
 from pessoa.forms import PessoaVeiculoForm
 from pessoa.models import Pessoa, Faccao, Foto, Tatuagem
-from pessoa.models import PessoaContato, PessoaVeiculo
+from pessoa.models import PessoaContato, PessoaVeiculo, Comparsa
 from utils.data import QUALIFICACAO, STATUS, TIPO
 from veiculo.models import Veiculo
 
@@ -305,6 +305,29 @@ def veiculo_update(request, pk):
         veiculo_obj = Veiculo.objects.get(pk=veiculo_pk)
         veiculo.veiculo = veiculo_obj
         veiculo.save()
+        return JsonResponse({'data': 'OK'})
+
+    return JsonResponse(data)
+
+
+@login_required
+def comparsa_update(request, pk):
+    comparsa = Comparsa.objects.get(pk=pk)
+
+    data = {
+        'pk': comparsa.pk,
+        'nome': comparsa.nome,
+        'rg': comparsa.rg,
+        'cpf': comparsa.cpf,
+        'cnh': comparsa.cnh,
+    }
+
+    if request.method == 'POST':
+        comparsa.nome = request.POST.get('nome')
+        comparsa.rg = request.POST.get('rg')
+        comparsa.cpf = request.POST.get('cpf')
+        comparsa.cnh = request.POST.get('cnh')
+        comparsa.save()
         return JsonResponse({'data': 'OK'})
 
     return JsonResponse(data)

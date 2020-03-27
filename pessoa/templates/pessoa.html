@@ -130,7 +130,15 @@
                 <div class="card-body">
                   <h3 class="card-title">Comparsas</h3>
                   {% for comparsa in object.comparsa_set.all %}
-                  <p class="card-text">{{ comparsa }}</p>
+                  <p class="card-text">
+                    {{ comparsa }}
+                    <span class="span-is-link float-right"
+                          data-toggle="modal" 
+                          data-target="#modalEditarComparsa" 
+                          @click="getComparsa('{% url 'api:comparsa_update' comparsa.pk %}')">
+                      <i class="fa fa-edit" style="margin-left: 10px;"></i>
+                    </span>
+                  </p>
                   <ul class="list-group list-group-flush mb-4">
                     <li class="list-group-item">RG: {{ comparsa.rg }}</li>
                     <li class="list-group-item">CPF: {{ comparsa.cpf }}</li>
@@ -255,29 +263,29 @@
       </div>
       <form action="{% url 'pessoa:pessoa_update' object.slug %}" method="POST">
         <div class="modal-body">
-            {% csrf_token %}
+          {% csrf_token %}
 
-            {% for field in form_pessoa.visible_fields %}
-              <div class="form-group{% if field.errors %} has-error {% endif %}">
-                <label for="{{ field.id_for_label }}">
-                  {% if field.field.required %}
-                    <span class="required">{{ field.label }}</span>
-                  {% else %}
-                    {{ field.label }}
-                  {% endif %}
-                </label>
-                {% render_field field class="form-control" %}
-                {% for error in field.errors %}
-                  <span class="text-muted">{{ error }}</span>
-                {% endfor %}
-              </div>
-            {% endfor %}
+          {% for field in form_pessoa.visible_fields %}
+            <div class="form-group{% if field.errors %} has-error {% endif %}">
+              <label for="{{ field.id_for_label }}">
+                {% if field.field.required %}
+                  <span class="required">{{ field.label }}</span>
+                {% else %}
+                  {{ field.label }}
+                {% endif %}
+              </label>
+              {% render_field field class="form-control" %}
+              {% for error in field.errors %}
+                <span class="text-muted">{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% endfor %}
 
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-primary">Salvar</button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
       </form>
     </div>
   </div>
@@ -293,27 +301,27 @@
       </div>
       <form method="POST" @submit.prevent="salvarContato">
         <div class="modal-body">
-            {% csrf_token %}
-            <input id="id_contato_pk" type="hidden" v-model="contato.pk" />
+          {% csrf_token %}
+          <input id="id_contato_pk" type="hidden" v-model="contato.pk" />
 
-            <div class="form-group">
-              <label for="id_tipo">Tipo</label>
-              <select id="id_tipo" name="tipo" class="form-control" v-model="contato.tipo">
-                <option value="cel">Celular</option>
-                <option value="tel">Telefone</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="id_telefone">Telefone</label>
-              <input id="id_telefone" name="telefone" type="tel" class="form-control" v-model="contato.telefone">
-            </div>
-
+          <div class="form-group">
+            <label for="id_tipo">Tipo</label>
+            <select id="id_tipo" name="tipo" class="form-control" v-model="contato.tipo">
+              <option value="cel">Celular</option>
+              <option value="tel">Telefone</option>
+            </select>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-primary">Salvar</button>
+
+          <div class="form-group">
+            <label for="id_telefone">Telefone</label>
+            <input id="id_telefone" name="telefone" type="tel" class="form-control" v-model="contato.telefone">
           </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
       </form>
     </div>
   </div>
@@ -329,16 +337,16 @@
       </div>
       <form method="POST" @submit.prevent="salvarVeiculo">
         <div class="modal-body">
-            {% csrf_token %}
-            <input id="id_veiculo_pk" type="text" v-model="veiculo.pk" />
+          {% csrf_token %}
+          <input id="id_veiculo_pk" type="text" v-model="veiculo.pk" />
 
-            <div class="form-group">
-              <label for="id_veiculo">Veículo</label>
-              <select id="id_veiculo" name="veiculo" class="form-control" v-model="veiculo.veiculo_pk">
-                <option value="">---</option>
-                <option v-for="veiculo in veiculos" :key="veiculo.pk" :value="veiculo.pk">${ veiculo.veiculo }</option>
-              </select>
-            </div>
+          <div class="form-group">
+            <label for="id_veiculo">Veículo</label>
+            <select id="id_veiculo" name="veiculo" class="form-control" v-model="veiculo.veiculo_pk">
+              <option value="">---</option>
+              <option v-for="veiculo in veiculos" :key="veiculo.pk" :value="veiculo.pk">${ veiculo.veiculo }</option>
+            </select>
+          </div>
 
           </div>
           <div class="modal-footer">
@@ -350,6 +358,48 @@
   </div>
 </div>
 
+<!-- Modal Comparsa -->
+<div class="modal fade" id="modalEditarComparsa" tabindex="-1" role="dialog" aria-labelledby="modalEditarComparsaLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalEditarComparsaLabel">Editar Comparsa</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form method="POST" @submit.prevent="salvarComparsa">
+        <div class="modal-body">
+          {% csrf_token %}
+          <input id="id_comparsa_pk" type="hidden" v-model="comparsa.pk" />
+
+          <div class="form-group">
+            <label for="id_nome">Nome</label>
+            <input id="id_nome" name="nome" type="text" class="form-control" v-model="comparsa.nome">
+          </div>
+
+          <div class="form-group">
+            <label for="id_rg">RG</label>
+            <input id="id_rg" name="rg" type="text" class="form-control" v-model="comparsa.rg">
+          </div>
+
+          <div class="form-group">
+            <label for="id_cpf">CPF</label>
+            <input id="id_cpf" name="cpf" type="text" class="form-control" v-model="comparsa.cpf">
+          </div>
+
+          <div class="form-group">
+            <label for="id_cnh">CNH</label>
+            <input id="id_cnh" name="cnh" type="text" class="form-control" v-model="comparsa.cnh">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 </div>
 {% endblock content %}
@@ -386,27 +436,36 @@
           'veiculo_pk': '',
           'veiculo': '',
         },
+        comparsa: {
+          'pk': '',
+          'nome': '',
+          'rg': '',
+          'cpf': '',
+          'cnh': '',
+        }
       },
       methods: {
         getContato(url) {
           axios.get(url)
           .then(response => {
-            this.contato.pk=response.data.pk
-            this.contato.tipo=response.data.tipo
-            this.contato.telefone=response.data.telefone
+            this.contato=response.data
           })
         },
         getVeiculo(url) {
           axios.get(url)
           .then(response => {
-            this.veiculo.pk=response.data.pk
-            this.veiculo.veiculo_pk=response.data.veiculo_pk
-            this.veiculo.veiculo=response.data.veiculo
+            this.veiculo=response.data
           })
           // Pega todos os veiculos de todas as pessoas.
           axios.get(endpoint + 'api/pessoas/veiculos/')
           .then(response => {
             this.veiculos=response.data.data;
+          })
+        },
+        getComparsa(url) {
+          axios.get(url)
+          .then(response => {
+            this.comparsa=response.data
           })
         },
         salvarContato() {
@@ -423,6 +482,18 @@
           let bodyFormData = new FormData();
           bodyFormData.append('veiculo_pk', this.veiculo.veiculo_pk);
           let url = endpoint + 'api/pessoas/' + this.veiculo.pk + '/veiculo/edit/'
+          axios.post(url, bodyFormData)
+            .then(response => {
+              location.reload();
+            })
+        },
+        salvarComparsa() {
+          let bodyFormData = new FormData();
+          bodyFormData.append('nome', this.comparsa.nome);
+          bodyFormData.append('rg', this.comparsa.rg);
+          bodyFormData.append('cpf', this.comparsa.cpf);
+          bodyFormData.append('cnh', this.comparsa.cnh);
+          let url = endpoint + 'api/pessoas/' + this.comparsa.pk + '/comparsa/edit/'
           axios.post(url, bodyFormData)
             .then(response => {
               location.reload();

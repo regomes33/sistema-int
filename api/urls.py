@@ -11,6 +11,7 @@ pessoas_patterns = [
     path('<int:pk>/contato/edit/', v.contato_update, name="contato_update"),
     path('veiculos/', v.pessoa_veiculos, name="pessoa_veiculos"),
     path('<int:pk>/veiculo/edit/', v.veiculo_update, name="veiculo_update"),
+    path('<int:pk>/comparsa/edit/', v.comparsa_update, name="comparsa_update"),
 ]
 
 urlpatterns = [
