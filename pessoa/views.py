@@ -7,8 +7,8 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, resolve_url
 from django.urls import reverse
 from django.views.generic import ListView
-from .forms import PessoaForm
-from .models import Pessoa, Faccao
+from .forms import PessoaForm, PessoaContatoForm
+from .models import Pessoa, Faccao, PessoaContato
 from .mixins import SearchMixin
 from ocorrencia.models import PessoaOcorrencia, Natureza
 
@@ -64,6 +64,7 @@ def pessoa(request, slug):
 
     form_pessoa = PessoaForm(request.POST or None, instance=obj)
     context = {
+        'endpoint': settings.ENDPOINT,
         'object': obj,
         'ocorrencias': ocorrencias,
         'model_name_plural': 'Pessoas',
@@ -92,6 +93,25 @@ def pessoa_update(request, slug):
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(resolve_url('pessoa:pessoa', pessoa.slug))
+
+
+@login_required
+def contato_update(request, pk):
+    contato = PessoaContato.objects.get(pk=pk)
+
+    data = {
+        'pk': contato.pk,
+        'tipo': contato.tipo,
+        'telefone': contato.telefone,
+    }
+
+    if request.method == 'POST':
+        contato.tipo = request.POST.get('tipo')
+        contato.telefone = request.POST.get('telefone')
+        contato.save()
+        return JsonResponse({'data': 'OK'})
+
+    return JsonResponse(data)
 
 
 # class Render:

@@ -87,7 +87,15 @@
                 <div class="card-body">
                   <h3 class="card-title">Contatos</h3>
                   {% for contato in object.pessoacontato_set.all %}
-                  <p class="card-text">{{ contato.telefone }} <span class="badge badge-info">{{ contato.tipo }}</span></p>
+                  <p class="card-text">
+                    <span class="badge badge-info">{{ contato.tipo }}</span> {{ contato.telefone }}
+                    <span class="editContato span-is-link"
+                          data-toggle="modal" 
+                          data-target="#modalEditarContato" 
+                          @click="getContato('{% url 'pessoa:contato_update' contato.pk %}')">
+                      <i class="fa fa-edit" style="margin-left: 10px;"></i>
+                    </span>
+                  </p>
                   {% endfor %}
                 </div>
               </div>
@@ -258,11 +266,46 @@
   </div>
 </div>
 
+<!-- Modal Contato -->
+<div class="modal fade" id="modalEditarContato" tabindex="-1" role="dialog" aria-labelledby="modalEditarContatoLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalEditarContatoLabel">Editar Contato</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form method="POST" @submit.prevent="salvarContato">
+        <div class="modal-body">
+            {% csrf_token %}
+            <input id="id_contato_pk" type="hidden" v-model="contato.pk" />
+            <div class="form-group">
+              <label for="id_tipo">Tipo</label>
+              <select id="id_tipo" name="tipo" class="form-control" v-model="contato.tipo">
+                <option value="cel">Celular</option>
+                <option value="tel">Telefone</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="id_telefone">Telefone</label>
+              <input id="id_telefone" name="telefone" type="tel" class="form-control" v-model="contato.telefone">
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 </div>
 {% endblock content %}
 
-{% block js %}
+{% block vuejs %}
   <script>
     $('.my-collapse').on('shown.bs.collapse', function() {
       $(this).prev().find(".fa").addClass('fa-chevron-up').removeClass('fa-chevron-down');
@@ -272,4 +315,49 @@
       $(this).prev().find(".fa").addClass('fa-chevron-down').removeClass('fa-chevron-up');
     });
   </script>
-{% endblock js %}
+
+  <script>
+    const endpoint = '{{ endpoint }}';
+
+    axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+    axios.defaults.xsrfCookieName = 'csrftoken'
+
+    var app = new Vue({
+      el: '#app',
+      delimiters: ['${', '}'],
+      data: {
+        contato: {
+          'pk': '',
+          'tipo': '',
+          'telefone': '',
+        }
+      },
+      methods: {
+        getContato(url) {
+          axios.get(url)
+          .then(response => {
+            this.contato.pk=response.data.pk
+            this.contato.tipo=response.data.tipo
+            this.contato.telefone=response.data.telefone
+          })
+        },
+        salvarContato() {
+          let bodyFormData = new FormData();
+          bodyFormData.append('tipo', this.contato.tipo);
+          bodyFormData.append('telefone', this.contato.telefone);
+
+
+          axios.post(endpoint + 'pessoa/' + this.contato.pk + '/contato/edit/', bodyFormData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            })
+            .then(response => {
+              location.reload();
+            })
+        },
+      }
+    });
+  </script>
+{% endblock vuejs %}
+
