@@ -14,6 +14,9 @@ pessoas_patterns = [
     path('<int:pk>/comparsa/edit/', v.comparsa_update, name="comparsa_update"),
     path('<int:pk>/photo/edit/', v.photo_update, name="photo_update"),
     path('<int:pk>/tattoo/edit/', v.tattoo_update, name="tattoo_update"),
+    path('ocorrencias/', v.pessoa_ocorrencias, name="pessoa_ocorrencias"),
+    path('<int:pk>/ocorrencia/edit/',
+         v.ocorrencia_update, name="ocorrencia_update"),
 ]
 
 urlpatterns = [

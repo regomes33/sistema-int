@@ -232,6 +232,14 @@
                 <td>{{ ocorrencia.ocorrencia.rai }}</td>
                 <td>{{ ocorrencia.ocorrencia.data_do_fato }}</td>
                 <td>{{ ocorrencia.ocorrencia.descricao }}</td>
+                <td>
+                  <span class="span-is-link"
+                        data-toggle="modal" 
+                        data-target="#modalEditarOcorrencia" 
+                        @click="getOcorrencia('{% url 'api:ocorrencia_update' ocorrencia.pk %}')">
+                    <i class="fa fa-edit" style="margin-left: 10px;"></i>
+                  </span>
+                </td>
               </tr>
               {% endfor %}
             </tbody>
@@ -512,6 +520,37 @@
   </div>
 </div>
 
+<!-- Modal Ocorrencia -->
+<div class="modal fade" id="modalEditarOcorrencia" tabindex="-1" role="dialog" aria-labelledby="modalEditarOcorrenciaLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalEditarOcorrenciaLabel">Editar Veículo</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form method="POST" @submit.prevent="salvarOcorrencia">
+        <div class="modal-body">
+          {% csrf_token %}
+          <input id="id_ocorrencia_pk" type="hidden" v-model="ocorrencia.pk" />
+
+          <div class="form-group">
+            <label for="id_ocorrencia">Ocorrência</label>
+            <select id="id_ocorrencia" name="ocorrencia" class="form-control" v-model="ocorrencia.ocorrencia_pk">
+              <option value="">---</option>
+              <option v-for="ocorrencia in ocorrencias" :key="ocorrencia.pk" :value="ocorrencia.pk">${ ocorrencia.ocorrencia }</option>
+            </select>
+          </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 </div>
 {% endblock content %}
 
@@ -568,6 +607,12 @@
           'photo': null,
           'url': '',
         },
+        ocorrencias: [],
+        ocorrencia: {
+          'pk': '',
+          'ocorrencia_pk': '',
+          'ocorrencia': '',
+        },
       },
       methods: {
         getContato(url) {
@@ -604,6 +649,17 @@
           this.tattoo.pk = pk
           this.tattoo.url = url
           console.log(this.tattoo.url);
+        },
+        getOcorrencia(url) {
+          axios.get(url)
+          .then(response => {
+            this.ocorrencia = response.data
+          })
+          // Pega todas as ocorrencias de todas as pessoas.
+          axios.get(endpoint + 'api/pessoas/ocorrencias/')
+          .then(response => {
+            this.ocorrencias = response.data.data;
+          })
         },
         salvarContato() {
           let bodyFormData = new FormData();
@@ -680,6 +736,15 @@
                 'Content-Type': 'multipart/form-data'
               }
             })
+            .then(response => {
+              location.reload();
+            })
+        },
+        salvarOcorrencia() {
+          let bodyFormData = new FormData();
+          bodyFormData.append('ocorrencia_pk', this.ocorrencia.ocorrencia_pk);
+          let url = endpoint + 'api/pessoas/' + this.ocorrencia.pk + '/ocorrencia/edit/'
+          axios.post(url, bodyFormData)
             .then(response => {
               location.reload();
             })

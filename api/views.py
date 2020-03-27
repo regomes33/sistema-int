@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from localflavor.br.br_states import STATE_CHOICES
 from ocorrencia.forms import InfracaoForm, PessoaOcorrenciaForm
-from ocorrencia.models import Natureza, Arma, Ocorrencia
+from ocorrencia.models import Natureza, Arma, Ocorrencia, PessoaOcorrencia
 from pessoa.forms import PessoaForm, PessoaContatoForm, PessoaComparsaForm
 from pessoa.forms import PessoaMinimalForm
 from pessoa.forms import PessoaVeiculoForm
@@ -355,3 +355,36 @@ def tattoo_update(request, pk):
         return JsonResponse({'data': 'OK'})
 
     return JsonResponse({})
+
+
+@login_required
+def pessoa_ocorrencias(request):
+    ocorrencias = Ocorrencia.objects.all()
+    data = [
+        {
+            'pk': ocorrencia.pk,
+            'ocorrencia': ocorrencia.rai,
+        }
+        for ocorrencia in ocorrencias
+    ]
+    return JsonResponse({'data': data})
+
+
+@login_required
+def ocorrencia_update(request, pk):
+    ocorrencia = PessoaOcorrencia.objects.get(pk=pk)
+
+    data = {
+        'pk': ocorrencia.pk,
+        'ocorrencia_pk': ocorrencia.ocorrencia.pk,
+        'ocorrencia': ocorrencia.ocorrencia.rai,
+    }
+
+    if request.method == 'POST':
+        ocorrencia_pk = request.POST.get('ocorrencia_pk')
+        ocorrencia_obj = Ocorrencia.objects.get(pk=ocorrencia_pk)
+        ocorrencia.ocorrencia = ocorrencia_obj
+        ocorrencia.save()
+        return JsonResponse({'data': 'OK'})
+
+    return JsonResponse(data)
