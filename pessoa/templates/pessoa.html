@@ -44,6 +44,12 @@
                         <div class="col-sm-6 col-md-6">
                           {% if object.get_first_photo %}
                             <img src="{{ object.get_first_photo.foto.url }}" width="200px" class="img-rounded img-responsive">
+                            <span class="span-is-link"
+                                  data-toggle="modal" 
+                                  data-target="#modalEditarFoto" 
+                                  @click="getPhoto('{{ object.get_first_photo.pk }}')">
+                              <i class="fa fa-edit" style="margin-left: 10px; margin-top: 10px;"></i> Editar foto
+                            </span>
                           {% endif %}
                         </div>
                         <div class="col-sm-6 col-md-6">
@@ -157,7 +163,16 @@
                   {% if foto != object.get_first_photo %}
                     {% if foto.foto %}
                       <div class="card">
-                        <img src="{{ foto.foto.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ foto.foto.name }}">
+                        <div class="card-body">
+                          <img src="{{ foto.foto.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ foto.foto.name }}">
+                          <br>
+                          <span class="span-is-link"
+                              data-toggle="modal" 
+                              data-target="#modalEditarFoto2" 
+                              click="getPhoto('{{ foto.pk }}')">
+                            <i class="fa fa-edit" style="margin-left: 10px; margin-top: 10px;"></i> Editar
+                          </span>
+                        </div>
                       </div>
                     {% endif %}
                   {% endif %}
@@ -401,6 +416,39 @@
   </div>
 </div>
 
+<!-- Modal Foto -->
+<div class="modal fade" id="modalEditarFoto" tabindex="-1" role="dialog" aria-labelledby="modalEditarFotoLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalEditarFotoLabel">Editar Foto</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form method="POST" @submit.prevent="salvarFoto">
+        <div class="modal-body">
+          {% csrf_token %}
+          <input id="id_foto_pk" type="hidden" gv-model="foto.pk" />
+
+          <div class="form-group">
+            {% if object.get_first_photo %}
+              <img src="{{ object.get_first_photo.foto.url }}" width="200px" class="img-rounded img-responsive">
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <input id="id_foto" name="foto" type="file" @change="processFile">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 </div>
 {% endblock content %}
 
@@ -442,31 +490,38 @@
           'rg': '',
           'cpf': '',
           'cnh': '',
-        }
+        },
+        photo: {
+          'pk': '',
+          'photo': null,
+        },
       },
       methods: {
         getContato(url) {
           axios.get(url)
           .then(response => {
-            this.contato=response.data
+            this.contato = response.data
           })
         },
         getVeiculo(url) {
           axios.get(url)
           .then(response => {
-            this.veiculo=response.data
+            this.veiculo = response.data
           })
           // Pega todos os veiculos de todas as pessoas.
           axios.get(endpoint + 'api/pessoas/veiculos/')
           .then(response => {
-            this.veiculos=response.data.data;
+            this.veiculos = response.data.data;
           })
         },
         getComparsa(url) {
           axios.get(url)
           .then(response => {
-            this.comparsa=response.data
+            this.comparsa = response.data
           })
+        },
+        getPhoto(pk) {
+          this.photo.pk = pk
         },
         salvarContato() {
           let bodyFormData = new FormData();
@@ -495,6 +550,22 @@
           bodyFormData.append('cnh', this.comparsa.cnh);
           let url = endpoint + 'api/pessoas/' + this.comparsa.pk + '/comparsa/edit/'
           axios.post(url, bodyFormData)
+            .then(response => {
+              location.reload();
+            })
+        },
+        processFile: function(e) {
+          this.photo.photo = e.target.files[0]
+        },
+        salvarFoto() {
+          let bodyFormData = new FormData();
+          bodyFormData.append('photo', this.photo.photo);
+          let url = endpoint + 'api/pessoas/' + this.photo.pk + '/photo/edit/'
+          axios.post(url, bodyFormData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            })
             .then(response => {
               location.reload();
             })

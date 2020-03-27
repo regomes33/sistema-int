@@ -331,3 +331,23 @@ def comparsa_update(request, pk):
         return JsonResponse({'data': 'OK'})
 
     return JsonResponse(data)
+
+
+@login_required
+def photo_update(request, pk):
+    photo = Foto.objects.get(pk=pk)
+
+    # data = {
+    #     'pk': comparsa.pk,
+    #     'nome': comparsa.nome,
+    #     'rg': comparsa.rg,
+    #     'cpf': comparsa.cpf,
+    #     'cnh': comparsa.cnh,
+    # }
+
+    if request.method == 'POST':
+        photo.foto = request.FILES.get('photo')
+        photo.save()
+        return JsonResponse({'data': 'OK'})
+
+    # return JsonResponse(data)
