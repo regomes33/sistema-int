@@ -394,28 +394,42 @@ def ocorrencia_update(request, pk):
 @login_required
 def infracao_update(request, pk):
     infracao = Infracao.objects.get(pk=pk)
+    natureza_pk = ''
+    arma_pk = ''
+    if infracao.natureza:
+        natureza_pk = infracao.natureza.pk
+    if infracao.arma:
+        arma_pk = infracao.arma.pk
 
     data = {
         'pk': infracao.pk,
-        'natureza_pk': infracao.natureza.pk,
+        'natureza_pk': natureza_pk,
+        'arma_pk': arma_pk,
         'qualificacao': infracao.qualificacao,
-        'arma_pk': infracao.arma.pk,
         'status': infracao.status,
     }
 
     if request.method == 'POST':
         natureza_pk = request.POST.get('natureza_pk')
-        natureza_obj = Natureza.objects.get(pk=natureza_pk)
+        natureza_obj = None
+        if natureza_pk:
+            natureza_obj = Natureza.objects.get(pk=natureza_pk)
 
         arma_pk = request.POST.get('arma_pk')
-        arma_obj = Arma.objects.get(pk=arma_pk)
+        arma_obj = None
+        if arma_pk:
+            arma_obj = Arma.objects.get(pk=arma_pk)
 
         qualificacao = request.POST.get('qualificacao')
         status = request.POST.get('status')
 
-        infracao.natureza = natureza_obj
+        if natureza_obj:
+            infracao.natureza = natureza_obj
+
+        if arma_obj:
+            infracao.arma = arma_obj
+
         infracao.qualificacao = qualificacao
-        infracao.arma = arma_obj
         infracao.status = status
         infracao.save()
         return JsonResponse({'data': 'OK'})
