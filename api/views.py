@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from localflavor.br.br_states import STATE_CHOICES
 from ocorrencia.forms import InfracaoForm, PessoaOcorrenciaForm
 from ocorrencia.models import Natureza, Arma, Ocorrencia, PessoaOcorrencia
+from ocorrencia.models import Infracao
 from pessoa.forms import PessoaForm, PessoaContatoForm, PessoaComparsaForm
 from pessoa.forms import PessoaMinimalForm
 from pessoa.forms import PessoaVeiculoForm
@@ -385,6 +386,38 @@ def ocorrencia_update(request, pk):
         ocorrencia_obj = Ocorrencia.objects.get(pk=ocorrencia_pk)
         ocorrencia.ocorrencia = ocorrencia_obj
         ocorrencia.save()
+        return JsonResponse({'data': 'OK'})
+
+    return JsonResponse(data)
+
+
+@login_required
+def infracao_update(request, pk):
+    infracao = Infracao.objects.get(pk=pk)
+
+    data = {
+        'pk': infracao.pk,
+        'natureza_pk': infracao.natureza.pk,
+        'qualificacao': infracao.qualificacao,
+        'arma_pk': infracao.arma.pk,
+        'status': infracao.status,
+    }
+
+    if request.method == 'POST':
+        natureza_pk = request.POST.get('natureza_pk')
+        natureza_obj = Natureza.objects.get(pk=natureza_pk)
+
+        arma_pk = request.POST.get('arma_pk')
+        arma_obj = Arma.objects.get(pk=arma_pk)
+
+        qualificacao = request.POST.get('qualificacao')
+        status = request.POST.get('status')
+
+        infracao.natureza = natureza_obj
+        infracao.qualificacao = qualificacao
+        infracao.arma = arma_obj
+        infracao.status = status
+        infracao.save()
         return JsonResponse({'data': 'OK'})
 
     return JsonResponse(data)

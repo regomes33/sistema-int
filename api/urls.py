@@ -7,16 +7,24 @@ app_name = 'api'
 pessoas_patterns = [
     path('', v.pessoas),
     path('add/', v.pessoa_add),
-    path('add/ajax/', v.pessoa_create_ajax, name="pessoa_create_ajax"),
-    path('<int:pk>/contato/edit/', v.contato_update, name="contato_update"),
-    path('veiculos/', v.pessoa_veiculos, name="pessoa_veiculos"),
-    path('<int:pk>/veiculo/edit/', v.veiculo_update, name="veiculo_update"),
-    path('<int:pk>/comparsa/edit/', v.comparsa_update, name="comparsa_update"),
-    path('<int:pk>/photo/edit/', v.photo_update, name="photo_update"),
-    path('<int:pk>/tattoo/edit/', v.tattoo_update, name="tattoo_update"),
-    path('ocorrencias/', v.pessoa_ocorrencias, name="pessoa_ocorrencias"),
-    path('<int:pk>/ocorrencia/edit/',
-         v.ocorrencia_update, name="ocorrencia_update"),
+    path('add/ajax/', v.pessoa_create_ajax, name='pessoa_create_ajax'),
+    path('<int:pk>/contato/edit/', v.contato_update, name='contato_update'),
+    path('veiculos/', v.pessoa_veiculos, name='pessoa_veiculos'),
+    path('<int:pk>/veiculo/edit/', v.veiculo_update, name='veiculo_update'),
+    path('<int:pk>/comparsa/edit/', v.comparsa_update, name='comparsa_update'),
+    path('<int:pk>/photo/edit/', v.photo_update, name='photo_update'),
+    path('<int:pk>/tattoo/edit/', v.tattoo_update, name='tattoo_update'),
+    path('ocorrencias/', v.pessoa_ocorrencias, name='pessoa_ocorrencias'),
+    path(
+        '<int:pk>/ocorrencia/edit/',
+        v.ocorrencia_update,
+        name='ocorrencia_update'
+    ),
+    path(
+        '<int:pk>/infracao/edit/',
+        v.infracao_update,
+        name='infracao_update'
+    ),
 ]
 
 urlpatterns = [

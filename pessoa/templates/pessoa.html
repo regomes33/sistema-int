@@ -224,6 +224,7 @@
                 <th>RAI</th>
                 <th>Data do fato</th>
                 <th>Descrição</th>
+                <th>Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -265,6 +266,7 @@
                 <th>Qualificação</th>
                 <th>Arma</th>
                 <th>Status</th>
+                <th>Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -274,6 +276,14 @@
                 <td>{{ infracao.get_qualificacao_display }}</td>
                 <td>{{ infracao.arma }}</td>
                 <td>{{ infracao.get_status_display }}</td>
+                <td>
+                  <span class="span-is-link"
+                        data-toggle="modal" 
+                        data-target="#modalEditarInfracao" 
+                        @click="getInfracao('{% url 'api:infracao_update' infracao.pk %}')">
+                    <i class="fa fa-edit" style="margin-left: 10px;"></i>
+                  </span>
+                </td>
               </tr>
               {% endfor %}
             </tbody>
@@ -525,7 +535,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="modalEditarOcorrenciaLabel">Editar Veículo</h4>
+        <h4 class="modal-title" id="modalEditarOcorrenciaLabel">Editar Ocorrência</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <form method="POST" @submit.prevent="salvarOcorrencia">
@@ -538,6 +548,61 @@
             <select id="id_ocorrencia" name="ocorrencia" class="form-control" v-model="ocorrencia.ocorrencia_pk">
               <option value="">---</option>
               <option v-for="ocorrencia in ocorrencias" :key="ocorrencia.pk" :value="ocorrencia.pk">${ ocorrencia.ocorrencia }</option>
+            </select>
+          </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Infracao -->
+<div class="modal fade" id="modalEditarInfracao" tabindex="-1" role="dialog" aria-labelledby="modalEditarInfracaoLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalEditarInfracaoLabel">Editar Infração</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form method="POST" @submit.prevent="salvarInfracao">
+        <div class="modal-body">
+          {% csrf_token %}
+          <input id="natureza_pk" type="hidden" v-model="infracao.pk" />
+
+          <div class="form-group">
+            <label for="id_natureza">Natureza</label>
+            <select id="id_natureza" class="form-control" v-model="infracao.natureza_pk">
+              <option value="">---</option>
+              <option v-for="natureza in naturezas" :value="natureza.value">${ natureza.text }</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="id_infracaoqualificacao">Qualificação</label>
+            <select id="id_qualificacao" class="form-control" v-model="infracao.qualificacao">
+              <option value="">---</option>
+              <option v-for="qualificacao in qualificacoes" :value="qualificacao.value">${ qualificacao.text }</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="id_arma">Arma</label>
+            <select id="id_arma" class="form-control" v-model="infracao.arma_pk">
+              <option value="">---</option>
+              <option v-for="arma in armas" :value="arma.value">${ arma.text }</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="id_status">Status</label>
+            <select id="id_status" class="form-control" v-model="infracao.status">
+              <option value="">---</option>
+              <option v-for="statu in status" :value="statu.value">${ statu.text }</option>
             </select>
           </div>
 
@@ -613,6 +678,17 @@
           'ocorrencia_pk': '',
           'ocorrencia': '',
         },
+        naturezas: [],
+        qualificacoes: [],
+        armas: [],
+        status: [],
+        infracao: {
+          'pk': '',
+          'natureza_pk': '',
+          'qualificacao': '',
+          'arma_pk': '',
+          'status': '',
+        },
       },
       methods: {
         getContato(url) {
@@ -648,7 +724,6 @@
         getTattoo(pk, url) {
           this.tattoo.pk = pk
           this.tattoo.url = url
-          console.log(this.tattoo.url);
         },
         getOcorrencia(url) {
           axios.get(url)
@@ -659,6 +734,32 @@
           axios.get(endpoint + 'api/pessoas/ocorrencias/')
           .then(response => {
             this.ocorrencias = response.data.data;
+          })
+        },
+        getInfracao(url) {
+          axios.get(url)
+          .then(response => {
+            this.infracao = response.data
+          })
+          // Pega todas as naturezas.
+          axios.get(endpoint + 'api/naturezas/')
+          .then(response => {
+            this.naturezas = response.data.data;
+          })
+          // Pega todas as qualificacoes.
+          axios.get(endpoint + 'api/qualificacoes/')
+          .then(response => {
+            this.qualificacoes = response.data.data;
+          })
+          // Pega todas as armas.
+          axios.get(endpoint + 'api/armas/')
+          .then(response => {
+            this.armas = response.data.data;
+          })
+          // Pega todos os status.
+          axios.get(endpoint + 'api/status/')
+          .then(response => {
+            this.status = response.data.data;
           })
         },
         salvarContato() {
@@ -744,6 +845,18 @@
           let bodyFormData = new FormData();
           bodyFormData.append('ocorrencia_pk', this.ocorrencia.ocorrencia_pk);
           let url = endpoint + 'api/pessoas/' + this.ocorrencia.pk + '/ocorrencia/edit/'
+          axios.post(url, bodyFormData)
+            .then(response => {
+              location.reload();
+            })
+        },
+        salvarInfracao() {
+          let bodyFormData = new FormData();
+          bodyFormData.append('natureza_pk', this.infracao.natureza_pk)
+          bodyFormData.append('qualificacao', this.infracao.qualificacao)
+          bodyFormData.append('arma_pk', this.infracao.arma_pk)
+          bodyFormData.append('status', this.infracao.status)
+          let url = endpoint + 'api/pessoas/' + this.infracao.pk + '/infracao/edit/'
           axios.post(url, bodyFormData)
             .then(response => {
               location.reload();
