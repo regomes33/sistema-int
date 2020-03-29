@@ -235,4 +235,5 @@ class HomicidioUpdate(LRM, UpdateView):
         context = super(HomicidioUpdate, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Homicidios'
         context['url'] = reverse('ocorrencia:homicidios')
+        context['form_ocorrencia'] = OcorrenciaForm(self.request.POST or None)
         return context
