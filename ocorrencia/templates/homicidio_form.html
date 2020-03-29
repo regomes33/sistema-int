@@ -11,16 +11,6 @@
   {% endif %}
 {% endblock %}
 
-{% block style %}
-  <style>
-    .add-item {
-      color: green;
-      padding-left: 5px;
-      cursor: pointer;
-    }
-  </style>
-{% endblock style %}
-
 {% block content %}
 <div class="container">
   {% if 'update' in request.path %}

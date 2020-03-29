@@ -91,7 +91,11 @@
             <div class="col-sm-3 text-left mb-4">
               <div class="card">
                 <div class="card-body">
-                  <h3 class="card-title">Contatos</h3>
+                  <h3 class="card-title">Contatos
+                    <span class="pull-right">
+                      <i class="fa fa-plus add-item" data-toggle="modal" data-target="#modalAdicionarContato"></i>
+                    </span>
+                  </h3>
                   {% for contato in object.pessoacontato_set.all %}
                   <p class="card-text">
                     <span class="badge badge-info">{{ contato.tipo }}</span> {{ contato.telefone }}
@@ -331,7 +335,43 @@
   </div>
 </div>
 
-<!-- Modal Contato -->
+<!-- Modal Adicionar Contato -->
+<div class="modal fade" id="modalAdicionarContato" tabindex="-1" role="dialog" aria-labelledby="modalAdicionarContatoLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalAdicionarContatoLabel">Adicionar Contato</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form method="POST" @submit.prevent="salvarAddContato('{{ object.pk }}')">
+        <div class="modal-body">
+          {% csrf_token %}
+          <input id="id_contato_pk" type="hidden" v-model="contato.pk" />
+
+          <div class="form-group">
+            <label for="id_tipo">Tipo</label>
+            <select id="id_tipo" name="tipo" class="form-control" v-model="contato.tipo">
+              <option value="cel">Celular</option>
+              <option value="tel">Telefone</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="id_telefone">Telefone</label>
+            <input id="id_telefone" name="telefone" type="tel" class="form-control" v-model="contato.telefone">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Contato -->
 <div class="modal fade" id="modalEditarContato" tabindex="-1" role="dialog" aria-labelledby="modalEditarContatoLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -367,7 +407,7 @@
   </div>
 </div>
 
-<!-- Modal Veiculo -->
+<!-- Modal Editar Veiculo -->
 <div class="modal fade" id="modalEditarVeiculo" tabindex="-1" role="dialog" aria-labelledby="modalEditarVeiculoLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -398,7 +438,7 @@
   </div>
 </div>
 
-<!-- Modal Comparsa -->
+<!-- Modal Editar Comparsa -->
 <div class="modal fade" id="modalEditarComparsa" tabindex="-1" role="dialog" aria-labelledby="modalEditarComparsaLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -441,7 +481,7 @@
   </div>
 </div>
 
-<!-- Modal Foto -->
+<!-- Modal Editar Foto -->
 <div class="modal fade" id="modalEditarFoto" tabindex="-1" role="dialog" aria-labelledby="modalEditarFotoLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -472,7 +512,7 @@
   </div>
 </div>
 
-<!-- Modal Foto2 -->
+<!-- Modal Editar Foto2 -->
 <div class="modal fade" id="modalEditarFoto2" tabindex="-1" role="dialog" aria-labelledby="modalEditarFotoLabel2">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -501,7 +541,7 @@
   </div>
 </div>
 
-<!-- Modal Tatuagem -->
+<!-- Modal Editar Tatuagem -->
 <div class="modal fade" id="modalEditarTatuagem" tabindex="-1" role="dialog" aria-labelledby="modalEditarTatuagemLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -530,7 +570,7 @@
   </div>
 </div>
 
-<!-- Modal Ocorrencia -->
+<!-- Modal Editar Ocorrencia -->
 <div class="modal fade" id="modalEditarOcorrencia" tabindex="-1" role="dialog" aria-labelledby="modalEditarOcorrenciaLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -561,7 +601,7 @@
   </div>
 </div>
 
-<!-- Modal Infracao -->
+<!-- Modal Editar Infracao -->
 <div class="modal fade" id="modalEditarInfracao" tabindex="-1" role="dialog" aria-labelledby="modalEditarInfracaoLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -761,6 +801,16 @@
           .then(response => {
             this.status = response.data.data;
           })
+        },
+        salvarAddContato(pessoa_pk) {
+          let bodyFormData = new FormData();
+          bodyFormData.append('tipo', this.contato.tipo);
+          bodyFormData.append('telefone', this.contato.telefone);
+          let url = endpoint + 'api/pessoas/' + pessoa_pk + '/contato/add/'
+          axios.post(url, bodyFormData)
+            .then(response => {
+              location.reload();
+            })
         },
         salvarContato() {
           let bodyFormData = new FormData();

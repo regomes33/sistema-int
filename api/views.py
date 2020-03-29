@@ -260,6 +260,18 @@ def ufs(request):
 
 
 @login_required
+def contato_add(request, pessoa_pk):
+    if request.method == 'POST':
+        pessoa = Pessoa.objects.get(pk=pessoa_pk)
+        PessoaContato.objects.create(
+            pessoa=pessoa,
+            tipo=request.POST.get('tipo'),
+            telefone=request.POST.get('telefone')
+        )
+        return JsonResponse({'data': 'OK'})
+
+
+@login_required
 def contato_update(request, pk):
     contato = PessoaContato.objects.get(pk=pk)
 
