@@ -337,6 +337,24 @@ def veiculo_update(request, pk):
 
 
 @login_required
+def comparsa_add(request, pessoa_pk):
+    if request.method == 'POST':
+        pessoa = Pessoa.objects.get(pk=pessoa_pk)
+        nome = request.POST.get('nome')
+        rg = request.POST.get('rg')
+        cpf = request.POST.get('cpf')
+        cnh = request.POST.get('cnh')
+        Comparsa.objects.create(
+            pessoa=pessoa,
+            nome=nome,
+            rg=rg,
+            cpf=cpf,
+            cnh=cnh,
+        )
+        return JsonResponse({'data': 'OK'})
+
+
+@login_required
 def comparsa_update(request, pk):
     comparsa = Comparsa.objects.get(pk=pk)
 

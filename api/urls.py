@@ -13,6 +13,7 @@ pessoas_patterns = [
     path('veiculos/', v.pessoa_veiculos, name='pessoa_veiculos'),
     path('<int:pessoa_pk>/veiculo/add/', v.veiculo_add, name='veiculo_add'),
     path('<int:pk>/veiculo/edit/', v.veiculo_update, name='veiculo_update'),
+    path('<int:pessoa_pk>/comparsa/add/', v.comparsa_add, name='comparsa_add'),
     path('<int:pk>/comparsa/edit/', v.comparsa_update, name='comparsa_update'),
     path('<int:pk>/photo/edit/', v.photo_update, name='photo_update'),
     path('<int:pk>/tattoo/edit/', v.tattoo_update, name='tattoo_update'),
