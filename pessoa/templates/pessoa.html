@@ -274,7 +274,7 @@
               <tr>
                 <td>{{ infracao.natureza }}</td>
                 <td>{{ infracao.get_qualificacao_display }}</td>
-                <td>{{ infracao.arma }}</td>
+                <td>{{ infracao.arma|default:"---" }}</td>
                 <td>{{ infracao.get_status_display }}</td>
                 <td>
                   <span class="span-is-link"

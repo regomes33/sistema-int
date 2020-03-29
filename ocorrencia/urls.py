@@ -10,26 +10,26 @@ ocorrencia_patterns = [
     path('<slug>/detail/', v.ocorrencia, name="ocorrencia"),
     path('add/', v.ocorrencia_create, name="ocorrencia_create"),
     path('add/ajax/', v.ocorrencia_create_ajax, name="ocorrencia_create_ajax"),
-    path('<slug>/upate/', v.OcorrenciaUpdate.as_view(),
+    path('<slug>/update/', v.OcorrenciaUpdate.as_view(),
          name="ocorrencia_update"),
 ]
 
 infracao_patterns = [
     path('', v.infracoes, name="infracoes"),
     path('add/', v.infracao_create, name="infracao_create"),
-    path('<slug>/upate/', v.InfracaoUpdate.as_view(), name="infracao_update"),
+    path('<slug>/update/', v.InfracaoUpdate.as_view(), name="infracao_update"),
 ]
 
 natureza_patterns = [
     path('', v.naturezas, name="naturezas"),
     path('add/', v.natureza_create, name="natureza_create"),
-    path('<slug>/upate/', v.NaturezaUpdate.as_view(), name="natureza_update"),
+    path('<slug>/update/', v.NaturezaUpdate.as_view(), name="natureza_update"),
 ]
 
 homicidio_patterns = [
     path('', v.homicidios, name="homicidios"),
     path('add/', v.homicidio_create, name="homicidio_create"),
-    path('<slug>/upate/', v.HomicidioUpdate.as_view(), name="homicidio_update"),
+    path('<slug>/update/', v.HomicidioUpdate.as_view(), name="homicidio_update"),
 ]
 
 urlpatterns = [
