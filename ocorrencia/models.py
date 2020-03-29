@@ -101,7 +101,7 @@ class Ocorrencia(UuidModel, CreatedBy, TimeStampedModel):
         return str(self.rai)
 
     def get_absolute_url(self):
-        return reverse_lazy('ocorrencia:ocorrencia', kwargs={'pk': self.pk})
+        return reverse_lazy('ocorrencia:ocorrencia', kwargs={'slug': self.slug})
 
     def to_dict(self):
         return {
