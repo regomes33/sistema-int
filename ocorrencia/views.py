@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, resolve_url
 from django.urls import reverse
 from django.views.generic import UpdateView
 from pessoa.forms import PessoaMinimalForm
@@ -81,6 +81,12 @@ class OcorrenciaUpdate(LRM, UpdateView):
     template_name = 'ocorrencia_form.html'
     form_class = OcorrenciaForm
 
+    def get_context_data(self, **kwargs):
+        context = super(OcorrenciaUpdate, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Ocorrências'
+        context['url'] = reverse('ocorrencia:ocorrencias')
+        return context
+
 
 @login_required
 def infracoes(request):
@@ -125,6 +131,12 @@ class InfracaoUpdate(LRM, UpdateView):
     template_name = 'infracao_form.html'
     form_class = InfracaoForm
 
+    def get_context_data(self, **kwargs):
+        context = super(InfracaoUpdate, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Infrações'
+        context['url'] = reverse('ocorrencia:infracoes')
+        return context
+
 
 @login_required
 def naturezas(request):
@@ -164,6 +176,12 @@ class NaturezaUpdate(LRM, UpdateView):
     model = Natureza
     template_name = 'natureza_form.html'
     form_class = NaturezaForm
+
+    def get_context_data(self, **kwargs):
+        context = super(NaturezaUpdate, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Naturezas'
+        context['url'] = reverse('ocorrencia:naturezas')
+        return context
 
 
 @login_required
@@ -212,3 +230,9 @@ class HomicidioUpdate(LRM, UpdateView):
     model = Homicidio
     template_name = 'homicidio_form.html'
     form_class = HomicidioForm
+
+    def get_context_data(self, **kwargs):
+        context = super(HomicidioUpdate, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Homicidios'
+        context['url'] = reverse('ocorrencia:homicidios')
+        return context

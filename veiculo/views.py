@@ -52,6 +52,12 @@ class VeiculoUpdate(LRM, UpdateView):
     template_name = 'veiculo_form.html'
     form_class = VeiculoForm
 
+    def get_context_data(self, **kwargs):
+        context = super(VeiculoUpdate, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Veículos'
+        context['url'] = reverse('veiculo:veiculos')
+        return context
+
 
 @login_required
 def modelos(request):
@@ -91,3 +97,9 @@ class ModeloUpdate(LRM, UpdateView):
     model = Modelo
     template_name = 'modelo_form.html'
     form_class = ModeloForm
+
+    def get_context_data(self, **kwargs):
+        context = super(ModeloUpdate, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Modelos'
+        context['url'] = reverse('veiculo:modelos')
+        return context

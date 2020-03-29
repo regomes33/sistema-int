@@ -4,12 +4,20 @@
 {% block title %}| Adicionar Infração{%endblock%}
 
 {% block breadcrumbs %}
-  {% include "breadcrumb/_include_breadcrumb_base_add.html" %}
+  {% if 'update' in request.path %}
+    {% include "breadcrumb/_include_breadcrumb_base_edit.html" %}
+  {% else %}
+    {% include "breadcrumb/_include_breadcrumb_base_add.html" %}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
 <div class="container">
-  <h4>Adicionar</h4>
+  {% if 'update' in request.path %}
+    <h4>Editar</h4>
+  {% else %}
+    <h4>Adicionar</h4>
+  {% endif %}
   <div>
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
