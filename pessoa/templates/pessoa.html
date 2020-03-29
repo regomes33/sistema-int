@@ -111,7 +111,11 @@
               </div>
               <div class="card mt-4">
                 <div class="card-body">
-                  <h3 class="card-title">Veículos</h3>
+                  <h3 class="card-title">Veículos
+                    <span class="pull-right">
+                      <i class="fa fa-plus add-item" data-toggle="modal" data-target="#modalAdicionarVeiculo" @click="getAddVeiculo"></i>
+                    </span>
+                  </h3>
                     <table class="table">
                       <tbody>
                         {% for veiculo in object.pessoas_veiculos.all %}
@@ -402,6 +406,37 @@
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
           <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Adicionar Veiculo -->
+<div class="modal fade" id="modalAdicionarVeiculo" tabindex="-1" role="dialog" aria-labelledby="modalAdicionarVeiculoLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalAdicionarVeiculoLabel">Adicionar Veículo</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form method="POST" @submit.prevent="salvarAddVeiculo('{{ object.pk }}')">
+        <div class="modal-body">
+          {% csrf_token %}
+          <input id="id_veiculo_pk" type="hidden" v-model="veiculo.pk" />
+
+          <div class="form-group">
+            <label for="id_veiculo">Veículo</label>
+            <select id="id_veiculo" name="veiculo" class="form-control" v-model="veiculo.veiculo_pk">
+              <option value="">---</option>
+              <option v-for="veiculo in veiculos" :key="veiculo.pk" :value="veiculo.pk">${ veiculo.veiculo }</option>
+            </select>
+          </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
       </form>
     </div>
   </div>
@@ -748,6 +783,13 @@
             this.veiculos = response.data.data;
           })
         },
+        getAddVeiculo() {
+          // Pega todos os veiculos de todas as pessoas.
+          axios.get(endpoint + 'api/pessoas/veiculos/')
+          .then(response => {
+            this.veiculos = response.data.data;
+          })
+        },
         getComparsa(url) {
           axios.get(url)
           .then(response => {
@@ -817,6 +859,15 @@
           bodyFormData.append('tipo', this.contato.tipo);
           bodyFormData.append('telefone', this.contato.telefone);
           let url = endpoint + 'api/pessoas/' + this.contato.pk + '/contato/edit/'
+          axios.post(url, bodyFormData)
+            .then(response => {
+              location.reload();
+            })
+        },
+        salvarAddVeiculo(pessoa_pk) {
+          let bodyFormData = new FormData();
+          bodyFormData.append('veiculo_pk', this.veiculo.veiculo_pk);
+          let url = endpoint + 'api/pessoas/' + pessoa_pk + '/veiculo/add/'
           axios.post(url, bodyFormData)
             .then(response => {
               location.reload();

@@ -304,6 +304,19 @@ def pessoa_veiculos(request):
 
 
 @login_required
+def veiculo_add(request, pessoa_pk):
+    if request.method == 'POST':
+        pessoa = Pessoa.objects.get(pk=pessoa_pk)
+        veiculo_pk = request.POST.get('veiculo_pk')
+        veiculo_obj = Veiculo.objects.get(pk=veiculo_pk)
+        PessoaVeiculo.objects.create(
+            pessoa=pessoa,
+            veiculo=veiculo_obj
+        )
+        return JsonResponse({'data': 'OK'})
+
+
+@login_required
 def veiculo_update(request, pk):
     veiculo = PessoaVeiculo.objects.get(pk=pk)
 

@@ -11,6 +11,7 @@ pessoas_patterns = [
     path('<int:pessoa_pk>/contato/add/', v.contato_add, name='contato_add'),
     path('<int:pk>/contato/edit/', v.contato_update, name='contato_update'),
     path('veiculos/', v.pessoa_veiculos, name='pessoa_veiculos'),
+    path('<int:pessoa_pk>/veiculo/add/', v.veiculo_add, name='veiculo_add'),
     path('<int:pk>/veiculo/edit/', v.veiculo_update, name='veiculo_update'),
     path('<int:pk>/comparsa/edit/', v.comparsa_update, name='comparsa_update'),
     path('<int:pk>/photo/edit/', v.photo_update, name='photo_update'),
