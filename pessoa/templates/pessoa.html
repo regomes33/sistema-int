@@ -277,6 +277,9 @@
           <button class="btn btn-link collapsed" type="button">
             <span><i class="fa fa-chevron-down"></i></span>
             Infrações
+            <span>
+              <i class="fa fa-plus fa-2x add-item" data-toggle="modal" data-target="#modalAdicionarInfracao" @click="getAddInfracao"></i>
+            </span>
           </button>
         </h2>
       </div>
@@ -783,6 +786,61 @@
   </div>
 </div>
 
+<!-- Modal Adicionar Infracao -->
+<div class="modal fade" id="modalAdicionarInfracao" tabindex="-1" role="dialog" aria-labelledby="modalAdicionarInfracaoLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalAdicionarInfracaoLabel">Adicionar Infração</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form method="POST" @submit.prevent="salvarAddInfracao('{{ object.pk }}')">
+        <div class="modal-body">
+          {% csrf_token %}
+          <input id="natureza_pk" type="hidden" v-model="infracao.pk" />
+
+          <div class="form-group">
+            <label for="id_natureza">Natureza</label>
+            <select id="id_natureza" class="form-control" v-model="infracao.natureza_pk">
+              <option value="">---</option>
+              <option v-for="natureza in naturezas" :value="natureza.value">${ natureza.text }</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="id_infracaoqualificacao">Qualificação</label>
+            <select id="id_qualificacao" class="form-control" v-model="infracao.qualificacao">
+              <option value="">---</option>
+              <option v-for="qualificacao in qualificacoes" :value="qualificacao.value">${ qualificacao.text }</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="id_arma">Arma</label>
+            <select id="id_arma" class="form-control" v-model="infracao.arma_pk">
+              <option value="">---</option>
+              <option v-for="arma in armas" :value="arma.value">${ arma.text }</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="id_status">Status</label>
+            <select id="id_status" class="form-control" v-model="infracao.status">
+              <option value="">---</option>
+              <option v-for="statu in status" :value="statu.value">${ statu.text }</option>
+            </select>
+          </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <!-- Modal Editar Infracao -->
 <div class="modal fade" id="modalEditarInfracao" tabindex="-1" role="dialog" aria-labelledby="modalEditarInfracaoLabel">
   <div class="modal-dialog" role="document">
@@ -1007,6 +1065,28 @@
             this.status = response.data.data;
           })
         },
+        getAddInfracao(url) {
+          // Pega todas as naturezas.
+          axios.get(endpoint + 'api/naturezas/')
+          .then(response => {
+            this.naturezas = response.data.data;
+          })
+          // Pega todas as qualificacoes.
+          axios.get(endpoint + 'api/qualificacoes/')
+          .then(response => {
+            this.qualificacoes = response.data.data;
+          })
+          // Pega todas as armas.
+          axios.get(endpoint + 'api/armas/')
+          .then(response => {
+            this.armas = response.data.data;
+          })
+          // Pega todos os status.
+          axios.get(endpoint + 'api/status/')
+          .then(response => {
+            this.status = response.data.data;
+          })
+        },
         salvarAddContato(pessoa_pk) {
           let bodyFormData = new FormData();
           bodyFormData.append('tipo', this.contato.tipo);
@@ -1162,6 +1242,18 @@
           let bodyFormData = new FormData();
           bodyFormData.append('ocorrencia_pk', this.ocorrencia.ocorrencia_pk);
           let url = endpoint + 'api/pessoas/' + this.ocorrencia.pk + '/ocorrencia/edit/'
+          axios.post(url, bodyFormData)
+            .then(response => {
+              location.reload();
+            })
+        },
+        salvarAddInfracao(pessoa_pk) {
+          let bodyFormData = new FormData();
+          bodyFormData.append('natureza_pk', this.infracao.natureza_pk)
+          bodyFormData.append('qualificacao', this.infracao.qualificacao)
+          bodyFormData.append('arma_pk', this.infracao.arma_pk)
+          bodyFormData.append('status', this.infracao.status)
+          let url = endpoint + 'api/pessoas/' + pessoa_pk + '/infracao/add/'
           axios.post(url, bodyFormData)
             .then(response => {
               location.reload();

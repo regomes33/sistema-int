@@ -438,7 +438,6 @@ def pessoa_ocorrencias(request):
 
 @login_required
 def ocorrencia_add(request, pessoa_pk):
-    # ocorrencia = PessoaOcorrencia.objects.get(pk=pk)
     if request.method == 'POST':
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
         ocorrencia_pk = request.POST.get('ocorrencia_pk')
@@ -468,6 +467,45 @@ def ocorrencia_update(request, pk):
         return JsonResponse({'data': 'OK'})
 
     return JsonResponse(data)
+
+
+@login_required
+def infracao_add(request, pessoa_pk):
+    if request.method == 'POST':
+        pessoa = Pessoa.objects.get(pk=pessoa_pk)
+        natureza_pk = ''
+        arma_pk = ''
+        natureza = None
+        arma = None
+
+        natureza_pk = request.POST.get('natureza_pk')
+        natureza_obj = None
+        if natureza_pk:
+            natureza_obj = Natureza.objects.get(pk=natureza_pk)
+
+        arma_pk = request.POST.get('arma_pk')
+        arma_obj = None
+        if arma_pk:
+            print(arma_pk)
+            arma_obj = Arma.objects.get(pk=arma_pk)
+
+        qualificacao = request.POST.get('qualificacao')
+        status = request.POST.get('status')
+
+        if natureza_obj:
+            natureza = natureza_obj
+
+        if arma_obj:
+            arma = arma_obj
+
+        Infracao.objects.create(
+            pessoa=pessoa,
+            natureza=natureza,
+            qualificacao=qualificacao,
+            arma=arma,
+            status=status,
+        )
+        return JsonResponse({'data': 'OK'})
 
 
 @login_required

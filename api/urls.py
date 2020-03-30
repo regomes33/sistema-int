@@ -31,6 +31,11 @@ pessoas_patterns = [
         name='ocorrencia_update'
     ),
     path(
+        '<int:pessoa_pk>/infracao/add/',
+        v.infracao_add,
+        name='infracao_add'
+    ),
+    path(
         '<int:pk>/infracao/edit/',
         v.infracao_update,
         name='infracao_update'
