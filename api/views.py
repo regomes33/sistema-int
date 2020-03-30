@@ -378,6 +378,17 @@ def comparsa_update(request, pk):
 
 
 @login_required
+def photo_add(request, pessoa_pk):
+    if request.method == 'POST':
+        pessoa = Pessoa.objects.get(pk=pessoa_pk)
+        photo = request.FILES.get('photo')
+        Foto.objects.create(pessoa=pessoa, foto=photo)
+        return JsonResponse({'data': 'OK'})
+
+    return JsonResponse({})
+
+
+@login_required
 def photo_update(request, pk):
     photo = Foto.objects.get(pk=pk)
 
