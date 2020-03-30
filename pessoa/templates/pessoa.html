@@ -198,23 +198,27 @@
           </div>
           <div class="row row-cols-1 row-cols-md-4">
             <div class="col text-left-mb-4">
-              <h3 class="card-title text-left">Tatuagens</h3>
+              <h3 class="card-title text-left">Tatuagens
+                <span>
+                  <i class="fa fa-plus add-item" data-toggle="modal" data-target="#modalAdicionarTatuagem"></i>
+                </span>
+              </h3>
               <div class="card-group">
                 {% for tatuagem in object.tatuagem_set.all %}
                   {% if tatuagem.foto %}
                     <div class="card">
-                      <img src="{{ tatuagem.foto.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ tatuagem.foto.name }}">
-                      <br>
-                      <span class="span-is-link"
-                          data-toggle="modal" 
-                          data-target="#modalEditarTatuagem" 
-                          @click="getTattoo('{{ tatuagem.pk }}', '{{ tatuagem.foto.url }}')">
-                        <i class="fa fa-edit" style="margin-left: 10px; margin-top: 10px;"></i> Editar
-                      </span>
                       <div class="card-body">
-                        <p class="card-text text-left">{{ tatuagem.descricao }}</p>
+                        <img src="{{ tatuagem.foto.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ tatuagem.foto.name }}">
+                        <br>
+                        <span class="span-is-link"
+                            data-toggle="modal" 
+                            data-target="#modalEditarTatuagem" 
+                            @click="getTattoo('{{ tatuagem.pk }}', '{{ tatuagem.foto.url }}')">
+                          <i class="fa fa-edit" style="margin-left: 10px; margin-top: 10px;"></i> Editar
+                        </span>
+                          <p class="card-text text-left">{{ tatuagem.descricao }}</p>
+                        </div>
                       </div>
-                    </div>
                   {% endif %}
                 {% endfor %}
               </div>
@@ -656,6 +660,35 @@
   </div>
 </div>
 
+<!-- Modal Adicionar Tatuagem -->
+<div class="modal fade" id="modalAdicionarTatuagem" tabindex="-1" role="dialog" aria-labelledby="modalAdicionarTatuagemLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalAdicionarTatuagemLabel">Adicionar Tatuagem</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form method="POST" @submit.prevent="salvarAddTatuagem('{{ object.pk }}')">
+        <div class="modal-body">
+          {% csrf_token %}
+          <div class="form-group">
+            <img id="imgTatuagem" :src="tattoo.url" width="200px" class="img-rounded img-responsive">
+          </div>
+
+          <div class="form-group">
+            <input type="file" @change="processFileAddTattoo">
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <!-- Modal Editar Tatuagem -->
 <div class="modal fade" id="modalEditarTatuagem" tabindex="-1" role="dialog" aria-labelledby="modalEditarTatuagemLabel">
   <div class="modal-dialog" role="document">
@@ -831,6 +864,11 @@
           'photo': null,
           'url': '',
         },
+        tattooAdd: {
+          'pk': '',
+          'photo': null,
+          'url': '',
+        },
         ocorrencias: [],
         ocorrencia: {
           'pk': '',
@@ -1002,6 +1040,9 @@
         processFileTattoo: function(e) {
           this.tattoo.photo = e.target.files[0]
         },
+        processFileAddTattoo: function(e) {
+          this.tattooAdd.photo = e.target.files[0]
+        },
         salvarFoto() {
           let bodyFormData = new FormData();
           bodyFormData.append('photo', this.photo.photo);
@@ -1032,6 +1073,19 @@
           let bodyFormData = new FormData();
           bodyFormData.append('photo', this.photoAdd.photo);
           let url = endpoint + 'api/pessoas/' + pessoa_pk + '/photo/add/'
+          axios.post(url, bodyFormData, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            })
+            .then(response => {
+              location.reload();
+            })
+        },
+        salvarAddTatuagem(pessoa_pk) {
+          let bodyFormData = new FormData();
+          bodyFormData.append('tattoo', this.tattooAdd.photo);
+          let url = endpoint + 'api/pessoas/' + pessoa_pk + '/tattoo/add/'
           axios.post(url, bodyFormData, {
               headers: {
                 'Content-Type': 'multipart/form-data'

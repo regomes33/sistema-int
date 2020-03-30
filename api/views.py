@@ -401,6 +401,17 @@ def photo_update(request, pk):
 
 
 @login_required
+def tattoo_add(request, pessoa_pk):
+    if request.method == 'POST':
+        pessoa = Pessoa.objects.get(pk=pessoa_pk)
+        tattoo = request.FILES.get('tattoo')
+        Tatuagem.objects.create(pessoa=pessoa, foto=tattoo)
+        return JsonResponse({'data': 'OK'})
+
+    return JsonResponse({})
+
+
+@login_required
 def tattoo_update(request, pk):
     tattoo = Tatuagem.objects.get(pk=pk)
 
