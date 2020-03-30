@@ -21,6 +21,11 @@ pessoas_patterns = [
     path('<int:pk>/tattoo/edit/', v.tattoo_update, name='tattoo_update'),
     path('ocorrencias/', v.pessoa_ocorrencias, name='pessoa_ocorrencias'),
     path(
+        '<int:pessoa_pk>/ocorrencia/add/',
+        v.ocorrencia_add,
+        name='ocorrencia_add'
+    ),
+    path(
         '<int:pk>/ocorrencia/edit/',
         v.ocorrencia_update,
         name='ocorrencia_update'

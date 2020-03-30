@@ -233,6 +233,9 @@
           <button class="btn btn-link collapsed" type="button">
             <span><i class="fa fa-chevron-down"></i></span>
             Ocorrências
+            <span>
+              <i class="fa fa-plus fa-2x add-item" data-toggle="modal" data-target="#modalAdicionarOcorrencia" @click="getAddOcorrencia"></i>
+            </span>
           </button>
         </h2>
       </div>
@@ -718,6 +721,37 @@
   </div>
 </div>
 
+<!-- Modal Adicionar Ocorrencia -->
+<div class="modal fade" id="modalAdicionarOcorrencia" tabindex="-1" role="dialog" aria-labelledby="modalAdicionarOcorrenciaLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalAdicionarOcorrenciaLabel">Adicionar Ocorrência</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form method="POST" @submit.prevent="salvarAddOcorrencia('{{ object.pk }}')">
+        <div class="modal-body">
+          {% csrf_token %}
+          <input id="id_ocorrencia_pk" type="hidden" v-model="ocorrencia.pk" />
+
+          <div class="form-group">
+            <label for="id_ocorrencia">Ocorrência</label>
+            <select id="id_ocorrencia" name="ocorrencia" class="form-control" v-model="ocorrencia.ocorrencia_pk">
+              <option value="">---</option>
+              <option v-for="ocorrencia in ocorrencias" :key="ocorrencia.pk" :value="ocorrencia.pk">${ ocorrencia.ocorrencia }</option>
+            </select>
+          </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <!-- Modal Editar Ocorrencia -->
 <div class="modal fade" id="modalEditarOcorrencia" tabindex="-1" role="dialog" aria-labelledby="modalEditarOcorrenciaLabel">
   <div class="modal-dialog" role="document">
@@ -940,6 +974,13 @@
             this.ocorrencias = response.data.data;
           })
         },
+        getAddOcorrencia() {
+          // Pega todas as ocorrencias de todas as pessoas.
+          axios.get(endpoint + 'api/pessoas/ocorrencias/')
+          .then(response => {
+            this.ocorrencias = response.data.data;
+          })
+        },
         getInfracao(url) {
           axios.get(url)
           .then(response => {
@@ -1104,6 +1145,15 @@
                 'Content-Type': 'multipart/form-data'
               }
             })
+            .then(response => {
+              location.reload();
+            })
+        },
+        salvarAddOcorrencia(pessoa_pk) {
+          let bodyFormData = new FormData();
+          bodyFormData.append('ocorrencia_pk', this.ocorrencia.ocorrencia_pk);
+          let url = endpoint + 'api/pessoas/' + pessoa_pk + '/ocorrencia/add/'
+          axios.post(url, bodyFormData)
             .then(response => {
               location.reload();
             })

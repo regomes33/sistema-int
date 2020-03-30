@@ -437,6 +437,20 @@ def pessoa_ocorrencias(request):
 
 
 @login_required
+def ocorrencia_add(request, pessoa_pk):
+    # ocorrencia = PessoaOcorrencia.objects.get(pk=pk)
+    if request.method == 'POST':
+        pessoa = Pessoa.objects.get(pk=pessoa_pk)
+        ocorrencia_pk = request.POST.get('ocorrencia_pk')
+        ocorrencia_obj = Ocorrencia.objects.get(pk=ocorrencia_pk)
+        PessoaOcorrencia.objects.create(
+            pessoa=pessoa,
+            ocorrencia=ocorrencia_obj
+        )
+        return JsonResponse({'data': 'OK'})
+
+
+@login_required
 def ocorrencia_update(request, pk):
     ocorrencia = PessoaOcorrencia.objects.get(pk=pk)
 
