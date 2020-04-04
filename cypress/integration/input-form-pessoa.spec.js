@@ -1,3 +1,4 @@
+let name = ['Benedito', 'Augusto', 'Paula', 'Silvia', 'Miranda']
 let rand_cpf
 let rand_rg
 let rand_cnh
@@ -20,18 +21,19 @@ describe('Input form', () => {
     cy.get('.btn-primary').click()
     cy.wait(500)
 
-    cy.get('input[name="nome"]').type('João')
+    var rand_name = name[Math.floor(Math.random() * name.length)]
+    cy.get('input[name="nome"]').type(rand_name)
     cy.get('input[name="sobrenome"]').type('Santos')
     cy.get('input[name="apelido"]').type('Cidão')
     cy.get('input[name="mae"]').type('Ivonete Santos')
     cy.get('input[name="pai"]').type('Benedito Santos')
-    cy.get('#faccao').select('1')
+    cy.get('#faccao').select('5')
     cy.wait(500)
 
     cy.get('#heading2').click()
-    rand_cpf = Math.floor(Math.random() * 10000000000)
+    rand_cpf = Math.floor(Math.random() * 99999999999)
     cy.get('#id_cpf').type(rand_cpf)
-    rand_rg = Math.floor(Math.random() * 100000000000)
+    rand_rg = Math.floor(Math.random() * 99999999999)
     cy.get('#id_rg').type(rand_rg)
     rand_cnh = Math.floor(Math.random() * 1000000)
     cy.get('#id_cnh').type(rand_cnh)
@@ -97,6 +99,6 @@ describe('Input form', () => {
     cy.get('#btnVeiculo').click()
     cy.get('#veiculo2').select('2')
 
-    // cy.get('#btnSubmit').click()
+    cy.get('button[type="submit"]').click()
   })
 })
