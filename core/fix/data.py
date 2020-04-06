@@ -5,18 +5,18 @@ ARMA = [
 ]
 
 NATUREZA = [
-    'Art. 121. Matar Alguem',
-    'Art. 155. Furto',
-    'Art. 157. Roubo',
-    'Art. 157. §3º - Roubo Com Lesão Corporal',
-    'Art. 157. §3º - Roubo Seguido de Morte (Latrocinio)',
-    'Art. 171. Estelionato',
-    'Art. 28. Usuário',
-    'Art. 33. Trafico de Drogas',
-    'Art. 34. Maquinario',
-    'Art. 35. Associarem-se duas ou mais pessoas para o Trafico',
-    'Art. 36. Financiar Financiamento do Trafico',
-    'Lei : 12850. Associação Criminosa',
+    ('121', 'Art. 121. Matar Alguem'),
+    ('155', 'Art. 155. Furto'),
+    ('157', 'Art. 157. Roubo'),
+    ('157. §3º', 'Art. 157. §3º - Roubo Com Lesão Corporal'),
+    ('157. §3º', 'Art. 157. §3º - Roubo Seguido de Morte (Latrocinio)'),
+    ('171', 'Art. 171. Estelionato'),
+    ('28', 'Art. 28. Usuário'),
+    ('33', 'Art. 33. Trafico de Drogas'),
+    ('34', 'Art. 34. Maquinario'),
+    ('35', 'Art. 35. Associarem-se duas ou mais pessoas para o Trafico'),
+    ('36', 'Art. 36. Financiar Financiamento do Trafico'),
+    ('12850', 'Lei : 12850. Associação Criminosa'),
 ]
 
 FACCAO = [

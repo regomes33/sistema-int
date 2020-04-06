@@ -164,7 +164,8 @@ def create_natureza():
     naturezas = progressbar(_naturezas, "Naturezas: ")
     for natureza in naturezas:
         obj = Natureza(
-            natureza=natureza,
+            artigo=natureza[0],
+            natureza=natureza[1],
         )
         aux.append(obj)
     Natureza.objects.bulk_create(aux)

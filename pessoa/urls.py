@@ -1,5 +1,6 @@
 from django.urls import path, include
 from pessoa import views as v
+from pessoa import reports as rep
 
 
 app_name = 'pessoa'
@@ -12,10 +13,12 @@ pessoa_patterns = [
     path('<slug>/edit/', v.pessoa_update, name="pessoa_update"),
 ]
 
+report_patterns = [
+    path('', rep.report_pessoas, name="report_pessoas"),
+]
+
 urlpatterns = [
     path('', include(pessoa_patterns)),
+    path('report/', include(report_patterns)),
     # path('accounts/', include('django.contrib.auth.urls')),
-    # path('relatorio_pdf/', Pdf.as_view(), name='relatorio_pdf'),
-    # path('relatorio_pdf/<int:pk>/', person_detail_pdf, name='person_detail_pdf'),
-    # path('validate_editar/', validate_editar, name="validade_editar"),
 ]
