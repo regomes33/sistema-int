@@ -1,4 +1,5 @@
 {% extends "base_report.html" %}
+{% load easy_mask %}
 
 {% block title %}Relatorio-{{ today|date:"Y-m-d" }}{%endblock%}
 
@@ -27,7 +28,7 @@
             <small>RG:</small> {{ object.rg }}
           {% endif %}
           {% if object.cpf %}
-            <br><small>CPF:</small> {{ object.cpf }}
+            <br><small>CPF:</small> {{ object.cpf|cpf_mask }}
           {% endif %}
         </td>
         <td>
