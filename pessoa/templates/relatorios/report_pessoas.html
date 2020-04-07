@@ -8,6 +8,7 @@
   <thead>
     <tr>
       <th>Nome completo</th>
+      <th>Documento</th>
       <th>Foto</th>
       <th>Apelido</th>
       <th>Facção</th>
@@ -21,6 +22,14 @@
       <tr>
         <td>
           {{ object }}
+        </td>
+        <td>
+          {% if object.rg %}
+            RG: {{ object.rg }}
+          {% endif %}
+          {% if object.cpf %}
+            <br>CPF: {{ object.cpf }}
+          {% endif %}
         </td>
         <td>
           {% if object.get_first_photo %}
