@@ -1,6 +1,6 @@
 {% extends "base_report.html" %}
 
-{% block title %}| Pessoa{%endblock%}
+{% block title %}Relatorio-{{ today|date:"Y-m-d" }}{%endblock%}
 
 {% block content %}
 
@@ -12,8 +12,7 @@
       <th>Foto</th>
       <th>Apelido</th>
       <th>Facção</th>
-      <th>Bairro</th>
-      <th>Cidade</th>
+      <th>Bairro/Cidade</th>
       <th>Infrações</th>
     </tr>
   </thead>
@@ -23,12 +22,12 @@
         <td>
           {{ object }}
         </td>
-        <td>
+        <td style="width: 200px;">
           {% if object.rg %}
-            RG: {{ object.rg }}
+            <small>RG:</small> {{ object.rg }}
           {% endif %}
           {% if object.cpf %}
-            <br>CPF: {{ object.cpf }}
+            <br><small>CPF:</small> {{ object.cpf }}
           {% endif %}
         </td>
         <td>
@@ -38,8 +37,14 @@
         </td>
         <td>{{ object.apelido|default:"---" }}</td>
         <td>{{ object.faccao|default:"---" }}</td>
-        <td>{{ object.district|default:"---" }}</td>
-        <td>{{ object.city|default:"---" }}</td>
+        <td>
+          {% if object.district %}
+            <small>Bairro</small><br> {{ object.district }}<br>
+          {% endif %}
+
+          {% if object.city %}
+            <small>Cidade:</small><br> {{ object.city }}
+          {% endif %}
         <td>
           {% for infracao in object.infracao_set.all %}
             <span>{{ infracao.natureza.artigo }}{% if not forloop.last %},{% endif %}</span>
