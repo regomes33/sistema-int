@@ -1,0 +1,246 @@
+{% extends "base_report.html" %}
+{% load easy_mask %}
+
+{% block title %}Ficha-{{ object }}-{{ today|date:"Y-m-d" }}{%endblock%}
+
+{% block content %}
+<div class="container">
+  <div class="accordion accordion-icons" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">Dados Pessoais</h2>
+      </div>
+      <div id="collapseOne" class="my-collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+          <div class="row row-cols-1 row-cols-md-3">
+            <div class="col-sm-6 text-left mb-4">
+              <div class="card">
+                <div class="card-body">
+
+                  <div class="well well-sm">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                          {% if object.get_first_photo %}
+                            <img src="{{ object.get_first_photo.foto.url }}" width="200px" class="img-rounded img-responsive">
+                            <span class="span-is-link"
+                                  data-toggle="modal" 
+                                  data-target="#modalEditarFoto" 
+                                  >
+                            </span>
+                          {% endif %}
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                          <h2>{{ object }}</h2>
+                          <p class="card-text">Apelido: {{ object.apelido|default:"---" }}</p>
+                          <h5 class="card-title">Facção: {{ object.faccao|default:"---" }}</h5>
+
+                        </div>
+                    </div>
+                  </div>
+
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <h5>Filiação</h5>
+                    <p class="card-text">Mãe: {{ object.mae|default:"---" }}</p>
+                    <p class="card-text">Pai: {{ object.pai|default:"---" }}</p>
+                  </li>
+                  <li class="list-group-item">
+                    <h5>Documentos</h5>
+                    <p class="card-text">RG: {{ object.rg|default:"---" }}</p>
+                    <p class="card-text">CPF: {{ object.cpf|cpf_mask|default:"---" }}</p>
+                    <p class="card-text">CNH: {{ object.cnh|default:"---" }}</p>
+                  </li>
+                  <li class="list-group-item">
+                    <h5>Endereço</h5>
+                    <p class="card-text">{{ object.get_address|default:"---" }}</p>
+                    <p class="card-text">{{ object.get_address_complement }}</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-sm-3 text-left mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Contatos</h3>
+                  {% for contato in object.pessoacontato_set.all %}
+                  <p class="card-text">
+                    <span>{{ contato.tipo }}: </span> {{ contato.telefone }}
+                    <span class="span-is-link"
+                          data-toggle="modal" 
+                          data-target="#modalEditarContato" 
+                          >
+                    </span>
+                  </p>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="card mt-4">
+                <div class="card-body">
+                  <h3 class="card-title">Veículos</h3>
+                    <table class="table">
+                      <tbody>
+                        {% for veiculo in object.pessoas_veiculos.all %}
+                          <tr>
+                            <td>
+                              {{ veiculo.veiculo.placa }}
+                              <small>{{ veiculo.veiculo.modelo }} {{ veiculo.veiculo.cor }}</small>
+                            </td>
+                            <td>
+                              <span class="span-is-link"
+                                    data-toggle="modal" 
+                                    data-target="#modalEditarVeiculo" 
+                                    >
+                              </span>
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3 text-left mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Comparsas</h3>
+                  {% for comparsa in object.comparsa_set.all %}
+                  <p class="card-text">
+                    {{ comparsa }}
+                    <span class="span-is-link float-right"
+                          data-toggle="modal" 
+                          data-target="#modalEditarComparsa" 
+                          >
+                    </span>
+                  </p>
+                  <ul class="list-group list-group-flush mb-4">
+                    <li class="list-group-item">RG: {{ comparsa.rg }}</li>
+                    <li class="list-group-item">CPF: {{ comparsa.cpf }}</li>
+                    <li class="list-group-item">CNH: {{ comparsa.cnh }}</li>
+                  </ul>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row row-cols-1 row-cols-md-4">
+            <div class="col text-left-mb-4">
+              <h3 class="card-title text-left">Fotos</h3>
+              <div class="card-group">
+                {% for foto in object.foto_set.all %}
+                  {% if foto != object.get_first_photo %}
+                    {% if foto.foto %}
+                      <div class="card">
+                        <div class="card-body">
+                          <img src="{{ foto.foto.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ foto.foto.name }}">
+                          <br>
+                          <span class="span-is-link"
+                              data-toggle="modal" 
+                              data-target="#modalEditarFoto2" 
+                              >
+                          </span>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="row row-cols-1 row-cols-md-4">
+            <div class="col text-left-mb-4">
+              <h3 class="card-title text-left">Tatuagens</h3>
+              <div class="card-group">
+                {% for tatuagem in object.tatuagem_set.all %}
+                  {% if tatuagem.foto %}
+                    <div class="card">
+                      <div class="card-body">
+                        <img src="{{ tatuagem.foto.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ tatuagem.foto.name }}">
+                        <br>
+                        <span class="span-is-link"
+                            data-toggle="modal" 
+                            data-target="#modalEditarTatuagem" 
+                            >
+                        </span>
+                          <p class="card-text text-left">{{ tatuagem.descricao }}</p>
+                        </div>
+                      </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingTwo">
+        <h3 class="mb-0">Ocorrências</h3>
+      </div>
+      <div id="collapseTwo" class="my-collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>RAI</th>
+                <th>Data do fato</th>
+                <th>Descrição</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for ocorrencia in ocorrencias %}
+              <tr>
+                <td>{{ ocorrencia.ocorrencia.rai }}</td>
+                <td>{{ ocorrencia.ocorrencia.data_do_fato }}</td>
+                <td>{{ ocorrencia.ocorrencia.descricao }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header" id="headingThree">
+        <h3 class="mb-0">Infrações</h3>
+      </div>
+      <div id="collapseThree" class="my-collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Natureza</th>
+                <th>Qualificação</th>
+                <th>Arma</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for infracao in object.infracao_set.all %}
+              <tr>
+                <td>{{ infracao.natureza }}</td>
+                <td>{{ infracao.get_qualificacao_display }}</td>
+                <td>{{ infracao.arma|default:"---" }}</td>
+                <td>{{ infracao.get_status_display }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+{% block js %}
+    <script>
+      window.onload = function () {
+        window.print();
+
+        setTimeout(() => {
+          window.close();
+        }, 2000);
+      };
+  </script>
+{% endblock js %}
