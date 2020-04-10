@@ -19,8 +19,7 @@ class PessoasList(LRM, SearchMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(PessoasList, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Pessoas'
-        context['pessoas_total'] = Pessoa.objects.values_list(
-            'id', flat=True).count()
+        # context['pessoas_total'] = Pessoa.objects.values_list('id', flat=True).count()
 
         context['naturezas'] = Natureza.objects.values_list('pk', 'natureza')
 
