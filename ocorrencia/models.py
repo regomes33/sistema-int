@@ -187,6 +187,27 @@ FORMA = (
     ('consumado', 'Consumado'),
 )
 
+class Autoria(UuidModel,models.Model):
+    autoria=models.CharField('autoria', max_length=50 )
+
+    class Meta:
+        ordering = ('autoria',)
+        verbose_name = 'autoria'
+        verbose_name_plural = 'autorias'
+
+    def __str__(self):
+        return self.autoria
+
+class Genero(UuidModel,models.Model):
+    genero=models.CharField('genero', max_length=50 )
+
+    class Meta:
+        ordering = ('genero',)
+        verbose_name = 'genero'
+        verbose_name_plural = 'generos'
+
+    def __str__(self):
+        return self.genero
 
 class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
     rai = models.ForeignKey(
@@ -203,6 +224,19 @@ class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
         verbose_name='área UPM',
         on_delete=models.CASCADE
     )
+
+    autoria = models.ForeignKey(
+        Autoria,
+        verbose_name='Autoria',
+        on_delete=models.CASCADE
+    )
+
+    genero = models.ForeignKey(
+        Genero,
+        verbose_name='Genero',
+        on_delete=models.CASCADE
+    )
+
     vitima = models.ForeignKey(
         Pessoa,
         verbose_name='vítima',
@@ -219,6 +253,8 @@ class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
         verbose_name='motivação',
         on_delete=models.CASCADE
     )
+
+
 
     class Meta:
         ordering = ('-data_do_homicidio',)

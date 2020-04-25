@@ -35,6 +35,9 @@ class HomicidioForm(forms.ModelForm):
             'vitima',
             'instrumento',
             'motivacao',
+            'autoria',
+            'genero',
+            'district',
         )
 
 

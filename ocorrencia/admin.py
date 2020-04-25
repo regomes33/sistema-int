@@ -8,6 +8,8 @@ from .models import OcorrenciaVeiculo
 from .models import AreaUpm
 from .models import Motivacao
 from .models import Homicidio
+from .models import Genero
+from .models import Autoria
 
 
 @admin.register(Arma)
@@ -80,6 +82,25 @@ class MotivacaoAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
 
+@admin.register(Autoria)
+class AutoriaAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'slug')
+    # list_filter = ('qualificacao', 'arma', 'status',)
+    # date_hierarchy = 'created'
+
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+@admin.register(Genero)
+class GeneroAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'slug')
+    # list_filter = ('qualificacao', 'arma', 'status',)
+    # date_hierarchy = 'created'
+
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 @admin.register(Homicidio)
 class HomicidioAdmin(admin.ModelAdmin):

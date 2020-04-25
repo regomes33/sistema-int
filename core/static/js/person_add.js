@@ -73,6 +73,9 @@ var app = new Vue({
       'cpf': '',
       'rg': '',
       'cnh': '',
+      'parente': '',
+      'grau_parentesco': '',
+      'observacao': '',
     }],
     v: [
       { 'v1': false },
@@ -201,6 +204,9 @@ var app = new Vue({
         'cpf': '',
         'rg': '',
         'cnh': '',
+        'parente': '',
+        'grau_parentesco': '',
+        'observacao': '',
       })
     },
     veiculoAdd() {

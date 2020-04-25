@@ -344,12 +344,23 @@ def comparsa_add(request, pessoa_pk):
         rg = request.POST.get('rg')
         cpf = request.POST.get('cpf')
         cnh = request.POST.get('cnh')
+        parente=request.POST.get('parente')
+        if parente == 'true':
+            parente=True
+        else:
+            parente=False    
+        grau_parentesco=request.POST.get('grau_parentesco')
+        observacao=request.POST.get('observacao')
+
         Comparsa.objects.create(
             pessoa=pessoa,
             nome=nome,
             rg=rg,
             cpf=cpf,
             cnh=cnh,
+            parente=parente,
+            grau_parentesco=grau_parentesco,
+            observacao=observacao,
         )
         return JsonResponse({'data': 'OK'})
 
@@ -364,6 +375,9 @@ def comparsa_update(request, pk):
         'rg': comparsa.rg,
         'cpf': comparsa.cpf,
         'cnh': comparsa.cnh,
+        'parente':comparsa.parente,
+        'grau_parentesco':comparsa.grau_parentesco,
+        'observacao':comparsa.observacao,
     }
 
     if request.method == 'POST':
@@ -371,6 +385,14 @@ def comparsa_update(request, pk):
         comparsa.rg = request.POST.get('rg')
         comparsa.cpf = request.POST.get('cpf')
         comparsa.cnh = request.POST.get('cnh')
+        comparsa.parente=request.POST.get('parente')
+        if comparsa.parente == 'true':
+            comparsa.parente=True
+        else:
+            comparsa.parente=False 
+        comparsa.grau_parentesco=request.POST.get('grau_parentesco')
+        comparsa.observacao=request.POST.get('observacao')
+
         comparsa.save()
         return JsonResponse({'data': 'OK'})
 
