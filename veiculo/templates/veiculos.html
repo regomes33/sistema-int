@@ -37,7 +37,7 @@
         <th>Placa</th>
         <th>Modelo</th>
         <th>Cor</th>
-        <th>Ações</th>
+        <th>Observações</th>
       </tr>
     </thead>
     <tbody>
@@ -46,6 +46,7 @@
           <td>{{ object.placa|default:"---" }}</td>
           <td>{{ object.modelo }}</td>
           <td>{{ object.cor }}</td>
+          <td>{{ object.observacao }}</td>
           <td>
             <a class="btn btn-info" href="{% url 'veiculo:veiculo_update' object.slug %}">Editar</a>
           </td>

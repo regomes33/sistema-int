@@ -309,9 +309,14 @@ def veiculo_add(request, pessoa_pk):
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
         veiculo_pk = request.POST.get('veiculo_pk')
         veiculo_obj = Veiculo.objects.get(pk=veiculo_pk)
+        observacao_pk=request.POST.get('observacao')
+        observacao_obj=Veiculo.objects.get(observacao_pk)
+        
         PessoaVeiculo.objects.create(
             pessoa=pessoa,
-            veiculo=veiculo_obj
+            veiculo=veiculo_obj,
+            observacao=observacao_obj,
+            
         )
         return JsonResponse({'data': 'OK'})
 
@@ -324,12 +329,16 @@ def veiculo_update(request, pk):
         'pk': veiculo.pk,
         'veiculo_pk': veiculo.veiculo.pk,
         'veiculo': veiculo.veiculo.placa,
+        'observacao':veiculo.veiculo.observacao,
     }
 
     if request.method == 'POST':
         veiculo_pk = request.POST.get('veiculo_pk')
         veiculo_obj = Veiculo.objects.get(pk=veiculo_pk)
         veiculo.veiculo = veiculo_obj
+        observacao=request.POST.get('observacao')
+        veiculo.veiculo.observacao=observacao
+        veiculo.veiculo.save()
         veiculo.save()
         return JsonResponse({'data': 'OK'})
 

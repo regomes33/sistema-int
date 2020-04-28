@@ -16,7 +16,7 @@ class Veiculo(UuidModel, TimeStampedModel):
         on_delete=models.PROTECT,
         related_name='cores',
     )
-    observacao=models.TextField(max_length=500,null=True,blank=True)
+    observacao=models.TextField('Observação',max_length=500,null=True,blank=True)
     class Meta:
         ordering = ('placa',)
         verbose_name = 'veículo'
@@ -32,6 +32,7 @@ class Veiculo(UuidModel, TimeStampedModel):
         return {
             'value': self.pk,
             'text': self.__str__(),
+            'observacao': self.observacao,
         }
 
 

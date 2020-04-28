@@ -123,8 +123,16 @@
                           <tr>
                             <td>
                               {{ veiculo.veiculo.placa }}
+                              <br>
+                             
                               <small>{{ veiculo.veiculo.modelo }} {{ veiculo.veiculo.cor }}</small>
                             </td>
+                             <tr>
+                               <td><label>Observações</label>
+                                <br>
+                                 {{veiculo.veiculo.observacao|default:"---"}}
+                               </td>
+                             </tr>
                             <td>
                               <span class="span-is-link"
                                     data-toggle="modal" 
@@ -448,13 +456,19 @@
         <div class="modal-body">
           {% csrf_token %}
           <input id="id_veiculo_pk" type="hidden" v-model="veiculo.pk" />
-
+         
           <div class="form-group">
             <label for="id_veiculo">Veículo</label>
             <select id="id_veiculo" name="veiculo" class="form-control" v-model="veiculo.veiculo_pk">
               <option value="">---</option>
               <option v-for="veiculo in veiculos" :key="veiculo.pk" :value="veiculo.pk">${ veiculo.veiculo }</option>
             </select>
+          </div>
+
+          <div class="form-group">  
+            <label for="id_observacao_veiculo">Observações</label>
+            <br>
+            <textarea id="id_observacao_veiculo" name= "observacao"type="text" maxlength="500" v-model="veiculo.observacao"></textarea>
           </div>
 
           </div>
@@ -488,6 +502,11 @@
             </select>
           </div>
 
+          
+          <div class="form-group">  
+            <label for="id_observacao_veiculo">Observações</label>
+            <br>
+            <textarea id="id_observacao_veiculo" name= "observacao"type="text" maxlength="500" v-model="veiculo.observacao"></textarea>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -964,6 +983,7 @@
           'pk': '',
           'veiculo_pk': '',
           'veiculo': '',
+          'observacao': '',
         },
         comparsa: {
           'pk': '',
@@ -1147,6 +1167,7 @@
         salvarAddVeiculo(pessoa_pk) {
           let bodyFormData = new FormData();
           bodyFormData.append('veiculo_pk', this.veiculo.veiculo_pk);
+          bodyFormData.append('observacao', this.veiculo.observacao);
           let url = endpoint + 'api/pessoas/' + pessoa_pk + '/veiculo/add/'
           axios.post(url, bodyFormData)
             .then(response => {
@@ -1156,6 +1177,7 @@
         salvarVeiculo() {
           let bodyFormData = new FormData();
           bodyFormData.append('veiculo_pk', this.veiculo.veiculo_pk);
+          bodyFormData.append('observacao', this.veiculo.observacao);  
           let url = endpoint + 'api/pessoas/' + this.veiculo.pk + '/veiculo/edit/'
           axios.post(url, bodyFormData)
             .then(response => {
