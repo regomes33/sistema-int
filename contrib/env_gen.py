@@ -10,8 +10,8 @@ chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
 
 CONFIG_STRING = """
 DEBUG=True
-SECRET_KEY=$$91rb)0mch91kqd+)6#q57smu&7*jfvyfu47+)yz=q(802wq4
-ALLOWED_HOSTS=127.0.0.1, .localhost,.https://sistema-int.herokuapp.com/
+SECRET_KEY=%s
+ALLOWED_HOSTS=127.0.0.1, .localhost
 #DATABASE_URL=postgres://USER:PASSWORD@HOST:PORT/NAME
 #DEFAULT_FROM_EMAIL=
 #EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
