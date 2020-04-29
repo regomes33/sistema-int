@@ -187,8 +187,9 @@ FORMA = (
     ('consumado', 'Consumado'),
 )
 
-class Autoria(UuidModel,models.Model):
-    autoria=models.CharField('autoria', max_length=50 )
+
+class Autoria(UuidModel, models.Model):
+    autoria = models.CharField('autoria', max_length=50)
 
     class Meta:
         ordering = ('autoria',)
@@ -198,8 +199,9 @@ class Autoria(UuidModel,models.Model):
     def __str__(self):
         return self.autoria
 
-class Genero(UuidModel,models.Model):
-    genero=models.CharField('genero', max_length=50 )
+
+class Genero(UuidModel, models.Model):
+    genero = models.CharField('genero', max_length=50)
 
     class Meta:
         ordering = ('genero',)
@@ -208,6 +210,7 @@ class Genero(UuidModel,models.Model):
 
     def __str__(self):
         return self.genero
+
 
 class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
     rai = models.ForeignKey(
@@ -253,8 +256,6 @@ class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
         verbose_name='motivação',
         on_delete=models.CASCADE
     )
-
-
 
     class Meta:
         ordering = ('-data_do_homicidio',)
