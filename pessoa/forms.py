@@ -36,6 +36,12 @@ class PessoaMinimalForm(forms.ModelForm):
             'sobrenome',
         )
 
+    def save(self, commit=True):
+        instance = super(PessoaMinimalForm, self).save(commit=False)
+        instance.vitima = True
+        instance.save()
+        return instance
+
 
 class PessoaContatoForm(forms.ModelForm):
 
@@ -48,7 +54,8 @@ class PessoaComparsaForm(forms.ModelForm):
 
     class Meta:
         model = Comparsa
-        fields = ('pessoa', 'nome', 'cpf', 'rg', 'cnh','parente','grau_parentesco','observacao')
+        fields = ('pessoa', 'nome', 'cpf', 'rg', 'cnh',
+                  'parente', 'grau_parentesco', 'observacao')
 
 
 class PessoaVeiculoForm(forms.ModelForm):

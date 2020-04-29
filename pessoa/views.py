@@ -7,11 +7,11 @@ from django.urls import reverse
 from django.views.generic import ListView
 from .forms import PessoaForm
 from .models import Pessoa, Faccao
-from .mixins import SearchMixin
+from .mixins import PessoaSomenteMixin, SearchMixin
 from ocorrencia.models import PessoaOcorrencia, Natureza
 
 
-class PessoasList(LRM, SearchMixin, ListView):
+class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):
     model = Pessoa
     template_name = 'pessoas.html'
     paginate_by = 10

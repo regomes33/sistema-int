@@ -61,7 +61,7 @@ class PessoaAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'slug', 'nome',
                     'sobrenome', 'apelido', 'faccao')
     search_fields = ('nome', 'sobrenome', 'apelido', 'mae', 'pai')
-    list_filter = ('faccao', 'infracao__natureza')
+    list_filter = ('vitima', 'faccao', 'infracao__natureza')
     date_hierarchy = 'created'
 
     # if not settings.DEBUG:

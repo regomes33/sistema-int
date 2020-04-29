@@ -1,6 +1,17 @@
 from django.db.models import Q
 
 
+class PessoaSomenteMixin(object):
+    '''
+    Retorna somente pessoas, exceto vítimas.
+    '''
+
+    def get_queryset(self):
+        queryset = super(PessoaSomenteMixin, self).get_queryset()
+        queryset = queryset.filter(vitima=False)
+        return queryset
+
+
 class SearchMixin(object):
 
     def get_queryset(self):

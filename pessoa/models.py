@@ -17,6 +17,7 @@ class Pessoa(UuidModel, TimeStampedModel, CreatedBy, Address, Document):
         null=True,
         blank=True
     )
+    vitima = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('nome',)
@@ -118,10 +119,10 @@ class Comparsa(UuidModel, TimeStampedModel, Document):
         null=True,
         blank=True
     )
-    parente=models.BooleanField(default=False)
-    grau_parentesco=models.CharField(max_length=50,null=True,blank=True)
-    observacao=models.TextField(max_length=500,null=True,blank=True)
-    
+    parente = models.BooleanField(default=False)
+    grau_parentesco = models.CharField(max_length=50, null=True, blank=True)
+    observacao = models.TextField(max_length=500, null=True, blank=True)
+
     class Meta:
         ordering = ('pessoa', 'nome')
         verbose_name = 'comparsa'
