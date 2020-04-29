@@ -309,14 +309,15 @@ def veiculo_add(request, pessoa_pk):
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
         veiculo_pk = request.POST.get('veiculo_pk')
         veiculo_obj = Veiculo.objects.get(pk=veiculo_pk)
-        observacao_pk=request.POST.get('observacao')
-        observacao_obj=Veiculo.objects.get(observacao_pk)
-        
+
+        # Salva a observação.
+        observacao = request.POST.get('observacao')
+        veiculo_obj.observacao = observacao
+        veiculo_obj.save()
+
         PessoaVeiculo.objects.create(
             pessoa=pessoa,
             veiculo=veiculo_obj,
-            observacao=observacao_obj,
-            
         )
         return JsonResponse({'data': 'OK'})
 
@@ -329,15 +330,15 @@ def veiculo_update(request, pk):
         'pk': veiculo.pk,
         'veiculo_pk': veiculo.veiculo.pk,
         'veiculo': veiculo.veiculo.placa,
-        'observacao':veiculo.veiculo.observacao,
+        'observacao': veiculo.veiculo.observacao,
     }
 
     if request.method == 'POST':
         veiculo_pk = request.POST.get('veiculo_pk')
         veiculo_obj = Veiculo.objects.get(pk=veiculo_pk)
         veiculo.veiculo = veiculo_obj
-        observacao=request.POST.get('observacao')
-        veiculo.veiculo.observacao=observacao
+        observacao = request.POST.get('observacao')
+        veiculo.veiculo.observacao = observacao
         veiculo.veiculo.save()
         veiculo.save()
         return JsonResponse({'data': 'OK'})
@@ -353,13 +354,13 @@ def comparsa_add(request, pessoa_pk):
         rg = request.POST.get('rg')
         cpf = request.POST.get('cpf')
         cnh = request.POST.get('cnh')
-        parente=request.POST.get('parente')
+        parente = request.POST.get('parente')
         if parente == 'true':
-            parente=True
+            parente = True
         else:
-            parente=False    
-        grau_parentesco=request.POST.get('grau_parentesco')
-        observacao=request.POST.get('observacao')
+            parente = False
+        grau_parentesco = request.POST.get('grau_parentesco')
+        observacao = request.POST.get('observacao')
 
         Comparsa.objects.create(
             pessoa=pessoa,
@@ -384,9 +385,9 @@ def comparsa_update(request, pk):
         'rg': comparsa.rg,
         'cpf': comparsa.cpf,
         'cnh': comparsa.cnh,
-        'parente':comparsa.parente,
-        'grau_parentesco':comparsa.grau_parentesco,
-        'observacao':comparsa.observacao,
+        'parente': comparsa.parente,
+        'grau_parentesco': comparsa.grau_parentesco,
+        'observacao': comparsa.observacao,
     }
 
     if request.method == 'POST':
@@ -394,13 +395,13 @@ def comparsa_update(request, pk):
         comparsa.rg = request.POST.get('rg')
         comparsa.cpf = request.POST.get('cpf')
         comparsa.cnh = request.POST.get('cnh')
-        comparsa.parente=request.POST.get('parente')
+        comparsa.parente = request.POST.get('parente')
         if comparsa.parente == 'true':
-            comparsa.parente=True
+            comparsa.parente = True
         else:
-            comparsa.parente=False 
-        comparsa.grau_parentesco=request.POST.get('grau_parentesco')
-        comparsa.observacao=request.POST.get('observacao')
+            comparsa.parente = False
+        comparsa.grau_parentesco = request.POST.get('grau_parentesco')
+        comparsa.observacao = request.POST.get('observacao')
 
         comparsa.save()
         return JsonResponse({'data': 'OK'})
