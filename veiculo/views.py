@@ -4,29 +4,31 @@ from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import UpdateView
+from django.views.generic import ListView, UpdateView
 from .forms import VeiculoForm, ModeloForm
 from .models import Veiculo, Modelo
 
 
-@login_required
-def veiculos(request):
+class VeiculoList(LRM, ListView):
+    model = Veiculo
     template_name = 'veiculos.html'
-    object_list = Veiculo.objects.all()
+    paginate_by = 10
 
-    search = request.GET.get('search')
-    if search:
-        object_list = object_list.filter(
-            Q(placa__icontains=search) |
-            Q(modelo__modelo__icontains=search) |
-            Q(cor__cor__icontains=search)
-        )
+    def get_queryset(self):
+        queryset = super(VeiculoList, self).get_queryset()
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(
+                Q(placa__icontains=search) |
+                Q(modelo__modelo__icontains=search) |
+                Q(cor__cor__icontains=search)
+            )
+        return queryset
 
-    context = {
-        'object_list': object_list,
-        'model_name_plural': 'Veículos',
-    }
-    return render(request, template_name, context)
+    def get_context_data(self, **kwargs):
+        context = super(VeiculoList, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Veículos'
+        return context
 
 
 @login_required
@@ -73,6 +75,24 @@ def modelos(request):
         'model_name_plural': 'Modelos',
     }
     return render(request, template_name, context)
+
+
+class ModeloList(LRM, ListView):
+    model = Modelo
+    template_name = 'modelos.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super(ModeloList, self).get_queryset()
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(modelo__icontains=search)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(ModeloList, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Modelos'
+        return context
 
 
 @login_required

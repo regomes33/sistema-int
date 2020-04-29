@@ -5,29 +5,31 @@ from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, resolve_url
 from django.urls import reverse
-from django.views.generic import UpdateView
+from django.views.generic import ListView, UpdateView
 from pessoa.forms import PessoaMinimalForm
 from .forms import OcorrenciaForm, InfracaoForm, NaturezaForm, HomicidioForm
 from .models import Ocorrencia, Infracao, Natureza, Homicidio
 
 
-@login_required
-def ocorrencias(request):
+class OcorrenciaList(LRM, ListView):
+    model = Ocorrencia
     template_name = 'ocorrencias.html'
-    object_list = Ocorrencia.objects.all()
+    paginate_by = 10
 
-    search = request.GET.get('search')
-    if search:
-        object_list = object_list.filter(
-            Q(rai__icontains=search) |
-            Q(descricao__icontains=search)
-        )
+    def get_queryset(self):
+        queryset = super(OcorrenciaList, self).get_queryset()
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(
+                Q(rai__icontains=search) |
+                Q(descricao__icontains=search)
+            )
+        return queryset
 
-    context = {
-        'object_list': object_list,
-        'model_name_plural': 'Ocorrências',
-    }
-    return render(request, template_name, context)
+    def get_context_data(self, **kwargs):
+        context = super(OcorrenciaList, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Ocorrências'
+        return context
 
 
 @login_required
@@ -88,22 +90,24 @@ class OcorrenciaUpdate(LRM, UpdateView):
         return context
 
 
-@login_required
-def infracoes(request):
+class InfracaoList(LRM, ListView):
+    model = Infracao
     template_name = 'infracoes.html'
-    object_list = Infracao.objects.all()
+    paginate_by = 10
 
-    search = request.GET.get('search')
-    if search:
-        object_list = object_list.filter(
-            Q(natureza__natureza__icontains=search)
-        )
+    def get_queryset(self):
+        queryset = super(InfracaoList, self).get_queryset()
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(
+                Q(natureza__natureza__icontains=search)
+            )
+        return queryset
 
-    context = {
-        'object_list': object_list,
-        'model_name_plural': 'Infrações',
-    }
-    return render(request, template_name, context)
+    def get_context_data(self, **kwargs):
+        context = super(InfracaoList, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Infrações'
+        return context
 
 
 @login_required
@@ -138,20 +142,22 @@ class InfracaoUpdate(LRM, UpdateView):
         return context
 
 
-@login_required
-def naturezas(request):
+class NaturezaList(LRM, ListView):
+    model = Natureza
     template_name = 'naturezas.html'
-    object_list = Natureza.objects.all()
+    paginate_by = 10
 
-    search = request.GET.get('search')
-    if search:
-        object_list = object_list.filter(natureza__icontains=search)
+    def get_queryset(self):
+        queryset = super(NaturezaList, self).get_queryset()
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(natureza__icontains=search)
+        return queryset
 
-    context = {
-        'object_list': object_list,
-        'model_name_plural': 'Naturezas',
-    }
-    return render(request, template_name, context)
+    def get_context_data(self, **kwargs):
+        context = super(NaturezaList, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Naturezas'
+        return context
 
 
 @login_required
@@ -189,17 +195,27 @@ def homicidios(request):
     template_name = 'homicidios.html'
     object_list = Homicidio.objects.all()
 
-    # search = request.GET.get('search')
-    # if search:
-    #     object_list = object_list.filter(
-    #         Q(forma__icontains=search)
-    #     )
 
-    context = {
-        'object_list': object_list,
-        'model_name_plural': 'Homicidios',
-    }
-    return render(request, template_name, context)
+class HomicidioList(LRM, ListView):
+    model = Homicidio
+    template_name = 'homicidios.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super(HomicidioList, self).get_queryset()
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(
+                Q(forma__icontains=search) |
+                Q(vitima__nome__icontains=search) |
+                Q(vitima__sobrenome__icontains=search)
+            )
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(HomicidioList, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Homicidios'
+        return context
 
 
 @login_required
