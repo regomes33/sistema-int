@@ -230,7 +230,9 @@ class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
     autoria = models.ForeignKey(
         Autoria,
         verbose_name='Autoria',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
     )
     genero = models.ForeignKey(
         Genero,
@@ -243,8 +245,6 @@ class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
         Pessoa,
         verbose_name='vítima',
         on_delete=models.CASCADE,
-        null=True,
-        blank=True
     )
     instrumento = models.ForeignKey(
         Arma,
