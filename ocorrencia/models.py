@@ -227,23 +227,24 @@ class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
         verbose_name='área UPM',
         on_delete=models.CASCADE
     )
-
     autoria = models.ForeignKey(
         Autoria,
         verbose_name='Autoria',
         on_delete=models.CASCADE
     )
-
     genero = models.ForeignKey(
         Genero,
         verbose_name='Genero',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
     )
-
     vitima = models.ForeignKey(
         Pessoa,
         verbose_name='vítima',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
     )
     instrumento = models.ForeignKey(
         Arma,
