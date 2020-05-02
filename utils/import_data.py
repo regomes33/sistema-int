@@ -15,6 +15,7 @@ from pessoa.models import Foto
 from ocorrencia.models import Natureza
 from ocorrencia.models import Arma
 from ocorrencia.models import Ocorrencia
+from ocorrencia.models import AreaUpm
 from veiculo.models import Cor
 from veiculo.models import Modelo
 from veiculo.models import Veiculo
@@ -45,6 +46,9 @@ def my_import_data():
 
     filename_ocorrencia = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588394853/csv/ocorrencia_ocorrencia_wgacov.csv'
     import_ocorrencia(filename_ocorrencia)
+
+    filename_areaupm = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588395968/csv/ocorrencia_areaupm_qk84df.csv'
+    import_areaupm(filename_areaupm)
 
     filename_veiculo_cor = f'{path}/v1588385001/csv/veiculo_cor_iq3e7i.csv'
     import_cor(filename_veiculo_cor)
@@ -289,8 +293,7 @@ def import_ocorrenciaveiculo(filename):
 
 
 def import_areaupm(filename):
-    'slug',
-    'area_upm',
+    create_data(filename, AreaUpm)
 
 
 def import_motivacao(filename):
