@@ -25,6 +25,12 @@ def my_import_data():
     filename_user = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588391446/csv/auth_user_c3md4d.csv'
     import_user(filename_user)
 
+    filename_pessoa_faccao = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588391160/csv/pessoa_faccao_lb17pd.csv'
+    import_faccao(filename_pessoa_faccao)
+
+    filename_pessoa_pessoa = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386442/csv/pessoa_pessoa_ei4ado.csv'
+    import_pessoa(filename_pessoa_pessoa)
+
     # filename_veiculo_cor = f'{path}/v1588385001/csv/veiculo_cor_iq3e7i.csv'
     # import_cor(filename_veiculo_cor)
 
@@ -33,12 +39,6 @@ def my_import_data():
 
     # filename_veiculo_veiculo = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386054/csv/veiculo_veiculo_bjwhpq.csv'
     # import_veiculo(filename_veiculo_veiculo)
-
-    # filename_pessoa_faccao = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588391160/csv/pessoa_faccao_lb17pd.csv'
-    # import_faccao(filename_pessoa_faccao)
-
-    # filename_pessoa_pessoa = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386442/csv/pessoa_pessoa_ei4ado.csv'
-    # import_pessoa(filename_pessoa_pessoa)
 
     # filename_pessoa_foto = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386919/csv/pessoa_foto_vakddv.csv'
     # import_foto(filename_pessoa_foto)
@@ -68,34 +68,36 @@ def csv_online_to_list(url: str) -> list:
 def create_pessoa(filename):
     items = csv_online_to_list(filename)
     data = []
-    for item in items[:1]:
-        pprint(item)
+    for i, item in enumerate(items):
         if item.get('address_number'):
             item['address_number'] = int(item.get('address_number'))
         else:
             item['address_number'] = None
 
-        if item.get('cpf'):
-            item['cpf'] = int(item.get('cpf'))
-        else:
+        if not item.get('cpf'):
             item['cpf'] = None
 
-        # if item.get('created_by_id'):
-        #     item['created_by_id'] = int(item.get('created_by_id'))
-        created_by_id = item.get('created_by_id')
-        created_by = User.objects.get(pk=created_by_id)
-        item['created_by'] = created_by
+        if not item.get('cnh'):
+            item['cnh'] = None
 
-        # if item.get('faccao_id'):
-        #     item['faccao_id'] = int(item.get('faccao_id'))
+        if not item.get('cep'):
+            item['cep'] = None
+
+        created_by_id = item.get('created_by_id')
+        if created_by_id:
+            created_by = User.objects.get(pk=created_by_id)
+            item['created_by'] = created_by
+        else:
+            created_by = User.objects.get(username='admin')
+
         faccao_id = item.get('faccao_id')
-        faccao = Faccao.objects.get(pk=faccao_id)
-        item['faccao'] = faccao
+        if faccao_id:
+            faccao = Faccao.objects.get(pk=faccao_id)
+            item['faccao'] = faccao
 
         obj = Pessoa(**item)
         data.append(obj)
 
-    # data = [Pessoa(**item) for item in items]
     Pessoa.objects.bulk_create(data)
 
 
