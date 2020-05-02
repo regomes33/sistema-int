@@ -31,6 +31,9 @@ def my_import_data():
     filename_pessoa_pessoa = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386442/csv/pessoa_pessoa_ei4ado.csv'
     import_pessoa(filename_pessoa_pessoa)
 
+    filename_pessoa_foto = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386919/csv/pessoa_foto_vakddv.csv'
+    import_foto(filename_pessoa_foto)
+
     # filename_veiculo_cor = f'{path}/v1588385001/csv/veiculo_cor_iq3e7i.csv'
     # import_cor(filename_veiculo_cor)
 
@@ -39,9 +42,6 @@ def my_import_data():
 
     # filename_veiculo_veiculo = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386054/csv/veiculo_veiculo_bjwhpq.csv'
     # import_veiculo(filename_veiculo_veiculo)
-
-    # filename_pessoa_foto = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386919/csv/pessoa_foto_vakddv.csv'
-    # import_foto(filename_pessoa_foto)
 
     toc = timeit.default_timer()
     return round(toc - tic, 2)
@@ -154,7 +154,20 @@ def import_pessoa(filename):
 
 
 def import_foto(filename):
-    create_data(filename, Foto)
+    df = pd.read_csv(filename)
+    items = df.T.apply(dict).tolist()
+    data = []
+    for item in items:
+        if isinstance(item.get('foto'), str):
+            pessoa_id = item.get('pessoa_id')
+            if pessoa_id:
+                pessoa = Pessoa.objects.get(pk=pessoa_id)
+                item['pessoa'] = pessoa
+
+            obj = Foto(**item)
+            data.append(obj)
+
+    Foto.objects.bulk_create(data)
 
 
 def import_tatuagem():
