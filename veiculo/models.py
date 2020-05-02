@@ -5,7 +5,7 @@ from core.models import UuidModel, TimeStampedModel
 
 class Veiculo(UuidModel, TimeStampedModel):
     placa = models.CharField(max_length=100, null=True, blank=True)
-   
+
     modelo = models.ForeignKey(
         'Modelo',
         on_delete=models.PROTECT,
@@ -16,7 +16,13 @@ class Veiculo(UuidModel, TimeStampedModel):
         on_delete=models.PROTECT,
         related_name='cores',
     )
-    observacao=models.TextField('Observação',max_length=500,null=True,blank=True)
+    observacao = models.TextField(
+        'Observação',
+        max_length=500,
+        null=True,
+        blank=True
+    )
+
     class Meta:
         ordering = ('placa',)
         verbose_name = 'veículo'
