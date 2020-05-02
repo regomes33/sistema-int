@@ -22,6 +22,9 @@ def my_import_data():
 
     path = 'https://res.cloudinary.com/sistema-int/raw/upload'
 
+    filename_user = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588391446/csv/auth_user_c3md4d.csv'
+    import_user(filename_user)
+
     # filename_veiculo_cor = f'{path}/v1588385001/csv/veiculo_cor_iq3e7i.csv'
     # import_cor(filename_veiculo_cor)
 
@@ -31,8 +34,8 @@ def my_import_data():
     # filename_veiculo_veiculo = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386054/csv/veiculo_veiculo_bjwhpq.csv'
     # import_veiculo(filename_veiculo_veiculo)
 
-    filename_pessoa_faccao = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588391160/csv/pessoa_faccao_lb17pd.csv'
-    import_faccao(filename_pessoa_faccao)
+    # filename_pessoa_faccao = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588391160/csv/pessoa_faccao_lb17pd.csv'
+    # import_faccao(filename_pessoa_faccao)
 
     # filename_pessoa_pessoa = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386442/csv/pessoa_pessoa_ei4ado.csv'
     # import_pessoa(filename_pessoa_pessoa)
@@ -95,6 +98,27 @@ def create_pessoa(filename):
     # data = [Pessoa(**item) for item in items]
     Pessoa.objects.bulk_create(data)
 
+
+'''
+User
+'''
+
+
+def import_user(filename):
+    df = pd.read_csv(filename)
+    aux = df.T.apply(dict).tolist()
+    for item in aux:
+        User.objects.create(
+            username=item['username'],
+            first_name=item['first_name'],
+            last_name=item['last_name'],
+            email=item['email'],
+            is_active=item['is_active'],
+            is_staff=item['is_staff'],
+            is_superuser=item['is_superuser'],
+            password=item['password'],
+            date_joined=item['date_joined'],
+        )
 
 '''
 Pessoa
