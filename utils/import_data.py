@@ -1,9 +1,17 @@
 '''
 Importa os dados do Cloudinary.
 '''
+import csv
+import io
 import pandas as pd
 import timeit
+import urllib.request
+from random import randint
+from pprint import pprint
 from django.contrib.auth.models import User, Group
+from pessoa.models import Faccao
+from pessoa.models import Pessoa
+from pessoa.models import Foto
 from veiculo.models import Cor
 from veiculo.models import Modelo
 from veiculo.models import Veiculo
@@ -20,11 +28,72 @@ def my_import_data():
     # filename_veiculo_modelo = f'{path}/v1588385550/csv/veiculo_modelo_ury3nj.csv'
     # import_modelo(filename_veiculo_modelo)
 
-    filename_veiculo_veiculo = f'https://res.cloudinary.com/sistema-int/raw/upload/v1588386054/csv/veiculo_veiculo_bjwhpq.csv'
-    import_veiculo(filename_veiculo_veiculo)
+    # filename_veiculo_veiculo = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386054/csv/veiculo_veiculo_bjwhpq.csv'
+    # import_veiculo(filename_veiculo_veiculo)
+
+    filename_pessoa_faccao = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588391160/csv/pessoa_faccao_lb17pd.csv'
+    import_faccao(filename_pessoa_faccao)
+
+    # filename_pessoa_pessoa = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386442/csv/pessoa_pessoa_ei4ado.csv'
+    # import_pessoa(filename_pessoa_pessoa)
+
+    # filename_pessoa_foto = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386919/csv/pessoa_foto_vakddv.csv'
+    # import_foto(filename_pessoa_foto)
 
     toc = timeit.default_timer()
     return round(toc - tic, 2)
+
+
+def create_data(filename, model):
+    df = pd.read_csv(filename)
+    aux = df.T.apply(dict).tolist()
+    data = [model(**item) for item in aux]
+    model.objects.bulk_create(data)
+
+
+def csv_online_to_list(url: str) -> list:
+    '''
+    Lê um CSV a partir de uma url.
+    '''
+    url_open = urllib.request.urlopen(url)
+    reader = csv.DictReader(io.StringIO(
+        url_open.read().decode('utf-8')), delimiter=',')
+    csv_data = [line for line in reader]
+    return csv_data
+
+
+def create_pessoa(filename):
+    items = csv_online_to_list(filename)
+    data = []
+    for item in items[:1]:
+        pprint(item)
+        if item.get('address_number'):
+            item['address_number'] = int(item.get('address_number'))
+        else:
+            item['address_number'] = None
+
+        if item.get('cpf'):
+            item['cpf'] = int(item.get('cpf'))
+        else:
+            item['cpf'] = None
+
+        # if item.get('created_by_id'):
+        #     item['created_by_id'] = int(item.get('created_by_id'))
+        created_by_id = item.get('created_by_id')
+        created_by = User.objects.get(pk=created_by_id)
+        item['created_by'] = created_by
+
+        # if item.get('faccao_id'):
+        #     item['faccao_id'] = int(item.get('faccao_id'))
+        faccao_id = item.get('faccao_id')
+        faccao = Faccao.objects.get(pk=faccao_id)
+        item['faccao'] = faccao
+
+        obj = Pessoa(**item)
+        data.append(obj)
+
+    # data = [Pessoa(**item) for item in items]
+    Pessoa.objects.bulk_create(data)
 
 
 '''
@@ -32,37 +101,34 @@ Pessoa
 '''
 
 
-def import_pessoa():
-    'slug',
-    'nome',
-    'sobrenome',
-    'apelido',
-    'mae',
-    'pai',
-    'faccao',
-    'vitima',
-    'created',
-    'modified',
-    'created_by',
-    'address',
-    'address_number',
-    'complement',
-    'district',
-    'city',
-    'uf',
-    'cep',
-    'country',
-    'cpf',
-    'rg',
-    'cnh',
+def import_pessoa(filename):
+    # 'slug',
+    # 'nome',
+    # 'sobrenome',
+    # 'apelido',
+    # 'mae',
+    # 'pai',
+    # 'faccao',
+    # 'vitima',
+    # 'created',
+    # 'modified',
+    # 'created_by',
+    # 'address',
+    # 'address_number',
+    # 'complement',
+    # 'district',
+    # 'city',
+    # 'uf',
+    # 'cep',
+    # 'country',
+    # 'cpf',
+    # 'rg',
+    # 'cnh',
+    create_pessoa(filename)
 
 
-def import_foto():
-    'slug',
-    'pessoa',
-    'foto',
-    'created',
-    'modified',
+def import_foto(filename):
+    create_data(filename, Foto)
 
 
 def import_tatuagem():
@@ -97,10 +163,8 @@ def import_comparsa():
     'cnh',
 
 
-def import_faccao():
-    'slug',
-    'nome',
-    'funcao',
+def import_faccao(filename):
+    create_data(filename, Faccao)
 
 
 def import_pessoaveiculo():
@@ -183,19 +247,12 @@ Veiculo
 
 
 def import_veiculo(filename):
-    get_data(filename, Veiculo)
+    create_data(filename, Veiculo)
 
 
 def import_modelo(filename):
-    get_data(filename, Modelo)
+    create_data(filename, Modelo)
 
 
 def import_cor(filename):
-    get_data(filename, Cor)
-
-
-def get_data(filename, model):
-    df = pd.read_csv(filename)
-    aux = df.T.apply(dict).tolist()
-    data = [model(**item) for item in aux]
-    model.objects.bulk_create(data)
+    create_data(filename, Cor)
