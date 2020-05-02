@@ -6,6 +6,7 @@ import timeit
 from django.contrib.auth.models import User, Group
 from veiculo.models import Cor
 from veiculo.models import Modelo
+from veiculo.models import Veiculo
 
 
 def my_import_data():
@@ -13,12 +14,14 @@ def my_import_data():
 
     path = 'https://res.cloudinary.com/sistema-int/raw/upload'
 
-    # filename_veiculo_cor = path + 'veiculo_cor.csv'
     # filename_veiculo_cor = f'{path}/v1588385001/csv/veiculo_cor_iq3e7i.csv'
     # import_cor(filename_veiculo_cor)
 
     # filename_veiculo_modelo = f'{path}/v1588385550/csv/veiculo_modelo_ury3nj.csv'
     # import_modelo(filename_veiculo_modelo)
+
+    filename_veiculo_veiculo = f'https://res.cloudinary.com/sistema-int/raw/upload/v1588386054/csv/veiculo_veiculo_bjwhpq.csv'
+    import_veiculo(filename_veiculo_veiculo)
 
     toc = timeit.default_timer()
     return round(toc - tic, 2)
@@ -179,25 +182,20 @@ Veiculo
 '''
 
 
-def import_veiculo():
-    'slug',
-    'placa',
-    'modelo',
-    'cor',
-    'observacao',
-    'created',
-    'modified',
+def import_veiculo(filename):
+    get_data(filename, Veiculo)
 
 
 def import_modelo(filename):
-    df = pd.read_csv(filename)
-    aux = df.T.apply(dict).tolist()
-    data = [Modelo(**item) for item in aux]
-    Modelo.objects.bulk_create(data)
+    get_data(filename, Modelo)
 
 
 def import_cor(filename):
+    get_data(filename, Cor)
+
+
+def get_data(filename, model):
     df = pd.read_csv(filename)
     aux = df.T.apply(dict).tolist()
-    data = [Cor(**item) for item in aux]
-    Cor.objects.bulk_create(data)
+    data = [model(**item) for item in aux]
+    model.objects.bulk_create(data)
