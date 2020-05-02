@@ -12,6 +12,7 @@ from django.contrib.auth.models import User, Group
 from pessoa.models import Faccao
 from pessoa.models import Pessoa
 from pessoa.models import Foto
+from ocorrencia.models import Natureza
 from veiculo.models import Cor
 from veiculo.models import Modelo
 from veiculo.models import Veiculo
@@ -34,14 +35,17 @@ def my_import_data():
     filename_pessoa_foto = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386919/csv/pessoa_foto_vakddv.csv'
     import_foto(filename_pessoa_foto)
 
-    # filename_veiculo_cor = f'{path}/v1588385001/csv/veiculo_cor_iq3e7i.csv'
-    # import_cor(filename_veiculo_cor)
+    filename_natureza = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588394597/csv/ocorrencia_natureza_z6ytfb.csv'
+    import_natureza(filename_natureza)
 
-    # filename_veiculo_modelo = f'{path}/v1588385550/csv/veiculo_modelo_ury3nj.csv'
-    # import_modelo(filename_veiculo_modelo)
+    filename_veiculo_cor = f'{path}/v1588385001/csv/veiculo_cor_iq3e7i.csv'
+    import_cor(filename_veiculo_cor)
 
-    # filename_veiculo_veiculo = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386054/csv/veiculo_veiculo_bjwhpq.csv'
-    # import_veiculo(filename_veiculo_veiculo)
+    filename_veiculo_modelo = f'{path}/v1588385550/csv/veiculo_modelo_ury3nj.csv'
+    import_modelo(filename_veiculo_modelo)
+
+    filename_veiculo_veiculo = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386054/csv/veiculo_veiculo_bjwhpq.csv'
+    import_veiculo(filename_veiculo_veiculo)
 
     toc = timeit.default_timer()
     return round(toc - tic, 2)
@@ -170,7 +174,7 @@ def import_foto(filename):
     Foto.objects.bulk_create(data)
 
 
-def import_tatuagem():
+def import_tatuagem(filename):
     'slug',
     'pessoa',
     'foto',
@@ -179,7 +183,7 @@ def import_tatuagem():
     'modified',
 
 
-def import_pessoacontato():
+def import_pessoacontato(filename):
     'slug',
     'pessoa',
     'tipo',
@@ -188,7 +192,7 @@ def import_pessoacontato():
     'modified',
 
 
-def import_comparsa():
+def import_comparsa(filename):
     'slug',
     'pessoa',
     'nome',
@@ -206,7 +210,7 @@ def import_faccao(filename):
     create_data(filename, Faccao)
 
 
-def import_pessoaveiculo():
+def import_pessoaveiculo(filename):
     'slug',
     'pessoa',
     'veiculo',
@@ -220,18 +224,16 @@ Ocorrencia
 '''
 
 
-def import_natureza():
-    'slug',
-    'artigo',
-    'natureza',
+def import_natureza(filename):
+    create_data(filename, Natureza)
 
 
-def import_arma():
+def import_arma(filename):
     'slug',
     'arma',
 
 
-def import_infracao():
+def import_infracao(filename):
     'slug',
     'pessoa',
     'natureza',
@@ -243,7 +245,7 @@ def import_infracao():
     'created_by',
 
 
-def import_ocorrencia():
+def import_ocorrencia(filename):
     'slug',
     'rai',
     'data_do_fato',
@@ -253,7 +255,7 @@ def import_ocorrencia():
     'created_by',
 
 
-def import_pessoaocorrencia():
+def import_pessoaocorrencia(filename):
     'slug',
     'pessoa',
     'ocorrencia',
@@ -262,7 +264,7 @@ def import_pessoaocorrencia():
     'created_by',
 
 
-def import_ocorrenciaveiculo():
+def import_ocorrenciaveiculo(filename):
     'slug',
     'ocorrencia',
     'veiculo',
@@ -271,12 +273,12 @@ def import_ocorrenciaveiculo():
     'created_by',
 
 
-def import_areaupm():
+def import_areaupm(filename):
     'slug',
     'area_upm',
 
 
-def import_motivacao():
+def import_motivacao(filename):
     'slug',
     'titulo',
 
