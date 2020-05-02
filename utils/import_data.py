@@ -14,6 +14,7 @@ from pessoa.models import Pessoa
 from pessoa.models import Foto
 from ocorrencia.models import Natureza
 from ocorrencia.models import Arma
+from ocorrencia.models import Ocorrencia
 from veiculo.models import Cor
 from veiculo.models import Modelo
 from veiculo.models import Veiculo
@@ -41,6 +42,9 @@ def my_import_data():
 
     filename_arma = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588394764/csv/ocorrencia_arma_bmfnm9.csv'
     import_arma(filename_arma)
+
+    filename_ocorrencia = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588394853/csv/ocorrencia_ocorrencia_wgacov.csv'
+    import_ocorrencia(filename_ocorrencia)
 
     filename_veiculo_cor = f'{path}/v1588385001/csv/veiculo_cor_iq3e7i.csv'
     import_cor(filename_veiculo_cor)
@@ -96,7 +100,7 @@ def create_pessoa(filename):
             created_by = User.objects.get(pk=created_by_id)
             item['created_by'] = created_by
         else:
-            created_by = User.objects.get(username='admin')
+            item['created_by'] = User.objects.get(username='admin')
 
         faccao_id = item.get('faccao_id')
         if faccao_id:
@@ -249,13 +253,21 @@ def import_infracao(filename):
 
 
 def import_ocorrencia(filename):
-    'slug',
-    'rai',
-    'data_do_fato',
-    'descricao',
-    'created',
-    'modified',
-    'created_by',
+    df = pd.read_csv(filename).fillna({'created_by_id': '1'})
+    items = df.T.apply(dict).tolist()
+    data = []
+    for item in items:
+        created_by_id = item.get('created_by_id')
+        if created_by_id:
+            created_by = User.objects.get(pk=created_by_id)
+            item['created_by'] = created_by
+        else:
+            item['created_by'] = User.objects.get(username='admin')
+
+        obj = Ocorrencia(**item)
+        data.append(obj)
+
+    Ocorrencia.objects.bulk_create(data)
 
 
 def import_pessoaocorrencia(filename):
