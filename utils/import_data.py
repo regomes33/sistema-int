@@ -16,6 +16,7 @@ from ocorrencia.models import Natureza
 from ocorrencia.models import Arma
 from ocorrencia.models import Ocorrencia
 from ocorrencia.models import AreaUpm
+from ocorrencia.models import Motivacao
 from veiculo.models import Cor
 from veiculo.models import Modelo
 from veiculo.models import Veiculo
@@ -26,29 +27,32 @@ def my_import_data():
 
     path = 'https://res.cloudinary.com/sistema-int/raw/upload'
 
-    filename_user = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588391446/csv/auth_user_c3md4d.csv'
+    filename_user = f'{path}/v1588391446/csv/auth_user_c3md4d.csv'
     import_user(filename_user)
 
-    filename_pessoa_faccao = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588391160/csv/pessoa_faccao_lb17pd.csv'
+    filename_pessoa_faccao = f'{path}/v1588391160/csv/pessoa_faccao_lb17pd.csv'
     import_faccao(filename_pessoa_faccao)
 
-    filename_pessoa_pessoa = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386442/csv/pessoa_pessoa_ei4ado.csv'
+    filename_pessoa_pessoa = f'{path}/v1588386442/csv/pessoa_pessoa_ei4ado.csv'
     import_pessoa(filename_pessoa_pessoa)
 
-    filename_pessoa_foto = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386919/csv/pessoa_foto_vakddv.csv'
+    filename_pessoa_foto = f'{path}/v1588386919/csv/pessoa_foto_vakddv.csv'
     import_foto(filename_pessoa_foto)
 
-    filename_natureza = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588394597/csv/ocorrencia_natureza_z6ytfb.csv'
+    filename_natureza = f'{path}/v1588394597/csv/ocorrencia_natureza_z6ytfb.csv'
     import_natureza(filename_natureza)
 
-    filename_arma = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588394764/csv/ocorrencia_arma_bmfnm9.csv'
+    filename_arma = f'{path}/v1588394764/csv/ocorrencia_arma_bmfnm9.csv'
     import_arma(filename_arma)
 
-    filename_ocorrencia = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588394853/csv/ocorrencia_ocorrencia_wgacov.csv'
+    filename_ocorrencia = f'{path}/v1588394853/csv/ocorrencia_ocorrencia_wgacov.csv'
     import_ocorrencia(filename_ocorrencia)
 
-    filename_areaupm = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588395968/csv/ocorrencia_areaupm_qk84df.csv'
+    filename_areaupm = f'{path}/v1588395968/csv/ocorrencia_areaupm_qk84df.csv'
     import_areaupm(filename_areaupm)
+
+    filename_motivacao = f'{path}/v1588396087/csv/ocorrencia_motivacao_zp5cpb.csv'
+    import_motivacao(filename_motivacao)
 
     filename_veiculo_cor = f'{path}/v1588385001/csv/veiculo_cor_iq3e7i.csv'
     import_cor(filename_veiculo_cor)
@@ -56,7 +60,7 @@ def my_import_data():
     filename_veiculo_modelo = f'{path}/v1588385550/csv/veiculo_modelo_ury3nj.csv'
     import_modelo(filename_veiculo_modelo)
 
-    filename_veiculo_veiculo = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588386054/csv/veiculo_veiculo_bjwhpq.csv'
+    filename_veiculo_veiculo = f'{path}/v1588386054/csv/veiculo_veiculo_bjwhpq.csv'
     import_veiculo(filename_veiculo_veiculo)
 
     toc = timeit.default_timer()
@@ -297,8 +301,7 @@ def import_areaupm(filename):
 
 
 def import_motivacao(filename):
-    'slug',
-    'titulo',
+    create_data(filename, Motivacao)
 
 '''
 Veiculo
