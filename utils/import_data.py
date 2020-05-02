@@ -13,6 +13,7 @@ from pessoa.models import Faccao
 from pessoa.models import Pessoa
 from pessoa.models import Foto
 from ocorrencia.models import Natureza
+from ocorrencia.models import Arma
 from veiculo.models import Cor
 from veiculo.models import Modelo
 from veiculo.models import Veiculo
@@ -37,6 +38,9 @@ def my_import_data():
 
     filename_natureza = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588394597/csv/ocorrencia_natureza_z6ytfb.csv'
     import_natureza(filename_natureza)
+
+    filename_arma = 'https://res.cloudinary.com/sistema-int/raw/upload/v1588394764/csv/ocorrencia_arma_bmfnm9.csv'
+    import_arma(filename_arma)
 
     filename_veiculo_cor = f'{path}/v1588385001/csv/veiculo_cor_iq3e7i.csv'
     import_cor(filename_veiculo_cor)
@@ -229,8 +233,7 @@ def import_natureza(filename):
 
 
 def import_arma(filename):
-    'slug',
-    'arma',
+    create_data(filename, Arma)
 
 
 def import_infracao(filename):
