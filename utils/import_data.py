@@ -69,7 +69,7 @@ def my_import_data():
     create_data(filename_pessoa_faccao, Faccao)
     create_pessoa(filename_pessoa_pessoa)
     import_foto(filename_pessoa_foto)
-    # import_comparsa(filename_pessoa_comparsa)
+    import_comparsa(filename_pessoa_comparsa)
 
     # # Ocorrencia
     # import_ocorrencia(filename_ocorrencia)
@@ -215,10 +215,10 @@ def import_comparsa(filename):
     data = []
     for item in items:
         del item['id']
-        pessoa_id = item.get('pessoa_id')
-        pessoa_slug = dict_pessoas.get(str(pessoa_id))
-        if pessoa_slug:
-            pessoa = Pessoa.objects.get(slug=pessoa_slug)
+        pessoa = get_pessoa(item.get('pessoa_id'))
+        del item['pessoa_id']
+        if pessoa:
+            item['pessoa'] = pessoa
 
         if not isinstance(item.get('cpf'), str):
             item['cpf'] = None
