@@ -12,6 +12,7 @@ from django.contrib.auth.models import User, Group
 from pessoa.models import Faccao
 from pessoa.models import Pessoa
 from pessoa.models import Foto
+from pessoa.models import Comparsa
 from ocorrencia.models import Natureza
 from ocorrencia.models import Arma
 from ocorrencia.models import Ocorrencia
@@ -31,6 +32,7 @@ def my_import_data():
     filename_pessoa_faccao = f'{path}/v1588391160/csv/pessoa_faccao_lb17pd.csv'
     filename_pessoa_pessoa = f'{path}/v1588386442/csv/pessoa_pessoa_ei4ado.csv'
     filename_pessoa_foto = f'{path}/v1588386919/csv/pessoa_foto_vakddv.csv'
+    filename_pessoa_comparsa = f'{path}/v1588463742/csv/pessoa_comparsa_q52hvu.csv'
     filename_natureza = f'{path}/v1588394597/csv/ocorrencia_natureza_z6ytfb.csv'
     filename_arma = f'{path}/v1588394764/csv/ocorrencia_arma_bmfnm9.csv'
     filename_ocorrencia = f'{path}/v1588394853/csv/ocorrencia_ocorrencia_wgacov.csv'
@@ -44,6 +46,7 @@ def my_import_data():
     create_data(filename_pessoa_faccao, Faccao)
     create_pessoa(filename_pessoa_pessoa)
     import_foto(filename_pessoa_foto)
+    import_comparsa(filename_pessoa_comparsa)
 
     # Ocorrencia
     import_ocorrencia(filename_ocorrencia)
@@ -188,6 +191,25 @@ def import_comparsa(filename):
     'cpf',
     'rg',
     'cnh',
+    df = pd.read_csv(filename)
+    items = df.T.apply(dict).tolist()
+    data = []
+    for item in items:
+        pessoa_id = item.get('pessoa_id')
+        if pessoa_id:
+            pessoa = Pessoa.objects.get(pk=pessoa_id)
+            item['pessoa'] = pessoa
+
+        if not isinstance(item.get('cpf'), str):
+            item['cpf'] = None
+
+        if not item.get('cnh'):
+            item['cnh'] = None
+
+        obj = Comparsa(**item)
+        data.append(obj)
+
+    Comparsa.objects.bulk_create(data)
 
 
 def import_pessoaveiculo(filename):
