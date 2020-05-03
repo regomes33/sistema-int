@@ -19,6 +19,7 @@ from ocorrencia.models import Ocorrencia
 from ocorrencia.models import AreaUpm
 from ocorrencia.models import Motivacao
 from ocorrencia.models import Infracao
+from ocorrencia.models import PessoaOcorrencia
 from veiculo.models import Cor
 from veiculo.models import Modelo
 from veiculo.models import Veiculo
@@ -34,6 +35,7 @@ def my_import_data():
     filename_pessoa_pessoa = f'{path}/v1588386442/csv/pessoa_pessoa_ei4ado.csv'
     filename_pessoa_foto = f'{path}/v1588386919/csv/pessoa_foto_vakddv.csv'
     filename_pessoa_comparsa = f'{path}/v1588463742/csv/pessoa_comparsa_q52hvu.csv'
+    filename_pessoa_ocorrencia = f'{path}/v1588536338/csv/ocorrencia_pessoaocorrencia_omw4h7.csv'
     filename_natureza = f'{path}/v1588394597/csv/ocorrencia_natureza_z6ytfb.csv'
     filename_arma = f'{path}/v1588394764/csv/ocorrencia_arma_bmfnm9.csv'
     filename_ocorrencia = f'{path}/v1588394853/csv/ocorrencia_ocorrencia_wgacov.csv'
@@ -57,6 +59,7 @@ def my_import_data():
     create_data(filename_areaupm, AreaUpm)
     create_data(filename_motivacao, Motivacao)
     import_infracao(filename_infracao)
+    import_pessoa_ocorrencia(filename_pessoa_ocorrencia)
 
     # Veiculo
     create_data(filename_veiculo_cor, Cor)
@@ -165,21 +168,11 @@ def import_foto(filename):
 
 
 def import_tatuagem(filename):
-    'slug',
-    'pessoa',
-    'foto',
-    'descricao',
-    'created',
-    'modified',
+    pass
 
 
 def import_pessoacontato(filename):
-    'slug',
-    'pessoa',
-    'tipo',
-    'telefone',
-    'created',
-    'modified',
+    pass
 
 
 def import_comparsa(filename):
@@ -205,12 +198,7 @@ def import_comparsa(filename):
 
 
 def import_pessoaveiculo(filename):
-    'slug',
-    'pessoa',
-    'veiculo',
-    'created',
-    'modified',
-    'created_by',
+    pass
 
 
 '''
@@ -221,8 +209,7 @@ Ocorrencia
 def import_infracao(filename):
     items = csv_online_to_list(filename)
     data = []
-    for i, item in enumerate(items):
-
+    for item in items:
         created_by_id = item.get('created_by_id')
         if created_by_id:
             created_by = User.objects.get(pk=created_by_id)
@@ -269,19 +256,32 @@ def import_ocorrencia(filename):
     Ocorrencia.objects.bulk_create(data)
 
 
-def import_pessoaocorrencia(filename):
-    'slug',
-    'pessoa',
-    'ocorrencia',
-    'created',
-    'modified',
-    'created_by',
+def import_pessoa_ocorrencia(filename):
+    items = csv_online_to_list(filename)
+    data = []
+    for item in items:
+        created_by_id = item.get('created_by_id')
+        if created_by_id:
+            created_by = User.objects.get(pk=created_by_id)
+            item['created_by'] = created_by
+        else:
+            item['created_by'] = User.objects.get(username='admin')
+
+        pessoa_id = item.get('pessoa_id')
+        if pessoa_id:
+            pessoa = Pessoa.objects.get(pk=pessoa_id)
+            item['pessoa'] = pessoa
+
+        ocorrencia_id = item.get('ocorrencia_id')
+        if ocorrencia_id:
+            ocorrencia = Ocorrencia.objects.get(pk=ocorrencia_id)
+            item['ocorrencia'] = ocorrencia
+
+        obj = PessoaOcorrencia(**item)
+        data.append(obj)
+
+    PessoaOcorrencia.objects.bulk_create(data)
 
 
 def import_ocorrenciaveiculo(filename):
-    'slug',
-    'ocorrencia',
-    'veiculo',
-    'created',
-    'modified',
-    'created_by',
+    pass
