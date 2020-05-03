@@ -18,6 +18,7 @@ from ocorrencia.models import Arma
 from ocorrencia.models import Ocorrencia
 from ocorrencia.models import AreaUpm
 from ocorrencia.models import Motivacao
+from ocorrencia.models import Infracao
 from veiculo.models import Cor
 from veiculo.models import Modelo
 from veiculo.models import Veiculo
@@ -38,6 +39,7 @@ def my_import_data():
     filename_ocorrencia = f'{path}/v1588394853/csv/ocorrencia_ocorrencia_wgacov.csv'
     filename_areaupm = f'{path}/v1588395968/csv/ocorrencia_areaupm_qk84df.csv'
     filename_motivacao = f'{path}/v1588396087/csv/ocorrencia_motivacao_zp5cpb.csv'
+    filename_infracao = f'{path}/v1588466176/csv/ocorrencia_infracao_nxg1sl.csv'
     filename_veiculo_cor = f'{path}/v1588385001/csv/veiculo_cor_iq3e7i.csv'
     filename_veiculo_modelo = f'{path}/v1588385550/csv/veiculo_modelo_ury3nj.csv'
     filename_veiculo_veiculo = f'{path}/v1588386054/csv/veiculo_veiculo_bjwhpq.csv'
@@ -54,6 +56,7 @@ def my_import_data():
     create_data(filename_arma, Arma)
     create_data(filename_areaupm, AreaUpm)
     create_data(filename_motivacao, Motivacao)
+    import_infracao(filename_infracao)
 
     # Veiculo
     create_data(filename_veiculo_cor, Cor)
@@ -180,17 +183,6 @@ def import_pessoacontato(filename):
 
 
 def import_comparsa(filename):
-    'slug',
-    'pessoa',
-    'nome',
-    'parente',
-    'grau_parentesco',
-    'observacao',
-    'created',
-    'modified',
-    'cpf',
-    'rg',
-    'cnh',
     df = pd.read_csv(filename)
     items = df.T.apply(dict).tolist()
     data = []
@@ -227,15 +219,36 @@ Ocorrencia
 
 
 def import_infracao(filename):
-    'slug',
-    'pessoa',
-    'natureza',
-    'qualificacao',
-    'arma',
-    'status',
-    'created',
-    'modified',
-    'created_by',
+    items = csv_online_to_list(filename)
+    data = []
+    for i, item in enumerate(items):
+
+        created_by_id = item.get('created_by_id')
+        if created_by_id:
+            created_by = User.objects.get(pk=created_by_id)
+            item['created_by'] = created_by
+        else:
+            item['created_by'] = User.objects.get(username='admin')
+
+        pessoa_id = item.get('pessoa_id')
+        if pessoa_id:
+            pessoa = Pessoa.objects.get(pk=pessoa_id)
+            item['pessoa'] = pessoa
+
+        natureza_id = item.get('natureza_id')
+        if natureza_id:
+            natureza = Natureza.objects.get(pk=natureza_id)
+            item['natureza'] = natureza
+
+        arma_id = item.get('arma_id')
+        if arma_id:
+            arma = Arma.objects.get(pk=arma_id)
+            item['arma'] = arma
+
+        obj = Infracao(**item)
+        data.append(obj)
+
+    Infracao.objects.bulk_create(data)
 
 
 def import_ocorrencia(filename):
