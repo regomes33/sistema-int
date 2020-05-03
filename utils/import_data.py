@@ -25,37 +25,50 @@ from veiculo.models import Modelo
 from veiculo.models import Veiculo
 
 
+path = 'https://res.cloudinary.com/sistema-int/raw/upload'
+
+filename_user = f'{path}/v1588391446/csv/auth_user_c3md4d.csv'
+filename_pessoa_faccao = f'{path}/v1588391160/csv/pessoa_faccao_lb17pd.csv'
+filename_pessoa_pessoa = f'{path}/v1588386442/csv/pessoa_pessoa_ei4ado.csv'
+filename_pessoa_foto = f'{path}/v1588386919/csv/pessoa_foto_vakddv.csv'
+filename_pessoa_comparsa = f'{path}/v1588463742/csv/pessoa_comparsa_q52hvu.csv'
+filename_pessoa_ocorrencia = f'{path}/v1588536338/csv/ocorrencia_pessoaocorrencia_omw4h7.csv'
+filename_natureza = f'{path}/v1588394597/csv/ocorrencia_natureza_z6ytfb.csv'
+filename_arma = f'{path}/v1588394764/csv/ocorrencia_arma_bmfnm9.csv'
+filename_ocorrencia = f'{path}/v1588394853/csv/ocorrencia_ocorrencia_wgacov.csv'
+filename_areaupm = f'{path}/v1588395968/csv/ocorrencia_areaupm_qk84df.csv'
+filename_motivacao = f'{path}/v1588396087/csv/ocorrencia_motivacao_zp5cpb.csv'
+filename_infracao = f'{path}/v1588466176/csv/ocorrencia_infracao_nxg1sl.csv'
+filename_veiculo_cor = f'{path}/v1588385001/csv/veiculo_cor_iq3e7i.csv'
+filename_veiculo_modelo = f'{path}/v1588385550/csv/veiculo_modelo_ury3nj.csv'
+filename_veiculo_veiculo = f'{path}/v1588386054/csv/veiculo_veiculo_bjwhpq.csv'
+
+
+def read_data(filename):
+    '''
+    Lê os dados para extrair id e slug e montar um dicionario.
+    '''
+    df = pd.read_csv(filename)
+    df = df[['id', 'slug']]
+    dictionary = {}
+    for row in df.itertuples():
+        dictionary[str(row.id)] = row.slug
+    return dictionary
+
+
 dict_users = {}
+
+dict_pessoas = read_data(filename_pessoa_pessoa)
+dict_faccao = read_data(filename_pessoa_faccao)
 
 
 def my_import_data():
     tic = timeit.default_timer()
 
-    path = 'https://res.cloudinary.com/sistema-int/raw/upload'
-
-    filename_user = f'{path}/v1588391446/csv/auth_user_c3md4d.csv'
-    filename_pessoa_faccao = f'{path}/v1588391160/csv/pessoa_faccao_lb17pd.csv'
-    filename_pessoa_pessoa = f'{path}/v1588386442/csv/pessoa_pessoa_ei4ado.csv'
-    filename_pessoa_foto = f'{path}/v1588386919/csv/pessoa_foto_vakddv.csv'
-    filename_pessoa_comparsa = f'{path}/v1588463742/csv/pessoa_comparsa_q52hvu.csv'
-    filename_pessoa_ocorrencia = f'{path}/v1588536338/csv/ocorrencia_pessoaocorrencia_omw4h7.csv'
-    filename_natureza = f'{path}/v1588394597/csv/ocorrencia_natureza_z6ytfb.csv'
-    filename_arma = f'{path}/v1588394764/csv/ocorrencia_arma_bmfnm9.csv'
-    filename_ocorrencia = f'{path}/v1588394853/csv/ocorrencia_ocorrencia_wgacov.csv'
-    filename_areaupm = f'{path}/v1588395968/csv/ocorrencia_areaupm_qk84df.csv'
-    filename_motivacao = f'{path}/v1588396087/csv/ocorrencia_motivacao_zp5cpb.csv'
-    filename_infracao = f'{path}/v1588466176/csv/ocorrencia_infracao_nxg1sl.csv'
-    filename_veiculo_cor = f'{path}/v1588385001/csv/veiculo_cor_iq3e7i.csv'
-    filename_veiculo_modelo = f'{path}/v1588385550/csv/veiculo_modelo_ury3nj.csv'
-    filename_veiculo_veiculo = f'{path}/v1588386054/csv/veiculo_veiculo_bjwhpq.csv'
-
-    dict_pessoas = read_data(filename_user)
-    dict_faccao = read_data(filename_pessoa_faccao)
-
     import_user(filename_user)
     create_data(filename_pessoa_faccao, Faccao)
     create_pessoa(filename_pessoa_pessoa)
-    # import_foto(filename_pessoa_foto)
+    import_foto(filename_pessoa_foto)
     # import_comparsa(filename_pessoa_comparsa)
 
     # # Ocorrencia
@@ -74,18 +87,6 @@ def my_import_data():
 
     toc = timeit.default_timer()
     return round(toc - tic, 2)
-
-
-def read_data(filename):
-    '''
-    Lê os dados para extrair id e slug e montar um dicionario.
-    '''
-    df = pd.read_csv(filename)
-    df = df[['id', 'slug']]
-    dictionary = {}
-    for row in df.itertuples():
-        dictionary[str(row.id)] = row.slug
-    return dictionary
 
 
 def create_data(filename, model):
@@ -111,7 +112,7 @@ def create_pessoa(filename):
     items = csv_online_to_list(filename)
     data = []
     for i, item in enumerate(items):
-        dict_pessoas[item['id']] = item['slug']
+        # dict_pessoas[item['id']] = item['slug']
         del item['id']
         if item.get('address_number'):
             item['address_number'] = int(item.get('address_number'))
@@ -175,17 +176,23 @@ Pessoa
 '''
 
 
+def get_pessoa(pessoa_id):
+    pessoa_slug = dict_pessoas.get(str(pessoa_id))
+    if pessoa_slug:
+        pessoa = Pessoa.objects.get(slug=pessoa_slug)
+        return pessoa
+
+
 def import_foto(filename):
     df = pd.read_csv(filename)
     items = df.T.apply(dict).tolist()
     data = []
-    for item in items:
+    for i, item in enumerate(items):
         del item['id']
         if isinstance(item.get('foto'), str):
-            pessoa_id = item.get('pessoa_id')
-            pessoa_slug = dict_pessoas.get(pessoa_id)
-            if pessoa_slug:
-                pessoa = Pessoa.objects.get(slug=pessoa_slug)
+            pessoa = get_pessoa(item.get('pessoa_id'))
+            del item['pessoa_id']
+            if pessoa:
                 item['pessoa'] = pessoa
 
             obj = Foto(**item)
