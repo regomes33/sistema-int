@@ -25,6 +25,9 @@ from veiculo.models import Modelo
 from veiculo.models import Veiculo
 
 
+dict_users = {}
+
+
 def my_import_data():
     tic = timeit.default_timer()
 
@@ -46,32 +49,48 @@ def my_import_data():
     filename_veiculo_modelo = f'{path}/v1588385550/csv/veiculo_modelo_ury3nj.csv'
     filename_veiculo_veiculo = f'{path}/v1588386054/csv/veiculo_veiculo_bjwhpq.csv'
 
+    dict_pessoas = read_data(filename_user)
+    dict_faccao = read_data(filename_pessoa_faccao)
+
     import_user(filename_user)
     create_data(filename_pessoa_faccao, Faccao)
     create_pessoa(filename_pessoa_pessoa)
-    import_foto(filename_pessoa_foto)
-    import_comparsa(filename_pessoa_comparsa)
+    # import_foto(filename_pessoa_foto)
+    # import_comparsa(filename_pessoa_comparsa)
 
-    # Ocorrencia
-    import_ocorrencia(filename_ocorrencia)
-    create_data(filename_natureza, Natureza)
-    create_data(filename_arma, Arma)
-    create_data(filename_areaupm, AreaUpm)
-    create_data(filename_motivacao, Motivacao)
-    import_infracao(filename_infracao)
-    import_pessoa_ocorrencia(filename_pessoa_ocorrencia)
+    # # Ocorrencia
+    # import_ocorrencia(filename_ocorrencia)
+    # create_data(filename_natureza, Natureza)
+    # create_data(filename_arma, Arma)
+    # create_data(filename_areaupm, AreaUpm)
+    # create_data(filename_motivacao, Motivacao)
+    # import_infracao(filename_infracao)
+    # import_pessoa_ocorrencia(filename_pessoa_ocorrencia)
 
-    # Veiculo
-    create_data(filename_veiculo_cor, Cor)
-    create_data(filename_veiculo_modelo, Modelo)
-    create_data(filename_veiculo_veiculo, Veiculo)
+    # # Veiculo
+    # create_data(filename_veiculo_cor, Cor)
+    # create_data(filename_veiculo_modelo, Modelo)
+    # create_data(filename_veiculo_veiculo, Veiculo)
 
     toc = timeit.default_timer()
     return round(toc - tic, 2)
 
 
+def read_data(filename):
+    '''
+    Lê os dados para extrair id e slug e montar um dicionario.
+    '''
+    df = pd.read_csv(filename)
+    df = df[['id', 'slug']]
+    dictionary = {}
+    for row in df.itertuples():
+        dictionary[str(row.id)] = row.slug
+    return dictionary
+
+
 def create_data(filename, model):
     df = pd.read_csv(filename)
+    df = df.drop(['id'], axis=1)
     aux = df.T.apply(dict).tolist()
     data = [model(**item) for item in aux]
     model.objects.bulk_create(data)
@@ -92,6 +111,8 @@ def create_pessoa(filename):
     items = csv_online_to_list(filename)
     data = []
     for i, item in enumerate(items):
+        dict_pessoas[item['id']] = item['slug']
+        del item['id']
         if item.get('address_number'):
             item['address_number'] = int(item.get('address_number'))
         else:
@@ -108,10 +129,12 @@ def create_pessoa(filename):
 
         created_by_id = item.get('created_by_id')
         if created_by_id:
-            created_by = User.objects.get(pk=created_by_id)
-            item['created_by'] = created_by
+            created_by_username = dict_users.get(int(created_by_id))
         else:
-            item['created_by'] = User.objects.get(username='admin')
+            created_by_username = 'admin'
+        if created_by_username:
+            created_by = User.objects.get(username=created_by_username)
+            item['created_by'] = created_by
 
         faccao_id = item.get('faccao_id')
         if faccao_id:
@@ -133,6 +156,8 @@ def import_user(filename):
     df = pd.read_csv(filename)
     aux = df.T.apply(dict).tolist()
     for item in aux:
+        dict_users[item['id']] = item['username']
+        del item['id']
         User.objects.create(
             username=item['username'],
             first_name=item['first_name'],
@@ -155,10 +180,12 @@ def import_foto(filename):
     items = df.T.apply(dict).tolist()
     data = []
     for item in items:
+        del item['id']
         if isinstance(item.get('foto'), str):
             pessoa_id = item.get('pessoa_id')
-            if pessoa_id:
-                pessoa = Pessoa.objects.get(pk=pessoa_id)
+            pessoa_slug = dict_pessoas.get(pessoa_id)
+            if pessoa_slug:
+                pessoa = Pessoa.objects.get(slug=pessoa_slug)
                 item['pessoa'] = pessoa
 
             obj = Foto(**item)
@@ -180,10 +207,11 @@ def import_comparsa(filename):
     items = df.T.apply(dict).tolist()
     data = []
     for item in items:
+        del item['id']
         pessoa_id = item.get('pessoa_id')
-        if pessoa_id:
-            pessoa = Pessoa.objects.get(pk=pessoa_id)
-            item['pessoa'] = pessoa
+        pessoa_slug = dict_pessoas.get(str(pessoa_id))
+        if pessoa_slug:
+            pessoa = Pessoa.objects.get(slug=pessoa_slug)
 
         if not isinstance(item.get('cpf'), str):
             item['cpf'] = None
@@ -210,6 +238,7 @@ def import_infracao(filename):
     items = csv_online_to_list(filename)
     data = []
     for item in items:
+        del item['id']
         created_by_id = item.get('created_by_id')
         if created_by_id:
             created_by = User.objects.get(pk=created_by_id)
@@ -218,9 +247,9 @@ def import_infracao(filename):
             item['created_by'] = User.objects.get(username='admin')
 
         pessoa_id = item.get('pessoa_id')
-        if pessoa_id:
-            pessoa = Pessoa.objects.get(pk=pessoa_id)
-            item['pessoa'] = pessoa
+        pessoa_slug = dict_pessoas.get(str(pessoa_id))
+        if pessoa_slug:
+            pessoa = Pessoa.objects.get(slug=pessoa_slug)
 
         natureza_id = item.get('natureza_id')
         if natureza_id:
@@ -243,6 +272,7 @@ def import_ocorrencia(filename):
     items = df.T.apply(dict).tolist()
     data = []
     for item in items:
+        del item['id']
         created_by_id = item.get('created_by_id')
         if created_by_id:
             created_by = User.objects.get(pk=created_by_id)
@@ -260,6 +290,7 @@ def import_pessoa_ocorrencia(filename):
     items = csv_online_to_list(filename)
     data = []
     for item in items:
+        del item['id']
         created_by_id = item.get('created_by_id')
         if created_by_id:
             created_by = User.objects.get(pk=created_by_id)
@@ -268,9 +299,9 @@ def import_pessoa_ocorrencia(filename):
             item['created_by'] = User.objects.get(username='admin')
 
         pessoa_id = item.get('pessoa_id')
-        if pessoa_id:
-            pessoa = Pessoa.objects.get(pk=pessoa_id)
-            item['pessoa'] = pessoa
+        pessoa_slug = dict_pessoas.get(str(pessoa_id))
+        if pessoa_slug:
+            pessoa = Pessoa.objects.get(slug=pessoa_slug)
 
         ocorrencia_id = item.get('ocorrencia_id')
         if ocorrencia_id:

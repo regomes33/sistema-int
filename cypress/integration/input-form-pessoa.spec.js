@@ -27,7 +27,7 @@ describe('Input form', () => {
     cy.get('input[name="apelido"]').type('Cidão')
     cy.get('input[name="mae"]').type('Ivonete Santos')
     cy.get('input[name="pai"]').type('Benedito Santos')
-    cy.get('#faccao').select('5')
+    cy.get('#faccao').select('1')
     cy.wait(500)
 
     cy.get('#heading2').click()
