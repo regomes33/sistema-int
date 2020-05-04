@@ -205,7 +205,7 @@ class HomicidioList(LRM, ListView):
         queryset = super(HomicidioList, self).get_queryset()
 
         # Retorna somente as vítimas.
-        queryset = queryset.filter(vitima__vitima=False)
+        queryset = queryset.filter(vitima__vitima=True)
 
         search = self.request.GET.get('search')
         if search:
