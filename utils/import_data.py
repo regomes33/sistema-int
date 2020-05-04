@@ -375,11 +375,6 @@ def import_ocorrenciaveiculo(filename):
 
 
 def import_veiculo(filename):
-    # placa
-    # modelo
-    # cor
-    # observacao
-
     df = pd.read_csv(filename)
     items = df.T.apply(dict).tolist()
     data = []

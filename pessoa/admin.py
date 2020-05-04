@@ -59,7 +59,7 @@ class PessoaAdmin(admin.ModelAdmin):
         PessoaVeiculoInline
     )
     list_display = ('__str__', 'slug', 'nome',
-                    'sobrenome', 'apelido', 'faccao')
+                    'sobrenome', 'apelido', 'faccao', 'vitima')
     search_fields = ('nome', 'sobrenome', 'apelido', 'mae', 'pai')
     list_filter = ('vitima', 'faccao', 'infracao__natureza')
     date_hierarchy = 'created'

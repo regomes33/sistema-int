@@ -233,6 +233,9 @@ def homicidio_create(request):
         if form.is_valid():
             new_form = form.save(commit=False)
             new_form.created_by = request.user
+            # Transforma a pessoa em vítima
+            new_form.vitima.vitima = True
+            new_form.vitima.save()
             new_form.save()
             return HttpResponseRedirect(reverse('ocorrencia:homicidios'))
 
