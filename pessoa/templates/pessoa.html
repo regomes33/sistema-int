@@ -126,13 +126,13 @@
                               <br>
                              
                               <small>{{ veiculo.veiculo.modelo }} {{ veiculo.veiculo.cor }}</small>
+
+                              <br>
+
+                              <label>Observações</label>
+                              <br>
+                              {{veiculo.veiculo.observacao|default:"---"}}
                             </td>
-                             <tr>
-                               <td><label>Observações</label>
-                                <br>
-                                 {{veiculo.veiculo.observacao|default:"---"}}
-                               </td>
-                             </tr>
                             <td>
                               <span class="span-is-link"
                                     data-toggle="modal" 
@@ -170,12 +170,9 @@
                     <li class="list-group-item">RG: {{ comparsa.rg }}</li>
                     <li class="list-group-item">CPF: {{ comparsa.cpf }}</li>
                     <li class="list-group-item">CNH: {{ comparsa.cnh }}</li>
-                    <li class="list-group-item">Parente: {% if comparsa.parente  %} Sim {% else  %} Não {% endif %}</li>
+                    <li class="list-group-item">Parente: {% if comparsa.parente %} Sim {% else %} Não {% endif %}</li>
                     <li class="list-group-item">Grau de Parentesco: {{ comparsa.grau_parentesco }}</li>
                     <li class="list-group-item">Observação: {{ comparsa.observacao }}</li>
-                    
-                    
-                    
                   </ul>
                   {% endfor %}
                 </div>
@@ -333,6 +330,7 @@
       </div>
     </div>
   </div>
+</div>
 
 <!-- Modal Pessoa -->
 <div class="modal fade" id="modalEditarPessoa" tabindex="-1" role="dialog" aria-labelledby="modalEditarPessoaLabel">
@@ -471,11 +469,11 @@
             <textarea id="id_observacao_veiculo" name= "observacao"type="text" maxlength="500" v-model="veiculo.observacao"></textarea>
           </div>
 
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-primary">Salvar</button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
       </form>
     </div>
   </div>
@@ -947,8 +945,6 @@
       </form>
     </div>
   </div>
-</div>
-
 </div>
 {% endblock content %}
 
