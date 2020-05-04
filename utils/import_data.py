@@ -61,6 +61,10 @@ dict_users = {}
 dict_pessoas = read_data(filename_pessoa_pessoa)
 dict_faccao = read_data(filename_pessoa_faccao)
 dict_ocorrencia = read_data(filename_ocorrencia)
+dict_natureza = read_data(filename_natureza)
+dict_arma = read_data(filename_arma)
+dict_modelo = read_data(filename_veiculo_modelo)
+dict_cor = read_data(filename_veiculo_cor)
 
 
 def my_import_data():
@@ -82,9 +86,9 @@ def my_import_data():
     import_pessoa_ocorrencia(filename_pessoa_ocorrencia)
 
     # Veiculo
-    # create_data(filename_veiculo_cor, Cor)
-    # create_data(filename_veiculo_modelo, Modelo)
-    # create_data(filename_veiculo_veiculo, Veiculo)
+    create_data(filename_veiculo_cor, Cor)
+    create_data(filename_veiculo_modelo, Modelo)
+    import_veiculo(filename_veiculo_veiculo)
 
     toc = timeit.default_timer()
     return round(toc - tic, 2)
@@ -194,6 +198,46 @@ def get_pessoa(pessoa_id):
         return pessoa
 
 
+def get_natureza(natureza_id):
+    '''
+    Retorna uma natureza.
+    '''
+    natureza_slug = dict_natureza.get(str(natureza_id))
+    if natureza_slug:
+        natureza = Natureza.objects.get(slug=natureza_slug)
+        return natureza
+
+
+def get_arma(arma_id):
+    '''
+    Retorna uma arma.
+    '''
+    arma_slug = dict_arma.get(str(arma_id))
+    if arma_slug:
+        arma = Arma.objects.get(slug=arma_slug)
+        return arma
+
+
+def get_modelo(modelo_id):
+    '''
+    Retorna uma modelo.
+    '''
+    modelo_slug = dict_modelo.get(str(modelo_id))
+    if modelo_slug:
+        modelo = Modelo.objects.get(slug=modelo_slug)
+        return modelo
+
+
+def get_cor(cor_id):
+    '''
+    Retorna uma cor.
+    '''
+    cor_slug = dict_cor.get(str(cor_id))
+    if cor_slug:
+        cor = Cor.objects.get(slug=cor_slug)
+        return cor
+
+
 def import_foto(filename):
     df = pd.read_csv(filename)
     items = df.T.apply(dict).tolist()
@@ -262,20 +306,19 @@ def import_infracao(filename):
         if created_by:
             item['created_by'] = created_by
 
-        # aqui
         pessoa = get_pessoa(item.get('pessoa_id'))
         del item['pessoa_id']
         if pessoa:
             item['pessoa'] = pessoa
 
-        natureza_id = item.get('natureza_id')
-        if natureza_id:
-            natureza = Natureza.objects.get(pk=natureza_id)
+        natureza = get_natureza(item.get('natureza_id'))
+        del item['natureza_id']
+        if natureza:
             item['natureza'] = natureza
 
-        arma_id = item.get('arma_id')
-        if arma_id:
-            arma = Arma.objects.get(pk=arma_id)
+        arma = get_arma(item.get('arma_id'))
+        del item['arma_id']
+        if arma:
             item['arma'] = arma
 
         obj = Infracao(**item)
@@ -316,10 +359,6 @@ def import_pessoa_ocorrencia(filename):
         if pessoa:
             item['pessoa'] = pessoa
 
-        # ocorrencia_id = item.get('ocorrencia_id')
-        # if ocorrencia_id:
-        #     ocorrencia = Ocorrencia.objects.get(pk=ocorrencia_id)
-        #     item['ocorrencia'] = ocorrencia
         ocorrencia_id = item.get('ocorrencia_id')
         ocorrencia_slug = dict_ocorrencia.get(ocorrencia_id)
         if ocorrencia_slug:
@@ -333,3 +372,31 @@ def import_pessoa_ocorrencia(filename):
 
 def import_ocorrenciaveiculo(filename):
     pass
+
+
+def import_veiculo(filename):
+    # placa
+    # modelo
+    # cor
+    # observacao
+
+    df = pd.read_csv(filename)
+    items = df.T.apply(dict).tolist()
+    data = []
+    for i, item in enumerate(items):
+        del item['id']
+
+        modelo = get_modelo(item.get('modelo_id'))
+        del item['modelo_id']
+        if modelo:
+            item['modelo'] = modelo
+
+        cor = get_cor(item.get('cor_id'))
+        del item['cor_id']
+        if cor:
+            item['cor'] = cor
+
+        obj = Veiculo(**item)
+        data.append(obj)
+
+    Veiculo.objects.bulk_create(data)
