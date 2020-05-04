@@ -1,16 +1,13 @@
 {% extends "base.html" %}
 {% load easy_mask %}
 {% load widget_tweaks %}
-
 {% block title %}| Pessoa{%endblock%}
-
 {% block breadcrumbs %}
-  {% include "breadcrumb/_include_breadcrumb_base_detail.html" %}
+{% include "breadcrumb/_include_breadcrumb_base_detail.html" %}
 {% endblock %}
-
 {% block style %}
-  <style>
-    .glyphicon {  margin-bottom: 10px;margin-right: 10px;}
+<style>
+  .glyphicon {  margin-bottom: 10px;margin-right: 10px;}
 
     small {
       display: block;
@@ -19,7 +16,6 @@
     }
   </style>
 {% endblock style %}
-
 {% block content %}
 <div class="">
   <div class="accordion accordion-icons" id="accordionExample">
@@ -39,35 +35,28 @@
             <div class="col-sm-6 text-left mb-4">
               <div class="card">
                 <div class="card-body">
-
                   <div class="well well-sm">
                     <div class="row">
-                        <div class="col-sm-6 col-md-6">
-                          {% if object.get_first_photo %}
-                            <img src="{{ object.get_first_photo.foto.url }}" width="200px" class="img-rounded img-responsive">
-                            <span class="span-is-link"
-                                  data-toggle="modal" 
-                                  data-target="#modalEditarFoto" 
-                                  @click="getPhoto('{{ object.get_first_photo.pk }}')">
-                              <i class="fa fa-edit" style="margin-left: 10px; margin-top: 10px;"></i> Editar foto
-                            </span>
-                          {% endif %}
+                      <div class="col-sm-6 col-md-6">
+                        {% if object.get_first_photo %}
+                        <img src="{{ object.get_first_photo.foto.url }}" width="200px" class="img-rounded img-responsive">
+                        <span class="span-is-link" data-toggle="modal" data-target="#modalEditarFoto" @click="getPhoto('{{ object.get_first_photo.pk }}')">
+                          <i class="fa fa-edit" style="margin-left: 10px; margin-top: 10px;"></i> Editar foto
+                        </span>
+                        {% endif %}
+                      </div>
+                      <div class="col-sm-6 col-md-6">
+                        <h2>{{ object }}</h2>
+                        <p class="card-text">Apelido: {{ object.apelido|default:"---" }}</p>
+                        <h5 class="card-title">Facção: {{ object.faccao|default:"---" }}</h5>
+                        <div class="pull-right">
+                          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarPessoa">
+                            Editar
+                          </button>
                         </div>
-                        <div class="col-sm-6 col-md-6">
-                          <h2>{{ object }}</h2>
-                          <p class="card-text">Apelido: {{ object.apelido|default:"---" }}</p>
-                          <h5 class="card-title">Facção: {{ object.faccao|default:"---" }}</h5>
-
-                          <div class="pull-right">
-                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarPessoa">
-                              Editar
-                            </button>
-                          </div>
-
-                        </div>
+                      </div>
                     </div>
                   </div>
-
                 </div>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">
@@ -100,10 +89,7 @@
                   {% for contato in object.pessoacontato_set.all %}
                   <p class="card-text">
                     <span class="badge badge-info">{{ contato.tipo }}</span> {{ contato.telefone }}
-                    <span class="span-is-link"
-                          data-toggle="modal" 
-                          data-target="#modalEditarContato" 
-                          @click="getContato('{% url 'api:contato_update' contato.pk %}')">
+                    <span class="span-is-link" data-toggle="modal" data-target="#modalEditarContato" @click="getContato('{% url 'api:contato_update' contato.pk %}')">
                       <i class="fa fa-edit" style="margin-left: 10px;"></i>
                     </span>
                   </p>
@@ -117,34 +103,28 @@
                       <i class="fa fa-plus add-item" data-toggle="modal" data-target="#modalAdicionarVeiculo" @click="getAddVeiculo"></i>
                     </span>
                   </h3>
-                    <table class="table">
-                      <tbody>
-                        {% for veiculo in object.pessoas_veiculos.all %}
-                          <tr>
-                            <td>
-                              {{ veiculo.veiculo.placa }}
-                              <br>
-                             
-                              <small>{{ veiculo.veiculo.modelo }} {{ veiculo.veiculo.cor }}</small>
-
-                              <br>
-
-                              <label>Observações</label>
-                              <br>
-                              {{veiculo.veiculo.observacao|default:"---"}}
-                            </td>
-                            <td>
-                              <span class="span-is-link"
-                                    data-toggle="modal" 
-                                    data-target="#modalEditarVeiculo" 
-                                    @click="getVeiculo('{% url 'api:veiculo_update' veiculo.pk %}')">
-                                <i class="fa fa-edit" style="margin-left: 10px;"></i>
-                              </span>
-                            </td>
-                          </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
+                  <table class="table">
+                    <tbody>
+                      {% for veiculo in object.pessoas_veiculos.all %}
+                      <tr>
+                        <td>
+                          {{ veiculo.veiculo.placa }}
+                          <br>
+                          <small>{{ veiculo.veiculo.modelo }} {{ veiculo.veiculo.cor }}</small>
+                          <br>
+                          <label>Observações</label>
+                          <br>
+                          {{veiculo.veiculo.observacao|default:"---"}}
+                        </td>
+                        <td>
+                          <span class="span-is-link" data-toggle="modal" data-target="#modalEditarVeiculo" @click="getVeiculo('{% url 'api:veiculo_update' veiculo.pk %}')">
+                            <i class="fa fa-edit" style="margin-left: 10px;"></i>
+                          </span>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -159,10 +139,7 @@
                   {% for comparsa in object.comparsa_set.all %}
                   <p class="card-text">
                     {{ comparsa }}
-                    <span class="span-is-link float-right"
-                          data-toggle="modal" 
-                          data-target="#modalEditarComparsa" 
-                          @click="getComparsa('{% url 'api:comparsa_update' comparsa.pk %}')">
+                    <span class="span-is-link float-right" data-toggle="modal" data-target="#modalEditarComparsa" @click="getComparsa('{% url 'api:comparsa_update' comparsa.pk %}')">
                       <i class="fa fa-edit" style="margin-left: 10px;"></i>
                     </span>
                   </p>
@@ -188,22 +165,19 @@
               </h3>
               <div class="card-group">
                 {% for foto in object.foto_set.all %}
-                  {% if foto != object.get_first_photo %}
-                    {% if foto.foto %}
-                      <div class="card">
-                        <div class="card-body">
-                          <img src="{{ foto.foto.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ foto.foto.name }}">
-                          <br>
-                          <span class="span-is-link"
-                              data-toggle="modal" 
-                              data-target="#modalEditarFoto2" 
-                              @click="getPhoto2('{{ foto.pk }}', '{{ foto.foto.url }}')">
-                            <i class="fa fa-edit" style="margin-left: 10px; margin-top: 10px;"></i> Editar
-                          </span>
-                        </div>
-                      </div>
-                    {% endif %}
-                  {% endif %}
+                {% if foto != object.get_first_photo %}
+                {% if foto.foto %}
+                <div class="card">
+                  <div class="card-body">
+                    <img src="{{ foto.foto.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ foto.foto.name }}">
+                    <br>
+                    <span class="span-is-link" data-toggle="modal" data-target="#modalEditarFoto2" @click="getPhoto2('{{ foto.pk }}', '{{ foto.foto.url }}')">
+                      <i class="fa fa-edit" style="margin-left: 10px; margin-top: 10px;"></i> Editar
+                    </span>
+                  </div>
+                </div>
+                {% endif %}
+                {% endif %}
                 {% endfor %}
               </div>
             </div>
@@ -217,21 +191,18 @@
               </h3>
               <div class="card-group">
                 {% for tatuagem in object.tatuagem_set.all %}
-                  {% if tatuagem.foto %}
-                    <div class="card">
-                      <div class="card-body">
-                        <img src="{{ tatuagem.foto.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ tatuagem.foto.name }}">
-                        <br>
-                        <span class="span-is-link"
-                            data-toggle="modal" 
-                            data-target="#modalEditarTatuagem" 
-                            @click="getTattoo('{{ tatuagem.pk }}', '{{ tatuagem.foto.url }}')">
-                          <i class="fa fa-edit" style="margin-left: 10px; margin-top: 10px;"></i> Editar
-                        </span>
-                          <p class="card-text text-left">{{ tatuagem.descricao }}</p>
-                        </div>
-                      </div>
-                  {% endif %}
+                {% if tatuagem.foto %}
+                <div class="card">
+                  <div class="card-body">
+                    <img src="{{ tatuagem.foto.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ tatuagem.foto.name }}">
+                    <br>
+                    <span class="span-is-link" data-toggle="modal" data-target="#modalEditarTatuagem" @click="getTattoo('{{ tatuagem.pk }}', '{{ tatuagem.foto.url }}')">
+                      <i class="fa fa-edit" style="margin-left: 10px; margin-top: 10px;"></i> Editar
+                    </span>
+                    <p class="card-text text-left">{{ tatuagem.descricao }}</p>
+                  </div>
+                </div>
+                {% endif %}
                 {% endfor %}
               </div>
             </div>
@@ -269,10 +240,7 @@
                 <td>{{ ocorrencia.ocorrencia.data_do_fato }}</td>
                 <td>{{ ocorrencia.ocorrencia.descricao }}</td>
                 <td>
-                  <span class="span-is-link"
-                        data-toggle="modal" 
-                        data-target="#modalEditarOcorrencia" 
-                        @click="getOcorrencia('{% url 'api:ocorrencia_update' ocorrencia.pk %}')">
+                  <span class="span-is-link" data-toggle="modal" data-target="#modalEditarOcorrencia" @click="getOcorrencia('{% url 'api:ocorrencia_update' ocorrencia.pk %}')">
                     <i class="fa fa-edit" style="margin-left: 10px;"></i>
                   </span>
                 </td>
@@ -315,10 +283,7 @@
                 <td>{{ infracao.arma|default:"---" }}</td>
                 <td>{{ infracao.get_status_display }}</td>
                 <td>
-                  <span class="span-is-link"
-                        data-toggle="modal" 
-                        data-target="#modalEditarInfracao" 
-                        @click="getInfracao('{% url 'api:infracao_update' infracao.pk %}')">
+                  <span class="span-is-link" data-toggle="modal" data-target="#modalEditarInfracao" @click="getInfracao('{% url 'api:infracao_update' infracao.pk %}')">
                     <i class="fa fa-edit" style="margin-left: 10px;"></i>
                   </span>
                 </td>
@@ -331,7 +296,6 @@
     </div>
   </div>
 </div>
-
 <!-- Modal Pessoa -->
 <div class="modal fade" id="modalEditarPessoa" tabindex="-1" role="dialog" aria-labelledby="modalEditarPessoaLabel">
   <div class="modal-dialog" role="document">
@@ -343,23 +307,21 @@
       <form action="{% url 'pessoa:pessoa_update' object.slug %}" method="POST">
         <div class="modal-body">
           {% csrf_token %}
-
           {% for field in form_pessoa.visible_fields %}
-            <div class="form-group{% if field.errors %} has-error {% endif %}">
-              <label for="{{ field.id_for_label }}">
-                {% if field.field.required %}
-                  <span class="required">{{ field.label }}</span>
-                {% else %}
-                  {{ field.label }}
-                {% endif %}
-              </label>
-              {% render_field field class="form-control" %}
-              {% for error in field.errors %}
-                <span class="text-muted">{{ error }}</span>
-              {% endfor %}
-            </div>
+          <div class="form-group{% if field.errors %} has-error {% endif %}">
+            <label for="{{ field.id_for_label }}">
+              {% if field.field.required %}
+              <span class="required">{{ field.label }}</span>
+              {% else %}
+              {{ field.label }}
+              {% endif %}
+            </label>
+            {% render_field field class="form-control" %}
+            {% for error in field.errors %}
+            <span class="text-muted">{{ error }}</span>
+            {% endfor %}
+          </div>
           {% endfor %}
-
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -369,7 +331,6 @@
     </div>
   </div>
 </div>
-
 <!-- Modal Adicionar Contato -->
 <div class="modal fade" id="modalAdicionarContato" tabindex="-1" role="dialog" aria-labelledby="modalAdicionarContatoLabel">
   <div class="modal-dialog" role="document">
@@ -382,7 +343,6 @@
         <div class="modal-body">
           {% csrf_token %}
           <input id="id_contato_pk" type="hidden" v-model="contato.pk" />
-
           <div class="form-group">
             <label for="id_tipo">Tipo</label>
             <select id="id_tipo" name="tipo" class="form-control" v-model="contato.tipo">
@@ -390,12 +350,10 @@
               <option value="tel">Telefone</option>
             </select>
           </div>
-
           <div class="form-group">
             <label for="id_telefone">Telefone</label>
             <input id="id_telefone" name="telefone" type="tel" class="form-control" v-model="contato.telefone">
           </div>
-
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -405,7 +363,6 @@
     </div>
   </div>
 </div>
-
 <!-- Modal Editar Contato -->
 <div class="modal fade" id="modalEditarContato" tabindex="-1" role="dialog" aria-labelledby="modalEditarContatoLabel">
   <div class="modal-dialog" role="document">
@@ -418,7 +375,6 @@
         <div class="modal-body">
           {% csrf_token %}
           <input id="id_contato_pk" type="hidden" v-model="contato.pk" />
-
           <div class="form-group">
             <label for="id_tipo">Tipo</label>
             <select id="id_tipo" name="tipo" class="form-control" v-model="contato.tipo">
@@ -426,12 +382,10 @@
               <option value="tel">Telefone</option>
             </select>
           </div>
-
           <div class="form-group">
             <label for="id_telefone">Telefone</label>
             <input id="id_telefone" name="telefone" type="tel" class="form-control" v-model="contato.telefone">
           </div>
-
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -441,7 +395,6 @@
     </div>
   </div>
 </div>
-
 <!-- Modal Adicionar Veiculo -->
 <div class="modal fade" id="modalAdicionarVeiculo" tabindex="-1" role="dialog" aria-labelledby="modalAdicionarVeiculoLabel">
   <div class="modal-dialog" role="document">
@@ -454,7 +407,6 @@
         <div class="modal-body">
           {% csrf_token %}
           <input id="id_veiculo_pk" type="hidden" v-model="veiculo.pk" />
-         
           <div class="form-group">
             <label for="id_veiculo">Veículo</label>
             <select id="id_veiculo" name="veiculo" class="form-control" v-model="veiculo.veiculo_pk">
@@ -462,13 +414,11 @@
               <option v-for="veiculo in veiculos" :key="veiculo.pk" :value="veiculo.pk">${ veiculo.veiculo }</option>
             </select>
           </div>
-
-          <div class="form-group">  
+          <div class="form-group">
             <label for="id_observacao_veiculo">Observações</label>
             <br>
-            <textarea id="id_observacao_veiculo" name= "observacao"type="text" maxlength="500" v-model="veiculo.observacao"></textarea>
+            <textarea id="id_observacao_veiculo" name="observacao" type="text" maxlength="500" v-model="veiculo.observacao"></textarea>
           </div>
-
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -478,7 +428,6 @@
     </div>
   </div>
 </div>
-
 <!-- Modal Editar Veiculo -->
 <div class="modal fade" id="modalEditarVeiculo" tabindex="-1" role="dialog" aria-labelledby="modalEditarVeiculoLabel">
   <div class="modal-dialog" role="document">
@@ -491,7 +440,6 @@
         <div class="modal-body">
           {% csrf_token %}
           <input id="id_veiculo_pk" type="hidden" v-model="veiculo.pk" />
-
           <div class="form-group">
             <label for="id_veiculo">Veículo</label>
             <select id="id_veiculo" name="veiculo" class="form-control" v-model="veiculo.veiculo_pk">
@@ -499,12 +447,10 @@
               <option v-for="veiculo in veiculos" :key="veiculo.pk" :value="veiculo.pk">${ veiculo.veiculo }</option>
             </select>
           </div>
-
-          
-          <div class="form-group">  
+          <div class="form-group">
             <label for="id_observacao_veiculo">Observações</label>
             <br>
-            <textarea id="id_observacao_veiculo" name= "observacao"type="text" maxlength="500" v-model="veiculo.observacao"></textarea>
+            <textarea id="id_observacao_veiculo" name="observacao" type="text" maxlength="500" v-model="veiculo.observacao"></textarea>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -514,7 +460,6 @@
     </div>
   </div>
 </div>
-
 <!-- Modal Adicionar Comparsa -->
 <div class="modal fade" id="modalAdicionarComparsa" tabindex="-1" role="dialog" aria-labelledby="modalAdicionarComparsaLabel">
   <div class="modal-dialog" role="document">
@@ -526,50 +471,44 @@
       <form method="POST" @submit.prevent="salvarAddComparsa('{{ object.pk }}')">
         <div class="modal-body">
           {% csrf_token %}
-              <input id="id_comparsa_pk" type="hidden" v-model="comparsa.pk" />
-
-                <div class="form-group">
-                  <label for="id_nome">Nome</label>
-                  <input id="id_nome" name="nome" type="text" maxlength="100" class="form-control" v-model="comparsa.nome">
-                </div>
-
-                <div class="form-group">
-                  <label for="id_rg">RG</label>
-                  <input id="id_rg" name="rg" type="text" maxlength="11" class="form-control" v-model="comparsa.rg">
-                </div>
-
-                <div class="form-group">
-                  <label for="id_cpf">CPF</label>
-                  <input id="id_cpf" name="cpf" type="text" maxlength="11" class="form-control" v-model="comparsa.cpf">
-                </div>
-
-                <div class="form-group">
-                  <label for="id_cnh">CNH</label>
-                  <input id="id_cnh" name="cnh" type="text" maxlength="20" class="form-control" v-model="comparsa.cnh">
-                </div>
-                <div class="checkbox-row">
-                  <input id="id_parente" name="parente" type="checkbox"  class="form-control" v-model="comparsa.parente" style="width: 50;">
-                  <label for="id_parente">Parente</label>
-                </div>  
-              
-              <div class="form-group" >
-                <label for="id_grau_parentesco">Grau de Parentesco</label>
-                <input id="id_grau_parentesco" name="grau_parentesco" type="text" maxlength="50" class="form-control" v-model="comparsa.grau_parentesco" >
-              </div>
-              <div class="form-group">
-                <label for="id_observacao">Observação</label>
-                <input id="id_observacao" name="observacao" type="text" maxlength="500" class="form-control" v-model="comparsa.observacao">
-              </div>
+          <input id="id_comparsa_pk" type="hidden" v-model="comparsa.pk" />
+          <div class="form-group">
+            <label for="id_nome">Nome</label>
+            <input id="id_nome" name="nome" type="text" maxlength="100" class="form-control" v-model="comparsa.nome">
           </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-              <button type="submit" class="btn btn-primary">Salvar</button>
-            </div>
+          <div class="form-group">
+            <label for="id_rg">RG</label>
+            <input id="id_rg" name="rg" type="text" maxlength="11" class="form-control" v-model="comparsa.rg">
+          </div>
+          <div class="form-group">
+            <label for="id_cpf">CPF</label>
+            <input id="id_cpf" name="cpf" type="text" maxlength="11" class="form-control" v-model="comparsa.cpf">
+          </div>
+          <div class="form-group">
+            <label for="id_cnh">CNH</label>
+            <input id="id_cnh" name="cnh" type="text" maxlength="20" class="form-control" v-model="comparsa.cnh">
+          </div>
+          <div class="checkbox-row">
+            <input id="id_parente" name="parente" type="checkbox" class="form-control" v-model="comparsa.parente" style="width: 50;">
+            <label for="id_parente">Parente</label>
+          </div>
+          <div class="form-group">
+            <label for="id_grau_parentesco">Grau de Parentesco</label>
+            <input id="id_grau_parentesco" name="grau_parentesco" type="text" maxlength="50" class="form-control" v-model="comparsa.grau_parentesco">
+          </div>
+          <div class="form-group">
+            <label for="id_observacao">Observação</label>
+            <input id="id_observacao" name="observacao" type="text" maxlength="500" class="form-control" v-model="comparsa.observacao">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
       </form>
     </div>
   </div>
 </div>
-
 <!-- Modal Editar Comparsa -->
 <div class="modal fade" id="modalEditarComparsa" tabindex="-1" role="dialog" aria-labelledby="modalEditarComparsaLabel">
   <div class="modal-dialog" role="document">
@@ -582,32 +521,26 @@
         <div class="modal-body">
           {% csrf_token %}
           <input id="id_comparsa_pk" type="hidden" v-model="comparsa.pk" />
-
           <div class="form-group">
             <label for="id_nome">Nome</label>
             <input id="id_nome" name="nome" type="text" maxlength="100" class="form-control" v-model="comparsa.nome">
           </div>
-
           <div class="form-group">
             <label for="id_rg">RG</label>
             <input id="id_rg" name="rg" type="text" maxlength="11" class="form-control" v-model="comparsa.rg">
           </div>
-
           <div class="form-group">
             <label for="id_cpf">CPF</label>
             <input id="id_cpf" name="cpf" type="text" maxlength="11" class="form-control" v-model="comparsa.cpf">
           </div>
-
           <div class="form-group">
             <label for="id_cnh">CNH</label>
             <input id="id_cnh" name="cnh" type="text" maxlength="20" class="form-control" v-model="comparsa.cnh">
           </div>
-
           <div class="form-check">
             <label for="id_parente">Parente</label>
-            <input id="id_parente" name="parente" type="checkbox"   class="form-control" v-model="comparsa.parente">
-          </div>  
-        
+            <input id="id_parente" name="parente" type="checkbox" class="form-control" v-model="comparsa.parente">
+          </div>
           <div class="form-group">
             <label for="id_grau_parentesco">Grau de Parentesco</label>
             <input id="id_grau_parentesco" name="grau_parentesco" type="text" maxlength="50" class="form-control" v-model="comparsa.grau_parentesco">
@@ -616,18 +549,16 @@
             <label for="id_observacao">Observação</label>
             <input id="id_observacao" name="observacao" type="text" maxlength="500" class="form-control" v-model="comparsa.observacao">
           </div>
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-primary">Salvar</button>
-          </div>
-      </div>
-      </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
     </div>
+    </form>
   </div>
 </div>
-
+</div>
 <!-- Modal Editar Foto -->
 <div class="modal fade" id="modalEditarFoto" tabindex="-1" role="dialog" aria-labelledby="modalEditarFotoLabel">
   <div class="modal-dialog" role="document">
@@ -641,14 +572,12 @@
           {% csrf_token %}
           <div class="form-group">
             {% if object.get_first_photo %}
-              <img src="{{ object.get_first_photo.foto.url }}" width="200px" class="img-rounded img-responsive">
+            <img src="{{ object.get_first_photo.foto.url }}" width="200px" class="img-rounded img-responsive">
             {% endif %}
           </div>
-
           <div class="form-group">
             <input id="id_foto" name="foto" type="file" @change="processFile">
           </div>
-
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -658,7 +587,6 @@
     </div>
   </div>
 </div>
-
 <!-- Modal Editar Foto2 -->
 <div class="modal fade" id="modalEditarFoto2" tabindex="-1" role="dialog" aria-labelledby="modalEditarFotoLabel2">
   <div class="modal-dialog" role="document">
@@ -673,11 +601,9 @@
           <div class="form-group">
             <img id="imgPhoto" :src="photo2.url" width="200px" class="img-rounded img-responsive">
           </div>
-
           <div class="form-group">
             <input type="file" @change="processFile2">
           </div>
-
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -687,7 +613,6 @@
     </div>
   </div>
 </div>
-
 <!-- Modal Adicionar Foto -->
 <div class="modal fade" id="modalAdicionarFoto" tabindex="-1" role="dialog" aria-labelledby="modalAdicionarFotoLabel">
   <div class="modal-dialog" role="document">
@@ -702,11 +627,9 @@
           <div class="form-group">
             <img id="imgPhoto" :src="photo2.url" width="200px" class="img-rounded img-responsive">
           </div>
-
           <div class="form-group">
             <input type="file" @change="processFileAddPhoto">
           </div>
-
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -716,7 +639,6 @@
     </div>
   </div>
 </div>
-
 <!-- Modal Adicionar Tatuagem -->
 <div class="modal fade" id="modalAdicionarTatuagem" tabindex="-1" role="dialog" aria-labelledby="modalAdicionarTatuagemLabel">
   <div class="modal-dialog" role="document">
@@ -731,11 +653,9 @@
           <div class="form-group">
             <img id="imgTatuagem" :src="tattoo.url" width="200px" class="img-rounded img-responsive">
           </div>
-
           <div class="form-group">
             <input type="file" @change="processFileAddTattoo">
           </div>
-
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -745,7 +665,6 @@
     </div>
   </div>
 </div>
-
 <!-- Modal Editar Tatuagem -->
 <div class="modal fade" id="modalEditarTatuagem" tabindex="-1" role="dialog" aria-labelledby="modalEditarTatuagemLabel">
   <div class="modal-dialog" role="document">
@@ -760,11 +679,9 @@
           <div class="form-group">
             <img id="imgTatuagem" :src="tattoo.url" width="200px" class="img-rounded img-responsive">
           </div>
-
           <div class="form-group">
             <input type="file" @change="processFileTattoo">
           </div>
-
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -774,7 +691,6 @@
     </div>
   </div>
 </div>
-
 <!-- Modal Adicionar Ocorrencia -->
 <div class="modal fade" id="modalAdicionarOcorrencia" tabindex="-1" role="dialog" aria-labelledby="modalAdicionarOcorrenciaLabel">
   <div class="modal-dialog" role="document">
@@ -787,7 +703,6 @@
         <div class="modal-body">
           {% csrf_token %}
           <input id="id_ocorrencia_pk" type="hidden" v-model="ocorrencia.pk" />
-
           <div class="form-group">
             <label for="id_ocorrencia">Ocorrência</label>
             <select id="id_ocorrencia" name="ocorrencia" class="form-control" v-model="ocorrencia.ocorrencia_pk">
@@ -795,17 +710,15 @@
               <option v-for="ocorrencia in ocorrencias" :key="ocorrencia.pk" :value="ocorrencia.pk">${ ocorrencia.ocorrencia }</option>
             </select>
           </div>
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-primary">Salvar</button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
       </form>
     </div>
   </div>
 </div>
-
 <!-- Modal Editar Ocorrencia -->
 <div class="modal fade" id="modalEditarOcorrencia" tabindex="-1" role="dialog" aria-labelledby="modalEditarOcorrenciaLabel">
   <div class="modal-dialog" role="document">
@@ -818,7 +731,6 @@
         <div class="modal-body">
           {% csrf_token %}
           <input id="id_ocorrencia_pk" type="hidden" v-model="ocorrencia.pk" />
-
           <div class="form-group">
             <label for="id_ocorrencia">Ocorrência</label>
             <select id="id_ocorrencia" name="ocorrencia" class="form-control" v-model="ocorrencia.ocorrencia_pk">
@@ -826,17 +738,15 @@
               <option v-for="ocorrencia in ocorrencias" :key="ocorrencia.pk" :value="ocorrencia.pk">${ ocorrencia.ocorrencia }</option>
             </select>
           </div>
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-primary">Salvar</button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
       </form>
     </div>
   </div>
 </div>
-
 <!-- Modal Adicionar Infracao -->
 <div class="modal fade" id="modalAdicionarInfracao" tabindex="-1" role="dialog" aria-labelledby="modalAdicionarInfracaoLabel">
   <div class="modal-dialog" role="document">
@@ -849,7 +759,6 @@
         <div class="modal-body">
           {% csrf_token %}
           <input id="natureza_pk" type="hidden" v-model="infracao.pk" />
-
           <div class="form-group">
             <label for="id_natureza">Natureza</label>
             <select id="id_natureza" class="form-control" v-model="infracao.natureza_pk">
@@ -857,7 +766,6 @@
               <option v-for="natureza in naturezas" :value="natureza.value">${ natureza.text }</option>
             </select>
           </div>
-
           <div class="form-group">
             <label for="id_infracaoqualificacao">Qualificação</label>
             <select id="id_qualificacao" class="form-control" v-model="infracao.qualificacao">
@@ -865,7 +773,6 @@
               <option v-for="qualificacao in qualificacoes" :value="qualificacao.value">${ qualificacao.text }</option>
             </select>
           </div>
-
           <div class="form-group">
             <label for="id_arma">Arma</label>
             <select id="id_arma" class="form-control" v-model="infracao.arma_pk">
@@ -873,7 +780,6 @@
               <option v-for="arma in armas" :value="arma.value">${ arma.text }</option>
             </select>
           </div>
-
           <div class="form-group">
             <label for="id_status">Status</label>
             <select id="id_status" class="form-control" v-model="infracao.status">
@@ -881,17 +787,15 @@
               <option v-for="statu in status" :value="statu.value">${ statu.text }</option>
             </select>
           </div>
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-primary">Salvar</button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
       </form>
     </div>
   </div>
 </div>
-
 <!-- Modal Editar Infracao -->
 <div class="modal fade" id="modalEditarInfracao" tabindex="-1" role="dialog" aria-labelledby="modalEditarInfracaoLabel">
   <div class="modal-dialog" role="document">
@@ -904,7 +808,6 @@
         <div class="modal-body">
           {% csrf_token %}
           <input id="natureza_pk" type="hidden" v-model="infracao.pk" />
-
           <div class="form-group">
             <label for="id_natureza">Natureza</label>
             <select id="id_natureza" class="form-control" v-model="infracao.natureza_pk">
@@ -912,7 +815,6 @@
               <option v-for="natureza in naturezas" :value="natureza.value">${ natureza.text }</option>
             </select>
           </div>
-
           <div class="form-group">
             <label for="id_infracaoqualificacao">Qualificação</label>
             <select id="id_qualificacao" class="form-control" v-model="infracao.qualificacao">
@@ -920,7 +822,6 @@
               <option v-for="qualificacao in qualificacoes" :value="qualificacao.value">${ qualificacao.text }</option>
             </select>
           </div>
-
           <div class="form-group">
             <label for="id_arma">Arma</label>
             <select id="id_arma" class="form-control" v-model="infracao.arma_pk">
@@ -928,7 +829,6 @@
               <option v-for="arma in armas" :value="arma.value">${ arma.text }</option>
             </select>
           </div>
-
           <div class="form-group">
             <label for="id_status">Status</label>
             <select id="id_status" class="form-control" v-model="infracao.status">
@@ -936,405 +836,401 @@
               <option v-for="statu in status" :value="statu.value">${ statu.text }</option>
             </select>
           </div>
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-primary">Salvar</button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
       </form>
     </div>
   </div>
 </div>
 {% endblock content %}
-
 {% block vuejs %}
-  <script>
-    $('.my-collapse').on('shown.bs.collapse', function() {
-      $(this).prev().find(".fa").addClass('fa-chevron-up').removeClass('fa-chevron-down');
-    });
+<script>
+$('.my-collapse').on('shown.bs.collapse', function() {
+  $(this).prev().find(".fa").addClass('fa-chevron-up').removeClass('fa-chevron-down');
+});
 
-    $('.my-collapse').on('hidden.bs.collapse', function() {
-      $(this).prev().find(".fa").addClass('fa-chevron-down').removeClass('fa-chevron-up');
-    });
-  </script>
+$('.my-collapse').on('hidden.bs.collapse', function() {
+  $(this).prev().find(".fa").addClass('fa-chevron-down').removeClass('fa-chevron-up');
+});
+</script>
+<script>
+const endpoint = '{{ endpoint }}';
 
-  <script>
-    const endpoint = '{{ endpoint }}';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+axios.defaults.xsrfCookieName = 'csrftoken'
 
-    axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-    axios.defaults.xsrfCookieName = 'csrftoken'
+var app = new Vue({
+  el: '#app',
+  delimiters: ['${', '}'],
+  data: {
+    contato: {
+      'pk': '',
+      'tipo': '',
+      'telefone': '',
+    },
+    veiculos: [],
+    veiculo: {
+      'pk': '',
+      'veiculo_pk': '',
+      'veiculo': '',
+      'observacao': '',
+    },
+    comparsa: {
+      'pk': '',
+      'nome': '',
+      'rg': '',
+      'cpf': '',
+      'cnh': '',
+      'parente': '',
+      'grau_parentesco': '',
+      'observacao': '',
+    },
+    photo: {
+      'pk': '',
+      'photo': null,
+    },
+    photo2: {
+      'pk': '',
+      'photo': null,
+      'url': '',
+    },
+    photoAdd: {
+      'pk': '',
+      'photo': null,
+    },
+    tattoo: {
+      'pk': '',
+      'photo': null,
+      'url': '',
+    },
+    tattooAdd: {
+      'pk': '',
+      'photo': null,
+      'url': '',
+    },
+    ocorrencias: [],
+    ocorrencia: {
+      'pk': '',
+      'ocorrencia_pk': '',
+      'ocorrencia': '',
+    },
+    naturezas: [],
+    qualificacoes: [],
+    armas: [],
+    status: [],
+    infracao: {
+      'pk': '',
+      'natureza_pk': '',
+      'qualificacao': '',
+      'arma_pk': '',
+      'status': '',
+    },
+  },
+  methods: {
+    getContato(url) {
+      axios.get(url)
+        .then(response => {
+          this.contato = response.data
+        })
+    },
+    getVeiculo(url) {
+      axios.get(url)
+        .then(response => {
+          this.veiculo = response.data
+        })
+      // Pega todos os veiculos de todas as pessoas.
+      axios.get(endpoint + 'api/pessoas/veiculos/')
+        .then(response => {
+          this.veiculos = response.data.data;
+        })
+    },
+    getAddVeiculo() {
+      // Pega todos os veiculos de todas as pessoas.
+      axios.get(endpoint + 'api/pessoas/veiculos/')
+        .then(response => {
+          this.veiculos = response.data.data;
+        })
+    },
+    getComparsa(url) {
+      axios.get(url)
+        .then(response => {
+          this.comparsa = response.data
+        })
+    },
+    getPhoto(pk) {
+      this.photo.pk = pk
+    },
+    getPhoto2(pk, url) {
+      this.photo2.pk = pk
+      this.photo2.url = url
+    },
+    getTattoo(pk, url) {
+      this.tattoo.pk = pk
+      this.tattoo.url = url
+    },
+    getOcorrencia(url) {
+      axios.get(url)
+        .then(response => {
+          this.ocorrencia = response.data
+        })
+      // Pega todas as ocorrencias de todas as pessoas.
+      axios.get(endpoint + 'api/pessoas/ocorrencias/')
+        .then(response => {
+          this.ocorrencias = response.data.data;
+        })
+    },
+    getAddOcorrencia() {
+      // Pega todas as ocorrencias de todas as pessoas.
+      axios.get(endpoint + 'api/pessoas/ocorrencias/')
+        .then(response => {
+          this.ocorrencias = response.data.data;
+        })
+    },
+    getInfracao(url) {
+      axios.get(url)
+        .then(response => {
+          this.infracao = response.data
+        })
+      // Pega todas as naturezas.
+      axios.get(endpoint + 'api/naturezas/')
+        .then(response => {
+          this.naturezas = response.data.data;
+        })
+      // Pega todas as qualificacoes.
+      axios.get(endpoint + 'api/qualificacoes/')
+        .then(response => {
+          this.qualificacoes = response.data.data;
+        })
+      // Pega todas as armas.
+      axios.get(endpoint + 'api/armas/')
+        .then(response => {
+          this.armas = response.data.data;
+        })
+      // Pega todos os status.
+      axios.get(endpoint + 'api/status/')
+        .then(response => {
+          this.status = response.data.data;
+        })
+    },
+    getAddInfracao(url) {
+      // Pega todas as naturezas.
+      axios.get(endpoint + 'api/naturezas/')
+        .then(response => {
+          this.naturezas = response.data.data;
+        })
+      // Pega todas as qualificacoes.
+      axios.get(endpoint + 'api/qualificacoes/')
+        .then(response => {
+          this.qualificacoes = response.data.data;
+        })
+      // Pega todas as armas.
+      axios.get(endpoint + 'api/armas/')
+        .then(response => {
+          this.armas = response.data.data;
+        })
+      // Pega todos os status.
+      axios.get(endpoint + 'api/status/')
+        .then(response => {
+          this.status = response.data.data;
+        })
+    },
+    salvarAddContato(pessoa_pk) {
+      let bodyFormData = new FormData();
+      bodyFormData.append('tipo', this.contato.tipo);
+      bodyFormData.append('telefone', this.contato.telefone);
+      let url = endpoint + 'api/pessoas/' + pessoa_pk + '/contato/add/'
+      axios.post(url, bodyFormData)
+        .then(response => {
+          location.reload();
+        })
+    },
+    salvarContato() {
+      let bodyFormData = new FormData();
+      bodyFormData.append('tipo', this.contato.tipo);
+      bodyFormData.append('telefone', this.contato.telefone);
+      let url = endpoint + 'api/pessoas/' + this.contato.pk + '/contato/edit/'
+      axios.post(url, bodyFormData)
+        .then(response => {
+          location.reload();
+        })
+    },
+    salvarAddVeiculo(pessoa_pk) {
+      let bodyFormData = new FormData();
+      bodyFormData.append('veiculo_pk', this.veiculo.veiculo_pk);
+      bodyFormData.append('observacao', this.veiculo.observacao);
+      let url = endpoint + 'api/pessoas/' + pessoa_pk + '/veiculo/add/'
+      axios.post(url, bodyFormData)
+        .then(response => {
+          location.reload();
+        })
+    },
+    salvarVeiculo() {
+      let bodyFormData = new FormData();
+      bodyFormData.append('veiculo_pk', this.veiculo.veiculo_pk);
+      bodyFormData.append('observacao', this.veiculo.observacao);
+      let url = endpoint + 'api/pessoas/' + this.veiculo.pk + '/veiculo/edit/'
+      axios.post(url, bodyFormData)
+        .then(response => {
+          location.reload();
+        })
+    },
+    salvarAddComparsa(pessoa_pk) {
+      let bodyFormData = new FormData();
+      bodyFormData.append('nome', this.comparsa.nome);
+      bodyFormData.append('rg', this.comparsa.rg);
+      bodyFormData.append('cpf', this.comparsa.cpf);
+      bodyFormData.append('cnh', this.comparsa.cnh);
+      bodyFormData.append('parente', this.comparsa.parente);
+      bodyFormData.append('grau_parentesco', this.comparsa.grau_parentesco);
+      bodyFormData.append('observacao', this.comparsa.observacao);
 
-    var app = new Vue({
-      el: '#app',
-      delimiters: ['${', '}'],
-      data: {
-        contato: {
-          'pk': '',
-          'tipo': '',
-          'telefone': '',
-        },
-        veiculos: [],
-        veiculo: {
-          'pk': '',
-          'veiculo_pk': '',
-          'veiculo': '',
-          'observacao': '',
-        },
-        comparsa: {
-          'pk': '',
-          'nome': '',
-          'rg': '',
-          'cpf': '',
-          'cnh': '',
-          'parente': '',
-          'grau_parentesco': '',
-          'observacao': '',
-        },
-        photo: {
-          'pk': '',
-          'photo': null,
-        },
-        photo2: {
-          'pk': '',
-          'photo': null,
-          'url': '',
-        },
-        photoAdd: {
-          'pk': '',
-          'photo': null,
-        },
-        tattoo: {
-          'pk': '',
-          'photo': null,
-          'url': '',
-        },
-        tattooAdd: {
-          'pk': '',
-          'photo': null,
-          'url': '',
-        },
-        ocorrencias: [],
-        ocorrencia: {
-          'pk': '',
-          'ocorrencia_pk': '',
-          'ocorrencia': '',
-        },
-        naturezas: [],
-        qualificacoes: [],
-        armas: [],
-        status: [],
-        infracao: {
-          'pk': '',
-          'natureza_pk': '',
-          'qualificacao': '',
-          'arma_pk': '',
-          'status': '',
-        },
-      },
-      methods: {
-        getContato(url) {
-          axios.get(url)
-          .then(response => {
-            this.contato = response.data
-          })
-        },
-        getVeiculo(url) {
-          axios.get(url)
-          .then(response => {
-            this.veiculo = response.data
-          })
-          // Pega todos os veiculos de todas as pessoas.
-          axios.get(endpoint + 'api/pessoas/veiculos/')
-          .then(response => {
-            this.veiculos = response.data.data;
-          })
-        },
-        getAddVeiculo() {
-          // Pega todos os veiculos de todas as pessoas.
-          axios.get(endpoint + 'api/pessoas/veiculos/')
-          .then(response => {
-            this.veiculos = response.data.data;
-          })
-        },
-        getComparsa(url) {
-          axios.get(url)
-          .then(response => {
-            this.comparsa = response.data
-          })
-        },
-        getPhoto(pk) {
-          this.photo.pk = pk
-        },
-        getPhoto2(pk, url) {
-          this.photo2.pk = pk
-          this.photo2.url = url
-        },
-        getTattoo(pk, url) {
-          this.tattoo.pk = pk
-          this.tattoo.url = url
-        },
-        getOcorrencia(url) {
-          axios.get(url)
-          .then(response => {
-            this.ocorrencia = response.data
-          })
-          // Pega todas as ocorrencias de todas as pessoas.
-          axios.get(endpoint + 'api/pessoas/ocorrencias/')
-          .then(response => {
-            this.ocorrencias = response.data.data;
-          })
-        },
-        getAddOcorrencia() {
-          // Pega todas as ocorrencias de todas as pessoas.
-          axios.get(endpoint + 'api/pessoas/ocorrencias/')
-          .then(response => {
-            this.ocorrencias = response.data.data;
-          })
-        },
-        getInfracao(url) {
-          axios.get(url)
-          .then(response => {
-            this.infracao = response.data
-          })
-          // Pega todas as naturezas.
-          axios.get(endpoint + 'api/naturezas/')
-          .then(response => {
-            this.naturezas = response.data.data;
-          })
-          // Pega todas as qualificacoes.
-          axios.get(endpoint + 'api/qualificacoes/')
-          .then(response => {
-            this.qualificacoes = response.data.data;
-          })
-          // Pega todas as armas.
-          axios.get(endpoint + 'api/armas/')
-          .then(response => {
-            this.armas = response.data.data;
-          })
-          // Pega todos os status.
-          axios.get(endpoint + 'api/status/')
-          .then(response => {
-            this.status = response.data.data;
-          })
-        },
-        getAddInfracao(url) {
-          // Pega todas as naturezas.
-          axios.get(endpoint + 'api/naturezas/')
-          .then(response => {
-            this.naturezas = response.data.data;
-          })
-          // Pega todas as qualificacoes.
-          axios.get(endpoint + 'api/qualificacoes/')
-          .then(response => {
-            this.qualificacoes = response.data.data;
-          })
-          // Pega todas as armas.
-          axios.get(endpoint + 'api/armas/')
-          .then(response => {
-            this.armas = response.data.data;
-          })
-          // Pega todos os status.
-          axios.get(endpoint + 'api/status/')
-          .then(response => {
-            this.status = response.data.data;
-          })
-        },
-        salvarAddContato(pessoa_pk) {
-          let bodyFormData = new FormData();
-          bodyFormData.append('tipo', this.contato.tipo);
-          bodyFormData.append('telefone', this.contato.telefone);
-          let url = endpoint + 'api/pessoas/' + pessoa_pk + '/contato/add/'
-          axios.post(url, bodyFormData)
-            .then(response => {
-              location.reload();
-            })
-        },
-        salvarContato() {
-          let bodyFormData = new FormData();
-          bodyFormData.append('tipo', this.contato.tipo);
-          bodyFormData.append('telefone', this.contato.telefone);
-          let url = endpoint + 'api/pessoas/' + this.contato.pk + '/contato/edit/'
-          axios.post(url, bodyFormData)
-            .then(response => {
-              location.reload();
-            })
-        },
-        salvarAddVeiculo(pessoa_pk) {
-          let bodyFormData = new FormData();
-          bodyFormData.append('veiculo_pk', this.veiculo.veiculo_pk);
-          bodyFormData.append('observacao', this.veiculo.observacao);
-          let url = endpoint + 'api/pessoas/' + pessoa_pk + '/veiculo/add/'
-          axios.post(url, bodyFormData)
-            .then(response => {
-              location.reload();
-            })
-        },
-        salvarVeiculo() {
-          let bodyFormData = new FormData();
-          bodyFormData.append('veiculo_pk', this.veiculo.veiculo_pk);
-          bodyFormData.append('observacao', this.veiculo.observacao);  
-          let url = endpoint + 'api/pessoas/' + this.veiculo.pk + '/veiculo/edit/'
-          axios.post(url, bodyFormData)
-            .then(response => {
-              location.reload();
-            })
-        },
-        salvarAddComparsa(pessoa_pk) {
-          let bodyFormData = new FormData();
-          bodyFormData.append('nome', this.comparsa.nome);
-          bodyFormData.append('rg', this.comparsa.rg);
-          bodyFormData.append('cpf', this.comparsa.cpf);
-          bodyFormData.append('cnh', this.comparsa.cnh);
-          bodyFormData.append('parente', this.comparsa.parente);
-          bodyFormData.append('grau_parentesco', this.comparsa.grau_parentesco);
-          bodyFormData.append('observacao', this.comparsa.observacao);
-
-          let url = endpoint + 'api/pessoas/' + pessoa_pk + '/comparsa/add/'
-          axios.post(url, bodyFormData)
-            .then(response => {
-              location.reload();
-            })
-        },
-        salvarComparsa() {
-          let bodyFormData = new FormData();
-          bodyFormData.append('nome', this.comparsa.nome);
-          bodyFormData.append('rg', this.comparsa.rg);
-          bodyFormData.append('cpf', this.comparsa.cpf);
-          bodyFormData.append('cnh', this.comparsa.cnh);
-          bodyFormData.append('parente', this.comparsa.parente);
-          bodyFormData.append('grau_parentesco', this.comparsa.grau_parentesco);
-          bodyFormData.append('observacao', this.comparsa.observacao);
-          let url = endpoint + 'api/pessoas/' + this.comparsa.pk + '/comparsa/edit/'
-          axios.post(url, bodyFormData)
-            .then(response => {
-              location.reload();
-            })
-        },
-        processFile: function(e) {
-          this.photo.photo = e.target.files[0]
-        },
-        processFile2: function(e) {
-          this.photo2.photo = e.target.files[0]
-        },
-        processFileAddPhoto: function(e) {
-          this.photoAdd.photo = e.target.files[0]
-        },
-        processFileTattoo: function(e) {
-          this.tattoo.photo = e.target.files[0]
-        },
-        processFileAddTattoo: function(e) {
-          this.tattooAdd.photo = e.target.files[0]
-        },
-        salvarFoto() {
-          let bodyFormData = new FormData();
-          bodyFormData.append('photo', this.photo.photo);
-          let url = endpoint + 'api/pessoas/' + this.photo.pk + '/photo/edit/'
-          axios.post(url, bodyFormData, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            })
-            .then(response => {
-              location.reload();
-            })
-        },
-        salvarFoto2() {
-          let bodyFormData = new FormData();
-          bodyFormData.append('photo', this.photo2.photo);
-          let url = endpoint + 'api/pessoas/' + this.photo2.pk + '/photo/edit/'
-          axios.post(url, bodyFormData, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            })
-            .then(response => {
-              location.reload();
-            })
-        },
-        salvarAddFoto(pessoa_pk) {
-          let bodyFormData = new FormData();
-          bodyFormData.append('photo', this.photoAdd.photo);
-          let url = endpoint + 'api/pessoas/' + pessoa_pk + '/photo/add/'
-          axios.post(url, bodyFormData, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            })
-            .then(response => {
-              location.reload();
-            })
-        },
-        salvarAddTatuagem(pessoa_pk) {
-          let bodyFormData = new FormData();
-          bodyFormData.append('tattoo', this.tattooAdd.photo);
-          let url = endpoint + 'api/pessoas/' + pessoa_pk + '/tattoo/add/'
-          axios.post(url, bodyFormData, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            })
-            .then(response => {
-              location.reload();
-            })
-        },
-        salvarTatuagem() {
-          let bodyFormData = new FormData();
-          bodyFormData.append('tattoo', this.tattoo.photo);
-          let url = endpoint + 'api/pessoas/' + this.tattoo.pk + '/tattoo/edit/'
-          axios.post(url, bodyFormData, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            })
-            .then(response => {
-              location.reload();
-            })
-        },
-        salvarAddOcorrencia(pessoa_pk) {
-          let bodyFormData = new FormData();
-          bodyFormData.append('ocorrencia_pk', this.ocorrencia.ocorrencia_pk);
-          let url = endpoint + 'api/pessoas/' + pessoa_pk + '/ocorrencia/add/'
-          axios.post(url, bodyFormData)
-            .then(response => {
-              location.reload();
-            })
-        },
-        salvarOcorrencia() {
-          let bodyFormData = new FormData();
-          bodyFormData.append('ocorrencia_pk', this.ocorrencia.ocorrencia_pk);
-          let url = endpoint + 'api/pessoas/' + this.ocorrencia.pk + '/ocorrencia/edit/'
-          axios.post(url, bodyFormData)
-            .then(response => {
-              location.reload();
-            })
-        },
-        salvarAddInfracao(pessoa_pk) {
-          let bodyFormData = new FormData();
-          bodyFormData.append('natureza_pk', this.infracao.natureza_pk)
-          bodyFormData.append('qualificacao', this.infracao.qualificacao)
-          bodyFormData.append('arma_pk', this.infracao.arma_pk)
-          bodyFormData.append('status', this.infracao.status)
-          let url = endpoint + 'api/pessoas/' + pessoa_pk + '/infracao/add/'
-          axios.post(url, bodyFormData)
-            .then(response => {
-              location.reload();
-            })
-        },
-        salvarInfracao() {
-          let bodyFormData = new FormData();
-          bodyFormData.append('natureza_pk', this.infracao.natureza_pk)
-          bodyFormData.append('qualificacao', this.infracao.qualificacao)
-          bodyFormData.append('arma_pk', this.infracao.arma_pk)
-          bodyFormData.append('status', this.infracao.status)
-          let url = endpoint + 'api/pessoas/' + this.infracao.pk + '/infracao/edit/'
-          axios.post(url, bodyFormData)
-            .then(response => {
-              location.reload();
-            })
-        },
-      }
-    });
-  </script>
+      let url = endpoint + 'api/pessoas/' + pessoa_pk + '/comparsa/add/'
+      axios.post(url, bodyFormData)
+        .then(response => {
+          location.reload();
+        })
+    },
+    salvarComparsa() {
+      let bodyFormData = new FormData();
+      bodyFormData.append('nome', this.comparsa.nome);
+      bodyFormData.append('rg', this.comparsa.rg);
+      bodyFormData.append('cpf', this.comparsa.cpf);
+      bodyFormData.append('cnh', this.comparsa.cnh);
+      bodyFormData.append('parente', this.comparsa.parente);
+      bodyFormData.append('grau_parentesco', this.comparsa.grau_parentesco);
+      bodyFormData.append('observacao', this.comparsa.observacao);
+      let url = endpoint + 'api/pessoas/' + this.comparsa.pk + '/comparsa/edit/'
+      axios.post(url, bodyFormData)
+        .then(response => {
+          location.reload();
+        })
+    },
+    processFile: function(e) {
+      this.photo.photo = e.target.files[0]
+    },
+    processFile2: function(e) {
+      this.photo2.photo = e.target.files[0]
+    },
+    processFileAddPhoto: function(e) {
+      this.photoAdd.photo = e.target.files[0]
+    },
+    processFileTattoo: function(e) {
+      this.tattoo.photo = e.target.files[0]
+    },
+    processFileAddTattoo: function(e) {
+      this.tattooAdd.photo = e.target.files[0]
+    },
+    salvarFoto() {
+      let bodyFormData = new FormData();
+      bodyFormData.append('photo', this.photo.photo);
+      let url = endpoint + 'api/pessoas/' + this.photo.pk + '/photo/edit/'
+      axios.post(url, bodyFormData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then(response => {
+          location.reload();
+        })
+    },
+    salvarFoto2() {
+      let bodyFormData = new FormData();
+      bodyFormData.append('photo', this.photo2.photo);
+      let url = endpoint + 'api/pessoas/' + this.photo2.pk + '/photo/edit/'
+      axios.post(url, bodyFormData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then(response => {
+          location.reload();
+        })
+    },
+    salvarAddFoto(pessoa_pk) {
+      let bodyFormData = new FormData();
+      bodyFormData.append('photo', this.photoAdd.photo);
+      let url = endpoint + 'api/pessoas/' + pessoa_pk + '/photo/add/'
+      axios.post(url, bodyFormData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then(response => {
+          location.reload();
+        })
+    },
+    salvarAddTatuagem(pessoa_pk) {
+      let bodyFormData = new FormData();
+      bodyFormData.append('tattoo', this.tattooAdd.photo);
+      let url = endpoint + 'api/pessoas/' + pessoa_pk + '/tattoo/add/'
+      axios.post(url, bodyFormData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then(response => {
+          location.reload();
+        })
+    },
+    salvarTatuagem() {
+      let bodyFormData = new FormData();
+      bodyFormData.append('tattoo', this.tattoo.photo);
+      let url = endpoint + 'api/pessoas/' + this.tattoo.pk + '/tattoo/edit/'
+      axios.post(url, bodyFormData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then(response => {
+          location.reload();
+        })
+    },
+    salvarAddOcorrencia(pessoa_pk) {
+      let bodyFormData = new FormData();
+      bodyFormData.append('ocorrencia_pk', this.ocorrencia.ocorrencia_pk);
+      let url = endpoint + 'api/pessoas/' + pessoa_pk + '/ocorrencia/add/'
+      axios.post(url, bodyFormData)
+        .then(response => {
+          location.reload();
+        })
+    },
+    salvarOcorrencia() {
+      let bodyFormData = new FormData();
+      bodyFormData.append('ocorrencia_pk', this.ocorrencia.ocorrencia_pk);
+      let url = endpoint + 'api/pessoas/' + this.ocorrencia.pk + '/ocorrencia/edit/'
+      axios.post(url, bodyFormData)
+        .then(response => {
+          location.reload();
+        })
+    },
+    salvarAddInfracao(pessoa_pk) {
+      let bodyFormData = new FormData();
+      bodyFormData.append('natureza_pk', this.infracao.natureza_pk)
+      bodyFormData.append('qualificacao', this.infracao.qualificacao)
+      bodyFormData.append('arma_pk', this.infracao.arma_pk)
+      bodyFormData.append('status', this.infracao.status)
+      let url = endpoint + 'api/pessoas/' + pessoa_pk + '/infracao/add/'
+      axios.post(url, bodyFormData)
+        .then(response => {
+          location.reload();
+        })
+    },
+    salvarInfracao() {
+      let bodyFormData = new FormData();
+      bodyFormData.append('natureza_pk', this.infracao.natureza_pk)
+      bodyFormData.append('qualificacao', this.infracao.qualificacao)
+      bodyFormData.append('arma_pk', this.infracao.arma_pk)
+      bodyFormData.append('status', this.infracao.status)
+      let url = endpoint + 'api/pessoas/' + this.infracao.pk + '/infracao/edit/'
+      axios.post(url, bodyFormData)
+        .then(response => {
+          location.reload();
+        })
+    },
+  }
+});
+</script>
 {% endblock vuejs %}
-
