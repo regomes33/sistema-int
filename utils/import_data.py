@@ -72,12 +72,12 @@ def my_import_data():
     import_comparsa(filename_pessoa_comparsa)
 
     # # Ocorrencia
-    # import_ocorrencia(filename_ocorrencia)
-    # create_data(filename_natureza, Natureza)
-    # create_data(filename_arma, Arma)
-    # create_data(filename_areaupm, AreaUpm)
-    # create_data(filename_motivacao, Motivacao)
-    # import_infracao(filename_infracao)
+    import_ocorrencia(filename_ocorrencia)
+    create_data(filename_natureza, Natureza)
+    create_data(filename_arma, Arma)
+    create_data(filename_areaupm, AreaUpm)
+    create_data(filename_motivacao, Motivacao)
+    import_infracao(filename_infracao)
     # import_pessoa_ocorrencia(filename_pessoa_ocorrencia)
 
     # # Veiculo
@@ -112,7 +112,6 @@ def create_pessoa(filename):
     items = csv_online_to_list(filename)
     data = []
     for i, item in enumerate(items):
-        # dict_pessoas[item['id']] = item['slug']
         del item['id']
         if item.get('address_number'):
             item['address_number'] = int(item.get('address_number'))
@@ -128,19 +127,15 @@ def create_pessoa(filename):
         if not item.get('cep'):
             item['cep'] = None
 
-        created_by_id = item.get('created_by_id')
-        if created_by_id:
-            created_by_username = dict_users.get(int(created_by_id))
-        else:
-            created_by_username = 'admin'
-        if created_by_username:
-            created_by = User.objects.get(username=created_by_username)
+        created_by = get_users(item.get('created_by_id'))
+        del item['created_by_id']
+        if created_by:
             item['created_by'] = created_by
 
         faccao_id = item.get('faccao_id')
-        if faccao_id:
-            faccao = Faccao.objects.get(pk=faccao_id)
-            item['faccao'] = faccao
+        faccao_slug = dict_faccao.get(faccao_id)
+        if faccao_slug:
+            faccao = Faccao.objects.get(slug=faccao_slug)
 
         obj = Pessoa(**item)
         data.append(obj)
@@ -176,7 +171,22 @@ Pessoa
 '''
 
 
+def get_users(created_by_id):
+    '''
+    Retorna um usuário.
+    '''
+    if created_by_id:
+        created_by_username = dict_users.get(int(created_by_id))
+    else:
+        created_by_username = 'admin'
+
+    return User.objects.get(username=created_by_username)
+
+
 def get_pessoa(pessoa_id):
+    '''
+    Retorna uma pessoa.
+    '''
     pessoa_slug = dict_pessoas.get(str(pessoa_id))
     if pessoa_slug:
         pessoa = Pessoa.objects.get(slug=pessoa_slug)
@@ -246,17 +256,16 @@ def import_infracao(filename):
     data = []
     for item in items:
         del item['id']
-        created_by_id = item.get('created_by_id')
-        if created_by_id:
-            created_by = User.objects.get(pk=created_by_id)
+        created_by = get_users(item.get('created_by_id'))
+        del item['created_by_id']
+        if created_by:
             item['created_by'] = created_by
-        else:
-            item['created_by'] = User.objects.get(username='admin')
 
-        pessoa_id = item.get('pessoa_id')
-        pessoa_slug = dict_pessoas.get(str(pessoa_id))
-        if pessoa_slug:
-            pessoa = Pessoa.objects.get(slug=pessoa_slug)
+        # aqui
+        pessoa = get_pessoa(item.get('pessoa_id'))
+        del item['pessoa_id']
+        if pessoa:
+            item['pessoa'] = pessoa
 
         natureza_id = item.get('natureza_id')
         if natureza_id:
@@ -280,12 +289,10 @@ def import_ocorrencia(filename):
     data = []
     for item in items:
         del item['id']
-        created_by_id = item.get('created_by_id')
-        if created_by_id:
-            created_by = User.objects.get(pk=created_by_id)
+        created_by = get_users(item.get('created_by_id'))
+        del item['created_by_id']
+        if created_by:
             item['created_by'] = created_by
-        else:
-            item['created_by'] = User.objects.get(username='admin')
 
         obj = Ocorrencia(**item)
         data.append(obj)
@@ -298,22 +305,20 @@ def import_pessoa_ocorrencia(filename):
     data = []
     for item in items:
         del item['id']
-        created_by_id = item.get('created_by_id')
-        if created_by_id:
-            created_by = User.objects.get(pk=created_by_id)
-            item['created_by'] = created_by
-        else:
-            item['created_by'] = User.objects.get(username='admin')
+        # created_by = get_users(item.get('created_by_id'))
+        # del item['created_by_id']
+        # if created_by:
+        #     item['created_by'] = created_by
 
-        pessoa_id = item.get('pessoa_id')
-        pessoa_slug = dict_pessoas.get(str(pessoa_id))
-        if pessoa_slug:
-            pessoa = Pessoa.objects.get(slug=pessoa_slug)
+        pessoa = get_pessoa(item.get('pessoa_id'))
+        del item['pessoa_id']
+        if pessoa:
+            item['pessoa'] = pessoa
 
-        ocorrencia_id = item.get('ocorrencia_id')
-        if ocorrencia_id:
-            ocorrencia = Ocorrencia.objects.get(pk=ocorrencia_id)
-            item['ocorrencia'] = ocorrencia
+        # ocorrencia_id = item.get('ocorrencia_id')
+        # if ocorrencia_id:
+        #     ocorrencia = Ocorrencia.objects.get(pk=ocorrencia_id)
+        #     item['ocorrencia'] = ocorrencia
 
         obj = PessoaOcorrencia(**item)
         data.append(obj)
