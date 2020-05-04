@@ -60,6 +60,7 @@ dict_users = {}
 
 dict_pessoas = read_data(filename_pessoa_pessoa)
 dict_faccao = read_data(filename_pessoa_faccao)
+dict_ocorrencia = read_data(filename_ocorrencia)
 
 
 def my_import_data():
@@ -71,16 +72,16 @@ def my_import_data():
     import_foto(filename_pessoa_foto)
     import_comparsa(filename_pessoa_comparsa)
 
-    # # Ocorrencia
+    # Ocorrencia
     import_ocorrencia(filename_ocorrencia)
     create_data(filename_natureza, Natureza)
     create_data(filename_arma, Arma)
     create_data(filename_areaupm, AreaUpm)
     create_data(filename_motivacao, Motivacao)
     import_infracao(filename_infracao)
-    # import_pessoa_ocorrencia(filename_pessoa_ocorrencia)
+    import_pessoa_ocorrencia(filename_pessoa_ocorrencia)
 
-    # # Veiculo
+    # Veiculo
     # create_data(filename_veiculo_cor, Cor)
     # create_data(filename_veiculo_modelo, Modelo)
     # create_data(filename_veiculo_veiculo, Veiculo)
@@ -305,10 +306,10 @@ def import_pessoa_ocorrencia(filename):
     data = []
     for item in items:
         del item['id']
-        # created_by = get_users(item.get('created_by_id'))
-        # del item['created_by_id']
-        # if created_by:
-        #     item['created_by'] = created_by
+        created_by = get_users(item.get('created_by_id'))
+        del item['created_by_id']
+        if created_by:
+            item['created_by'] = created_by
 
         pessoa = get_pessoa(item.get('pessoa_id'))
         del item['pessoa_id']
@@ -319,6 +320,10 @@ def import_pessoa_ocorrencia(filename):
         # if ocorrencia_id:
         #     ocorrencia = Ocorrencia.objects.get(pk=ocorrencia_id)
         #     item['ocorrencia'] = ocorrencia
+        ocorrencia_id = item.get('ocorrencia_id')
+        ocorrencia_slug = dict_ocorrencia.get(ocorrencia_id)
+        if ocorrencia_slug:
+            ocorrencia = Ocorrencia.objects.get(slug=ocorrencia_slug)
 
         obj = PessoaOcorrencia(**item)
         data.append(obj)
