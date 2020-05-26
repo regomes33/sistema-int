@@ -24,6 +24,7 @@ class PessoaForm(forms.ModelForm):
             'uf',
             'cep',
             'country',
+            'observacao',
         )
 
 
