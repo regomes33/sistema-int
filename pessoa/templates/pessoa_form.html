@@ -4,7 +4,7 @@
 {% block title %}| Pessoa{%endblock%}
 
 {% block breadcrumbs %}
-  {% include "breadcrumb/_include_breadcrumb_base_add.html" %}
+{% include "breadcrumb/_include_breadcrumb_base_add.html" %}
 {% endblock %}
 
 {% block content %}
@@ -12,23 +12,25 @@
   <h4>Adicionar Pessoas</h4>
   <form @submit.prevent="salvar">
 
-  <div class="accordion" id="accordionExample">
-    <!-- Pessoa -->
-    <div class="card">
-      <div class="card-header" id="heading1" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1" @click="toggleCollapse(1)">
-        <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button">
-            <span>
-              <i class="fa" :class="v.v1 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </span>
-            Pessoa
-          </button>
-        </h2>
-      </div>
-      <div id="collapse1" class="my-collapse collapse show" aria-labelledby="heading1" data-parent="#accordionExample">
-        <div class="card-body">
-          <!-- Pessoa -->
-          <div>
+    <div class="accordion" id="accordionExample">
+      <!-- Pessoa -->
+      <div class="card">
+        <div class="card-header" id="heading1" data-toggle="collapse" data-target="#collapse1" aria-expanded="false"
+          aria-controls="collapse1" @click="toggleCollapse(1)">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button">
+              <span>
+                <i class="fa" :class="v.v1 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+              </span>
+              Pessoa
+            </button>
+          </h2>
+        </div>
+        <div id="collapse1" class="my-collapse collapse show" aria-labelledby="heading1"
+          data-parent="#accordionExample">
+          <div class="card-body">
+            <!-- Pessoa -->
+            <div>
 
               <div class="form-group">
                 <label for="" class="control-label required">Nome</label>
@@ -37,7 +39,8 @@
 
               <div class="form-group">
                 <label for="" class="control-label required">Sobrenome</label>
-                <input id="id_sobrenome" name="sobrenome" v-model="pessoa.sobrenome" class="form-control" required type="text" />
+                <input id="id_sobrenome" name="sobrenome" v-model="pessoa.sobrenome" class="form-control" required
+                  type="text" />
               </div>
 
               <div class="form-group">
@@ -63,29 +66,30 @@
                 </select>
               </div>
               <div class="form-group ">
-                <label class="control-label">Observações</label> 
-                <input id="comparsa_observacao1" type="text" maxlength="500" class="form-control"/>
+                <label class="control-label">Observações</label>
+                <input id="id_observacao" name="observacao"  v-model="pessoa.observacao" class="form-control" maxlength="500" type="text"  />
               </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Fotos -->
-    <div class="card">
-      <div class="card-header" id="heading4" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4" @click="toggleCollapse(4)">
-        <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button">
-            <span>
-              <i class="fa" :class="v.v4 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </span>
-            Fotos
-          </button>
-        </h2>
-      </div>
-      <div id="collapse4" class="my-collapse collapse" aria-labelledby="heading4" data-parent="#accordionExample">
-        <div class="card-body">
-          <div>
+      <!-- Fotos -->
+      <div class="card">
+        <div class="card-header" id="heading4" data-toggle="collapse" data-target="#collapse4" aria-expanded="false"
+          aria-controls="collapse4" @click="toggleCollapse(4)">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button">
+              <span>
+                <i class="fa" :class="v.v4 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+              </span>
+              Fotos
+            </button>
+          </h2>
+        </div>
+        <div id="collapse4" class="my-collapse collapse" aria-labelledby="heading4" data-parent="#accordionExample">
+          <div class="card-body">
+            <div>
 
               <div class="form-row" v-for="foto in fotos">
 
@@ -99,26 +103,27 @@
               <button type="button" class="btn btn-primary" @click="fotoAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Tatuagens -->
-    <div class="card">
-      <div class="card-header" id="heading5" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5" @click="toggleCollapse(5)">
-        <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button">
-            <span>
-              <i class="fa" :class="v.v5 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </span>
-            Tatuagens
-          </button>
-        </h2>
-      </div>
-      <div id="collapse5" class="my-collapse collapse" aria-labelledby="heading5" data-parent="#accordionExample">
-        <div class="card-body">
-          <div>
+      <!-- Tatuagens -->
+      <div class="card">
+        <div class="card-header" id="heading5" data-toggle="collapse" data-target="#collapse5" aria-expanded="false"
+          aria-controls="collapse5" @click="toggleCollapse(5)">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button">
+              <span>
+                <i class="fa" :class="v.v5 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+              </span>
+              Tatuagens
+            </button>
+          </h2>
+        </div>
+        <div id="collapse5" class="my-collapse collapse" aria-labelledby="heading5" data-parent="#accordionExample">
+          <div class="card-body">
+            <div>
 
               <div class="form-row" v-for="tattoo in tattoos">
 
@@ -132,26 +137,27 @@
               <button type="button" class="btn btn-primary" @click="tattooAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Documentos -->
-    <div class="card">
-      <div class="card-header" id="heading2" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2" @click="toggleCollapse(2)">
-        <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button">
-            <span>
-              <i class="fa" :class="v.v2 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </span>
-            Documentos
-          </button>
-        </h2>
-      </div>
-      <div id="collapse2" class="my-collapse collapse" aria-labelledby="heading2" data-parent="#accordionExample">
-        <div class="card-body">
-          <div>
+      <!-- Documentos -->
+      <div class="card">
+        <div class="card-header" id="heading2" data-toggle="collapse" data-target="#collapse2" aria-expanded="false"
+          aria-controls="collapse2" @click="toggleCollapse(2)">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button">
+              <span>
+                <i class="fa" :class="v.v2 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+              </span>
+              Documentos
+            </button>
+          </h2>
+        </div>
+        <div id="collapse2" class="my-collapse collapse" aria-labelledby="heading2" data-parent="#accordionExample">
+          <div class="card-body">
+            <div>
 
               <div class="form-group">
                 <label for="id_cpf" class="control-label">CPF (sem pontuação)</label>
@@ -168,26 +174,27 @@
                 <input id="id_cnh" name="cnh" v-model="pessoa.cnh" class="form-control" type="text" maxlength="20" />
               </div>
 
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Endereço -->
-    <div class="card">
-      <div class="card-header" id="heading3" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3" @click="toggleCollapse(3)">
-        <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button">
-            <span>
-              <i class="fa" :class="v.v3 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </span>
-            Endereço
-          </button>
-        </h2>
-      </div>
-      <div id="collapse3" class="my-collapse collapse" aria-labelledby="heading3" data-parent="#accordionExample">
-        <div class="card-body">
-          <div>
+      <!-- Endereço -->
+      <div class="card">
+        <div class="card-header" id="heading3" data-toggle="collapse" data-target="#collapse3" aria-expanded="false"
+          aria-controls="collapse3" @click="toggleCollapse(3)">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button">
+              <span>
+                <i class="fa" :class="v.v3 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+              </span>
+              Endereço
+            </button>
+          </h2>
+        </div>
+        <div id="collapse3" class="my-collapse collapse" aria-labelledby="heading3" data-parent="#accordionExample">
+          <div class="card-body">
+            <div>
 
               <div class="form-group">
                 <label for="id_address" class="control-label">Endereço</label>
@@ -196,12 +203,14 @@
 
               <div class="form-group">
                 <label for="id_address_number" class="control-label">Número</label>
-                <input id="id_address_number" name="address_number" v-model="pessoa.address_number" class="form-control" type="number" />
+                <input id="id_address_number" name="address_number" v-model="pessoa.address_number" class="form-control"
+                  type="number" />
               </div>
 
               <div class="form-group">
                 <label for="id_complement" class="control-label">Complemento</label>
-                <input id="id_complement" name="complement" v-model="pessoa.complement" class="form-control" type="text" />
+                <input id="id_complement" name="complement" v-model="pessoa.complement" class="form-control"
+                  type="text" />
               </div>
 
               <div class="form-group">
@@ -232,26 +241,27 @@
                 <input id="id_country" name="country" v-model="pessoa.country" class="form-control" type="text" />
               </div>
 
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Infrações -->
-    <div class="card">
-      <div class="card-header" id="heading6" data-toggle="collapse" data-target="#collapse6" aria-expanded="false" aria-controls="collapse6" @click="toggleCollapse(6)">
-        <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button">
-            <span>
-              <i class="fa" :class="v.v6 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </span>
-            Infrações
-          </button>
-        </h2>
-      </div>
-      <div id="collapse6" class="my-collapse collapse" aria-labelledby="heading6" data-parent="#accordionExample">
-        <div class="card-body">
-          <div>
+      <!-- Infrações -->
+      <div class="card">
+        <div class="card-header" id="heading6" data-toggle="collapse" data-target="#collapse6" aria-expanded="false"
+          aria-controls="collapse6" @click="toggleCollapse(6)">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button">
+              <span>
+                <i class="fa" :class="v.v6 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+              </span>
+              Infrações
+            </button>
+          </h2>
+        </div>
+        <div id="collapse6" class="my-collapse collapse" aria-labelledby="heading6" data-parent="#accordionExample">
+          <div class="card-body">
+            <div>
 
               <div class="form-row" v-for="infracao in infracoes" :key="infracao.id">
 
@@ -259,7 +269,8 @@
                   <label for="natureza">Natureza</label>
                   <select :id="'natureza'+infracao.id" class="form-control" v-model="infracao.natureza">
                     <option selected value="">---</option>
-                    <option v-for="natureza in naturezas" :key="natureza.value" :value="natureza.value">${ natureza.text }</option>
+                    <option v-for="natureza in naturezas" :key="natureza.value" :value="natureza.value">${ natureza.text
+                      }</option>
                   </select>
                 </div>
 
@@ -267,7 +278,8 @@
                   <label for="qualificacao">Qualificação</label>
                   <select :id="'qualificacao'+infracao.id" class="form-control" v-model="infracao.qualificacao">
                     <option selected value="">---</option>
-                    <option v-for="qualificacao in qualificacoes" :key="qualificacao.value" :value="qualificacao.value">${ qualificacao.text }</option>
+                    <option v-for="qualificacao in qualificacoes" :key="qualificacao.value" :value="qualificacao.value">
+                      ${ qualificacao.text }</option>
                   </select>
                 </div>
 
@@ -292,33 +304,35 @@
               <button id="btnInfracao" type="button" class="btn btn-primary" @click="infracaoAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Ocorrências -->
-    <div class="card">
-      <div class="card-header" id="heading7" data-toggle="collapse" data-target="#collapse7" aria-expanded="false" aria-controls="collapse7" @click="toggleCollapse(7)">
-        <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button">
-            <span>
-              <i class="fa" :class="v.v7 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </span>
-            Ocorrências
-          </button>
-        </h2>
-      </div>
-      <div id="collapse7" class="my-collapse collapse" aria-labelledby="heading7" data-parent="#accordionExample">
-        <div class="card-body">
-          <div>
+      <!-- Ocorrências -->
+      <div class="card">
+        <div class="card-header" id="heading7" data-toggle="collapse" data-target="#collapse7" aria-expanded="false"
+          aria-controls="collapse7" @click="toggleCollapse(7)">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button">
+              <span>
+                <i class="fa" :class="v.v7 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+              </span>
+              Ocorrências
+            </button>
+          </h2>
+        </div>
+        <div id="collapse7" class="my-collapse collapse" aria-labelledby="heading7" data-parent="#accordionExample">
+          <div class="card-body">
+            <div>
               <div class="form-row" v-for="ocorrencia in ocorrencias" :key="ocorrencia.id">
 
                 <div class="form-group col-md-3">
                   <label for="ocorrencia">Ocorrência</label>
                   <select :id="'ocorrencia'+ocorrencia.id" class="form-control" v-model="ocorrencia.ocorrencia">
                     <option selected value="">---</option>
-                    <option v-for="ocorrencia in ocorrencias_list" :key="ocorrencia.value" :value="ocorrencia.value">${ ocorrencia.text }</option>
+                    <option v-for="ocorrencia in ocorrencias_list" :key="ocorrencia.value" :value="ocorrencia.value">${
+                      ocorrencia.text }</option>
                   </select>
                 </div>
 
@@ -327,26 +341,27 @@
               <button id="btnOcorrencia" type="button" class="btn btn-primary" @click="ocorrenciaAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Contatos -->
-    <div class="card">
-      <div class="card-header" id="heading8" data-toggle="collapse" data-target="#collapse8" aria-expanded="false" aria-controls="collapse8" @click="toggleCollapse(8)">
-        <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button">
-            <span>
-              <i class="fa" :class="v.v8 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </span>
-            Contatos
-          </button>
-        </h2>
-      </div>
-      <div id="collapse8" class="my-collapse collapse" aria-labelledby="heading8" data-parent="#accordionExample">
-        <div class="card-body">
-          <div>
+      <!-- Contatos -->
+      <div class="card">
+        <div class="card-header" id="heading8" data-toggle="collapse" data-target="#collapse8" aria-expanded="false"
+          aria-controls="collapse8" @click="toggleCollapse(8)">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button">
+              <span>
+                <i class="fa" :class="v.v8 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+              </span>
+              Contatos
+            </button>
+          </h2>
+        </div>
+        <div id="collapse8" class="my-collapse collapse" aria-labelledby="heading8" data-parent="#accordionExample">
+          <div class="card-body">
+            <div>
 
               <div class="form-row" v-for="contato in contatos" :key="contato.id">
 
@@ -359,7 +374,8 @@
 
                 <div class="form-group col-md-3">
                   <label class="control-label">Telefone</label>
-                  <input :id="'telefone'+contato.id" v-model="contato.telefone" class="form-control phone-mask" type="text" maxlength="20" />
+                  <input :id="'telefone'+contato.id" v-model="contato.telefone" class="form-control phone-mask"
+                    type="text" maxlength="20" />
                 </div>
 
               </div> <!-- form-row -->
@@ -367,26 +383,27 @@
               <button id="btnContato" type="button" class="btn btn-primary" @click="contatoAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Comparsas -->
-    <div class="card">
-      <div class="card-header" id="heading9" data-toggle="collapse" data-target="#collapse9" aria-expanded="false" aria-controls="collapse9" @click="toggleCollapse(9)">
-        <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button">
-            <span>
-              <i class="fa" :class="v.v9 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </span>
-            Comparsas
-          </button>
-        </h2>
-      </div>
-      <div id="collapse9" class="my-collapse collapse" aria-labelledby="heading9" data-parent="#accordionExample">
-        <div class="card-body">
-          <div>
+      <!-- Comparsas -->
+      <div class="card">
+        <div class="card-header" id="heading9" data-toggle="collapse" data-target="#collapse9" aria-expanded="false"
+          aria-controls="collapse9" @click="toggleCollapse(9)">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button">
+              <span>
+                <i class="fa" :class="v.v9 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+              </span>
+              Comparsas
+            </button>
+          </h2>
+        </div>
+        <div id="collapse9" class="my-collapse collapse" aria-labelledby="heading9" data-parent="#accordionExample">
+          <div class="card-body">
+            <div>
 
               <div class="form-row" v-for="comparsa in comparsas" :key="comparsa.id">
 
@@ -397,35 +414,42 @@
 
                 <div class="form-group col-md-3">
                   <label class="control-label">CPF</label>
-                  <input :id="'comparsa_cpf'+comparsa.id" v-model="comparsa.cpf" class="form-control" type="text" maxlength="11" />
+                  <input :id="'comparsa_cpf'+comparsa.id" v-model="comparsa.cpf" class="form-control" type="text"
+                    maxlength="11" />
                 </div>
 
                 <div class="form-group col-md-3">
                   <label class="control-label">RG</label>
-                  <input :id="'comparsa_rg'+comparsa.id" v-model="comparsa.rg" class="form-control" type="text" maxlength="11" />
+                  <input :id="'comparsa_rg'+comparsa.id" v-model="comparsa.rg" class="form-control" type="text"
+                    maxlength="11" />
                 </div>
 
                 <div class="form-group col-md-3">
                   <label class="control-label">CNH</label>
-                  <input :id="'comparsa_cnh'+comparsa.id" v-model="comparsa.cnh" class="form-control" type="text" maxlength="20" />
+                  <input :id="'comparsa_cnh'+comparsa.id" v-model="comparsa.cnh" class="form-control" type="text"
+                    maxlength="20" />
                 </div>
-                
+
                 <div class="form-group col-md-3">
                   <div class="checkbox-row">
-                    <label class="control-label" style="margin-left: 10px;" title="Escolha se for Parente">Parente</label>
-                    <input :id="'comparsa_parente'+comparsa.id" v-model="comparsa.parente" class="form-control" type="checkbox" style="width: 40px;" >
-                </div>
+                    <label class="control-label" style="margin-left: 10px;"
+                      title="Escolha se for Parente">Parente</label>
+                    <input :id="'comparsa_parente'+comparsa.id" v-model="comparsa.parente" class="form-control"
+                      type="checkbox" style="width: 40px;">
+                  </div>
                 </div>
 
                 <div class="form-group col-md-3">
                   <label class="control-label">Grau de Parentesco</label>
-                  <input :id="'comparsa_ grau_parentesco'+comparsa.id" v-model="comparsa.grau_parentesco" class="form-control" type="text" maxlength="20" />
-                </div>    
-                
+                  <input :id="'comparsa_ grau_parentesco'+comparsa.id" v-model="comparsa.grau_parentesco"
+                    class="form-control" type="text" maxlength="20" />
+                </div>
+
                 <div class="form-group col-md-3">
                   <label class="control-label">Observações</label>
-                  <input :id="'comparsa_observacao'+comparsa.id" v-model="comparsa.observacao" class="form-control" type="text" maxlength="500" />
-                </div>    
+                  <input :id="'comparsa_observacao'+comparsa.id" v-model="comparsa.observacao" class="form-control"
+                    type="text" maxlength="500" />
+                </div>
 
 
               </div> <!-- form-row -->
@@ -433,26 +457,27 @@
               <button id="btnComparsa" type="button" class="btn btn-primary" @click="comparsaAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Veículos -->
-    <div class="card">
-      <div class="card-header" id="heading10" data-toggle="collapse" data-target="#collapse10" aria-expanded="false" aria-controls="collapse10" @click="toggleCollapse(10)">
-        <h2 class="mb-0">
-          <button class="btn btn-link collapsed" type="button">
-            <span>
-              <i class="fa" :class="v.v10 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </span>
-            Veículos
-          </button>
-        </h2>
-      </div>
-      <div id="collapse10" class="my-collapse collapse" aria-labelledby="heading10" data-parent="#accordionExample">
-        <div class="card-body">
-          <div>
+      <!-- Veículos -->
+      <div class="card">
+        <div class="card-header" id="heading10" data-toggle="collapse" data-target="#collapse10" aria-expanded="false"
+          aria-controls="collapse10" @click="toggleCollapse(10)">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button">
+              <span>
+                <i class="fa" :class="v.v10 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+              </span>
+              Veículos
+            </button>
+          </h2>
+        </div>
+        <div id="collapse10" class="my-collapse collapse" aria-labelledby="heading10" data-parent="#accordionExample">
+          <div class="card-body">
+            <div>
               <div class="form-row" v-for="veiculo in veiculos" :key="veiculo.id">
 
                 <div class="form-group col-md-4">
@@ -468,33 +493,33 @@
               <button id="btnVeiculo" type="button" class="btn btn-primary" @click="veiculoAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
+            </div>
           </div>
         </div>
       </div>
+
     </div>
 
-  </div>
+    <div class="float-right mt-3">
+      <button class="btn btn-lg btn-success" type="submit">Salvar</button>
+    </div>
 
-  <div class="float-right mt-3">
-    <button class="btn btn-lg btn-success" type="submit">Salvar</button>
-  </div>
-
-</form>
+  </form>
 </div>
 {% endblock content %}
 
 {% block vuejs %}
-  <script>
-    const endpoint = '{{ endpoint }}';
+<script>
+  const endpoint = '{{ endpoint }}';
 
-    $(document).ready(function(){
-      $('#telefone1').mask('(00) 00000-0000');
-    });
+  $(document).ready(function () {
+    $('#telefone1').mask('(00) 00000-0000');
+  });
 
-    $(document).on('click', '#btnContato', function(id) {
-      $('.phone-mask').mask('(00) 00000-0000');
-    });
-  </script>
+  $(document).on('click', '#btnContato', function (id) {
+    $('.phone-mask').mask('(00) 00000-0000');
+  });
+</script>
 
-  <script src="{% static 'js/person_add.js' %}"></script>
+<script src="{% static 'js/person_add.js' %}"></script>
 {% endblock vuejs %}
