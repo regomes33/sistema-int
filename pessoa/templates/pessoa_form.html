@@ -1,22 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block title %}| Pessoa{%endblock%}
-
 {% block breadcrumbs %}
 {% include "breadcrumb/_include_breadcrumb_base_add.html" %}
 {% endblock %}
-
 {% block content %}
 <div class="container">
   <h4>Adicionar Pessoas</h4>
   <form @submit.prevent="salvar">
-
     <div class="accordion" id="accordionExample">
       <!-- Pessoa -->
       <div class="card">
-        <div class="card-header" id="heading1" data-toggle="collapse" data-target="#collapse1" aria-expanded="false"
-          aria-controls="collapse1" @click="toggleCollapse(1)">
+        <div class="card-header" id="heading1" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1" @click="toggleCollapse(1)">
           <h2 class="mb-0">
             <button class="btn btn-link collapsed" type="button">
               <span>
@@ -26,38 +21,30 @@
             </button>
           </h2>
         </div>
-        <div id="collapse1" class="my-collapse collapse show" aria-labelledby="heading1"
-          data-parent="#accordionExample">
+        <div id="collapse1" class="my-collapse collapse show" aria-labelledby="heading1" data-parent="#accordionExample">
           <div class="card-body">
             <!-- Pessoa -->
             <div>
-
               <div class="form-group">
                 <label for="" class="control-label required">Nome</label>
                 <input id="id_nome" name="nome" v-model="pessoa.nome" class="form-control" required type="text" />
               </div>
-
               <div class="form-group">
                 <label for="" class="control-label required">Sobrenome</label>
-                <input id="id_sobrenome" name="sobrenome" v-model="pessoa.sobrenome" class="form-control" required
-                  type="text" />
+                <input id="id_sobrenome" name="sobrenome" v-model="pessoa.sobrenome" class="form-control" required type="text" />
               </div>
-
               <div class="form-group">
                 <label for="" class="control-label">Apelido</label>
                 <input id="id_apelido" name="apelido" v-model="pessoa.apelido" class="form-control" type="text" />
               </div>
-
               <div class="form-group">
                 <label for="" class="control-label">Mãe</label>
                 <input id="id_mae" name="mae" v-model="pessoa.mae" class="form-control" type="text" />
               </div>
-
               <div class="form-group">
                 <label for="" class="control-label">Pai</label>
                 <input id="id_pai" name="pai" v-model="pessoa.pai" class="form-control" type="text" />
               </div>
-
               <div class="form-group">
                 <label for="faccao">Facção</label>
                 <select id="faccao" class="form-control" v-model="pessoa.faccao">
@@ -67,17 +54,15 @@
               </div>
               <div class="form-group ">
                 <label class="control-label">Observações</label>
-                <input id="id_observacao" name="observacao"  v-model="pessoa.observacao" class="form-control" maxlength="500" type="text"  />
+                <textarea id="id_observacao" name="observacao" v-model="pessoa.observacao" class="form-control" cols="30" rows="10"></textarea>
               </div>
             </div>
           </div>
         </div>
       </div>
-
       <!-- Fotos -->
       <div class="card">
-        <div class="card-header" id="heading4" data-toggle="collapse" data-target="#collapse4" aria-expanded="false"
-          aria-controls="collapse4" @click="toggleCollapse(4)">
+        <div class="card-header" id="heading4" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4" @click="toggleCollapse(4)">
           <h2 class="mb-0">
             <button class="btn btn-link collapsed" type="button">
               <span>
@@ -90,16 +75,12 @@
         <div id="collapse4" class="my-collapse collapse" aria-labelledby="heading4" data-parent="#accordionExample">
           <div class="card-body">
             <div>
-
               <div class="form-row" v-for="foto in fotos">
-
                 <div class="form-group col-md-3">
                   <label>Foto</label>
                   <input class="form-control" type="file" @change="processFile" />
                 </div>
-
               </div> <!-- form-row -->
-
               <button type="button" class="btn btn-primary" @click="fotoAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
@@ -107,11 +88,9 @@
           </div>
         </div>
       </div>
-
       <!-- Tatuagens -->
       <div class="card">
-        <div class="card-header" id="heading5" data-toggle="collapse" data-target="#collapse5" aria-expanded="false"
-          aria-controls="collapse5" @click="toggleCollapse(5)">
+        <div class="card-header" id="heading5" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5" @click="toggleCollapse(5)">
           <h2 class="mb-0">
             <button class="btn btn-link collapsed" type="button">
               <span>
@@ -124,16 +103,12 @@
         <div id="collapse5" class="my-collapse collapse" aria-labelledby="heading5" data-parent="#accordionExample">
           <div class="card-body">
             <div>
-
               <div class="form-row" v-for="tattoo in tattoos">
-
                 <div class="form-group col-md-3">
                   <label>Tatuagem</label>
                   <input class="form-control" type="file" @change="processFileTattoo" />
                 </div>
-
               </div> <!-- form-row -->
-
               <button type="button" class="btn btn-primary" @click="tattooAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
@@ -141,11 +116,9 @@
           </div>
         </div>
       </div>
-
       <!-- Documentos -->
       <div class="card">
-        <div class="card-header" id="heading2" data-toggle="collapse" data-target="#collapse2" aria-expanded="false"
-          aria-controls="collapse2" @click="toggleCollapse(2)">
+        <div class="card-header" id="heading2" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2" @click="toggleCollapse(2)">
           <h2 class="mb-0">
             <button class="btn btn-link collapsed" type="button">
               <span>
@@ -158,31 +131,25 @@
         <div id="collapse2" class="my-collapse collapse" aria-labelledby="heading2" data-parent="#accordionExample">
           <div class="card-body">
             <div>
-
               <div class="form-group">
                 <label for="id_cpf" class="control-label">CPF (sem pontuação)</label>
                 <input id="id_cpf" name="cpf" v-model="pessoa.cpf" class="form-control" type="text" maxlength="11" />
               </div>
-
               <div class="form-group">
                 <label for="id_rg" class="control-label">RG</label>
                 <input id="id_rg" name="rg" v-model="pessoa.rg" class="form-control" type="text" maxlength="11" />
               </div>
-
               <div class="form-group">
                 <label for="id_cnh" class="control-label">CNH</label>
                 <input id="id_cnh" name="cnh" v-model="pessoa.cnh" class="form-control" type="text" maxlength="20" />
               </div>
-
             </div>
           </div>
         </div>
       </div>
-
       <!-- Endereço -->
       <div class="card">
-        <div class="card-header" id="heading3" data-toggle="collapse" data-target="#collapse3" aria-expanded="false"
-          aria-controls="collapse3" @click="toggleCollapse(3)">
+        <div class="card-header" id="heading3" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3" @click="toggleCollapse(3)">
           <h2 class="mb-0">
             <button class="btn btn-link collapsed" type="button">
               <span>
@@ -195,34 +162,26 @@
         <div id="collapse3" class="my-collapse collapse" aria-labelledby="heading3" data-parent="#accordionExample">
           <div class="card-body">
             <div>
-
               <div class="form-group">
                 <label for="id_address" class="control-label">Endereço</label>
                 <input id="id_address" name="address" v-model="pessoa.address" class="form-control" type="text" />
               </div>
-
               <div class="form-group">
                 <label for="id_address_number" class="control-label">Número</label>
-                <input id="id_address_number" name="address_number" v-model="pessoa.address_number" class="form-control"
-                  type="number" />
+                <input id="id_address_number" name="address_number" v-model="pessoa.address_number" class="form-control" type="number" />
               </div>
-
               <div class="form-group">
                 <label for="id_complement" class="control-label">Complemento</label>
-                <input id="id_complement" name="complement" v-model="pessoa.complement" class="form-control"
-                  type="text" />
+                <input id="id_complement" name="complement" v-model="pessoa.complement" class="form-control" type="text" />
               </div>
-
               <div class="form-group">
                 <label for="id_district" class="control-label">Bairro</label>
                 <input id="id_district" name="district" v-model="pessoa.district" class="form-control" type="text" />
               </div>
-
               <div class="form-group">
                 <label for="id_city" class="control-label">Cidade</label>
                 <input id="id_city" name="city" v-model="pessoa.city" class="form-control" type="text" />
               </div>
-
               <div class="form-group">
                 <label for="uf">UF</label>
                 <select id="uf" class="form-control" v-model="pessoa.uf">
@@ -230,26 +189,21 @@
                   <option v-for="uf in ufs" :key="uf.value" :value="uf.value">${ uf.text }</option>
                 </select>
               </div>
-
               <div class="form-group">
                 <label for="id_cep" class="control-label">CEP (sem pontuação)</label>
                 <input id="id_cep" name="cep" v-model="pessoa.cep" class="form-control" type="text" />
               </div>
-
               <div class="form-group">
                 <label for="id_country" class="control-label">País</label>
                 <input id="id_country" name="country" v-model="pessoa.country" class="form-control" type="text" />
               </div>
-
             </div>
           </div>
         </div>
       </div>
-
       <!-- Infrações -->
       <div class="card">
-        <div class="card-header" id="heading6" data-toggle="collapse" data-target="#collapse6" aria-expanded="false"
-          aria-controls="collapse6" @click="toggleCollapse(6)">
+        <div class="card-header" id="heading6" data-toggle="collapse" data-target="#collapse6" aria-expanded="false" aria-controls="collapse6" @click="toggleCollapse(6)">
           <h2 class="mb-0">
             <button class="btn btn-link collapsed" type="button">
               <span>
@@ -262,9 +216,7 @@
         <div id="collapse6" class="my-collapse collapse" aria-labelledby="heading6" data-parent="#accordionExample">
           <div class="card-body">
             <div>
-
               <div class="form-row" v-for="infracao in infracoes" :key="infracao.id">
-
                 <div class="form-group col-md-3">
                   <label for="natureza">Natureza</label>
                   <select :id="'natureza'+infracao.id" class="form-control" v-model="infracao.natureza">
@@ -273,7 +225,6 @@
                       }</option>
                   </select>
                 </div>
-
                 <div class="form-group col-md-3">
                   <label for="qualificacao">Qualificação</label>
                   <select :id="'qualificacao'+infracao.id" class="form-control" v-model="infracao.qualificacao">
@@ -282,7 +233,6 @@
                       ${ qualificacao.text }</option>
                   </select>
                 </div>
-
                 <div class="form-group col-md-3">
                   <label for="arma">Arma</label>
                   <select :id="'arma'+infracao.id" class="form-control" v-model="infracao.arma">
@@ -290,7 +240,6 @@
                     <option v-for="arma in armas" :key="arma.value" :value="arma.value">${ arma.text }</option>
                   </select>
                 </div>
-
                 <div class="form-group col-md-3">
                   <label for="status">Status</label>
                   <select :id="'status'+infracao.id" class="form-control" v-model="infracao.status">
@@ -298,9 +247,7 @@
                     <option v-for="status in status" :key="status.value" :value="status.value">${ status.text }</option>
                   </select>
                 </div>
-
               </div> <!-- form-row -->
-
               <button id="btnInfracao" type="button" class="btn btn-primary" @click="infracaoAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
@@ -308,11 +255,9 @@
           </div>
         </div>
       </div>
-
       <!-- Ocorrências -->
       <div class="card">
-        <div class="card-header" id="heading7" data-toggle="collapse" data-target="#collapse7" aria-expanded="false"
-          aria-controls="collapse7" @click="toggleCollapse(7)">
+        <div class="card-header" id="heading7" data-toggle="collapse" data-target="#collapse7" aria-expanded="false" aria-controls="collapse7" @click="toggleCollapse(7)">
           <h2 class="mb-0">
             <button class="btn btn-link collapsed" type="button">
               <span>
@@ -326,7 +271,6 @@
           <div class="card-body">
             <div>
               <div class="form-row" v-for="ocorrencia in ocorrencias" :key="ocorrencia.id">
-
                 <div class="form-group col-md-3">
                   <label for="ocorrencia">Ocorrência</label>
                   <select :id="'ocorrencia'+ocorrencia.id" class="form-control" v-model="ocorrencia.ocorrencia">
@@ -335,9 +279,7 @@
                       ocorrencia.text }</option>
                   </select>
                 </div>
-
               </div> <!-- form-row -->
-
               <button id="btnOcorrencia" type="button" class="btn btn-primary" @click="ocorrenciaAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
@@ -345,11 +287,9 @@
           </div>
         </div>
       </div>
-
       <!-- Contatos -->
       <div class="card">
-        <div class="card-header" id="heading8" data-toggle="collapse" data-target="#collapse8" aria-expanded="false"
-          aria-controls="collapse8" @click="toggleCollapse(8)">
+        <div class="card-header" id="heading8" data-toggle="collapse" data-target="#collapse8" aria-expanded="false" aria-controls="collapse8" @click="toggleCollapse(8)">
           <h2 class="mb-0">
             <button class="btn btn-link collapsed" type="button">
               <span>
@@ -362,24 +302,18 @@
         <div id="collapse8" class="my-collapse collapse" aria-labelledby="heading8" data-parent="#accordionExample">
           <div class="card-body">
             <div>
-
               <div class="form-row" v-for="contato in contatos" :key="contato.id">
-
                 <div class="form-group col-md-3">
                   <label for="tipo">Tipo</label>
                   <select :id="'tipo'+contato.id" class="form-control" v-model="contato.tipo">
                     <option v-for="tipo in tipos" :key="tipo.value" :value="tipo.value">${ tipo.text }</option>
                   </select>
                 </div>
-
                 <div class="form-group col-md-3">
                   <label class="control-label">Telefone</label>
-                  <input :id="'telefone'+contato.id" v-model="contato.telefone" class="form-control phone-mask"
-                    type="text" maxlength="20" />
+                  <input :id="'telefone'+contato.id" v-model="contato.telefone" class="form-control phone-mask" type="text" maxlength="20" />
                 </div>
-
               </div> <!-- form-row -->
-
               <button id="btnContato" type="button" class="btn btn-primary" @click="contatoAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
@@ -387,11 +321,9 @@
           </div>
         </div>
       </div>
-
       <!-- Comparsas -->
       <div class="card">
-        <div class="card-header" id="heading9" data-toggle="collapse" data-target="#collapse9" aria-expanded="false"
-          aria-controls="collapse9" @click="toggleCollapse(9)">
+        <div class="card-header" id="heading9" data-toggle="collapse" data-target="#collapse9" aria-expanded="false" aria-controls="collapse9" @click="toggleCollapse(9)">
           <h2 class="mb-0">
             <button class="btn btn-link collapsed" type="button">
               <span>
@@ -404,56 +336,38 @@
         <div id="collapse9" class="my-collapse collapse" aria-labelledby="heading9" data-parent="#accordionExample">
           <div class="card-body">
             <div>
-
               <div class="form-row" v-for="comparsa in comparsas" :key="comparsa.id">
-
                 <div class="form-group col-md-3">
                   <label class="control-label">Nome</label>
                   <input :id="'comparsa_nome'+comparsa.id" v-model="comparsa.nome" class="form-control" type="text" />
                 </div>
-
                 <div class="form-group col-md-3">
                   <label class="control-label">CPF</label>
-                  <input :id="'comparsa_cpf'+comparsa.id" v-model="comparsa.cpf" class="form-control" type="text"
-                    maxlength="11" />
+                  <input :id="'comparsa_cpf'+comparsa.id" v-model="comparsa.cpf" class="form-control" type="text" maxlength="11" />
                 </div>
-
                 <div class="form-group col-md-3">
                   <label class="control-label">RG</label>
-                  <input :id="'comparsa_rg'+comparsa.id" v-model="comparsa.rg" class="form-control" type="text"
-                    maxlength="11" />
+                  <input :id="'comparsa_rg'+comparsa.id" v-model="comparsa.rg" class="form-control" type="text" maxlength="11" />
                 </div>
-
                 <div class="form-group col-md-3">
                   <label class="control-label">CNH</label>
-                  <input :id="'comparsa_cnh'+comparsa.id" v-model="comparsa.cnh" class="form-control" type="text"
-                    maxlength="20" />
+                  <input :id="'comparsa_cnh'+comparsa.id" v-model="comparsa.cnh" class="form-control" type="text" maxlength="20" />
                 </div>
-
                 <div class="form-group col-md-3">
                   <div class="checkbox-row">
-                    <label class="control-label" style="margin-left: 10px;"
-                      title="Escolha se for Parente">Parente</label>
-                    <input :id="'comparsa_parente'+comparsa.id" v-model="comparsa.parente" class="form-control"
-                      type="checkbox" style="width: 40px;">
+                    <label class="control-label" style="margin-left: 10px;" title="Escolha se for Parente">Parente</label>
+                    <input :id="'comparsa_parente'+comparsa.id" v-model="comparsa.parente" class="form-control" type="checkbox" style="width: 40px;">
                   </div>
                 </div>
-
                 <div class="form-group col-md-3">
                   <label class="control-label">Grau de Parentesco</label>
-                  <input :id="'comparsa_ grau_parentesco'+comparsa.id" v-model="comparsa.grau_parentesco"
-                    class="form-control" type="text" maxlength="20" />
+                  <input :id="'comparsa_ grau_parentesco'+comparsa.id" v-model="comparsa.grau_parentesco" class="form-control" type="text" maxlength="20" />
                 </div>
-
                 <div class="form-group col-md-3">
                   <label class="control-label">Observações</label>
-                  <input :id="'comparsa_observacao'+comparsa.id" v-model="comparsa.observacao" class="form-control"
-                    type="text" maxlength="500" />
+                  <input :id="'comparsa_observacao'+comparsa.id" v-model="comparsa.observacao" class="form-control" type="text" maxlength="500" />
                 </div>
-
-
               </div> <!-- form-row -->
-
               <button id="btnComparsa" type="button" class="btn btn-primary" @click="comparsaAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
@@ -461,11 +375,9 @@
           </div>
         </div>
       </div>
-
       <!-- Veículos -->
       <div class="card">
-        <div class="card-header" id="heading10" data-toggle="collapse" data-target="#collapse10" aria-expanded="false"
-          aria-controls="collapse10" @click="toggleCollapse(10)">
+        <div class="card-header" id="heading10" data-toggle="collapse" data-target="#collapse10" aria-expanded="false" aria-controls="collapse10" @click="toggleCollapse(10)">
           <h2 class="mb-0">
             <button class="btn btn-link collapsed" type="button">
               <span>
@@ -479,7 +391,6 @@
           <div class="card-body">
             <div>
               <div class="form-row" v-for="veiculo in veiculos" :key="veiculo.id">
-
                 <div class="form-group col-md-4">
                   <label for="veiculo">Veículo</label>
                   <select :id="'veiculo'+veiculo.id" class="form-control" v-model="veiculo.veiculo">
@@ -487,9 +398,7 @@
                     <option v-for="carro in carros" :key="carro.value" :value="carro.value">${ carro.text }</option>
                   </select>
                 </div>
-
               </div> <!-- form-row -->
-
               <button id="btnVeiculo" type="button" class="btn btn-primary" @click="veiculoAdd">
                 <i class="fa fa-plus"></i> Adicionar
               </button>
@@ -497,29 +406,24 @@
           </div>
         </div>
       </div>
-
     </div>
-
     <div class="float-right mt-3">
       <button class="btn btn-lg btn-success" type="submit">Salvar</button>
     </div>
-
   </form>
 </div>
 {% endblock content %}
-
 {% block vuejs %}
 <script>
-  const endpoint = '{{ endpoint }}';
+const endpoint = '{{ endpoint }}';
 
-  $(document).ready(function () {
-    $('#telefone1').mask('(00) 00000-0000');
-  });
+$(document).ready(function() {
+  $('#telefone1').mask('(00) 00000-0000');
+});
 
-  $(document).on('click', '#btnContato', function (id) {
-    $('.phone-mask').mask('(00) 00000-0000');
-  });
+$(document).on('click', '#btnContato', function(id) {
+  $('.phone-mask').mask('(00) 00000-0000');
+});
 </script>
-
 <script src="{% static 'js/person_add.js' %}"></script>
 {% endblock vuejs %}

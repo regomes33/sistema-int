@@ -1,8 +1,6 @@
 {% extends "base_report.html" %}
 {% load easy_mask %}
-
 {% block title %}Ficha-{{ object }}-{{ today|date:"Y-m-d" }}{%endblock%}
-
 {% block content %}
 <div class="container">
   <div class="accordion accordion-icons" id="accordionExample">
@@ -16,13 +14,11 @@
             <div class="col-sm-6 text-left mb-4">
               <div class="card">
                 <div class="card-body">
-
                   <div class="well well-sm">
                     <div class="row">
                       <div class="col-sm-6 col-md-6">
                         {% if object.get_first_photo %}
-                        <img src="{{ object.get_first_photo.foto.url }}" width="200px"
-                          class="img-rounded img-responsive">
+                        <img src="{{ object.get_first_photo.foto.url }}" width="200px" class="img-rounded img-responsive">
                         <span class="span-is-link" data-toggle="modal" data-target="#modalEditarFoto">
                         </span>
                         {% endif %}
@@ -31,11 +27,9 @@
                         <h2>{{ object }}</h2>
                         <p class="card-text">Apelido: {{ object.apelido|default:"---" }}</p>
                         <h5 class="card-title">Facção: {{ object.faccao|default:"---" }}</h5>
-
                       </div>
                     </div>
                   </div>
-
                 </div>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">
@@ -58,7 +52,6 @@
                     <h5>Observações</h5>
                     <p class="card-text">{{ object.observacao|default:"---" }}</p>
                   </li>
-
                 </ul>
               </div>
             </div>
@@ -86,9 +79,10 @@
                           {{ veiculo.veiculo.placa }}
                           <small>{{ veiculo.veiculo.modelo }} {{ veiculo.veiculo.cor }}</small>
                         </td>
+                      </tr>
+                      <tr>
                         <td>
-                          <span class="span-is-link" data-toggle="modal" data-target="#modalEditarVeiculo">
-                          </span>
+                          {{ veiculo.veiculo.observacao }}
                         </td>
                       </tr>
                       {% endfor %}
@@ -111,6 +105,9 @@
                     <li class="list-group-item">RG: {{ comparsa.rg }}</li>
                     <li class="list-group-item">CPF: {{ comparsa.cpf }}</li>
                     <li class="list-group-item">CNH: {{ comparsa.cnh }}</li>
+                    <li class="list-group-item">Parente: {{ comparsa.parente }}</li>
+                    <li class="list-group-item">Grau de parentesco: {{ comparsa.grau_parentesco }}</li>
+                    <li class="list-group-item">Observação: {{ comparsa.observacao }}</li>
                   </ul>
                   {% endfor %}
                 </div>
@@ -126,8 +123,7 @@
                 {% if foto.foto %}
                 <div class="card">
                   <div class="card-body">
-                    <img src="{{ foto.foto.url }}" class="card-img-top" style="max-width: 200px;"
-                      alt="{{ foto.foto.name }}">
+                    <img src="{{ foto.foto.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ foto.foto.name }}">
                     <br>
                     <span class="span-is-link" data-toggle="modal" data-target="#modalEditarFoto2">
                     </span>
@@ -147,8 +143,7 @@
                 {% if tatuagem.foto %}
                 <div class="card">
                   <div class="card-body">
-                    <img src="{{ tatuagem.foto.url }}" class="card-img-top" style="max-width: 200px;"
-                      alt="{{ tatuagem.foto.name }}">
+                    <img src="{{ tatuagem.foto.url }}" class="card-img-top" style="max-width: 200px;" alt="{{ tatuagem.foto.name }}">
                     <br>
                     <span class="span-is-link" data-toggle="modal" data-target="#modalEditarTatuagem">
                     </span>
@@ -220,17 +215,15 @@
       </div>
     </div>
   </div>
-
   {% endblock content %}
-
   {% block js %}
   <script>
-    window.onload = function () {
-      window.print();
+  window.onload = function() {
+    window.print();
 
-      setTimeout(() => {
-        window.close();
-      }, 2000);
-    };
+    setTimeout(() => {
+      window.close();
+    }, 2000);
+  };
   </script>
   {% endblock js %}
