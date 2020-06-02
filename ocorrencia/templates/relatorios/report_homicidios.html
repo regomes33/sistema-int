@@ -1,0 +1,67 @@
+{% extends "base_report.html" %}
+{% load easy_mask %}
+
+{% block title %}Relatorio de Homicídios-{{ today|date:"Y-m-d" }}{%endblock%}
+
+{% block content %}
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>Rai</th>
+            <th>Data do Homicidio</th>
+            <th>Forma</th>
+            <th>Área_UPM</th>
+            <th>Vítima</th>
+            <th>Instrumento</th>
+            <th>Motivação</th>
+            <th>Autoria</th>
+            <th>Gênero</th>
+            <th>Cidade</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in object_list %}
+        <tr>
+            
+            <td style="width: 200px;">
+                {{object.rai}}
+            </td>
+            
+
+                    <!--     <td>{{ object.apelido|default:"---" }}</td>
+                    <td>{{ object.faccao|default:"---" }}</td>
+                    <td>
+                        {% if object.district %}
+                        <small>Bairro</small><br> {{ object.district }}<br>
+                        {% endif %}
+
+                        {% if object.city %}
+                        <small>Cidade:</small><br> {{ object.city }}
+                        {% endif %}
+                    <td>
+                        {% for infracao in object.infracao_set.all %}
+                        <span>{{ infracao.natureza.artigo }}{% if not forloop.last %},{% endif %}</span>
+                        {% endfor %}
+                    </td>
+                </tr> -->
+            {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
+
+{% block js %}
+<script>
+    window.onload = function () {
+        window.print();
+
+        setTimeout(() => {
+            window.close();
+        }, 2000);
+    };
+</script>
+{% endblock js %}

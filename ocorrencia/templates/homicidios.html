@@ -21,6 +21,7 @@
         </div>
         <div class="col-md-3">
             <a class="btn btn-primary" href="{% url 'ocorrencia:homicidio_create' %}">Adicionar</a>
+            <button class="btn btn-warning" onclick="printDiv('printme')">PDF</button>
         </div>
     </div>
     <h4>Homicídios</h4>
@@ -63,3 +64,14 @@
 </div>
 {% include "includes/pagination.html" %}
 {% endblock content %}
+
+
+{%block js%}
+<Script>
+     let path = "{% url 'ocorrencia:report_homicidios' %}"
+    
+    function printDiv(divName) {
+        window.open(path)
+    }
+</Script>
+{%endblock js%}
