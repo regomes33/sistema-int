@@ -18,7 +18,7 @@
             <th>Motivação</th>
             <th>Autoria</th>
             <th>Gênero</th>
-            <th>Cidade</th>
+            <th>Bairro</th>
 
 
         </tr>
@@ -27,11 +27,20 @@
         {% for object in object_list %}
         <tr>
             
-            <td style="width: 200px;">
+            <td style="width: 50px;">
                 {{object.rai}}
             </td>
+            <td>{{ object.data_do_homicidio|default:"---" }}</td>
+            <td>{{ object.forma|default:"---" }}</td>
+            <td>{{ object.area_upm|default:"---" }}</td>
+            <td>{{ object.vitima|default:"---" }}</td>
+            <td>{{ object.instrumento|default:"---" }}</td>
+            <td>{{ object.motivacao|default:"---" }}</td>
+            <td>{{ object.autoria|default:"---" }}</td>
+            <td>{{ object.genero|default:"---" }}</td>
+            <td>{{ object.district|default:"---" }}</td>
             
-
+            
                     <!--     <td>{{ object.apelido|default:"---" }}</td>
                     <td>{{ object.faccao|default:"---" }}</td>
                     <td>
