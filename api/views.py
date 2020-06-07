@@ -350,28 +350,28 @@ def veiculo_update(request, pk):
 def comparsa_add(request, pessoa_pk):
     if request.method == 'POST':
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
-        nome = request.POST.get('nome')
-        rg = request.POST.get('rg')
-        cpf = request.POST.get('cpf')
-        cnh = request.POST.get('cnh')
+
         parente = request.POST.get('parente')
         if parente == 'true':
             parente = True
         else:
             parente = False
-        grau_parentesco = request.POST.get('grau_parentesco')
-        observacao = request.POST.get('observacao')
 
-        Comparsa.objects.create(
-            pessoa=pessoa,
-            nome=nome,
-            rg=rg,
-            cpf=cpf,
-            cnh=cnh,
-            parente=parente,
-            grau_parentesco=grau_parentesco,
-            observacao=observacao,
-        )
+        _data = request.POST
+
+        data = {'data': _data}
+
+        # Transformando 'parente' em booleano.
+        data['parente'] = parente
+
+        # Usando formulário você resolve o problema de CPF vazio.
+        comparsa_form = PessoaComparsaForm(data)
+
+        if comparsa_form.is_valid():
+            comparsa_post = comparsa_form.save(commit=False)
+            comparsa_post.pessoa = pessoa
+            comparsa_post.save()
+
         return JsonResponse({'data': 'OK'})
 
 

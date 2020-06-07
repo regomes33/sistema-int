@@ -10,7 +10,8 @@ class Pessoa(UuidModel, TimeStampedModel, CreatedBy, Address, Document):
     apelido = models.CharField(max_length=50, null=True, blank=True)
     mae = models.CharField('mãe', max_length=50, null=True, blank=True)
     pai = models.CharField(max_length=50, null=True, blank=True)
-    observacao=models.TextField('Observação',max_length=500,null=True,blank=True)
+    observacao = models.TextField(
+        'Observação', max_length=500, null=True, blank=True)
     faccao = models.ForeignKey(
         'Faccao',
         on_delete=models.SET_NULL,
@@ -130,7 +131,9 @@ class Comparsa(UuidModel, TimeStampedModel, Document):
         verbose_name_plural = 'comparsas'
 
     def __str__(self):
-        return self.nome
+        if self.nome:
+            return self.nome
+        return str(self.pk)
 
 
 class Faccao(UuidModel):
