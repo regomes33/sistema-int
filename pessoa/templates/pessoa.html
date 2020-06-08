@@ -1094,7 +1094,13 @@ var app = new Vue({
       let url = endpoint + 'api/pessoas/' + pessoa_pk + '/comparsa/add/'
       axios.post(url, bodyFormData)
         .then(response => {
-          location.reload();
+          if (response.data.status === 900) {
+            console.log(response.data.message);
+            alert(response.data.message);
+            return
+          } else {
+            location.reload();
+          }
         })
     },
     salvarComparsa() {
