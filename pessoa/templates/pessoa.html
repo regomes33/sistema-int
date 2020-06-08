@@ -48,6 +48,7 @@
                         <h2>{{ object }}</h2>
                         <p class="card-text">Apelido: {{ object.apelido|default:"---" }}</p>
                         <h5 class="card-title">Facção: {{ object.faccao|default:"---" }}</h5>
+                        <h5 class="card-title">Nascimento: {{ object.nascimento|date:"d/m/Y"|default:"---" }}</h5>
                         <div class="pull-right">
                           <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarPessoa">
                             Editar
@@ -859,6 +860,9 @@ $('.my-collapse').on('shown.bs.collapse', function() {
 $('.my-collapse').on('hidden.bs.collapse', function() {
   $(this).prev().find(".fa").addClass('fa-chevron-down').removeClass('fa-chevron-up');
 });
+
+$('[for="id_nascimento"]').append('<small class="text-muted">formato dd/mm/YYYY</small>');
+
 </script>
 <script>
 const endpoint = '{{ endpoint }}';

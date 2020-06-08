@@ -20,6 +20,12 @@ class Pessoa(UuidModel, TimeStampedModel, CreatedBy, Address, Document):
         blank=True
     )
     vitima = models.BooleanField(default=False)
+    nascimento = models.DateField(
+        'data de nascimento',
+        null=True,
+        blank=True,
+        help_text='Data no formato dd/mm/YYYY'
+    )
 
     class Meta:
         ordering = ('nome',)
@@ -54,6 +60,7 @@ class Pessoa(UuidModel, TimeStampedModel, CreatedBy, Address, Document):
             'apelido': self.apelido,
             'mae': self.mae,
             'pai': self.pai,
+            'nascimento': self.nascimento,
             # **document_dict,
             # **address_dict,
             # 'full_address': self.get_address(),

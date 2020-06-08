@@ -12,6 +12,7 @@ var app = new Vue({
       'mae': '',
       'pai': '',
       'faccao': '',
+      'nascimento': '',
       'cpf': '',
       'rg': '',
       'cnh': '',

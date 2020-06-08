@@ -27,6 +27,7 @@
                         <h2>{{ object }}</h2>
                         <p class="card-text">Apelido: {{ object.apelido|default:"---" }}</p>
                         <h5 class="card-title">Facção: {{ object.faccao|default:"---" }}</h5>
+                        <h5 class="card-title">Nascimento: {{ object.nascimento|date:"d/m/Y"|default:"---" }}</h5>
                       </div>
                     </div>
                   </div>
