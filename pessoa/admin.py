@@ -81,7 +81,7 @@ class PessoaContatoAdmin(admin.ModelAdmin):
 
 @admin.register(Comparsa)
 class ComparsaAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'slug',)
+    list_display = ('__str__', 'rg', 'cpf', 'slug')
     # search_fields = ('nome',)
 
     # if not settings.DEBUG:
