@@ -82,6 +82,7 @@ class MotivacaoAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
 
+
 @admin.register(Autoria)
 class AutoriaAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'slug')
@@ -91,6 +92,7 @@ class AutoriaAdmin(admin.ModelAdmin):
     # if not settings.DEBUG:
     def has_delete_permission(self, request, obj=None):
         return False
+
 
 @admin.register(Genero)
 class GeneroAdmin(admin.ModelAdmin):
@@ -102,11 +104,14 @@ class GeneroAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
 
+
 @admin.register(Homicidio)
 class HomicidioAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'slug', 'data_do_homicidio',
                     'forma', 'uf', 'area_upm', 'vitima', 'motivacao')
+    search_fields = ('vitima__nome',)
     list_filter = ('forma', 'uf', 'area_upm', 'motivacao')
+    readonly_fields = ('slug',)
     date_hierarchy = 'created'
 
     # if not settings.DEBUG:
