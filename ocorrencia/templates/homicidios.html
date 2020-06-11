@@ -4,74 +4,86 @@
 {% include "breadcrumb/_include_breadcrumb_base.html" %}
 {% endblock %}
 {% block content %}
+{% for message in messages %}
+{% if 'success' in message.tags %}
+<p class="alert alert-success" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+{% else %}
+<p class="alert alert-danger" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+{% endif %}
+{% endfor %}
 <div class="container">
-    <div class="row cols">
-        <div class="col-md-6">
-            <form method="GET">
-                <label class="sr-only" for="inlineFormInputGroup">Username</label>
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fa fa-search"></i></div>
-                    </div>
-                    <input type="text" class="form-control" name="search" placeholder="Localizar...">
-                    <input type="submit" class="btn btn-success ml-2" value="OK"></button>
-                    <a href="." class="btn btn-link">Limpar</a>
-                </div>
-            </form>
+  <div class="row cols">
+    <div class="col-md-6">
+      <form method="GET">
+        <label class="sr-only" for="inlineFormInputGroup">Username</label>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fa fa-search"></i></div>
+          </div>
+          <input type="text" class="form-control" name="search" placeholder="Localizar...">
+          <input type="submit" class="btn btn-success ml-2" value="OK"></button>
+          <a href="." class="btn btn-link">Limpar</a>
         </div>
-        <div class="col-md-3">
-            <a class="btn btn-primary" href="{% url 'ocorrencia:homicidio_create' %}">Adicionar</a>
-            <button class="btn btn-warning" onclick="printDiv('printme')">PDF</button>
-        </div>
+      </form>
     </div>
-    <h4>Homicídios</h4>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>RAI</th>
-                <th>Data do Homicídio</th>
-                <th>Forma</th>
-                <th>Área UPM</th>
-                <th>Vítima</th>
-                <th>Instrumento</th>
-                <th>Motivação</th>
-                <th>Autoria</th>
-                <th>Gênero</th>
-                <th>Bairro</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for object in object_list %}
-            <tr>
-                <td>{{ object.rai }}</td>
-                <td>{{ object.data_do_homicidio }}</td>
-                <td>{{ object.get_forma_display }}</td>
-                <td>{{ object.area_upm }}</td>
-                <td>{{ object.vitima }}</td>
-                <td>{{ object.instrumento }}</td>
-                <td>{{ object.motivacao }}</td>
-                <td>{{ object.autoria|default:"---" }}</td>
-                <td>{{ object.genero|default:"---" }}</td>
-                <td>{{ object.district|default:"---" }}</td>
-                <td>
-                    <a class="btn btn-info" href="{% url 'ocorrencia:homicidio_update' object.slug %}">Editar</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="col-md-3">
+      <a class="btn btn-primary" href="{% url 'ocorrencia:homicidio_create' %}">Adicionar</a>
+      <button class="btn btn-warning" onclick="printDiv('printme')">PDF</button>
+    </div>
+  </div>
+  <h4>Homicídios</h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>RAI</th>
+        <th>Data do Homicídio</th>
+        <th>Forma</th>
+        <th>Área UPM</th>
+        <th>Vítima</th>
+        <th>Instrumento</th>
+        <th>Motivação</th>
+        <th>Autoria</th>
+        <th>Gênero</th>
+        <th>Bairro</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for object in object_list %}
+      <tr>
+        <td>{{ object.rai }}</td>
+        <td>{{ object.data_do_homicidio }}</td>
+        <td>{{ object.get_forma_display }}</td>
+        <td>{{ object.area_upm }}</td>
+        <td>{{ object.vitima }}</td>
+        <td>{{ object.instrumento }}</td>
+        <td>{{ object.motivacao }}</td>
+        <td>{{ object.autoria|default:"---" }}</td>
+        <td>{{ object.genero|default:"---" }}</td>
+        <td>{{ object.district|default:"---" }}</td>
+        <td>
+          <a class="btn btn-info" href="{% url 'ocorrencia:homicidio_update' object.slug %}">Editar</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 {% include "includes/pagination.html" %}
 {% endblock content %}
-
-
 {%block js%}
-<Script>
-     let path = "{% url 'ocorrencia:report_homicidios' %}"
-    
-    function printDiv(divName) {
-        window.open(path)
-    }
-</Script>
+<script>
+  let path = "{% url 'ocorrencia:report_homicidios' %}"
+
+  function printDiv(divName) {
+    window.open(path)
+  }
+
+  //close alert after 3 seconds
+  window.setTimeout(function() {
+    $(".alert").fadeTo(500, 0).slideUp(500, function() {
+      $(this).remove();
+    });
+  }, 3000);
+</script>
 {%endblock js%}

@@ -1,11 +1,13 @@
 import json
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 from django.db.models import Q
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, resolve_url
 from django.urls import reverse
 from django.views.generic import ListView, UpdateView
+from pessoa.models import Pessoa
 from pessoa.forms import PessoaMinimalForm
 from .forms import OcorrenciaForm, InfracaoForm, NaturezaForm, HomicidioForm
 from .models import Ocorrencia, Infracao, Natureza, Homicidio
@@ -233,6 +235,12 @@ def homicidio_create(request):
         if form.is_valid():
             new_form = form.save(commit=False)
             new_form.created_by = request.user
+            vitima = Homicidio.objects.filter(
+                vitima=form.data.get('vitima')).first()
+            if vitima:
+                msg_error = 'Já existe um homicídio para esta vítima.'
+                messages.error(request, msg_error)
+                return HttpResponseRedirect(reverse('ocorrencia:homicidios'))
             # Transforma a pessoa em vítima
             new_form.vitima.vitima = True
             new_form.vitima.save()
