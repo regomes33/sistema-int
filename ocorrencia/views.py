@@ -9,6 +9,7 @@ from django.views.generic import ListView, UpdateView
 from pessoa.forms import PessoaMinimalForm
 from .forms import OcorrenciaForm, InfracaoForm, NaturezaForm, HomicidioForm
 from .models import Ocorrencia, Infracao, Natureza, Homicidio
+from .mixins import SearchMixin
 
 
 class OcorrenciaList(LRM, ListView):
@@ -196,7 +197,7 @@ def homicidios(request):
     object_list = Homicidio.objects.all()
 
 
-class HomicidioList(LRM, ListView):
+class HomicidioList(LRM, ListView, SearchMixin):
     model = Homicidio
     template_name = 'homicidios.html'
     paginate_by = 10
@@ -219,6 +220,85 @@ class HomicidioList(LRM, ListView):
     def get_context_data(self, **kwargs):
         context = super(HomicidioList, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Homicidios'
+
+        rais = Homicidio.objects.values_list('rai', flat=True)
+        context['rais'] = sorted(set([rai for rai in rais if rai]))
+
+        data_do_homicidios = Homicidio.objects.values_list(
+            'data_do_homicidio', flat=True)
+        context['data_do_homicidios'] = sorted(
+            set([data_do_homicidio for data_do_homicidio in data_do_homicidios if data_do_homicidio]))
+
+        formas = Homicidio.objects.values_list(
+            'forma', flat=True)
+        context['formas'] = sorted(
+            set([forma for forma in formas if forma]))
+
+        area_upms = Homicidio.objects.values_list(
+            'area_upm', flat=True)
+        context['area_upms'] = sorted(
+            set([area_upm for area_upm in area_upms if area_upm]))
+
+        vitimas = Homicidio.objects.values_list(
+            'vitima', flat=True)
+        context['vitimas'] = sorted(
+            set([vitima for vitima in vitimas if vitima]))
+
+        instrumentos = Homicidio.objects.values_list(
+            'instrumeto', flat=True)
+        context['instrumentos'] = sorted(
+            set([instrumento for instrumento in instrumentos if instrumento]))
+
+        motivacoes = Homicidio.objects.values_list(
+            'motivacao', flat=True)
+        context['motivacoes'] = sorted(
+            set([motivacao for motivacao in motivacoes if motivacao]))
+
+        autorias = Homicidio.objects.values_list(
+            'autoria', flat=True)
+        context['autorias'] = sorted(
+            set([autoria for autoria in autorias if autoria]))
+
+        generos = Homicidio.objects.values_list(
+            'genero', flat=True)
+        context['generos'] = sorted(
+            set([genero for genero in generos if genero]))
+
+        bairros = Homicidio.objects.values_list(
+            'district', flat=True)
+        context['bairros'] = sorted(
+            set([bairro for bairro in bairros if bairro]))
+
+ # Devolve o valor selecionado pra manter o filtro aplicado no template.
+        filter_rai = self.request.GET.get('filter_rai')
+        filter_data_do_homicidio = self.request.GET.get('filter_data_do_homicidio')
+        filter_forma = self.request.GET.get('filter_forma')
+        filter_area_upm = self.request.GET.get('filter_area_upm')
+        filter_instrumento = self.request.GET.get('filter_instrumento')
+        filter_motivacao = self.request.GET.get('filter_motivacao')
+        filter_autoria = self.request.GET.get('filter_autoria')
+        filter_genero = self.request.GET.get(' filter_genero')
+        filter_bairro = self.request.GET.get('filter_bairro')
+        
+
+        if filter_rai:
+            context['selected_rai'] = str(filter_rai)
+        
+        if filter_data_do_homicidio:
+            context['selected_data_do_homicidio'] = str(filter_data_do_homicidio)
+        
+        if filter_forma:
+            context['selected_forma'] = str(filter_forma)
+
+         if filter_area_upm:
+            context['selected_area_upm'] = str(filter_area_upm)    
+        
+        if filter_bairro:
+            context['selected_bairro'] = str(filter_bairro)
+       
+
+
+
         return context
 
 
