@@ -24,6 +24,29 @@
             <button class="btn btn-warning" onclick="printDiv('printme')">PDF</button>
         </div>
     </div>
+
+    <div class="collapse" id="collapseFiltro">
+        <div class="card card-body">
+
+            <form id="formFilter" method="GET">
+                <div class="row">
+
+                    <div class="col-sm">
+                        <h6>Filtrar por Bairro</h6>
+
+                        <select id="filterBairro" name="filter_bairro" class="form-control">
+                            <option value="">Todos</option>
+                            {% for bairro in bairros %}
+                            <option value="{{ bairro }}">{{ bairro }}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+            </form>
+        </div>
+    </div>
+
+
     <h4>Homicídios</h4>
     <table class="table">
         <thead>
@@ -68,10 +91,29 @@
 
 {%block js%}
 <Script>
-     let path = "{% url 'ocorrencia:report_homicidios' %}"
-    
+    let path = "{% url 'ocorrencia:report_homicidios' %}"
+
     function printDiv(divName) {
         window.open(path)
     }
+
+
+
+    $(document).ready(function () {
+
+        $('#filterBairro').val('{{ selected_bairro }}');
+
+    });
+
+    $('#filterBairro').on('change', function () {
+        $('#formFilter').submit();
+    });
+
+    $('#collapseFiltro').collapse({
+        toggle: true
+    })
+
 </Script>
+
+
 {%endblock js%}

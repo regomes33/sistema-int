@@ -63,8 +63,8 @@ class InfracaoAdmin(admin.ModelAdmin):
 
 @admin.register(AreaUpm)
 class AreaUpmAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'slug')
-    # list_filter = ('qualificacao', 'arma', 'status',)
+    list_display = ('__str__', 'slug',)
+    list_filter = ('area_upm' ,)
     # date_hierarchy = 'created'
 
     # if not settings.DEBUG:
@@ -106,9 +106,10 @@ class GeneroAdmin(admin.ModelAdmin):
 class HomicidioAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'slug', 'data_do_homicidio',
                     'forma', 'uf', 'area_upm', 'vitima', 'motivacao')
-    list_filter = ('forma', 'uf', 'area_upm', 'motivacao')
+    list_filter = ('forma', 'district', 'area_upm', 'motivacao')
     date_hierarchy = 'created'
 
     # if not settings.DEBUG:
     def has_delete_permission(self, request, obj=None):
         return False
+
