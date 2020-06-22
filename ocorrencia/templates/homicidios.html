@@ -24,7 +24,7 @@
             <button class="btn btn-warning" onclick="printDiv('printme')">PDF</button>
         </div>
     </div>
-
+    <!-- Filtros de Homicidios  -->
     <div class="collapse" id="collapseFiltro">
         <div class="card card-body">
 
@@ -42,6 +42,7 @@
                         </select>
 
                     </div>
+
                     <div class="col-sm">
                         <h6>Filtrar por Forma</h6>
 
@@ -54,24 +55,11 @@
 
 
                     </div>
-
-                    <div class="col-sm">
-                        <h6>Filtrar por Aréa</h6>
-
-                        <select id="filterAreaUpm" name="filter_area_upm" class="form-control">
-                            <option value="">Todos</option>
-                            {% for forma in formas %}
-                            <option value="{{ area_upm }}">{{ area_upm }}</option>
-                            {% endfor %}
-                        </select>
-
-
-                    </div>
-
+                    <!-- Filtrar por Aréa -->
                     <div class="row">
                         <div class="col-sm">
                             <h6>Filtrar por Area</h6>
-                            <select id="filterAreaUpm" name="filter_area_up" class="form-control">
+                            <select id="filterAreaUpm" name="filter_area_upm" class="form-control">
                                 <option value="">Todos</option>
                                 {% for area_upm in area_upms %}
                                 <option value="{{ area_upm.0 }}">{{ area_upm.1 }}</option>
@@ -144,7 +132,7 @@
 
         $('#filterBairro').val('{{ selected_bairro }}');
         $('#filterForma').val('{{ selected_forma }}');
-        $('filterAreaUpm').val('{{ selected_area_upm }}');
+        $('#filterAreaUpm').val('{{ selected_area_upm }}');
 
     });
 
