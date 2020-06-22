@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.views.generic import ListView, UpdateView
 from pessoa.forms import PessoaMinimalForm
 from .forms import OcorrenciaForm, InfracaoForm, NaturezaForm, HomicidioForm
-from .models import Ocorrencia, Infracao, Natureza, Homicidio
+from .models import Ocorrencia, Infracao, Natureza, Homicidio, AreaUpm
 from .mixins import SearchMixin
 
 
@@ -220,16 +220,16 @@ class HomicidioList(LRM, ListView, SearchMixin):
     def get_context_data(self, **kwargs):
         context = super(HomicidioList, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Homicidios'
-
+        context['area_upms'] = AreaUpm.objects.values_list('pk', 'area_upm')
         formas = Homicidio.objects.values_list(
             'forma', flat=True)
         context['formas'] = sorted(
             set([forma for forma in formas if forma]))
 
-        area_upms = Homicidio.objects.values_list(
-            'area_upm', flat=True)
-        context['area_upms'] = sorted(
-            set([area_upm for area_upm in area_upms if area_upm]))
+        # area_upms = AreaUpm.objects.values_list(
+        #     'area_upm', flat=True)
+        # context['area_upms'] = sorted(
+        #     set([area_upm for area_upm in area_upms if area_upm]))
 
         motivacoes = Homicidio.objects.values_list(
             'motivacao', flat=True)

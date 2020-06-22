@@ -42,6 +42,45 @@
                         </select>
 
                     </div>
+                    <div class="col-sm">
+                        <h6>Filtrar por Forma</h6>
+
+                        <select id="filterForma" name="filter_forma" class="form-control">
+                            <option value="">Todos</option>
+                            {% for forma in formas %}
+                            <option value="{{ forma }}">{{ forma }}</option>
+                            {% endfor %}
+                        </select>
+
+
+                    </div>
+
+                    <div class="col-sm">
+                        <h6>Filtrar por Aréa</h6>
+
+                        <select id="filterAreaUpm" name="filter_area_upm" class="form-control">
+                            <option value="">Todos</option>
+                            {% for forma in formas %}
+                            <option value="{{ area_upm }}">{{ area_upm }}</option>
+                            {% endfor %}
+                        </select>
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm">
+                            <h6>Filtrar por Area</h6>
+                            <select id="filterAreaUpm" name="filter_area_up" class="form-control">
+                                <option value="">Todos</option>
+                                {% for area_upm in area_upms %}
+                                <option value="{{ area_upm.0 }}">{{ area_upm.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
             </form>
         </div>
     </div>
@@ -96,16 +135,32 @@
     function printDiv(divName) {
         window.open(path)
     }
+</Script>
 
 
 
+<script>
     $(document).ready(function () {
 
         $('#filterBairro').val('{{ selected_bairro }}');
+        $('#filterForma').val('{{ selected_forma }}');
+        $('filterAreaUpm').val('{{ selected_area_upm }}');
 
     });
 
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+
     $('#filterBairro').on('change', function () {
+        $('#formFilter').submit();
+    });
+
+    $('#filterForma').on('change', function () {
+        $('#formFilter').submit();
+    });
+
+    $('#filterAreaUpm').on('change', function () {
         $('#formFilter').submit();
     });
 
@@ -113,7 +168,6 @@
         toggle: true
     })
 
-</Script>
-
+</script>
 
 {%endblock js%}
