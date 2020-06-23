@@ -25,53 +25,53 @@
         </div>
     </div>
     <!-- Filtros de Homicidios  -->
-    <div class="collapse" id="collapseFiltro">
-        <div class="card card-body">
+    <!-- <div class="collapse" id="collapseFiltro"> -->
+    <div class="card card-body">
 
-            <form id="formFilter" method="GET">
-                <div class="row">
+        <form id="formFilter" method="GET">
+            <div class="row">
 
-                    <div class="col-sm">
-                        <h6>Filtrar por Bairro</h6>
+                <div class="col-sm">
+                    <h6>Filtrar por Bairro</h6>
 
-                        <select id="filterBairro" name="filter_bairro" class="form-control">
-                            <option value="">Todos</option>
-                            {% for bairro in bairros %}
-                            <option value="{{ bairro }}">{{ bairro }}</option>
-                            {% endfor %}
-                        </select>
+                    <select id="filterBairro" name="filter_bairro" class="form-control">
+                        <option value="">Todos</option>
+                        {% for bairro in bairros %}
+                        <option value="{{ bairro }}">{{ bairro }}</option>
+                        {% endfor %}
+                    </select>
 
-                    </div>
-
-                    <div class="col-sm">
-                        <h6>Filtrar por Forma</h6>
-
-                        <select id="filterForma" name="filter_forma" class="form-control">
-                            <option value="">Todos</option>
-                            {% for forma in formas %}
-                            <option value="{{ forma }}">{{ forma }}</option>
-                            {% endfor %}
-                        </select>
-
-
-                    </div>
-                    <!-- Filtrar por Aréa -->
-                    <div class="row">
-                        <div class="col-sm">
-                            <h6>Filtrar por Area</h6>
-                            <select id="filterAreaUpm" name="filter_area_upm" class="form-control">
-                                <option value="">Todos</option>
-                                {% for area_upm in area_upms %}
-                                <option value="{{ area_upm.0 }}">{{ area_upm.1 }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
                 </div>
 
-            </form>
-        </div>
+                <div class="col-sm">
+                    <h6>Filtrar por Forma</h6>
+
+                    <select id="filterForma" name="filter_forma" class="form-control">
+                        <option value="">Todos</option>
+                        {% for forma in formas %}
+                        <option value="{{ forma }}">{{ forma }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+
+                <!-- Filtrar por Aréa -->
+                <div class="row">
+                    <div class="col-sm">
+                        <h6>Filtrar por Area</h6>
+                        <select id="filterAreaUpm" name="filter_area_upm" class="form-control">
+                            <option value="">Todos</option>
+                            {% for area_upm in area_upms %}
+                            <option value="{{ area_upm.0 }}">{{ area_upm.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </form>
     </div>
+    <!-- </div> -->
 
 
     <h4>Homicídios</h4>
@@ -116,28 +116,24 @@
 {% endblock content %}
 
 
-{%block js%}
-<Script>
-    let path = "{% url 'ocorrencia:report_homicidios' %}"
 
-    function printDiv(divName) {
-        window.open(path)
-    }
-</Script>
-
-
+{% block js %}
 
 <script>
-    $(document).ready(function () {
 
+    $(document).ready(function () {
+        $('#filterAreaUpm').val('{{ selected_area_upm }}');
         $('#filterBairro').val('{{ selected_bairro }}');
         $('#filterForma').val('{{ selected_forma }}');
-        $('#filterAreaUpm').val('{{ selected_area_upm }}');
-
+        $('#filterFaccao').val('{{ selected_faccao }}');
     });
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
+    });
+
+    $('#filterAreaUpm').on('change', function () {
+        $('#formFilter').submit();
     });
 
     $('#filterBairro').on('change', function () {
@@ -148,14 +144,37 @@
         $('#formFilter').submit();
     });
 
-    $('#filterAreaUpm').on('change', function () {
+    $('#filterCidade').on('change', function () {
         $('#formFilter').submit();
     });
+
+    
+
+    let query_string = "{{ request.GET.urlencode }}"
+
+    if (query_string) {
+        path = "{% url 'ocorrencia:report_homicidios' %}" + "?" + query_string
+    }
+
+    function printDiv(divName) {
+        window.open(path)
+    }
 
     $('#collapseFiltro').collapse({
         toggle: true
     })
 
-</script>
+
+
+    let path = "{% url 'ocorrencia:report_homicidios' %}"
+
+    function printDiv(divName) {
+        window.open(path)
+    }
+</Script>
+
+
+
+
 
 {%endblock js%}

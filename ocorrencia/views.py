@@ -208,6 +208,22 @@ class HomicidioList(LRM, ListView, SearchMixin):
         # Retorna somente as vítimas.
         queryset = queryset.filter(vitima__vitima=True)
 
+        filter_forma = self.request.GET.get('filter_forma')
+        filter_area_upm = self.request.GET.get('filter_area_upm')
+        filter_motivacao = self.request.GET.get('filter_motivacao')
+        filter_bairro = self.request.GET.get('filter_bairro')
+        if filter_area_upm:
+            queryset = queryset.filter(area_upm__pk=filter_area_upm)
+
+        if filter_motivacao:
+            queryset = queryset.filter(motivacao__titulo=filter_motivacao)
+        
+        if filter_forma:
+            queryset = queryset.filter(forma=filter_forma)
+
+        if filter_bairro:
+            queryset = queryset.filter(district=filter_bairro)
+
         search = self.request.GET.get('search')
         if search:
             queryset = queryset.filter(
@@ -225,11 +241,6 @@ class HomicidioList(LRM, ListView, SearchMixin):
             'forma', flat=True)
         context['formas'] = sorted(
             set([forma for forma in formas if forma]))
-
-        # area_upms = AreaUpm.objects.values_list(
-        #     'area_upm', flat=True)
-        # context['area_upms'] = sorted(
-        #     set([area_upm for area_upm in area_upms if area_upm]))
 
         motivacoes = Homicidio.objects.values_list(
             'motivacao', flat=True)
