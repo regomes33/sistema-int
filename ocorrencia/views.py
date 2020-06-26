@@ -217,7 +217,7 @@ class HomicidioList(LRM, ListView, SearchMixin):
 
         if filter_motivacao:
             queryset = queryset.filter(motivacao__titulo=filter_motivacao)
-        
+
         if filter_forma:
             queryset = queryset.filter(forma=filter_forma)
 

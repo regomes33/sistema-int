@@ -11,6 +11,7 @@ class SearchMixin(object):
         filter_area_upm = self.request.GET.get('filter_area_upm')
         filter_motivacao = self.request.GET.get('filter_motivacao')
         filter_bairro = self.request.GET.get('filter_bairro')
+
         if search:
             queryset = queryset.filter(
                 Q(forma__icontains=search) |

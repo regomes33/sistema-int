@@ -148,13 +148,14 @@
         $('#formFilter').submit();
     });
 
-    
+    let path = "{% url 'ocorrencia:report_homicidios' %}"
 
     let query_string = "{{ request.GET.urlencode }}"
 
     if (query_string) {
         path = "{% url 'ocorrencia:report_homicidios' %}" + "?" + query_string
     }
+
 
     function printDiv(divName) {
         window.open(path)
@@ -164,13 +165,6 @@
         toggle: true
     })
 
-
-
-    let path = "{% url 'ocorrencia:report_homicidios' %}"
-
-    function printDiv(divName) {
-        window.open(path)
-    }
 </Script>
 
 
