@@ -31,17 +31,7 @@
         <form id="formFilter" method="GET">
             <div class="row">
 
-                <div class="col-sm">
-                    <h6>Filtrar por Bairro</h6>
 
-                    <select id="filterBairro" name="filter_bairro" class="form-control">
-                        <option value="">Todos</option>
-                        {% for bairro in bairros %}
-                        <option value="{{ bairro }}">{{ bairro }}</option>
-                        {% endfor %}
-                    </select>
-
-                </div>
 
                 <div class="col-sm">
                     <h6>Filtrar por Forma</h6>
@@ -56,16 +46,42 @@
 
 
                 <!-- Filtrar por Aréa -->
-                <div class="row">
-                    <div class="col-sm">
-                        <h6>Filtrar por Area</h6>
-                        <select id="filterAreaUpm" name="filter_area_upm" class="form-control">
-                            <option value="">Todos</option>
-                            {% for area_upm in area_upms %}
-                            <option value="{{ area_upm.0 }}">{{ area_upm.1 }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+
+                <div class="col-sm">
+                    <h6>Filtrar por Área</h6>
+                    <select id="filterAreaUpm" name="filter_area_upm" class="form-control">
+                        <option value="">Todos</option>
+                        {% for area_upm in area_upms %}
+                        <option value="{{ area_upm.0 }}">{{ area_upm.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <!-- Filtrar por Motivação -->
+                
+                <div class="col-sm">
+                    <h6>Filtrar por Motivação</h6>
+
+                    <select id="filterMotivacao" name="filter_motivacao" class="form-control">
+                        <option value="">Todos</option>
+                        {% for motivacao in motivacoes %}
+                        <option value="{{ motivacao.0 }}">{{ motivacao.1 }}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+
+
+                <div class="col-sm">
+                    <h6>Filtrar por Bairro</h6>
+
+                    <select id="filterBairro" name="filter_bairro" class="form-control">
+                        <option value="">Todos</option>
+                        {% for bairro in bairros %}
+                        <option value="{{ bairro }}">{{ bairro }}</option>
+                        {% endfor %}
+                    </select>
+
                 </div>
             </div>
 
@@ -122,29 +138,30 @@
 <script>
 
     $(document).ready(function () {
-        $('#filterAreaUpm').val('{{ selected_area_upm }}');
-        $('#filterBairro').val('{{ selected_bairro }}');
         $('#filterForma').val('{{ selected_forma }}');
-        $('#filterFaccao').val('{{ selected_faccao }}');
+        $('#filterAreaUpm').val('{{ selected_area_upm }}');
+        $('#filterMotivacao').val('{{ selected_motivacao }}');
+        $('#filterBairro').val('{{ selected_bairro }}');
     });
 
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     });
 
-    $('#filterAreaUpm').on('change', function () {
-        $('#formFilter').submit();
-    });
-
-    $('#filterBairro').on('change', function () {
-        $('#formFilter').submit();
-    });
-
     $('#filterForma').on('change', function () {
         $('#formFilter').submit();
     });
 
-    $('#filterCidade').on('change', function () {
+    $('#filterAreaUpm').on('change', function () {
+        $('#formFilter').submit();
+    });
+
+
+    $('#filterMotivacao').on('change', function () {
+        $('#formFilter').submit();
+    });
+
+    $('#filterBairro').on('change', function () {
         $('#formFilter').submit();
     });
 

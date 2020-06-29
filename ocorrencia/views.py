@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.views.generic import ListView, UpdateView
 from pessoa.forms import PessoaMinimalForm
 from .forms import OcorrenciaForm, InfracaoForm, NaturezaForm, HomicidioForm
-from .models import Ocorrencia, Infracao, Natureza, Homicidio, AreaUpm
+from .models import Ocorrencia, Infracao, Natureza, Homicidio, AreaUpm, Motivacao
 from .mixins import SearchMixin
 
 
@@ -212,14 +212,15 @@ class HomicidioList(LRM, ListView, SearchMixin):
         filter_area_upm = self.request.GET.get('filter_area_upm')
         filter_motivacao = self.request.GET.get('filter_motivacao')
         filter_bairro = self.request.GET.get('filter_bairro')
+
+        if filter_forma:
+            queryset = queryset.filter(forma=filter_forma)
+
         if filter_area_upm:
             queryset = queryset.filter(area_upm__pk=filter_area_upm)
 
         if filter_motivacao:
-            queryset = queryset.filter(motivacao__titulo=filter_motivacao)
-
-        if filter_forma:
-            queryset = queryset.filter(forma=filter_forma)
+            queryset = queryset.filter(motivacao=filter_motivacao)
 
         if filter_bairro:
             queryset = queryset.filter(district=filter_bairro)
@@ -242,8 +243,7 @@ class HomicidioList(LRM, ListView, SearchMixin):
         context['formas'] = sorted(
             set([forma for forma in formas if forma]))
 
-        motivacoes = Homicidio.objects.values_list(
-            'motivacao', flat=True)
+        motivacoes = Motivacao.objects.values_list('pk', 'titulo')
         context['motivacoes'] = sorted(
             set([motivacao for motivacao in motivacoes if motivacao]))
 
