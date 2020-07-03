@@ -30,6 +30,9 @@ def report_homicidios(request):
     if filter_data_final:
         homicidios=homicidios.filter(Q(data_do_homicidio=filter_data_final))
     
+    if filter_genero:
+        homicidios=homicidios.filter(Q(genero=filter_genero))
+    
     if filter_bairro:
         homicidios = homicidios.filter(Q(district=filter_bairro))
 
