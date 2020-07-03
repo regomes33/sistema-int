@@ -106,7 +106,7 @@ class GeneroAdmin(admin.ModelAdmin):
 class HomicidioAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'slug', 'data_do_homicidio',
                     'forma', 'uf', 'area_upm', 'vitima', 'motivacao')
-    list_filter = ('forma', 'district', 'area_upm', 'motivacao')
+    list_filter = ('forma', 'district', 'area_upm', 'motivacao','data_do_homicidio')
     date_hierarchy = 'created'
 
     # if not settings.DEBUG:

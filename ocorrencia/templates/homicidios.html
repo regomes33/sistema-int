@@ -25,7 +25,7 @@
         </div>
     </div>
     <!-- Filtros de Homicidios  -->
-    <!-- <div class="collapse" id="collapseFiltro"> -->
+    
     <div class="card card-body">
 
         <form id="formFilter" method="GET">
@@ -56,9 +56,9 @@
                         {% endfor %}
                     </select>
                 </div>
-                
+
                 <!-- Filtrar por Motivação -->
-                
+
                 <div class="col-sm">
                     <h6>Filtrar por Motivação</h6>
 
@@ -66,6 +66,20 @@
                         <option value="">Todos</option>
                         {% for motivacao in motivacoes %}
                         <option value="{{ motivacao.0 }}">{{ motivacao.1 }}</option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+
+
+
+                <div class="col-sm">
+                    <h6>Filtrar por Genero</h6>
+
+                    <select id="filterGenero" name="filter_genero" class="form-control">
+                        <option value="">Todos</option>
+                        {% for genero in generos %}
+                        <option value="{{ genero.0 }}">{{ genero.1 }}</option>
                         {% endfor %}
                     </select>
 
@@ -84,10 +98,54 @@
 
                 </div>
             </div>
+            <br>
+            <div class="row" style="width: 50%;">
+                <div class="col-sm">
+                    <h6>Filtrar por Data Inicial</h6>
+                    <input id="filterDataStart" name="filter_data_inicial_do_homicidio" class="form-control"
+                        type="date">
+                </div>
+                <div class="col-sm">
+                    <h6>Filtrar por Data Final</h6>
+                    <input id="filterDataEnd" name="filter_data_final_do_homicidio" class="form-control" type="date">
+                </div>
+            </div>
 
+
+
+            <!-- <div class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+                                aria-expanded="true" aria-controls="collapseOne">
+                                <h6>Filtrar por Data </h6>
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                        data-parent="#accordionExample">
+                        <div class="card card-body" style="width:;">
+                            <div class="float-left">
+                                <h6>Filtrar por Data Inicial</h6>
+                                <input id="filterDataStart" name="filter_data_inicial_do_homicidio" class="form-control"
+                                    type="date">
+                            </div>
+
+                            <div class="float-left">
+                                <h6>Filtrar por Data Final</h6>
+                                <input id="filterDataEnd" name="filter_data_final_do_homicidio" class="form-control"
+                                    type="date">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                       
+            </div> -->
         </form>
     </div>
-    <!-- </div> -->
+    
 
 
     <h4>Homicídios</h4>
@@ -141,6 +199,9 @@
         $('#filterForma').val('{{ selected_forma }}');
         $('#filterAreaUpm').val('{{ selected_area_upm }}');
         $('#filterMotivacao').val('{{ selected_motivacao }}');
+        $('#filterDataStart').val('{{ data_do_inicial }}');
+        $('#filterDataEnd').val('{{ data_do_final}}');
+        $('#filterGenero').val('{{ selected_genero }}');
         $('#filterBairro').val('{{ selected_bairro }}');
     });
 
@@ -158,6 +219,14 @@
 
 
     $('#filterMotivacao').on('change', function () {
+        $('#formFilter').submit();
+    });
+
+    $('#filterDataEnd').on('change', function () {
+        $('#formFilter').submit();
+    });
+
+    $('#filterGenero').on('change', function () {
         $('#formFilter').submit();
     });
 
