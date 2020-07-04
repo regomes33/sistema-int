@@ -37,7 +37,7 @@
             <img src="{{ object.get_first_photo.foto.url }}" width="100px">
           {% endif %}
         </td>
-        <td>{{object.infracao_set.all.0.status}}</td>
+        <td>{{object.infracao_set.all.0.status|default:"---"}}</td>
         <td>{{ object.apelido|default:"---" }}</td>
         <td>{{ object.faccao|default:"---" }}</td>
         <td>
