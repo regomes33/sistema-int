@@ -23,6 +23,7 @@
             <a class="btn btn-primary" href="{% url 'ocorrencia:homicidio_create' %}">Adicionar</a>
             <button class="btn btn-warning" onclick="printDiv('printme')">PDF</button>
         </div>
+        <span class="float-right lead"><b>Total:</b> {{ object_list.count }} de {{ page_obj.paginator.count }}</span>
     </div>
     <!-- Filtros de Homicidios  -->
     
