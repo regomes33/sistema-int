@@ -11,8 +11,8 @@ def report_homicidios(request):
     filter_area_upm = request.GET.get('filter_area_upm')
     filter_motivacao = request.GET.get('filter_motivacao')
     filter_data_inicial = request.GET.get('filter_data_inicial_do_homicidio')
-    filter_data_final= request.GET.get('filter_data_final_do_homicidio')
-    filter_genero=request.GET.get('filter_genero')
+    filter_data_final = request.GET.get('filter_data_final_do_homicidio')
+    filter_genero = request.GET.get('filter_genero')
     filter_bairro = request.GET.get('filter_bairro')
 
     if filter_forma:
@@ -25,14 +25,15 @@ def report_homicidios(request):
         homicidios = homicidios.filter(Q(motivacao=filter_motivacao))
 
     if filter_data_inicial:
-        homicidios=homicidios.filter(Q(data_do_homicidio=filter_data_inicial))
-    
+        homicidios = homicidios.filter(
+            Q(data_do_homicidio=filter_data_inicial))
+
     if filter_data_final:
-        homicidios=homicidios.filter(Q(data_do_homicidio=filter_data_final))
-    
+        homicidios = homicidios.filter(Q(data_do_homicidio=filter_data_final))
+
     if filter_genero:
-        homicidios=homicidios.filter(Q(genero=filter_genero))
-    
+        homicidios = homicidios.filter(Q(genero=filter_genero))
+
     if filter_bairro:
         homicidios = homicidios.filter(Q(district=filter_bairro))
 

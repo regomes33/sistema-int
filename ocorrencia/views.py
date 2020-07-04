@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.views.generic import ListView, UpdateView
 from pessoa.forms import PessoaMinimalForm
 from .forms import OcorrenciaForm, InfracaoForm, NaturezaForm, HomicidioForm
-from .models import Ocorrencia, Infracao, Natureza, Homicidio, AreaUpm, Motivacao,Genero
+from .models import Ocorrencia, Infracao, Natureza, Homicidio, AreaUpm, Motivacao, Genero
 from .mixins import SearchMixin
 
 
@@ -211,11 +211,12 @@ class HomicidioList(LRM, ListView, SearchMixin):
         filter_forma = self.request.GET.get('filter_forma')
         filter_area_upm = self.request.GET.get('filter_area_upm')
         filter_motivacao = self.request.GET.get('filter_motivacao')
-        filter_data_inicial = self.request.GET.get('filter_data_inicial_do_homicidio')
-        filter_data_final= self.request.GET.get('filter_data_final_do_homicidio')
-        
+        filter_data_inicial = self.request.GET.get(
+            'filter_data_inicial_do_homicidio')
+        filter_data_final = self.request.GET.get(
+            'filter_data_final_do_homicidio')
 
-        filter_genero=self.request.GET.get('filter_genero')
+        filter_genero = self.request.GET.get('filter_genero')
         filter_bairro = self.request.GET.get('filter_bairro')
 
         if filter_forma:
@@ -229,11 +230,12 @@ class HomicidioList(LRM, ListView, SearchMixin):
 
         if filter_data_inicial and filter_data_final:
             queryset = queryset.filter(
-                data_do_homicidio__range=(filter_data_inicial, filter_data_final)
+                data_do_homicidio__range=(
+                    filter_data_inicial, filter_data_final)
             )
         if filter_genero:
-            queryset=queryset.filter(genero=filter_genero)
-        
+            queryset = queryset.filter(genero=filter_genero)
+
         if filter_bairro:
             queryset = queryset.filter(district=filter_bairro)
 
@@ -259,11 +261,10 @@ class HomicidioList(LRM, ListView, SearchMixin):
         context['motivacoes'] = sorted(
             set([motivacao for motivacao in motivacoes if motivacao]))
 
-        
-        
-        generos=Genero.objects.values_list('pk','genero')
-        context['generos']=sorted(set([genero for genero in generos if genero]))
-        
+        generos = Genero.objects.values_list('pk', 'genero')
+        context['generos'] = sorted(
+            set([genero for genero in generos if genero]))
+
         bairros = Homicidio.objects.values_list(
             'district', flat=True)
         context['bairros'] = sorted(
@@ -274,9 +275,11 @@ class HomicidioList(LRM, ListView, SearchMixin):
         filter_forma = self.request.GET.get('filter_forma')
         filter_area_upm = self.request.GET.get('filter_area_upm')
         filter_motivacao = self.request.GET.get('filter_motivacao')
-        filter_data_inicial = self.request.GET.get('filter_data_inicial_do_homicidio')
-        filter_data_final= self.request.GET.get('filter_data_final_do_homicidio')
-        filter_genero=self.request.GET.get('filter_genero')
+        filter_data_inicial = self.request.GET.get(
+            'filter_data_inicial_do_homicidio')
+        filter_data_final = self.request.GET.get(
+            'filter_data_final_do_homicidio')
+        filter_genero = self.request.GET.get('filter_genero')
         filter_bairro = self.request.GET.get('filter_bairro')
 
         if filter_forma:
@@ -295,7 +298,7 @@ class HomicidioList(LRM, ListView, SearchMixin):
             context['data_do_final'] = str(filter_data_final)
 
         if filter_genero:
-            context['selected_genero']=str(filter_genero)
+            context['selected_genero'] = str(filter_genero)
 
         if filter_bairro:
             context['selected_bairro'] = str(filter_bairro)

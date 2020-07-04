@@ -3,166 +3,166 @@
 {% block title %}| Pessoas{%endblock%}
 
 {% block breadcrumbs %}
-  {% include "breadcrumb/_include_breadcrumb_base.html" %}
+{% include "breadcrumb/_include_breadcrumb_base.html" %}
 {% endblock %}
 
 {% block style %}
-  <style>
-    .badge-article {
-      border-radius: 0;
-      font-size: .85rem;
-    }
-    .container-person {
-      min-width: 96%;
-    }
-  </style>
+<style>
+  .badge-article {
+    border-radius: 0;
+    font-size: .85rem;
+  }
+
+  .container-person {
+    min-width: 96%;
+  }
+</style>
 {% endblock style %}
 
 {% block content %}
 
 
-  
-  
-  
-  
-  <div class="row cols">
-    <div class="col-md-6">
-      <form method="GET">
-        <label class="sr-only" for="inlineFormInputGroup">Username</label>
-        <div class="input-group mb-2">
-          <div class="input-group-prepend">
-            <div class="input-group-text"><i class="fa fa-search"></i></div>
-          </div>
-          <input type="text" class="form-control" name="search" placeholder="Localizar...">
-          <input type="submit" class="btn btn-success ml-2" value="OK"></button>
-          <a href="." class="btn btn-link">Limpar</a>
+
+
+
+
+<div class="row cols">
+  <div class="col-md-6">
+    <form method="GET">
+      <label class="sr-only" for="inlineFormInputGroup">Username</label>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fa fa-search"></i></div>
+        </div>
+        <input type="text" class="form-control" name="search" placeholder="Localizar...">
+        <input type="submit" class="btn btn-success ml-2" value="OK"></button>
+        <a href="." class="btn btn-link">Limpar</a>
+      </div>
+
+    </form>
+  </div>
+  <div class="col-md-3">
+    <a class="btn btn-primary" href="{% url 'pessoa:pessoa_create' %}">Adicionar</a>
+    <button class="btn btn-warning" onclick="printDiv('printme')">PDF</button>
+  </div>
+</div>
+<br>
+<p>
+  <a class="btn btn-info" data-toggle="collapse" href="#collapseFiltro" role="button" aria-expanded="true"
+    aria-controls="collapseFiltro">
+    Filtros
+  </a>
+</p>
+
+<div class="collapse" id="collapseFiltro">
+  <div class="card card-body">
+    <form id="formFilter" method="GET">
+      <div class="row">
+        <div class="col-sm">
+          <h6>Filtrar por Natureza</h6>
+
+          <select id="filterNatureza" name="filter_natureza" class="form-control">
+            <option value="">Todos</option>
+            {% for natureza in naturezas %}
+            {% if selected_natureza == natureza.0 %}
+            <option value="{{ natureza.0 }}" selected>{{ natureza.1 }}</option>
+            {% else %}
+            <option value="{{ natureza.0 }}">{{ natureza.1 }}</option>
+            {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-sm">
+          <h6>Filtrar por Bairro</h6>
+
+          <select id="filterBairro" name="filter_bairro" class="form-control">
+            <option value="">Todos</option>
+            {% for bairro in bairros %}
+            <option value="{{ bairro }}">{{ bairro }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-sm">
+          <h6>Filtrar por Cidade</h6>
+
+          <select id="filterCidade" name="filter_cidade" class="form-control">
+            <option value="">Todos</option>
+            {% for cidade in cidades %}
+            <option value="{{ cidade }}">{{ cidade }}</option>
+            {% endfor %}
+          </select>
         </div>
 
-      </form>
-    </div>
-    <div class="col-md-3">
-      <a class="btn btn-primary" href="{% url 'pessoa:pessoa_create' %}">Adicionar</a>
-      <button class="btn btn-warning" onclick="printDiv('printme')">PDF</button>
-    </div>
-  </div>
-  <br>
-  <p>
-    <a class="btn btn-info" data-toggle="collapse" href="#collapseFiltro" role="button" aria-expanded="true" aria-controls="collapseFiltro">
-      Filtros
-    </a>
-  </p>  
+        <div class="col-sm">
+          <h6>Filtrar por Facção</h6>
 
-  <div class="collapse" id="collapseFiltro">
-    <div class="card card-body">
-      <form id="formFilter" method="GET">
-        <div class="row">
-          <div class="col-sm">
-            <h6>Filtrar por Natureza</h6>
-
-            <select id="filterNatureza" name="filter_natureza" class="form-control">
-              <option value="">Todos</option>
-              {% for natureza in naturezas %}
-                {% if selected_natureza == natureza.0 %}
-                  <option value="{{ natureza.0 }}" selected>{{ natureza.1 }}</option>
-                {% else %}
-                  <option value="{{ natureza.0 }}">{{ natureza.1 }}</option>
-                {% endif %}
-              {% endfor %}
-            </select>
-          </div>
-          <div class="col-sm">
-            <h6>Filtrar por Bairro</h6>
-
-            <select id="filterBairro" name="filter_bairro" class="form-control">
-              <option value="">Todos</option>
-              {% for bairro in bairros %}
-                <option value="{{ bairro }}">{{ bairro }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="col-sm">
-            <h6>Filtrar por Cidade</h6>
-
-            <select id="filterCidade" name="filter_cidade" class="form-control">
-              <option value="">Todos</option>
-              {% for cidade in cidades %}
-                <option value="{{ cidade }}">{{ cidade }}</option>
-              {% endfor %}
-            </select>
-          </div>
-      
-          <div class="col-sm">
-            <h6>Filtrar por Facção</h6>
-
-            <select id="filterFaccao" name="filter_faccao" class="form-control">
-              <option value="">Todos</option>
-              {% for faccao in faccoes %}
-                <option value="{{ faccao.0 }}">{{ faccao.1 }}</option>
-              {% endfor %}
-            </select>
-          </div>
-      
-      </form>
-    </div>
-      
-      
-      
-      
-      
-    </div>
-  </div>
-
-
-  <div>
-    <div class="row">
-      <div class="col-md-10 mt-3">
-        <h4 class="float-left">Pessoas</h4>
-        <span class="float-right lead"><b>Total:</b> {{ object_list.count }} de {{ page_obj.paginator.count }}</span>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Nome completo</th>
-              <th>Foto</th>
-              <th>Apelido</th>
-              <th>Facção</th>
-              <th>Bairro</th>
-              <th>Cidade</th>
-              <th>Infrações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for object in object_list %}
-            <tr>
-              <td>
-                <a href="{% url 'pessoa:pessoa' object.slug %}">{{ object }}</a>
-              </td>
-              <td>
-                {% if object.get_first_photo %}
-                <img src="{{ object.get_first_photo.foto.url }}" width="100px">
-                {% endif %}
-              </td>
-              <td>{{ object.apelido|default:"---" }}</td>
-              <td>{{ object.faccao|default:"---" }}</td>
-              <td>{{ object.district|default:"---" }}</td>
-              <td>{{ object.city|default:"---" }}</td>
-              <td>
-                {{ object.infracao_set.all.0.natureza.natureza.artigo }}
-                {% for infracao in object.infracao_set.all %}
-                <span class="badge badge-info badge-article" data-toggle="tooltip" data-placement="top" title="{{ infracao.natureza }}">{{ infracao.natureza.artigo }}</span>
-                {% endfor %}
-              </td>
-            </tr>
+          <select id="filterFaccao" name="filter_faccao" class="form-control">
+            <option value="">Todos</option>
+            {% for faccao in faccoes %}
+            <option value="{{ faccao.0 }}">{{ faccao.1 }}</option>
             {% endfor %}
-          </tbody>
-        </table>
-      </div>
-      
-     
-      
-    </div>
-  </div>
+          </select>
+        </div>
 
-  {% include "includes/pagination.html" %}
+    </form>
+  </div>
+  
+</div>
+
+
+<div class="" style="margin-left: 50px;">
+  <div class="row">
+    <div class="col-md-10 mt-3">
+      <h4 class="float-left">Pessoas</h4>
+      <span class="float-right lead"><b>Total:</b> {{ object_list.count }} de {{ page_obj.paginator.count }}</span>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nome completo</th>
+            <th>Foto</th>
+            <th> Status </th>
+            <th>Apelido</th>
+            <th>Facção</th>
+            <th>Bairro</th>
+            <th>Cidade</th>
+            <th>Infrações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for object in object_list %}
+          <tr>
+            <td>
+              <a href="{% url 'pessoa:pessoa' object.slug %}">{{ object }}</a>
+            </td>
+            <td>
+              {% if object.get_first_photo %}
+              <img src="{{ object.get_first_photo.foto.url }}" width="100px">
+              {% endif %}
+            </td>
+            <td>{{object.infracao_set.all.0.status}}</td>
+            <td>{{ object.apelido|default:"---" }}</td>
+            <td>{{ object.faccao|default:"---" }}</td>
+            <td>{{ object.district|default:"---" }}</td>
+            <td>{{ object.city|default:"---" }}</td>
+            <td>
+              {{ object.infracao_set.all.0.natureza.natureza.artigo }}
+              {% for infracao in object.infracao_set.all %}
+              <span class="badge badge-info badge-article" data-toggle="tooltip" data-placement="top"
+                title="{{ infracao.natureza }}">{{ infracao.natureza.artigo }}</span>
+              {% endfor %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+
+
+  </div>
+</div>
+
+{% include "includes/pagination.html" %}
 
 </div>
 
@@ -172,30 +172,30 @@
 
 <script>
 
-  $(document).ready(function() {
+  $(document).ready(function () {
     $('#filterNatureza').val('{{ selected_natureza }}');
     $('#filterBairro').val('{{ selected_bairro }}');
     $('#filterCidade').val('{{ selected_cidade }}');
     $('#filterFaccao').val('{{ selected_faccao }}');
   });
 
-  $(function() {
+  $(function () {
     $('[data-toggle="tooltip"]').tooltip()
   });
 
-  $('#filterNatureza').on('change', function() {
+  $('#filterNatureza').on('change', function () {
     $('#formFilter').submit();
   });
 
-  $('#filterBairro').on('change', function() {
+  $('#filterBairro').on('change', function () {
     $('#formFilter').submit();
   });
 
-  $('#filterFaccao').on('change', function() {
+  $('#filterFaccao').on('change', function () {
     $('#formFilter').submit();
   });
 
-  $('#filterCidade').on('change', function() {
+  $('#filterCidade').on('change', function () {
     $('#formFilter').submit();
   });
 
@@ -212,8 +212,8 @@
   }
 
   $('#collapseFiltro').collapse({
-  toggle: true
-})
+    toggle: true
+  })
 
 </script>
 
