@@ -63,8 +63,8 @@ class InfracaoAdmin(admin.ModelAdmin):
 
 @admin.register(AreaUpm)
 class AreaUpmAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'slug')
-    # list_filter = ('qualificacao', 'arma', 'status',)
+    list_display = ('__str__', 'slug',)
+    list_filter = ('area_upm',)
     # date_hierarchy = 'created'
 
     # if not settings.DEBUG:
@@ -110,8 +110,9 @@ class HomicidioAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'slug', 'data_do_homicidio',
                     'forma', 'uf', 'area_upm', 'vitima', 'motivacao')
     search_fields = ('vitima__nome',)
-    list_filter = ('forma', 'uf', 'area_upm', 'motivacao')
     readonly_fields = ('slug',)
+    list_filter = ('forma', 'district', 'area_upm',
+                   'motivacao', 'data_do_homicidio')
     date_hierarchy = 'created'
 
     # if not settings.DEBUG:

@@ -1,16 +1,21 @@
 {% extends "base.html" %}
+
 {% block title %}| Homicídios{%endblock%}
+
 {% block breadcrumbs %}
-{% include "breadcrumb/_include_breadcrumb_base.html" %}
+    {% include "breadcrumb/_include_breadcrumb_base.html" %}
 {% endblock %}
+
 {% block content %}
+
 {% for message in messages %}
-{% if 'success' in message.tags %}
-<p class="alert alert-success" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
-{% else %}
-<p class="alert alert-danger" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
-{% endif %}
+    {% if 'success' in message.tags %}
+        <p class="alert alert-success" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+    {% else %}
+        <p class="alert alert-danger" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+    {% endif %}
 {% endfor %}
+
 <div class="container">
   <div class="row cols">
     <div class="col-md-6">
@@ -31,59 +36,179 @@
       <button class="btn btn-warning" onclick="printDiv('printme')">PDF</button>
     </div>
   </div>
-  <h4>Homicídios</h4>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>RAI</th>
-        <th>Data do Homicídio</th>
-        <th>Forma</th>
-        <th>Área UPM</th>
-        <th>Vítima</th>
-        <th>Instrumento</th>
-        <th>Motivação</th>
-        <th>Autoria</th>
-        <th>Gênero</th>
-        <th>Bairro</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for object in object_list %}
-      <tr>
-        <td>{{ object.rai }}</td>
-        <td>{{ object.data_do_homicidio }}</td>
-        <td>{{ object.get_forma_display }}</td>
-        <td>{{ object.area_upm }}</td>
-        <td>{{ object.vitima }}</td>
-        <td>{{ object.instrumento }}</td>
-        <td>{{ object.motivacao }}</td>
-        <td>{{ object.autoria|default:"---" }}</td>
-        <td>{{ object.genero|default:"---" }}</td>
-        <td>{{ object.district|default:"---" }}</td>
-        <td>
-          <a class="btn btn-info" href="{% url 'ocorrencia:homicidio_update' object.slug %}">Editar</a>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <span class="float-right lead"><b>Total:</b> {{ object_list.count }} de {{ page_obj.paginator.count }}</span>
 </div>
+
+<!-- Filtros de Homicidios  -->
+<div class="card card-body">
+  <form id="formFilter" method="GET">
+    <div class="row">
+      <div class="col-sm">
+        <h6>Filtrar por Forma</h6>
+        <select id="filterForma" name="filter_forma" class="form-control">
+          <option value="">Todos</option>
+          {% for forma in formas %}
+          <option value="{{ forma }}">{{ forma }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <!-- Filtrar por Aréa -->
+      <div class="col-sm">
+        <h6>Filtrar por Área</h6>
+        <select id="filterAreaUpm" name="filter_area_upm" class="form-control">
+          <option value="">Todos</option>
+          {% for area_upm in area_upms %}
+          <option value="{{ area_upm.0 }}">{{ area_upm.1 }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <!-- Filtrar por Motivação -->
+      <div class="col-sm">
+        <h6>Filtrar por Motivação</h6>
+        <select id="filterMotivacao" name="filter_motivacao" class="form-control">
+          <option value="">Todos</option>
+          {% for motivacao in motivacoes %}
+          <option value="{{ motivacao.0 }}">{{ motivacao.1 }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-sm">
+        <h6>Filtrar por Genero</h6>
+        <select id="filterGenero" name="filter_genero" class="form-control">
+          <option value="">Todos</option>
+          {% for genero in generos %}
+          <option value="{{ genero.0 }}">{{ genero.1 }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-sm">
+        <h6>Filtrar por Bairro</h6>
+        <select id="filterBairro" name="filter_bairro" class="form-control">
+          <option value="">Todos</option>
+          {% for bairro in bairros %}
+          <option value="{{ bairro }}">{{ bairro }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <br>
+    <div class="row" style="width: 50%;">
+      <div class="col-sm">
+        <h6>Filtrar por Data Inicial</h6>
+        <input id="filterDataStart" name="filter_data_inicial_do_homicidio" class="form-control" type="date">
+      </div>
+      <div class="col-sm">
+        <h6>Filtrar por Data Final</h6>
+        <input id="filterDataEnd" name="filter_data_final_do_homicidio" class="form-control" type="date">
+      </div>
+    </div>
+  </form>
+</div>
+
+<h4>Homicídios</h4>
+<table class="table">
+  <thead>
+    <tr>
+      <th>RAI</th>
+      <th>Data do Homicídio</th>
+      <th>Forma</th>
+      <th>Área UPM</th>
+      <th>Vítima</th>
+      <th>Instrumento</th>
+      <th>Motivação</th>
+      <th>Autoria</th>
+      <th>Gênero</th>
+      <th>Bairro</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for object in object_list %}
+    <tr>
+      <td>{{ object.rai }}</td>
+      <td>{{ object.data_do_homicidio }}</td>
+      <td>{{ object.get_forma_display }}</td>
+      <td>{{ object.area_upm }}</td>
+      <td>{{ object.vitima }}</td>
+      <td>{{ object.instrumento }}</td>
+      <td>{{ object.motivacao }}</td>
+      <td>{{ object.autoria|default:"---" }}</td>
+      <td>{{ object.genero|default:"---" }}</td>
+      <td>{{ object.district|default:"---" }}</td>
+      <td>
+        <a class="btn btn-info" href="{% url 'ocorrencia:homicidio_update' object.slug %}">Editar</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
 {% include "includes/pagination.html" %}
+
 {% endblock content %}
+
 {%block js%}
 <script>
-  let path = "{% url 'ocorrencia:report_homicidios' %}"
 
-  function printDiv(divName) {
-    window.open(path)
-  }
+//close alert after 3 seconds
+window.setTimeout(function() {
+  $(".alert").fadeTo(500, 0).slideUp(500, function() {
+    $(this).remove();
+  });
+}, 3000);
 
-  //close alert after 3 seconds
-  window.setTimeout(function() {
-    $(".alert").fadeTo(500, 0).slideUp(500, function() {
-      $(this).remove();
-    });
-  }, 3000);
+$(document).ready(function() {
+  $('#filterForma').val('{{ selected_forma }}');
+  $('#filterAreaUpm').val('{{ selected_area_upm }}');
+  $('#filterMotivacao').val('{{ selected_motivacao }}');
+  $('#filterDataStart').val('{{ data_do_inicial }}');
+  $('#filterDataEnd').val('{{ data_do_final}}');
+  $('#filterGenero').val('{{ selected_genero }}');
+  $('#filterBairro').val('{{ selected_bairro }}');
+});
+
+$(function() {
+  $('[data-toggle="tooltip"]').tooltip()
+});
+
+$('#filterForma').on('change', function() {
+  $('#formFilter').submit();
+});
+
+$('#filterAreaUpm').on('change', function() {
+  $('#formFilter').submit();
+});
+
+
+$('#filterMotivacao').on('change', function() {
+  $('#formFilter').submit();
+});
+
+$('#filterDataEnd').on('change', function() {
+  $('#formFilter').submit();
+});
+
+$('#filterGenero').on('change', function() {
+  $('#formFilter').submit();
+});
+
+$('#filterBairro').on('change', function() {
+  $('#formFilter').submit();
+});
+
+let path = "{% url 'ocorrencia:report_homicidios' %}"
+let query_string = "{{ request.GET.urlencode }}"
+
+if (query_string) {
+  path = "{% url 'ocorrencia:report_homicidios' %}" + "?" + query_string
+}
+
+function printDiv(divName) {
+  window.open(path)
+}
+
+$('#collapseFiltro').collapse({
+  toggle: true
+});
 </script>
 {%endblock js%}
