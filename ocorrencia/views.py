@@ -1,3 +1,4 @@
+from pprint import pprint
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
@@ -212,10 +213,8 @@ class HomicidioList(LRM, ListView, SearchMixin):
         filter_forma = self.request.GET.get('filter_forma')
         filter_area_upm = self.request.GET.get('filter_area_upm')
         filter_motivacao = self.request.GET.get('filter_motivacao')
-        filter_data_inicial = self.request.GET.get(
-            'filter_data_inicial_do_homicidio')
-        filter_data_final = self.request.GET.get(
-            'filter_data_final_do_homicidio')
+        filter_data_inicial = self.request.GET.get('filter_data_inicial')
+        filter_data_final = self.request.GET.get('filter_data_final')
 
         filter_genero = self.request.GET.get('filter_genero')
         filter_bairro = self.request.GET.get('filter_bairro')
@@ -273,14 +272,11 @@ class HomicidioList(LRM, ListView, SearchMixin):
             set([bairro for bairro in bairros if bairro]))
 
         # Devolve o valor selecionado pra manter o filtro aplicado no template.
-
         filter_forma = self.request.GET.get('filter_forma')
         filter_area_upm = self.request.GET.get('filter_area_upm')
         filter_motivacao = self.request.GET.get('filter_motivacao')
-        filter_data_inicial = self.request.GET.get(
-            'filter_data_inicial_do_homicidio')
-        filter_data_final = self.request.GET.get(
-            'filter_data_final_do_homicidio')
+        filter_data_inicial = self.request.GET.get('filter_data_inicial')
+        filter_data_final = self.request.GET.get('filter_data_final')
         filter_genero = self.request.GET.get('filter_genero')
         filter_bairro = self.request.GET.get('filter_bairro')
 
@@ -294,10 +290,10 @@ class HomicidioList(LRM, ListView, SearchMixin):
             context['selected_motivacao'] = str(filter_motivacao)
 
         if filter_data_inicial:
-            context['data_do_inicial'] = str(filter_data_inicial)
+            context['filter_data_inicial'] = str(filter_data_inicial)
 
         if filter_data_final:
-            context['data_do_final'] = str(filter_data_final)
+            context['filter_data_inicial'] = str(filter_data_final)
 
         if filter_genero:
             context['selected_genero'] = str(filter_genero)
