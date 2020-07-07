@@ -12,8 +12,8 @@ def report_homicidios(request):
     filter_motivacao = request.GET.get('filter_motivacao')
     filter_genero = request.GET.get('filter_genero')
     filter_bairro = request.GET.get('filter_bairro')
-    filter_data_inicial = request.GET.get('filter_data_inicial_do_homicidio')
-    filter_data_final = request.GET.get('filter_data_final_do_homicidio')
+    filter_data_inicial = request.GET.get('filter_data_inicial')
+    filter_data_final = request.GET.get('filter_data_final')
 
     if filter_forma:
         homicidios = homicidios.filter(Q(forma=filter_forma))
