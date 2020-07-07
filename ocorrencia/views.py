@@ -1,16 +1,15 @@
-import json
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 from django.db.models import Q
-from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, resolve_url
+from django.http import JsonResponse, HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import ListView, UpdateView
-from pessoa.models import Pessoa
 from pessoa.forms import PessoaMinimalForm
 from .forms import OcorrenciaForm, InfracaoForm, NaturezaForm, HomicidioForm
-from .models import Ocorrencia, Infracao, Natureza, Homicidio, AreaUpm, Motivacao, Genero
+from .models import Ocorrencia, Infracao, Natureza, Homicidio, AreaUpm
+from .models import Motivacao, Genero
 from .mixins import SearchMixin
 
 
@@ -235,6 +234,7 @@ class HomicidioList(LRM, ListView, SearchMixin):
                 data_do_homicidio__range=(
                     filter_data_inicial, filter_data_final)
             )
+
         if filter_genero:
             queryset = queryset.filter(genero=filter_genero)
 
@@ -272,7 +272,7 @@ class HomicidioList(LRM, ListView, SearchMixin):
         context['bairros'] = sorted(
             set([bairro for bairro in bairros if bairro]))
 
- # Devolve o valor selecionado pra manter o filtro aplicado no template.
+        # Devolve o valor selecionado pra manter o filtro aplicado no template.
 
         filter_forma = self.request.GET.get('filter_forma')
         filter_area_upm = self.request.GET.get('filter_area_upm')

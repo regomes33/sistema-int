@@ -31,9 +31,9 @@ homicidio_patterns = [
     path('add/', v.homicidio_create, name="homicidio_create"),
     path('<slug>/update/', v.HomicidioUpdate.as_view(), name="homicidio_update"),
 ]
+
 report_patterns = [
     path('', rep.report_homicidios, name='report_homicidios'),
-    
 ]
 
 urlpatterns = [
@@ -43,4 +43,3 @@ urlpatterns = [
     path('homicidio/', include(homicidio_patterns)),
     path('report/', include(report_patterns)),
 ]
-
