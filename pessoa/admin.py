@@ -64,8 +64,9 @@ class PessoaAdmin(admin.ModelAdmin):
     list_filter = ('vitima', 'faccao', 'infracao__natureza')
     date_hierarchy = 'created'
 
-    # if not settings.DEBUG:
     def has_delete_permission(self, request, obj=None):
+        if request.user.username == 'admin':
+            return True
         return False
 
 
