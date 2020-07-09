@@ -73,7 +73,7 @@ def csv_online_to_list(url: str) -> list:
     return csv_data
 
 
-# dict_users = {}
+dict_users = {}  # global
 
 dict_pessoas = read_data(csv_online_to_list(filename_pessoa_pessoa))
 dict_faccao = read_data(csv_online_to_list(filename_pessoa_faccao))
@@ -90,7 +90,7 @@ def my_import_data():
     import_user(filename_auth_user)
     create_cities()
     create_data(filename_pessoa_faccao, Faccao)
-    # create_pessoa(filename_pessoa_pessoa)
+    create_pessoa(filename_pessoa_pessoa)
     # import_foto(filename_pessoa_foto)
     # import_comparsa(filename_pessoa_comparsa)
 
@@ -125,6 +125,9 @@ def create_pessoa(filename):
     data = []
     for i, item in enumerate(items):
         del item['id']
+        del item['district']  # Remove district
+        del item['city']  # Remove city
+        del item['uf']  # Remove uf
         if item.get('address_number'):
             item['address_number'] = int(item.get('address_number'))
         else:
@@ -138,6 +141,9 @@ def create_pessoa(filename):
 
         if not item.get('cep'):
             item['cep'] = None
+
+        if not item.get('nascimento'):
+            item['nascimento'] = None
 
         created_by = get_users(item.get('created_by_id'))
         del item['created_by_id']
@@ -164,7 +170,6 @@ def import_user(filename_auth_user):
     '''
     Importa os usuários.
     '''
-    dict_users = {}
     items = csv_online_to_list(filename_auth_user)
     for item in items:
         dict_users[str(item['id'])] = item['username']
@@ -193,7 +198,7 @@ def get_users(created_by_id):
     Retorna um usuário.
     '''
     if created_by_id:
-        created_by_username = dict_users.get(int(created_by_id))
+        created_by_username = dict_users.get(created_by_id)
     else:
         created_by_username = 'admin'
 
