@@ -94,8 +94,8 @@ def my_import_data():
     import_foto(filename_pessoa_foto)
     import_comparsa(filename_pessoa_comparsa)
 
-    # # Ocorrencia
-    # import_ocorrencia(filename_ocorrencia_ocorrencia)
+    # Ocorrencia
+    import_ocorrencia(filename_ocorrencia_ocorrencia)
     # create_data(filename_ocorrencia_natureza, Natureza)
     # create_data(filename_ocorrencia_arma, Arma)
     # create_data(filename_ocorrencia_areaupm, AreaUpm)
@@ -302,6 +302,9 @@ def import_comparsa(filename):
         if not item.get('cnh'):
             item['cnh'] = None
 
+        if item['cnh'] == 'nan':
+            item['cnh'] = None
+
         obj = Comparsa(**item)
         data.append(obj)
 
@@ -349,8 +352,7 @@ def import_infracao(filename):
 
 
 def import_ocorrencia(filename):
-    df = pd.read_csv(filename).fillna({'created_by_id': '1'})
-    items = df.T.apply(dict).tolist()
+    items = csv_online_to_list(filename)
     data = []
     for item in items:
         del item['id']

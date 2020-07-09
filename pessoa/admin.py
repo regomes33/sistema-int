@@ -83,7 +83,7 @@ class PessoaContatoAdmin(admin.ModelAdmin):
 @admin.register(Comparsa)
 class ComparsaAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'rg', 'cpf', 'slug')
-    # search_fields = ('nome',)
+    search_fields = ('nome',)
 
     # if not settings.DEBUG:
     def has_delete_permission(self, request, obj=None):
