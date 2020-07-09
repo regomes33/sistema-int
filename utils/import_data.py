@@ -3,12 +3,10 @@ Importa os dados do Cloudinary.
 '''
 import csv
 import io
-import pandas as pd
 import timeit
 import urllib.request
-from random import randint
 from pprint import pprint
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
 from core.models import City
 from ocorrencia.models import AreaUpm
 from ocorrencia.models import Arma
@@ -25,6 +23,7 @@ from pessoa.models import Faccao
 from pessoa.models import Foto
 from pessoa.models import Pessoa
 from pessoa.models import PessoaVeiculo
+from pessoa.models import Tatuagem
 from veiculo.models import Cor
 from veiculo.models import Modelo
 from veiculo.models import Veiculo
@@ -102,6 +101,7 @@ def my_import_data():
     create_data(filename_pessoa_faccao, Faccao)
     create_pessoa(filename_pessoa_pessoa)
     import_foto(filename_pessoa_foto)
+    import_tatuagem(filename_pessoa_tatuagem)
     import_comparsa(filename_pessoa_comparsa)
 
     # Ocorrencia
@@ -348,7 +348,20 @@ def import_foto(filename):
 
 
 def import_tatuagem(filename):
-    pass
+    items = csv_online_to_list(filename)
+    data = []
+    for item in items:
+        del item['id']
+
+        pessoa = get_pessoa(item.get('pessoa_id'))
+        del item['pessoa_id']
+        if pessoa:
+            item['pessoa'] = pessoa
+
+        obj = Tatuagem(**item)
+        data.append(obj)
+
+    Tatuagem.objects.bulk_create(data)
 
 
 def import_pessoacontato(filename):
