@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'corsheaders',
     # my apps
     'api',
-    'core',
+    'core.apps.CoreConfig',
     'ocorrencia.apps.OcorrenciaConfig',
     'pessoa.apps.PessoaConfig',
     'veiculo.apps.VeiculoConfig',

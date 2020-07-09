@@ -21,8 +21,6 @@ class PessoaForm(forms.ModelForm):
             'address_number',
             'complement',
             'district',
-            'city',
-            'uf',
             'cep',
             'country',
             'observacao',

@@ -40,6 +40,41 @@ class CreatedBy(models.Model):
         abstract = True
 
 
+class City(models.Model):
+    name = models.CharField('cidade', max_length=100)
+    uf = models.CharField(
+        'UF',
+        max_length=2,
+        choices=STATE_CHOICES,
+        blank=True
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'cidade'
+        verbose_name_plural = 'cidades'
+
+
+class District(models.Model):
+    name = models.CharField('bairro', max_length=100)
+    city = models.ForeignKey(
+        'City',
+        verbose_name='cidade',
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'bairro'
+        verbose_name_plural = 'bairros'
+
+
 class Address(models.Model):
     address = models.CharField(
         'endereço',
@@ -54,17 +89,10 @@ class Address(models.Model):
         null=True,
         blank=True
     )
-    district = models.CharField(
-        'bairro',
-        max_length=100,
-        null=True,
-        blank=True
-    )
-    city = models.CharField('cidade', max_length=100, null=True, blank=True)
-    uf = models.CharField(
-        'UF',
-        max_length=2,
-        choices=STATE_CHOICES,
+    district = models.ForeignKey(
+        District,
+        verbose_name='bairro',
+        on_delete=models.SET_NULL,
         null=True,
         blank=True
     )

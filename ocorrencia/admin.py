@@ -108,7 +108,7 @@ class GeneroAdmin(admin.ModelAdmin):
 @admin.register(Homicidio)
 class HomicidioAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'slug', 'data_do_homicidio',
-                    'forma', 'uf', 'area_upm', 'vitima', 'motivacao')
+                    'forma', 'area_upm', 'vitima', 'motivacao')
     search_fields = ('vitima__nome',)
     readonly_fields = ('slug',)
     list_filter = ('forma', 'district', 'area_upm',
