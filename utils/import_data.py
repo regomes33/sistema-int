@@ -3,6 +3,8 @@ Importa os dados do Cloudinary.
 '''
 import csv
 import io
+import sys
+import time
 import timeit
 import urllib.request
 from pprint import pprint
@@ -53,6 +55,22 @@ filename_pessoa_tatuagem = f'{path}/v1594243968/csv/pessoa_tatuagem_200708_rwg6d
 filename_veiculo_cor = f'{path}/v1594243968/csv/veiculo_cor_200708_mi1rgw.csv'
 filename_veiculo_modelo = f'{path}/v1594243968/csv/veiculo_modelo_200708_z1fgmr.csv'
 filename_veiculo_veiculo = f'{path}/v1594243968/csv/veiculo_veiculo_200708_azri8x.csv'
+
+
+def progressbar(it, prefix="", size=60, file=sys.stdout):
+    count = len(it)
+
+    def show(j):
+        x = int(size * j / count)
+        file.write("%s[%s%s] %i/%i\r" %
+                   (prefix, "#" * x, "." * (size - x), j, count))
+        file.flush()
+    show(0)
+    for i, item in enumerate(it):
+        yield item
+        show(i + 1)
+    file.write("\n")
+    file.flush()
 
 
 def read_data(items):
@@ -131,14 +149,17 @@ def create_data(filename, model):
     items = csv_online_to_list(filename)
     # Remove os ids
     map(lambda d: d.pop('id'), items)
-    data = [model(**item) for item in items]
+    data = []
+    # data = [model(**item) for item in items]
+    for item in progressbar(items, model.__name__ + ': '):
+        data.append(model(**item))
     model.objects.bulk_create(data)
 
 
 def create_pessoa(filename):
     items = csv_online_to_list(filename)
     data = []
-    for i, item in enumerate(items):
+    for item in progressbar(items, 'Pessoas: '):
         del item['id']
         del item['district']  # Remove district
         del item['city']  # Remove city
@@ -186,7 +207,7 @@ def import_user(filename_auth_user):
     Importa os usuários.
     '''
     items = csv_online_to_list(filename_auth_user)
-    for item in items:
+    for item in progressbar(items, 'Users: '):
         dict_users[str(item['id'])] = item['username']
         del item['id']
         first_name = item['first_name'] if item['first_name'] != 'nan' else ''
@@ -333,7 +354,7 @@ def get_veiculo(veiculo_id):
 def import_foto(filename):
     items = csv_online_to_list(filename)
     data = []
-    for i, item in enumerate(items):
+    for item in progressbar(items, 'Fotos: '):
         del item['id']
         if isinstance(item.get('foto'), str):
             pessoa = get_pessoa(item.get('pessoa_id'))
@@ -350,7 +371,7 @@ def import_foto(filename):
 def import_tatuagem(filename):
     items = csv_online_to_list(filename)
     data = []
-    for item in items:
+    for item in progressbar(items, 'Tatuagem: '):
         del item['id']
 
         pessoa = get_pessoa(item.get('pessoa_id'))
@@ -371,7 +392,7 @@ def import_pessoacontato(filename):
 def import_comparsa(filename):
     items = csv_online_to_list(filename)
     data = []
-    for item in items:
+    for item in progressbar(items, 'Comparsas: '):
         del item['id']
 
         pessoa = get_pessoa(item.get('pessoa_id'))
@@ -403,7 +424,7 @@ def import_comparsa(filename):
 def import_pessoaveiculo(filename):
     items = csv_online_to_list(filename)
     data = []
-    for item in items:
+    for item in progressbar(items, 'Pessoa Veiculo: '):
         del item['id']
 
         pessoa = get_pessoa(item.get('pessoa_id'))
@@ -435,7 +456,7 @@ Ocorrencia
 def import_infracao(filename):
     items = csv_online_to_list(filename)
     data = []
-    for item in items:
+    for item in progressbar(items, 'Infraçao: '):
         del item['id']
         created_by = get_users(item.get('created_by_id'))
         del item['created_by_id']
@@ -466,7 +487,7 @@ def import_infracao(filename):
 def import_ocorrencia(filename):
     items = csv_online_to_list(filename)
     data = []
-    for item in items:
+    for item in progressbar(items, 'Ocorrencia: '):
         del item['id']
         created_by = get_users(item.get('created_by_id'))
         del item['created_by_id']
@@ -482,7 +503,7 @@ def import_ocorrencia(filename):
 def import_pessoa_ocorrencia(filename):
     items = csv_online_to_list(filename)
     data = []
-    for item in items:
+    for item in progressbar(items, 'PessoaOcorrencia: '):
         del item['id']
         created_by = get_users(item.get('created_by_id'))
         del item['created_by_id']
@@ -512,7 +533,7 @@ def import_ocorrenciaveiculo(filename):
 def import_veiculo(filename):
     items = csv_online_to_list(filename)
     data = []
-    for i, item in enumerate(items):
+    for item in progressbar(items, 'Veiculo: '):
         del item['id']
 
         modelo = get_modelo(item.get('modelo_id'))
@@ -534,7 +555,7 @@ def import_veiculo(filename):
 def import_ocorrencia_homicidio(filename):
     items = csv_online_to_list(filename)
     data = []
-    for i, item in enumerate(items):
+    for item in progressbar(items, 'Homicidio: '):
         del item['id']
         del item['district']  # Remove district
         del item['city']  # Remove city
@@ -609,7 +630,7 @@ def create_cities():
         'TRINDADE',
     )
     aux = []
-    for city in cities:
+    for city in progressbar(cities, 'Cidades: '):
         obj = City(name=city, uf='GO')
         aux.append(obj)
 
