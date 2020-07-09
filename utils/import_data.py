@@ -92,7 +92,7 @@ def my_import_data():
     create_data(filename_pessoa_faccao, Faccao)
     create_pessoa(filename_pessoa_pessoa)
     import_foto(filename_pessoa_foto)
-    # import_comparsa(filename_pessoa_comparsa)
+    import_comparsa(filename_pessoa_comparsa)
 
     # # Ocorrencia
     # import_ocorrencia(filename_ocorrencia_ocorrencia)
@@ -281,8 +281,7 @@ def import_pessoacontato(filename):
 
 
 def import_comparsa(filename):
-    df = pd.read_csv(filename)
-    items = df.T.apply(dict).tolist()
+    items = csv_online_to_list(filename)
     data = []
     for item in items:
         del item['id']
@@ -290,6 +289,12 @@ def import_comparsa(filename):
         del item['pessoa_id']
         if pessoa:
             item['pessoa'] = pessoa
+
+        if item['rg'] == 'nan':
+            item['rg'] = None
+
+        if not item['cpf']:
+            item['cpf'] = None
 
         if not isinstance(item.get('cpf'), str):
             item['cpf'] = None
