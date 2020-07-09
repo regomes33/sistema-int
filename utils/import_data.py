@@ -89,7 +89,7 @@ def my_import_data():
 
     import_user(filename_auth_user)
     create_cities()
-    # create_data(filename_pessoa_faccao, Faccao)
+    create_data(filename_pessoa_faccao, Faccao)
     # create_pessoa(filename_pessoa_pessoa)
     # import_foto(filename_pessoa_foto)
     # import_comparsa(filename_pessoa_comparsa)
@@ -113,10 +113,10 @@ def my_import_data():
 
 
 def create_data(filename, model):
-    df = pd.read_csv(filename)
-    df = df.drop(['id'], axis=1)
-    aux = df.T.apply(dict).tolist()
-    data = [model(**item) for item in aux]
+    items = csv_online_to_list(filename)
+    # Remove os ids
+    map(lambda d: d.pop('id'), items)
+    data = [model(**item) for item in items]
     model.objects.bulk_create(data)
 
 
