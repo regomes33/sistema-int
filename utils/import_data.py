@@ -12,7 +12,9 @@ from django.contrib.auth.models import User, Group
 from core.models import City
 from ocorrencia.models import AreaUpm
 from ocorrencia.models import Arma
+from ocorrencia.models import Autoria
 from ocorrencia.models import Genero
+from ocorrencia.models import Homicidio
 from ocorrencia.models import Infracao
 from ocorrencia.models import Motivacao
 from ocorrencia.models import Natureza
@@ -83,6 +85,11 @@ dict_natureza = read_data(csv_online_to_list(filename_ocorrencia_natureza))
 dict_arma = read_data(csv_online_to_list(filename_ocorrencia_arma))
 dict_modelo = read_data(csv_online_to_list(filename_veiculo_modelo))
 dict_cor = read_data(csv_online_to_list(filename_veiculo_cor))
+dict_area_upm = read_data(csv_online_to_list(filename_ocorrencia_areaupm))
+dict_autoria = read_data(csv_online_to_list(filename_ocorrencia_autoria))
+dict_genero = read_data(csv_online_to_list(filename_ocorrencia_genero))
+dict_motivacao = read_data(csv_online_to_list(filename_ocorrencia_motivacao))
+dict_rai = read_data(csv_online_to_list(filename_ocorrencia_ocorrencia))
 
 
 def my_import_data():
@@ -104,6 +111,8 @@ def my_import_data():
     import_infracao(filename_ocorrencia_infracao)
     import_pessoa_ocorrencia(filename_ocorrencia_pessoaocorrencia)
     create_data(filename_ocorrencia_genero, Genero)
+    create_data(filename_ocorrencia_autoria, Autoria)
+    import_ocorrencia_homicidio(filename_ocorrencia_homicidio)
 
     # Veiculo
     create_data(filename_veiculo_cor, Cor)
@@ -225,6 +234,56 @@ def get_natureza(natureza_id):
     if natureza_slug:
         natureza = Natureza.objects.get(slug=natureza_slug)
         return natureza
+
+
+def get_area_upm(area_upm_id):
+    '''
+    Retorna uma area_upm.
+    '''
+    area_upm_slug = dict_area_upm.get(str(area_upm_id))
+    if area_upm_slug:
+        area_upm = AreaUpm.objects.get(slug=area_upm_slug)
+        return area_upm
+
+
+def get_autoria(autoria_id):
+    '''
+    Retorna uma autoria.
+    '''
+    autoria_slug = dict_autoria.get(str(autoria_id))
+    if autoria_slug:
+        autoria = Autoria.objects.get(slug=autoria_slug)
+        return autoria
+
+
+def get_genero(genero_id):
+    '''
+    Retorna uma genero.
+    '''
+    genero_slug = dict_genero.get(str(genero_id))
+    if genero_slug:
+        genero = Genero.objects.get(slug=genero_slug)
+        return genero
+
+
+def get_motivacao(motivacao_id):
+    '''
+    Retorna uma motivacao.
+    '''
+    motivacao_slug = dict_motivacao.get(str(motivacao_id))
+    if motivacao_slug:
+        motivacao = Motivacao.objects.get(slug=motivacao_slug)
+        return motivacao
+
+
+def get_rai(rai_id):
+    '''
+    Retorna uma rai.
+    '''
+    rai_slug = dict_rai.get(str(rai_id))
+    if rai_slug:
+        rai = Ocorrencia.objects.get(slug=rai_slug)
+        return rai
 
 
 def get_arma(arma_id):
@@ -419,6 +478,64 @@ def import_veiculo(filename):
         data.append(obj)
 
     Veiculo.objects.bulk_create(data)
+
+
+def import_ocorrencia_homicidio(filename):
+    items = csv_online_to_list(filename)
+    data = []
+    for i, item in enumerate(items):
+        del item['id']
+        del item['district']  # Remove district
+        del item['city']  # Remove city
+        del item['uf']  # Remove uf
+
+        if not item['address_number']:
+            item['address_number'] = None
+
+        area_upm = get_area_upm(item.get('area_upm_id'))
+        del item['area_upm_id']
+        if area_upm:
+            item['area_upm'] = area_upm
+
+        autoria = get_autoria(item.get('autoria_id'))
+        del item['autoria_id']
+        if autoria:
+            item['autoria'] = autoria
+
+        created_by = get_users(item.get('created_by_id'))
+        del item['created_by_id']
+        if created_by:
+            item['created_by'] = created_by
+
+        genero = get_genero(item.get('genero_id'))
+        del item['genero_id']
+        if genero:
+            item['genero'] = genero
+
+        instrumento = get_arma(item.get('instrumento_id'))
+        del item['instrumento_id']
+        if instrumento:
+            item['instrumento'] = instrumento
+
+        motivacao = get_motivacao(item.get('motivacao_id'))
+        del item['motivacao_id']
+        if motivacao:
+            item['motivacao'] = motivacao
+
+        rai = get_rai(item.get('rai_id'))
+        del item['rai_id']
+        if rai:
+            item['rai'] = rai
+
+        vitima = get_pessoa(item.get('vitima_id'))
+        del item['vitima_id']
+        if vitima:
+            item['vitima'] = vitima
+
+        obj = Homicidio(**item)
+        data.append(obj)
+
+    Homicidio.objects.bulk_create(data)
 
 
 def create_cities():
