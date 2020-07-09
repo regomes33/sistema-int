@@ -96,10 +96,10 @@ def my_import_data():
 
     # Ocorrencia
     import_ocorrencia(filename_ocorrencia_ocorrencia)
-    # create_data(filename_ocorrencia_natureza, Natureza)
-    # create_data(filename_ocorrencia_arma, Arma)
-    # create_data(filename_ocorrencia_areaupm, AreaUpm)
-    # create_data(filename_ocorrencia_motivacao, Motivacao)
+    create_data(filename_ocorrencia_natureza, Natureza)
+    create_data(filename_ocorrencia_arma, Arma)
+    create_data(filename_ocorrencia_areaupm, AreaUpm)
+    create_data(filename_ocorrencia_motivacao, Motivacao)
     # import_infracao(filename_ocorrencia_infracao)
     # import_pessoa_ocorrencia(filename_ocorrencia_pessoaocorrencia)
 
