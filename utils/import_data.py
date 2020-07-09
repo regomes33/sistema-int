@@ -9,17 +9,18 @@ import urllib.request
 from random import randint
 from pprint import pprint
 from django.contrib.auth.models import User, Group
-from pessoa.models import Faccao
-from pessoa.models import Pessoa
-from pessoa.models import Foto
-from pessoa.models import Comparsa
-from ocorrencia.models import Natureza
-from ocorrencia.models import Arma
-from ocorrencia.models import Ocorrencia
+from core.models import City
 from ocorrencia.models import AreaUpm
-from ocorrencia.models import Motivacao
+from ocorrencia.models import Arma
 from ocorrencia.models import Infracao
+from ocorrencia.models import Motivacao
+from ocorrencia.models import Natureza
+from ocorrencia.models import Ocorrencia
 from ocorrencia.models import PessoaOcorrencia
+from pessoa.models import Comparsa
+from pessoa.models import Faccao
+from pessoa.models import Foto
+from pessoa.models import Pessoa
 from veiculo.models import Cor
 from veiculo.models import Modelo
 from veiculo.models import Veiculo
@@ -87,6 +88,7 @@ def my_import_data():
     tic = timeit.default_timer()
 
     import_user(filename_auth_user)
+    create_cities()
     # create_data(filename_pessoa_faccao, Faccao)
     # create_pessoa(filename_pessoa_pessoa)
     # import_foto(filename_pessoa_foto)
@@ -159,6 +161,9 @@ User
 
 
 def import_user(filename_auth_user):
+    '''
+    Importa os usuários.
+    '''
     dict_users = {}
     items = csv_online_to_list(filename_auth_user)
     for item in items:
@@ -402,3 +407,30 @@ def import_veiculo(filename):
         data.append(obj)
 
     Veiculo.objects.bulk_create(data)
+
+
+def create_cities():
+    cities = (
+        'ABADIÂNIA',
+        'ANÁPOLIS',
+        'APARECIDA DE GOIÂNIA',
+        'BRASÍLIA',
+        'CAMPO LIMPO',
+        'GOIANESIA',
+        'GOIÂNIA',
+        'LEOPOLDO DE BULHÕES',
+        'LUZIÂNIA',
+        'NATAL'
+        'PIRENÓPOLIS',
+        'PIRES DO RIO',
+        'PONTA PORÃ',
+        'PORTO NACIONAL',
+        'SANTO ANTÔNIO DO DESCOBERTO',
+        'TRINDADE',
+    )
+    aux = []
+    for city in cities:
+        obj = City(name=city, uf='GO')
+        aux.append(obj)
+
+    City.objects.bulk_create(aux)
