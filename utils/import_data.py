@@ -103,9 +103,9 @@ def my_import_data():
     import_infracao(filename_ocorrencia_infracao)
     import_pessoa_ocorrencia(filename_ocorrencia_pessoaocorrencia)
 
-    # # Veiculo
-    # create_data(filename_veiculo_cor, Cor)
-    # create_data(filename_veiculo_modelo, Modelo)
+    # Veiculo
+    create_data(filename_veiculo_cor, Cor)
+    create_data(filename_veiculo_modelo, Modelo)
     # import_veiculo(filename_veiculo_veiculo)
 
     toc = timeit.default_timer()
