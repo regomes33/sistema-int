@@ -40,7 +40,9 @@ class Pessoa(UuidModel, TimeStampedModel, CreatedBy, Address, Document):
             return f'{self.address}, {self.address_number or ""} {self.complement or ""}'
 
     def get_address_complement(self):
-        return ' - '.join(filter(None, [self.district, self.city, self.uf]))
+        # return ' - '.join(filter(None, [self.district, self.district.city,
+        # self.uf]))
+        return 'address_complement'
 
     def get_first_photo(self):
         '''

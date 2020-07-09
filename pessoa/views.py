@@ -28,10 +28,8 @@ class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):
         context['bairros'] = sorted(
             set([bairro for bairro in bairros if bairro]))
 
-        cidades = Pessoa.objects.values_list(
-            'city', flat=True)
-        context['cidades'] = sorted(
-            set([cidade for cidade in cidades if cidade]))
+        # cidades = Pessoa.objects.values_list('city', flat=True)
+        # context['cidades'] = sorted(set([cidade for cidade in cidades if cidade]))
 
         context['faccoes'] = Faccao.objects.values_list('pk', 'nome')
 

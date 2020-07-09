@@ -143,7 +143,7 @@
             <td>{{ object.apelido|default:"---" }}</td>
             <td>{{ object.faccao|default:"---" }}</td>
             <td>{{ object.district|default:"---" }}</td>
-            <td>{{ object.city|default:"---" }}</td>
+            <td>{{ object.district.city|default:"---" }}</td>
             <td>
               {{ object.infracao_set.all.0.natureza.natureza.artigo }}
               {% for infracao in object.infracao_set.all %}

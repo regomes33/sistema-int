@@ -91,7 +91,7 @@ def my_import_data():
     create_cities()
     create_data(filename_pessoa_faccao, Faccao)
     create_pessoa(filename_pessoa_pessoa)
-    # import_foto(filename_pessoa_foto)
+    import_foto(filename_pessoa_foto)
     # import_comparsa(filename_pessoa_comparsa)
 
     # # Ocorrencia
@@ -256,8 +256,7 @@ def get_cor(cor_id):
 
 
 def import_foto(filename):
-    df = pd.read_csv(filename)
-    items = df.T.apply(dict).tolist()
+    items = csv_online_to_list(filename)
     data = []
     for i, item in enumerate(items):
         del item['id']
