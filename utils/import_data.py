@@ -12,6 +12,7 @@ from django.contrib.auth.models import User, Group
 from core.models import City
 from ocorrencia.models import AreaUpm
 from ocorrencia.models import Arma
+from ocorrencia.models import Genero
 from ocorrencia.models import Infracao
 from ocorrencia.models import Motivacao
 from ocorrencia.models import Natureza
@@ -102,11 +103,12 @@ def my_import_data():
     create_data(filename_ocorrencia_motivacao, Motivacao)
     import_infracao(filename_ocorrencia_infracao)
     import_pessoa_ocorrencia(filename_ocorrencia_pessoaocorrencia)
+    create_data(filename_ocorrencia_genero, Genero)
 
     # Veiculo
     create_data(filename_veiculo_cor, Cor)
     create_data(filename_veiculo_modelo, Modelo)
-    # import_veiculo(filename_veiculo_veiculo)
+    import_veiculo(filename_veiculo_veiculo)
 
     toc = timeit.default_timer()
     return round(toc - tic, 2)
@@ -398,8 +400,7 @@ def import_ocorrenciaveiculo(filename):
 
 
 def import_veiculo(filename):
-    df = pd.read_csv(filename)
-    items = df.T.apply(dict).tolist()
+    items = csv_online_to_list(filename)
     data = []
     for i, item in enumerate(items):
         del item['id']
