@@ -100,7 +100,7 @@ def my_import_data():
     create_data(filename_ocorrencia_arma, Arma)
     create_data(filename_ocorrencia_areaupm, AreaUpm)
     create_data(filename_ocorrencia_motivacao, Motivacao)
-    # import_infracao(filename_ocorrencia_infracao)
+    import_infracao(filename_ocorrencia_infracao)
     # import_pessoa_ocorrencia(filename_ocorrencia_pessoaocorrencia)
 
     # # Veiculo
