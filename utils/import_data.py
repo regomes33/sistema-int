@@ -24,6 +24,7 @@ from pessoa.models import Comparsa
 from pessoa.models import Faccao
 from pessoa.models import Foto
 from pessoa.models import Pessoa
+from pessoa.models import PessoaVeiculo
 from veiculo.models import Cor
 from veiculo.models import Modelo
 from veiculo.models import Veiculo
@@ -85,6 +86,7 @@ dict_natureza = read_data(csv_online_to_list(filename_ocorrencia_natureza))
 dict_arma = read_data(csv_online_to_list(filename_ocorrencia_arma))
 dict_modelo = read_data(csv_online_to_list(filename_veiculo_modelo))
 dict_cor = read_data(csv_online_to_list(filename_veiculo_cor))
+dict_veiculo = read_data(csv_online_to_list(filename_veiculo_veiculo))
 dict_area_upm = read_data(csv_online_to_list(filename_ocorrencia_areaupm))
 dict_autoria = read_data(csv_online_to_list(filename_ocorrencia_autoria))
 dict_genero = read_data(csv_online_to_list(filename_ocorrencia_genero))
@@ -118,6 +120,8 @@ def my_import_data():
     create_data(filename_veiculo_cor, Cor)
     create_data(filename_veiculo_modelo, Modelo)
     import_veiculo(filename_veiculo_veiculo)
+
+    import_pessoaveiculo(filename_pessoa_pessoaveiculo)
 
     toc = timeit.default_timer()
     return round(toc - tic, 2)
@@ -316,6 +320,16 @@ def get_cor(cor_id):
         return cor
 
 
+def get_veiculo(veiculo_id):
+    '''
+    Retorna uma veiculo.
+    '''
+    veiculo_slug = dict_veiculo.get(str(veiculo_id))
+    if veiculo_slug:
+        veiculo = Veiculo.objects.get(slug=veiculo_slug)
+        return veiculo
+
+
 def import_foto(filename):
     items = csv_online_to_list(filename)
     data = []
@@ -346,6 +360,7 @@ def import_comparsa(filename):
     data = []
     for item in items:
         del item['id']
+
         pessoa = get_pessoa(item.get('pessoa_id'))
         del item['pessoa_id']
         if pessoa:
@@ -373,7 +388,30 @@ def import_comparsa(filename):
 
 
 def import_pessoaveiculo(filename):
-    pass
+    items = csv_online_to_list(filename)
+    data = []
+    for item in items:
+        del item['id']
+
+        pessoa = get_pessoa(item.get('pessoa_id'))
+        del item['pessoa_id']
+        if pessoa:
+            item['pessoa'] = pessoa
+
+        created_by = get_users(item.get('created_by_id'))
+        del item['created_by_id']
+        if created_by:
+            item['created_by'] = created_by
+
+        veiculo = get_veiculo(item.get('veiculo_id'))
+        del item['veiculo_id']
+        if veiculo:
+            item['veiculo'] = veiculo
+
+        obj = PessoaVeiculo(**item)
+        data.append(obj)
+
+    PessoaVeiculo.objects.bulk_create(data)
 
 
 '''
