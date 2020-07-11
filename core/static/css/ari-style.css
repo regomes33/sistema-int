@@ -1,0 +1,5 @@
+.span-is-link {
+    text-decoration: none;
+    cursor: pointer;
+    color: #20a8d8;
+}
