@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     # my apps
     'api',
     'core.apps.CoreConfig',
+    'infracao.apps.InfracaoConfig',
     'ocorrencia.apps.OcorrenciaConfig',
     'pessoa.apps.PessoaConfig',
     'veiculo.apps.VeiculoConfig',
