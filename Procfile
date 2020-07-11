@@ -1,1 +1,1 @@
-web: gunicorn ari.wsgi --log-file -
+web: gunicorn ariproject.wsgi --log-file -

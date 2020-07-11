@@ -45,7 +45,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'ari.urls'
+ROOT_URLCONF = 'ariproject.urls'
 
 
 TEMPLATES = [
@@ -70,7 +70,7 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': config('API_SECRET'),
 }
 
-WSGI_APPLICATION = 'ari.wsgi.application'
+WSGI_APPLICATION = 'ariproject.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
