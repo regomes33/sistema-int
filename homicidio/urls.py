@@ -7,9 +7,9 @@ app_name = 'homicidio'
 
 
 homicidio_patterns = [
-    path('', v.HomicidioList.as_view(), name="homicidios"),
-    path('add/', v.homicidio_create, name="homicidio_create"),
-    path('<slug>/update/', v.HomicidioUpdate.as_view(), name="homicidio_update"),
+    path('', v.HomicidioList.as_view(), name='homicidio_list'),
+    path('add/', v.homicidio_create, name='homicidio_create'),
+    path('<slug>/update/', v.HomicidioUpdate.as_view(), name='homicidio_update'),
 ]
 
 report_patterns = [
