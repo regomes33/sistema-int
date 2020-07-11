@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'infracao.apps.InfracaoConfig',
     'ocorrencia.apps.OcorrenciaConfig',
+    'homicidio.apps.HomicidioConfig',
     'pessoa.apps.PessoaConfig',
     'veiculo.apps.VeiculoConfig',
 ]

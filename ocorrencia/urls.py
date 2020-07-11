@@ -1,6 +1,6 @@
 from django.urls import path, include
 from ocorrencia import views as v
-from ocorrencia import reports as rep
+
 
 app_name = 'ocorrencia'
 
@@ -14,32 +14,7 @@ ocorrencia_patterns = [
          name="ocorrencia_update"),
 ]
 
-infracao_patterns = [
-    path('', v.InfracaoList.as_view(), name="infracoes"),
-    path('add/', v.infracao_create, name="infracao_create"),
-    path('<slug>/update/', v.InfracaoUpdate.as_view(), name="infracao_update"),
-]
-
-natureza_patterns = [
-    path('', v.NaturezaList.as_view(), name="naturezas"),
-    path('add/', v.natureza_create, name="natureza_create"),
-    path('<slug>/update/', v.NaturezaUpdate.as_view(), name="natureza_update"),
-]
-
-homicidio_patterns = [
-    path('', v.HomicidioList.as_view(), name="homicidios"),
-    path('add/', v.homicidio_create, name="homicidio_create"),
-    path('<slug>/update/', v.HomicidioUpdate.as_view(), name="homicidio_update"),
-]
-
-report_patterns = [
-    path('', rep.report_homicidios, name='report_homicidios'),
-]
 
 urlpatterns = [
     path('ocorrencia/', include(ocorrencia_patterns)),
-    path('infracao/', include(infracao_patterns)),
-    path('natureza/', include(natureza_patterns)),
-    path('homicidio/', include(homicidio_patterns)),
-    path('report/', include(report_patterns)),
 ]

@@ -1,19 +1,17 @@
 import json
 import re
-from pprint import pprint
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from localflavor.br.br_states import STATE_CHOICES
-from ocorrencia.forms import InfracaoForm, PessoaOcorrenciaForm
-from ocorrencia.models import Natureza, Arma, Ocorrencia, PessoaOcorrencia
-from ocorrencia.models import Infracao
-from pessoa.forms import PessoaForm, PessoaContatoForm, PessoaComparsaForm
-from pessoa.forms import PessoaMinimalForm
-from pessoa.forms import PessoaVeiculoForm
-from pessoa.models import Pessoa, Faccao, Foto, Tatuagem
-from pessoa.models import PessoaContato, PessoaVeiculo, Comparsa
+from infracao.forms import InfracaoForm
+# from ocorrencia.forms import InfracaoForm, PessoaOcorrenciaForm
+# from pessoa.forms import PessoaForm, PessoaContatoForm, PessoaComparsaForm
+# from pessoa.forms import PessoaMinimalForm
+# from pessoa.forms import PessoaVeiculoForm
+# from pessoa.models import Pessoa, Faccao, Foto, Tatuagem
+# from pessoa.models import PessoaContato, PessoaVeiculo, Comparsa
 from utils.data import QUALIFICACAO, STATUS, TIPO
-from veiculo.models import Veiculo
+# from veiculo.models import Veiculo
 
 
 @login_required

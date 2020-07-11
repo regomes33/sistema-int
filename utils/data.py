@@ -16,3 +16,9 @@ TIPO = (
     ('cel', 'Celular'),
     ('tel', 'Telefone'),
 )
+
+
+FORMA = (
+    ('tentado', 'Tentado'),
+    ('consumado', 'Consumado'),
+)
