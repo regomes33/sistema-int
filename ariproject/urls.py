@@ -15,8 +15,10 @@ urlpatterns = [
         name='logout'
     ),
     path('api/', include('api.urls', namespace='api')),
-    path('pessoa/', include('pessoa.urls', namespace='pessoa')),
+    path('homicidio/', include('homicidio.urls', namespace='homicidio')),
+    path('infracao/', include('infracao.urls', namespace='infracao')),
     path('ocorrencia/', include('ocorrencia.urls', namespace='ocorrencia')),
+    path('pessoa/', include('pessoa.urls', namespace='pessoa')),
     path('veiculo/', include('veiculo.urls', namespace='veiculo')),
     path('admin/', admin.site.urls),
     # path('accounts/', include('django.contrib.auth.urls')),
