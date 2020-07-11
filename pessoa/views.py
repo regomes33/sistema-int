@@ -63,7 +63,7 @@ def pessoa_detail(request, slug):
         'object': obj,
         'ocorrencias': ocorrencias,
         'model_name_plural': 'Pessoas',
-        'url': reverse('pessoa:pessoas'),
+        'url': reverse('pessoa:pessoa_list'),
         'form_pessoa': form_pessoa,
     }
     return render(request, template_name, context)
@@ -71,11 +71,11 @@ def pessoa_detail(request, slug):
 
 @login_required
 def pessoa_create(request):
-    template_name = 'pessoa_form.html'
+    template_name = 'pessoa/pessoa_form.html'
     context = {
         'endpoint': settings.ENDPOINT,
         'model_name_plural': 'Pessoas',
-        'url': reverse('pessoa:pessoas'),
+        'url': reverse('pessoa:pessoa_list'),
     }
     return render(request, template_name, context)
 
