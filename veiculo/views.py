@@ -34,17 +34,17 @@ class VeiculoList(LRM, ListView):
 @login_required
 def veiculo_create(request):
     form = VeiculoForm(request.POST or None)
-    template_name = 'veiculo_form.html'
+    template_name = 'veiculo/veiculo_form.html'
 
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('veiculo:veiculos'))
+            return HttpResponseRedirect(reverse('veiculo:veiculo_list'))
 
     context = {
         'form': form,
         'model_name_plural': 'Veículos',
-        'url': reverse('veiculo:veiculos'),
+        'url': reverse('veiculo:veiculo_list'),
     }
     return render(request, template_name, context)
 
@@ -57,24 +57,8 @@ class VeiculoUpdate(LRM, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(VeiculoUpdate, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Veículos'
-        context['url'] = reverse('veiculo:veiculos')
+        context['url'] = reverse('veiculo:veiculo_list')
         return context
-
-
-@login_required
-def modelos(request):
-    template_name = 'modelos.html'
-    object_list = Modelo.objects.all()
-
-    search = request.GET.get('search')
-    if search:
-        object_list = object_list.filter(modelo__icontains=search)
-
-    context = {
-        'object_list': object_list,
-        'model_name_plural': 'Modelos',
-    }
-    return render(request, template_name, context)
 
 
 class ModeloList(LRM, ListView):
@@ -98,17 +82,17 @@ class ModeloList(LRM, ListView):
 @login_required
 def modelo_create(request):
     form = ModeloForm(request.POST or None)
-    template_name = 'modelo_form.html'
+    template_name = 'veiculo/modelo_form.html'
 
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('veiculo:modelos'))
+            return HttpResponseRedirect(reverse('veiculo:modelo_list'))
 
     context = {
         'form': form,
         'model_name_plural': 'Modelos',
-        'url': reverse('veiculo:modelos'),
+        'url': reverse('veiculo:modelo_list'),
     }
     return render(request, template_name, context)
 
@@ -121,5 +105,5 @@ class ModeloUpdate(LRM, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(ModeloUpdate, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Modelos'
-        context['url'] = reverse('veiculo:modelos')
+        context['url'] = reverse('veiculo:modelo_list')
         return context

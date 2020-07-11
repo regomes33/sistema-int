@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="col-lg-12">
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-plus"></i> Adicionar Veículo
+    </div>
+    <div class="card-body">
+      <form method="POST">
+        {% csrf_token %}
+        {% for field in form.visible_fields %}
+        <div class="form-group{% if field.errors %} has-error {% endif %}">
+          <label for="{{ field.id_for_label }}">
+            {% if field.field.required %}
+            <span class="required">{{ field.label }}</span>
+            {% else %}
+            {{ field.label }}
+            {% endif %}
+          </label>
+          {% render_field field class="form-control" %}
+          {% for error in field.errors %}
+          <span class="text-muted">{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% endfor %}
+        <div class="pull-right">
+          <button class="btn btn-primary" type="submit">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock content %}
