@@ -126,7 +126,7 @@ def homicidio_create(request):
     form = HomicidioForm(request.POST or None)
     form_ocorrencia = OcorrenciaForm(request.POST or None)
     form_pessoa = PessoaMinimalForm(request.POST or None)
-    template_name = 'homicidio_form.html'
+    template_name = 'homicidio/homicidio_form.html'
 
     if request.method == 'POST':
         if form.is_valid():
@@ -137,19 +137,19 @@ def homicidio_create(request):
             if vitima:
                 msg_error = 'Já existe um homicídio para esta vítima.'
                 messages.error(request, msg_error)
-                return HttpResponseRedirect(reverse('ocorrencia:homicidios'))
+                return HttpResponseRedirect(reverse('homicidio:homicidio_list'))
             # Transforma a pessoa em vítima
             new_form.vitima.vitima = True
             new_form.vitima.save()
             new_form.save()
-            return HttpResponseRedirect(reverse('ocorrencia:homicidios'))
+            return HttpResponseRedirect(reverse('homicidio:homicidio_list'))
 
     context = {
         'form': form,
         'form_ocorrencia': form_ocorrencia,
         'form_pessoa': form_pessoa,
         'model_name_plural': 'Homicidios',
-        'url': reverse('ocorrencia:homicidios'),
+        'url': reverse('homicidio:homicidio_list'),
     }
     return render(request, template_name, context)
 

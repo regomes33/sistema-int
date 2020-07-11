@@ -3,44 +3,82 @@
 <div class="col-lg-12">
   <div class="card">
     <div class="card-header">
-      <i class="fa fa-align-justify"></i> Homicídios</div>
+      Homicídios
+      <span class="pull-right">10 / 10 items</span>
+    </div>
     <div class="card-body">
-      <table class="table table-responsive-sm table-striped">
-        <thead>
-          <tr>
-            <th>RAI</th>
-            <th>Data do Homicídio</th>
-            <th>Forma</th>
-            <th>Área UPM</th>
-            <th>Vítima</th>
-            <th>Instrumento</th>
-            <th>Motivação</th>
-            <th>Autoria</th>
-            <th>Gênero</th>
-            <th>Bairro</th>
-            <th class="text-center">Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-              <span class="badge badge-success">Active</span>
-            </td>
-            <td class="text-center">
-              <span class="span-is-link"><i class="fa fa-edit"></i></span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="row">
+        <div class="pr-1 col-md-auto">
+          <a class="btn btn-primary" href="{% url 'homicidio:homicidio_create' %}">
+            <i class="fa fa-plus"></i>
+            Adicionar
+          </a>
+        </div>
+        <div class="pl-1 col">
+          <input name="search" class="mb-2 form-control" type="text" placeholder="Busca..." />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <div class="card">
+            <div class="card-header">Selecione um filtro</div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <form action="." method="GET">
+                    <fieldset class="form-group">
+                      <legend class="col-form-label pt-0">Campo</legend>
+                      <select id="" name="" class="form-control">
+                        <option value="">---</option>
+                        <option value="">A</option>
+                      </select>
+                    </fieldset>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-9">
+          <table class="table table-responsive-sm table-striped">
+            <thead>
+              <tr>
+                <th>RAI</th>
+                <th>Data</th>
+                <th>Forma</th>
+                <th>Área UPM</th>
+                <th>Vítima</th>
+                <th>Gênero</th>
+                <th>Instrumento</th>
+                <th>Motivação</th>
+                <th>Autoria</th>
+                <th>Bairro</th>
+                <th class="text-center">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <span class="badge badge-success">Ativo</span>
+                </td>
+                <td class="text-center">
+                  <span class="span-is-link"><i class="fa fa-edit"></i></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- pagination -->
       <ul class="pagination">
         <li class="page-item">
           <a class="page-link" href="#">Prev</a>
