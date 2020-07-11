@@ -5,19 +5,9 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import ListView, UpdateView
-from homicidio.forms import HomicidioForm
-from homicidio.models import AreaUpm
-from homicidio.models import Genero
-from homicidio.models import Homicidio
-from homicidio.models import Motivacao
-from infracao.forms import InfracaoForm
-from infracao.forms import NaturezaForm
-from infracao.models import Infracao
-from infracao.models import Natureza
-from ocorrencia.forms import OcorrenciaForm
-from ocorrencia.mixins import SearchMixin
-from ocorrencia.models import Ocorrencia
-from pessoa.forms import PessoaMinimalForm
+from .models import Ocorrencia
+from .models import OcorrenciaVeiculo
+from .forms import OcorrenciaForm
 
 
 class OcorrenciaList(LRM, ListView):
@@ -42,7 +32,7 @@ class OcorrenciaList(LRM, ListView):
 
 
 @login_required
-def ocorrencia(request, slug):
+def ocorrencia_detail(request, slug):
     template_name = 'ocorrencia.html'
     obj = Ocorrencia.objects.get(slug=slug)
     context = {
