@@ -38,7 +38,7 @@ def ocorrencia_detail(request, slug):
     context = {
         'object': obj,
         'model_name_plural': 'Ocorrências',
-        'url': reverse('ocorrencia:ocorrencias'),
+        'url': reverse('ocorrencia:ocorrencia_list'),
     }
     return render(request, template_name, context)
 
@@ -46,19 +46,19 @@ def ocorrencia_detail(request, slug):
 @login_required
 def ocorrencia_create(request):
     form = OcorrenciaForm(request.POST or None)
-    template_name = 'ocorrencia_form.html'
+    template_name = 'ocorrencia/ocorrencia_form.html'
 
     if request.method == 'POST':
         if form.is_valid():
             new_form = form.save(commit=False)
             new_form.created_by = request.user
             new_form.save()
-            return HttpResponseRedirect(reverse('ocorrencia:ocorrencias'))
+            return HttpResponseRedirect(reverse('ocorrencia:ocorrencia_list'))
 
     context = {
         'form': form,
         'model_name_plural': 'Ocorrências',
-        'url': reverse('ocorrencia:ocorrencias'),
+        'url': reverse('ocorrencia:ocorrencia_list'),
     }
     return render(request, template_name, context)
 
@@ -85,5 +85,5 @@ class OcorrenciaUpdate(LRM, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(OcorrenciaUpdate, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Ocorrências'
-        context['url'] = reverse('ocorrencia:ocorrencias')
+        context['url'] = reverse('ocorrencia:ocorrencia_list')
         return context
