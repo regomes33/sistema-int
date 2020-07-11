@@ -34,19 +34,19 @@ class InfracaoList(LRM, ListView):
 @login_required
 def infracao_create(request):
     form = InfracaoForm(request.POST or None)
-    template_name = 'infracao_form.html'
+    template_name = 'infracao/infracao_form.html'
 
     if request.method == 'POST':
         if form.is_valid():
             new_form = form.save(commit=False)
             new_form.created_by = request.user
             new_form.save()
-            return HttpResponseRedirect(reverse('ocorrencia:infracoes'))
+            return HttpResponseRedirect(reverse('infracao:infracao_list'))
 
     context = {
         'form': form,
         'model_name_plural': 'Infrações',
-        'url': reverse('ocorrencia:infracoes'),
+        'url': reverse('infracao:infracao_list'),
     }
     return render(request, template_name, context)
 
@@ -59,7 +59,7 @@ class InfracaoUpdate(LRM, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(InfracaoUpdate, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Infrações'
-        context['url'] = reverse('ocorrencia:infracoes')
+        context['url'] = reverse('infracao:infracao_list')
         return context
 
 
@@ -84,17 +84,17 @@ class NaturezaList(LRM, ListView):
 @login_required
 def natureza_create(request):
     form = NaturezaForm(request.POST or None)
-    template_name = 'natureza_form.html'
+    template_name = 'infracao/natureza_form.html'
 
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('ocorrencia:naturezas'))
+            return HttpResponseRedirect(reverse('infracao:natureza_list'))
 
     context = {
         'form': form,
         'model_name_plural': 'Naturezas',
-        'url': reverse('ocorrencia:naturezas'),
+        'url': reverse('infracao:natureza_list'),
     }
     return render(request, template_name, context)
 
@@ -107,5 +107,5 @@ class NaturezaUpdate(LRM, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(NaturezaUpdate, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Naturezas'
-        context['url'] = reverse('ocorrencia:naturezas')
+        context['url'] = reverse('infracao:natureza_list')
         return context
