@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from core import views as v
 
 
@@ -7,6 +7,4 @@ app_name = 'core'
 
 urlpatterns = [
     path('', v.index, name="index"),
-    path('registrar/', v.registrarusuario, name='registrar'),
-    # path('accounts/', include('django.contrib.auth.urls')),
 ]

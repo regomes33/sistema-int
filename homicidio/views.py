@@ -1,19 +1,19 @@
 from django.contrib import messages
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.db.models import Q
-from django.contrib.auth.mixins import LoginRequiredMixin as LRM
-from django.shortcuts import render
-from django.views.generic import ListView, UpdateView
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin as LRM
+from django.db.models import Q
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse
+from django.views.generic import ListView, UpdateView
 from homicidio.mixins import SearchMixin
-from .models import AreaUpm
-from .models import Homicidio
-from .models import Motivacao
-from .models import Genero
-from .forms import HomicidioForm
 from ocorrencia.forms import OcorrenciaForm
 from pessoa.forms import PessoaMinimalForm
+from .forms import HomicidioForm
+from .models import AreaUpm
+from .models import Genero
+from .models import Homicidio
+from .models import Motivacao
 
 
 class HomicidioList(LRM, ListView, SearchMixin):
