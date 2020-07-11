@@ -52,7 +52,7 @@ class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):
 
 
 @login_required
-def pessoa(request, slug):
+def pessoa_detail(request, slug):
     template_name = 'pessoa.html'
     obj = Pessoa.objects.get(slug=slug)
     ocorrencias = PessoaOcorrencia.objects.filter(pessoa__slug=slug)
