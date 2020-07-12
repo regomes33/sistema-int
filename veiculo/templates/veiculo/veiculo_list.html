@@ -35,15 +35,17 @@
               </tr>
             </thead>
             <tbody>
+              {% for object in object_list %}
               <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{ object.placa|default:"---" }}</td>
+                <td>{{ object.modelo }}</td>
+                <td>{{ object.cor }}</td>
+                <td>{{ object.observacao }}</td>
                 <td class="text-center">
                   <span class="span-is-link"><i class="fa fa-edit"></i></span>
                 </td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
