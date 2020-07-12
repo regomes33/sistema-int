@@ -39,3 +39,61 @@
 </div>
 </div>
 {% endblock content %}
+
+{% block js %}
+  <script>
+    $('#id_data_do_homicidio').datepicker({
+      uiLibrary: 'bootstrap4',
+      format: 'dd/mm/yyyy',
+    });
+
+    $('#id_data_do_fato').datepicker({
+      uiLibrary: 'bootstrap4',
+      format: 'dd/mm/yyyy',
+    });
+
+    $('#modalOcorrencia').on('shown.bs.modal', function (e) {
+      // Clear fields
+      $('.modal-field').val('');
+    });
+
+    $('#modalPessoa').on('shown.bs.modal', function (e) {
+      // Clear fields
+      $('.modal-field').val('');
+    });
+
+
+    $('#formOcorrencia').on('submit', function(e) {
+      e.preventDefault();
+      let url = $(this).attr('action');
+      let postData = $(this).serialize();
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: postData,
+        success: function(response) {
+          $('#id_rai').append('<option value="' + response.pk + '" selected>' + response.rai + '</option>');
+          // Fecha o modal
+          $('#modalOcorrencia').modal('hide');
+        }
+      })
+    });
+
+    $('#formPessoa').on('submit', function(e) {
+      e.preventDefault();
+      let url = $(this).attr('action');
+      let postData = $(this).serialize();
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: postData,
+        success: function(response) {
+          $('#id_vitima').append('<option value="' + response.pk + '" selected>' + response.full_name + '</option>');
+          // Fecha o modal
+          $('#modalPessoa').modal('hide');
+        }
+      })
+    });
+
+  </script>
+{% endblock js %}
