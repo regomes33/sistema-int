@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView
 from .models import Ocorrencia
 from .models import OcorrenciaVeiculo
@@ -67,8 +68,9 @@ def ocorrencia_create_ajax(request):
 
 class OcorrenciaUpdate(LRM, UpdateView):
     model = Ocorrencia
-    template_name = 'ocorrencia_form.html'
+    template_name = 'ocorrencia/ocorrencia_form.html'
     form_class = OcorrenciaForm
+    success_url = reverse_lazy('ocorrencia:ocorrencia_list')
 
     def get_context_data(self, **kwargs):
         context = super(OcorrenciaUpdate, self).get_context_data(**kwargs)

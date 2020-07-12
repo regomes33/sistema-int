@@ -42,7 +42,7 @@
                 <td>{{ object.data_do_fato|date:"d/m/y" }}</td>
                 <td>{{ object.descricao }}</td>
                 <td class="text-center">
-                  <span class="span-is-link"><i class="fa fa-edit"></i></span>
+                  <a href="{% url 'ocorrencia:ocorrencia_update' object.slug %}"><i class="fa fa-edit"></i></a>
                 </td>
               </tr>
               {% endfor %}
