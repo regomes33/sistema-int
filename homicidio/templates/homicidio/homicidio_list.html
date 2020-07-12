@@ -47,37 +47,48 @@
           <table class="table table-responsive-sm table-striped">
             <thead>
               <tr>
-                <th>RAI</th>
-                <th>Data</th>
-                <th>Forma</th>
-                <th>Área UPM</th>
+                <th>RAI/Data</th>
+                <th>Área/Forma</th>
                 <th>Vítima</th>
-                <th>Gênero</th>
-                <th>Instrumento</th>
-                <th>Motivação</th>
+                <th>Instrumento/Motivação</th>
                 <th>Autoria</th>
                 <th>Bairro</th>
                 <th class="text-center">Ações</th>
               </tr>
             </thead>
             <tbody>
+              {% for object in object_list %}
               <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
                 <td>
-                  <span class="badge badge-success">Ativo</span>
+                  {{ object.rai }} <br>
+                  <span class="text-muted">{{ object.data_do_homicidio|date:"d/m/y" }}</span>
+                </td>
+                <td>
+                  {{ object.area_upm }} <br>
+                  {{ object.get_forma_display }}
+                </td>
+                <td>
+                  {{ object.vitima }}
+                  {% if object.genero.genero == 'MASCULINO' %}
+                  <br> <span class="badge badge-info">Masculino</span>
+                  {% else %}
+                  <br> <span class="badge badge-warning">Feminino</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {{ object.instrumento }} <br>
+                  <span class="text-muted">{{ object.motivacao }}</span>
+                </td>
+                <td>{{ object.autoria|default:"---" }}</td>
+                <td>
+                  {{ object.district|default:"---" }} <br>
+                  <span class="text-muted">{{ object.district.city }}</span>
                 </td>
                 <td class="text-center">
                   <span class="span-is-link"><i class="fa fa-edit"></i></span>
                 </td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
