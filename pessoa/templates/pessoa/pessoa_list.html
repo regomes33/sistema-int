@@ -57,7 +57,8 @@
               {% for object in object_list %}
               <tr>
                 <td>
-                  {{ object }} <br>
+                  <a href="{% url 'pessoa:pessoa_detail' object.slug %}">{{ object }}</a>
+                  <br>
                   {% if object.apelido %}
                   <span class="text-muted">Apelido: {{ object.apelido }}</span> <br>
                   {% endif %}

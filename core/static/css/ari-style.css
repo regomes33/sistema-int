@@ -53,3 +53,12 @@ span.required:after {
 .fs-badge {
   font-size: 14px;
 }
+
+.no-border {
+  border: none;
+  padding-left: 0;
+}
+
+.li-line {
+  padding: .2rem 1.25rem;
+}

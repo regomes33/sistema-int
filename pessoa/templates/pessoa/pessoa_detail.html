@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load easy_mask %}
+{% block content %}
+<div class="col-lg-6">
+  <div class="card">
+    <div class="card-header">
+      {{ object }}
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-6">
+          {% if object.get_first_photo %}
+          <img src="{{ object.get_first_photo.foto.url }}" width="200px">
+          {% endif %}
+        </div>
+        <div class="col-6">
+          <h4>{{ object }}</h4>
+          {% if object.apelido %}
+          <h4 class="text-muted">Apelido: {{ object.apelido }}</h4>
+          {% endif %}
+          <h4>Facção: {{ object.faccao|default:"---" }}</h4>
+          <h5>Nascimento: {{ object.nascimento|date:"d/m/Y"|default:"---" }}</h5>
+        </div>
+      </div>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <h4>Filiação</h4>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item no-border">Mãe: {{ object.mae }}</li>
+          <li class="list-group-item no-border">Pai: {{ object.pai }}</li>
+        </ul>
+      </li>
+      <li class="list-group-item">
+        <h4>Documentos</h4>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item no-border">RG: {{ object.rg|default:"---" }}</li>
+          <li class="list-group-item no-border">CPF: {{ object.cpf|cpf_mask|default:"---" }}</li>
+          <li class="list-group-item no-border">CNH: {{ object.cnh|default:"---" }}</li>
+        </ul>
+      </li>
+      <li class="list-group-item">
+        <h4>Endereço</h4>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item no-border">{{ object.get_address|default:"---" }}</li>
+          {% if object.get_address_complement %}
+          <li class="list-group-item no-border">
+            {{ object.get_address_complement }}
+          </li>
+          {% endif %}
+          {% if object.cep %}
+          <li class="list-group-item no-border">
+            CEP: {{ object.cep }}
+          </li>
+          {% endif %}
+        </ul>
+      </li>
+      <li class="list-group-item">
+        <h4>Observações</h4>
+        <p class="text-justify">{{ object.observacao }}</p>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="col-lg-3">
+  <div class="card">
+    <div class="card-header">
+      CONTATOS
+      <span class="pull-right badge badge-success"><i class="fa fa-plus"></i> Adicionar</span>
+    </div>
+    <div class="card-body">
+      <ul class="list-group list-group-flush">
+        {% for contato in object.pessoacontato_set.all %}
+        <li class="list-group-item no-border">
+          {% if contato.tipo == 'cel' %}
+          <span class="badge badge-warning">{{ contato.tipo }}</span> {{ contato.telefone }}
+          {% else %}
+          <span class="badge badge-info">{{ contato.tipo }}</span> {{ contato.telefone }}
+          {% endif %}
+          <span class="span-is-link pull-right" data-toggle="modal" data-target="#modalEditarContato" @click="getContato('{% url 'api:contato_update' contato.pk %}')">
+            <i class="fa fa-edit" style="margin-left: 10px;"></i>
+          </span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      VEÍCULOS
+      <span class="pull-right badge badge-success"><i class="fa fa-plus"></i> Adicionar</span>
+    </div>
+    <div class="card-body">
+      <ul class="list-group list-group-flush">
+        {% for veiculo in object.pessoas_veiculos.all %}
+        <li class="list-group-item">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item no-border li-line pl-0 pr-0">
+              <span class="text-muted">Placa:</span> <span class="lead">{{ veiculo.veiculo.placa }}</span>
+              <span class="span-is-link float-right" data-toggle="modal" data-target="#modalEditarVeiculo" @click="getVeiculo('{% url 'api:veiculo_update' veiculo.pk %}')">
+                <i class="fa fa-edit" style="margin-left: 10px;"></i>
+              </span>
+            </li>
+            <li class="list-group-item no-border li-line pl-0 pr-0">
+              <span class="text-muted">{{ veiculo.veiculo.modelo }} {{ veiculo.veiculo.cor }}</span>
+            </li>
+            {% if veiculo.veiculo.observacao %}
+            <li class="list-group-item no-border li-line pl-0 pr-0">
+              <span class="text-muted">Observações:</span>
+              <p class="text-justify">{{ veiculo.veiculo.observacao }}</p>
+            </li>
+            {% endif %}
+          </ul>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="col-lg-3">
+  <div class="card">
+    <div class="card-header">
+      COMPARSAS
+      <span class="pull-right badge badge-success"><i class="fa fa-plus"></i> Adicionar</span>
+    </div>
+    <div>
+      <!-- card-body -->
+      <ul class="list-group list-group-flush">
+        {% for comparsa in object.comparsa_set.all %}
+        <li class="list-group-item">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item no-border li-line pl-0 pr-0">
+              <span class="lead">{{ comparsa }}</span>
+              <span class="span-is-link pull-right" data-toggle="modal" data-target="#modalEditarComparsa" @click="getComparsa('{% url 'api:comparsa_update' comparsa.pk %}')">
+                <i class="fa fa-edit" style="margin-left: 10px;"></i>
+              </span>
+            </li>
+            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">RG:</span> {{ comparsa.rg }}</li>
+            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">CPF:</span> {{ comparsa.cpf|cpf_mask }}</li>
+            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">CNH:</span> {{ comparsa.cnh }}</li>
+            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">Parente:</span>
+              {% if comparsa.parente %} <span class="badge badge-success">Sim</span>
+              {% else %}
+              <span class="badge badge-danger">Não</span>
+              {% endif %}
+            </li>
+            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">Grau de Parentesco:</span> {{ comparsa.grau_parentesco }}</li>
+            <li class="list-group-item li-line pl-0 pr-0">
+              <span class="text-muted">Observações:</span>
+              <p class="text-justify">{{ comparsa.observacao }}</p>
+            </li>
+          </ul>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock content %}
