@@ -32,12 +32,14 @@
               </tr>
             </thead>
             <tbody>
+              {% for object in object_list %}
               <tr>
-                <td></td>
+                <td>{{ object }}</td>
                 <td class="text-center">
                   <span class="span-is-link"><i class="fa fa-edit"></i></span>
                 </td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
