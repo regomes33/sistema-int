@@ -4,7 +4,6 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView
 from .forms import InfracaoForm
 from .forms import NaturezaForm
@@ -56,7 +55,6 @@ class InfracaoUpdate(LRM, UpdateView):
     model = Infracao
     template_name = 'infracao/infracao_form.html'
     form_class = InfracaoForm
-    success_url = reverse_lazy('infracao:infracao_list')
 
     def get_context_data(self, **kwargs):
         context = super(InfracaoUpdate, self).get_context_data(**kwargs)
@@ -105,7 +103,6 @@ class NaturezaUpdate(LRM, UpdateView):
     model = Natureza
     template_name = 'infracao/natureza_form.html'
     form_class = NaturezaForm
-    success_url = reverse_lazy('infracao:natureza_list')
 
     def get_context_data(self, **kwargs):
         context = super(NaturezaUpdate, self).get_context_data(**kwargs)

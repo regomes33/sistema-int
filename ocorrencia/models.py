@@ -18,8 +18,8 @@ class Ocorrencia(UuidModel, CreatedBy, TimeStampedModel):
     def __str__(self):
         return str(self.rai)
 
-    # def get_absolute_url(self):
-    # return reverse_lazy('ocorrencia:ocorrencia', kwargs={'slug': self.slug})
+    def get_absolute_url(self):
+        return reverse_lazy('ocorrencia:ocorrencia_list')
 
     def to_dict(self):
         return {

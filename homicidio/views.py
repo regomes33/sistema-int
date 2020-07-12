@@ -5,7 +5,6 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView
 from homicidio.mixins import SearchMixin
 from ocorrencia.forms import OcorrenciaForm
@@ -159,7 +158,6 @@ class HomicidioUpdate(LRM, UpdateView):
     model = Homicidio
     template_name = 'homicidio/homicidio_form.html'
     form_class = HomicidioForm
-    success_url = reverse_lazy('homicidio:homicidio_list')
 
     def get_context_data(self, **kwargs):
         context = super(HomicidioUpdate, self).get_context_data(**kwargs)

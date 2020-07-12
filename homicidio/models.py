@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse_lazy
 from core.models import UuidModel, TimeStampedModel, CreatedBy, Address
 from ocorrencia.models import Ocorrencia
 from pessoa.models import Pessoa
@@ -108,5 +109,5 @@ class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
     def __str__(self):
         return str(self.rai)
 
-    # def get_absolute_url(self):
-    #     return reverse_lazy('ocorrencia:homicidios')
+    def get_absolute_url(self):
+        return reverse_lazy('homicidio:homicidio_list')

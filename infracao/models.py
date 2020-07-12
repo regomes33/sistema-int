@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse_lazy
 from pessoa.models import Pessoa
 from core.models import UuidModel, TimeStampedModel, CreatedBy
 from utils.data import QUALIFICACAO, STATUS
@@ -35,7 +36,7 @@ class Natureza(UuidModel):
         return self.natureza
 
     def get_absolute_url(self):
-        return reverse_lazy('ocorrencia:naturezas')
+        return reverse_lazy('infracao:natureza_list')
 
     def to_dict(self):
         return {
@@ -82,5 +83,5 @@ class Infracao(UuidModel, CreatedBy, TimeStampedModel):
     def __str__(self):
         return f'{self.pessoa} - {self.natureza}'
 
-    # def get_absolute_url(self):
-    #     return reverse_lazy('ocorrencia:infracoes')
+    def get_absolute_url(self):
+        return reverse_lazy('infracao:infracao_list')
