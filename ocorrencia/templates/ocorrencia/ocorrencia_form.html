@@ -4,7 +4,8 @@
 <div class="col-lg-12">
   <div class="card">
     <div class="card-header">
-      {% if object.slug %} Editar {% else %} <i class="fa fa-plus"></i> Adicionar {% endif %} Ocorrência </div>
+      {% if object.slug %} Editar {% else %} <i class="fa fa-plus"></i> Adicionar {% endif %} Ocorrência
+    </div>
     <div class="card-body">
       <form method="POST">
         {% csrf_token %}
@@ -30,14 +31,12 @@
     </div>
   </div>
 </div>
-</div>
 {% endblock content %}
-
 {% block js %}
-  <script>
-    $('#id_data_do_fato').datepicker({
-      uiLibrary: 'bootstrap4',
-      format: 'dd/mm/yyyy',
-    });
-  </script>
+<script>
+$('#id_data_do_fato').datepicker({
+  uiLibrary: 'bootstrap4',
+  format: 'dd/mm/yyyy',
+});
+</script>
 {% endblock js %}

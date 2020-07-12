@@ -82,5 +82,5 @@ class Infracao(UuidModel, CreatedBy, TimeStampedModel):
     def __str__(self):
         return f'{self.pessoa} - {self.natureza}'
 
-    def get_absolute_url(self):
-        return reverse_lazy('ocorrencia:infracoes')
+    # def get_absolute_url(self):
+    #     return reverse_lazy('ocorrencia:infracoes')
