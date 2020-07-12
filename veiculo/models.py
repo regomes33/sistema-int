@@ -54,7 +54,7 @@ class Modelo(UuidModel):
         return self.modelo
 
     def get_absolute_url(self):
-        return reverse_lazy('veiculo:modelos')
+        return reverse_lazy('veiculo:modelo_list')
 
 
 class Cor(UuidModel):

@@ -99,7 +99,7 @@ def modelo_create(request):
 
 class ModeloUpdate(LRM, UpdateView):
     model = Modelo
-    template_name = 'modelo_form.html'
+    template_name = 'veiculo/modelo_form.html'
     form_class = ModeloForm
 
     def get_context_data(self, **kwargs):

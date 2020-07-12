@@ -36,7 +36,7 @@
               <tr>
                 <td>{{ object }}</td>
                 <td class="text-center">
-                  <span class="span-is-link"><i class="fa fa-edit"></i></span>
+                  <a href="{% url 'veiculo:modelo_update' object.slug %}"><i class="fa fa-edit"></i></a>
                 </td>
               </tr>
               {% endfor %}
