@@ -3,6 +3,7 @@ Importa os dados do Cloudinary.
 '''
 import csv
 import io
+import subprocess
 import sys
 import time
 import timeit
@@ -10,14 +11,14 @@ import urllib.request
 from pprint import pprint
 from django.contrib.auth.models import User
 from core.models import City
-from ocorrencia.models import AreaUpm
-from ocorrencia.models import Arma
-from ocorrencia.models import Autoria
-from ocorrencia.models import Genero
-from ocorrencia.models import Homicidio
-from ocorrencia.models import Infracao
-from ocorrencia.models import Motivacao
-from ocorrencia.models import Natureza
+from homicidio.models import AreaUpm
+from homicidio.models import Autoria
+from homicidio.models import Genero
+from homicidio.models import Homicidio
+from homicidio.models import Motivacao
+from infracao.models import Arma
+from infracao.models import Infracao
+from infracao.models import Natureza
 from ocorrencia.models import Ocorrencia
 from ocorrencia.models import PessoaOcorrencia
 from pessoa.models import Comparsa
@@ -30,6 +31,7 @@ from veiculo.models import Cor
 from veiculo.models import Modelo
 from veiculo.models import Veiculo
 
+LOCAL = True
 
 path = 'https://res.cloudinary.com/sistema-int/raw/upload'
 
@@ -55,6 +57,41 @@ filename_pessoa_tatuagem = f'{path}/v1594243968/csv/pessoa_tatuagem_200708_rwg6d
 filename_veiculo_cor = f'{path}/v1594243968/csv/veiculo_cor_200708_mi1rgw.csv'
 filename_veiculo_modelo = f'{path}/v1594243968/csv/veiculo_modelo_200708_z1fgmr.csv'
 filename_veiculo_veiculo = f'{path}/v1594243968/csv/veiculo_veiculo_200708_azri8x.csv'
+
+
+def download_file(file):
+    subprocess.call(f'wget {file}', shell=True)
+
+# if LOCAL:
+#     print('Downloading files...')
+#     download_file(filename_auth_user)
+#     download_file(filename_ocorrencia_areaupm)
+#     download_file(filename_ocorrencia_arma)
+#     download_file(filename_ocorrencia_autoria)
+#     download_file(filename_ocorrencia_genero)
+#     download_file(filename_ocorrencia_homicidio)
+#     download_file(filename_ocorrencia_infracao)
+#     download_file(filename_ocorrencia_motivacao)
+#     download_file(filename_ocorrencia_natureza)
+#     download_file(filename_ocorrencia_ocorrencia)
+#     download_file(filename_ocorrencia_ocorrenciaveiculo)
+#     download_file(filename_ocorrencia_pessoaocorrencia)
+#     download_file(filename_pessoa_comparsa)
+#     download_file(filename_pessoa_faccao)
+#     download_file(filename_pessoa_foto)
+#     download_file(filename_pessoa_pessoa)
+#     download_file(filename_pessoa_pessoacontato)
+#     download_file(filename_pessoa_pessoaveiculo)
+#     download_file(filename_pessoa_tatuagem)
+#     download_file(filename_veiculo_cor)
+#     download_file(filename_veiculo_modelo)
+#     download_file(filename_veiculo_veiculo)
+#     print('Download complete!')
+
+
+def fix_filename(filename):
+    if LOCAL:
+        return f"/tmp/{filename.split('/')[-1]}"
 
 
 def progressbar(it, prefix="", size=60, file=sys.stdout):
@@ -83,6 +120,18 @@ def read_data(items):
     return dictionary
 
 
+def csv_to_list(filename: str) -> list:
+    '''
+    Lê um csv e retorna um OrderedDict.
+    Créditos para Rafael Henrique
+    https://bit.ly/2FLDHsH
+    '''
+    with open(filename) as csv_file:
+        reader = csv.DictReader(csv_file, delimiter=';')
+        csv_data = [line for line in reader]
+    return csv_data
+
+
 def csv_online_to_list(url: str) -> list:
     '''
     Lê um CSV a partir de uma url.
@@ -94,21 +143,39 @@ def csv_online_to_list(url: str) -> list:
     return csv_data
 
 
+def get_data(filename):
+    '''
+    Retorna id e slug. Ajuda read_data.
+    '''
+    if LOCAL:
+        return read_data(csv_to_list(fix_filename(filename)))
+    return read_data(csv_online_to_list(filename))
+
+
+def get_list(filename):
+    '''
+    Retorna a lista de items.
+    '''
+    if LOCAL:
+        return csv_to_list(fix_filename(filename))
+    return csv_online_to_list(filename)
+
+
 dict_users = {}  # global
 
-dict_pessoas = read_data(csv_online_to_list(filename_pessoa_pessoa))
-dict_faccao = read_data(csv_online_to_list(filename_pessoa_faccao))
-dict_ocorrencia = read_data(csv_online_to_list(filename_ocorrencia_ocorrencia))
-dict_natureza = read_data(csv_online_to_list(filename_ocorrencia_natureza))
-dict_arma = read_data(csv_online_to_list(filename_ocorrencia_arma))
-dict_modelo = read_data(csv_online_to_list(filename_veiculo_modelo))
-dict_cor = read_data(csv_online_to_list(filename_veiculo_cor))
-dict_veiculo = read_data(csv_online_to_list(filename_veiculo_veiculo))
-dict_area_upm = read_data(csv_online_to_list(filename_ocorrencia_areaupm))
-dict_autoria = read_data(csv_online_to_list(filename_ocorrencia_autoria))
-dict_genero = read_data(csv_online_to_list(filename_ocorrencia_genero))
-dict_motivacao = read_data(csv_online_to_list(filename_ocorrencia_motivacao))
-dict_rai = read_data(csv_online_to_list(filename_ocorrencia_ocorrencia))
+dict_pessoas = get_data(filename_pessoa_pessoa)
+dict_faccao = get_data(filename_pessoa_faccao)
+dict_ocorrencia = get_data(filename_ocorrencia_ocorrencia)
+dict_natureza = get_data(filename_ocorrencia_natureza)
+dict_arma = get_data(filename_ocorrencia_arma)
+dict_modelo = get_data(filename_veiculo_modelo)
+dict_cor = get_data(filename_veiculo_cor)
+dict_veiculo = get_data(filename_veiculo_veiculo)
+dict_area_upm = get_data(filename_ocorrencia_areaupm)
+dict_autoria = get_data(filename_ocorrencia_autoria)
+dict_genero = get_data(filename_ocorrencia_genero)
+dict_motivacao = get_data(filename_ocorrencia_motivacao)
+dict_rai = get_data(filename_ocorrencia_ocorrencia)
 
 
 def my_import_data():
@@ -146,7 +213,7 @@ def my_import_data():
 
 
 def create_data(filename, model):
-    items = csv_online_to_list(filename)
+    items = get_list(filename)
     # Remove os ids
     map(lambda d: d.pop('id'), items)
     data = []
@@ -157,7 +224,7 @@ def create_data(filename, model):
 
 
 def create_pessoa(filename):
-    items = csv_online_to_list(filename)
+    items = get_list(filename)
     data = []
     for item in progressbar(items, 'Pessoas: '):
         del item['id']
@@ -206,7 +273,7 @@ def import_user(filename_auth_user):
     '''
     Importa os usuários.
     '''
-    items = csv_online_to_list(filename_auth_user)
+    items = get_list(filename_auth_user)
     for item in progressbar(items, 'Users: '):
         dict_users[str(item['id'])] = item['username']
         del item['id']
@@ -352,7 +419,7 @@ def get_veiculo(veiculo_id):
 
 
 def import_foto(filename):
-    items = csv_online_to_list(filename)
+    items = get_list(filename)
     data = []
     for item in progressbar(items, 'Fotos: '):
         del item['id']
@@ -369,7 +436,7 @@ def import_foto(filename):
 
 
 def import_tatuagem(filename):
-    items = csv_online_to_list(filename)
+    items = get_list(filename)
     data = []
     for item in progressbar(items, 'Tatuagem: '):
         del item['id']
@@ -390,7 +457,7 @@ def import_pessoacontato(filename):
 
 
 def import_comparsa(filename):
-    items = csv_online_to_list(filename)
+    items = get_list(filename)
     data = []
     for item in progressbar(items, 'Comparsas: '):
         del item['id']
@@ -422,7 +489,7 @@ def import_comparsa(filename):
 
 
 def import_pessoaveiculo(filename):
-    items = csv_online_to_list(filename)
+    items = get_list(filename)
     data = []
     for item in progressbar(items, 'Pessoa Veiculo: '):
         del item['id']
@@ -454,7 +521,7 @@ Ocorrencia
 
 
 def import_infracao(filename):
-    items = csv_online_to_list(filename)
+    items = get_list(filename)
     data = []
     for item in progressbar(items, 'Infraçao: '):
         del item['id']
@@ -485,7 +552,7 @@ def import_infracao(filename):
 
 
 def import_ocorrencia(filename):
-    items = csv_online_to_list(filename)
+    items = get_list(filename)
     data = []
     for item in progressbar(items, 'Ocorrencia: '):
         del item['id']
@@ -501,7 +568,7 @@ def import_ocorrencia(filename):
 
 
 def import_pessoa_ocorrencia(filename):
-    items = csv_online_to_list(filename)
+    items = get_list(filename)
     data = []
     for item in progressbar(items, 'PessoaOcorrencia: '):
         del item['id']
@@ -531,7 +598,7 @@ def import_ocorrenciaveiculo(filename):
 
 
 def import_veiculo(filename):
-    items = csv_online_to_list(filename)
+    items = get_list(filename)
     data = []
     for item in progressbar(items, 'Veiculo: '):
         del item['id']
@@ -553,7 +620,7 @@ def import_veiculo(filename):
 
 
 def import_ocorrencia_homicidio(filename):
-    items = csv_online_to_list(filename)
+    items = get_list(filename)
     data = []
     for item in progressbar(items, 'Homicidio: '):
         del item['id']
