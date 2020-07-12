@@ -32,18 +32,6 @@ class OcorrenciaList(LRM, ListView):
 
 
 @login_required
-def ocorrencia_detail(request, slug):
-    template_name = 'ocorrencia.html'
-    obj = Ocorrencia.objects.get(slug=slug)
-    context = {
-        'object': obj,
-        'model_name_plural': 'Ocorrências',
-        'url': reverse('ocorrencia:ocorrencia_list'),
-    }
-    return render(request, template_name, context)
-
-
-@login_required
 def ocorrencia_create(request):
     form = OcorrenciaForm(request.POST or None)
     template_name = 'ocorrencia/ocorrencia_form.html'
