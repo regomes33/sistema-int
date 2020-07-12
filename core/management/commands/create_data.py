@@ -7,9 +7,9 @@ from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 from core.fix.data import ARMA, NATUREZA, FACCAO, MODELO, COR, LOREM, CIDADE
 from core.management.commands.progress_bar import progressbar
-from ocorrencia.models import Arma
-from ocorrencia.models import Infracao
-from ocorrencia.models import Natureza
+from infracao.models import Arma
+from infracao.models import Infracao
+from infracao.models import Natureza
 from ocorrencia.models import Ocorrencia
 from ocorrencia.models import PessoaOcorrencia
 from pessoa.models import Comparsa
@@ -203,8 +203,8 @@ def create_pessoa():
 
         address = f'Rua {gen_first_name()} {gen_last_name()}'
         address_number = randint(100, 9999)
-        district = gen_last_name()
-        city = gen_city()
+        # district = gen_last_name()
+        # city = gen_city()
         cep = f'{gen_digits(5)}-{gen_digits(3)}'
 
         obj = Pessoa(
@@ -216,9 +216,9 @@ def create_pessoa():
             faccao=faccao,
             address=address,
             address_number=address_number,
-            district=district,
-            city=city,
-            uf='GO',
+            # district=district,
+            # city=city,
+            # uf='GO',
             cep=cep,
             rg=gen_rg(),
             cpf=gen_cpf(),
