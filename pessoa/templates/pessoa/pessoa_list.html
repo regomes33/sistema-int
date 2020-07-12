@@ -47,33 +47,58 @@
           <table class="table table-responsive-sm table-striped">
             <thead>
               <tr>
-                <th>Nome</th>
+                <th>Nome/Apelido/Facção/Status</th>
                 <th>Foto</th>
-                <th>Status</th>
-                <th>Apelido</th>
-                <th>Facção</th>
                 <th>Bairro</th>
-                <th>Cidade</th>
                 <th>Infrações</th>
-                <th class="text-center">Ações</th>
               </tr>
             </thead>
             <tbody>
+              {% for object in object_list %}
               <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
                 <td>
-                  <span class="badge badge-success">Ativo</span>
+                  {{ object }} <br>
+                  {% if object.apelido %}
+                  <span class="text-muted">Apelido: {{ object.apelido }}</span> <br>
+                  {% endif %}
+
+                  {% if object.faccao.nome == 'Comando Vermelho' %}
+                  <span class="badge badge-danger fs-badge">C.V.</span> <br>
+                  {% elif object.faccao.nome == 'ADE' %}
+                  <span class="badge badge-dark fs-badge">A.D.E.</span> <br>
+                  {% elif object.faccao.nome == 'PCC-Primeiro Comando da Capital' %}
+                  <span class="badge badge-warning fs-badge">P.C.C.</span> <br>
+                  {% elif object.faccao.nome == 'Não Identificada' %}
+                  <span class="badge badge-link fs-badge">Não Identificada</span> <br>
+                  {% endif %}
+
+                  {% if object.infracao_set.all.0.status == 'foragido' %}
+                  <span class="badge badge-danger">Foragido</span>
+                  {% elif object.infracao_set.all.0.status == 'morto' %}
+                  <span class="badge badge-secondary">Morto</span>
+                  {% elif object.infracao_set.all.0.status == 'preso' %}
+                  <span class="badge badge-primary">Preso</span>
+                  {% elif object.infracao_set.all.0.status == 'solto' %}
+                  <span class="badge badge-warning">Solto</span>
+                  {% endif %}
                 </td>
-                <td class="text-center">
-                  <span class="span-is-link"><i class="fa fa-edit"></i></span>
+                <td>
+                  {% if object.get_first_photo %}
+                  <img src="{{ object.get_first_photo.foto.url }}" width="100px">
+                  {% endif %}
+                </td>
+                <td>
+                  {{ object.district|default:"---" }} <br>
+                  <span class="text-muted">{{ object.district.city }}</span>
+                </td>
+                <td>
+                  {{ object.infracao_set.all.0.natureza.natureza.artigo }}
+                  {% for infracao in object.infracao_set.all %}
+                  <span class="badge badge-info badge-article" data-toggle="tooltip" data-placement="top" title="{{ infracao.natureza }}">{{ infracao.natureza.artigo }}</span>
+                  {% endfor %}
                 </td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>

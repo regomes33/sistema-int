@@ -49,3 +49,7 @@ span.required:after {
 .pr-ari-5 {
   padding-right: 5px;
 }
+
+.fs-badge {
+  font-size: 14px;
+}
