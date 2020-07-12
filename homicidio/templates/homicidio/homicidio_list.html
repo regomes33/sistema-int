@@ -85,7 +85,7 @@
                   <span class="text-muted">{{ object.district.city }}</span>
                 </td>
                 <td class="text-center">
-                  <span class="span-is-link"><i class="fa fa-edit"></i></span>
+                  <a href="{% url 'homicidio:homicidio_update' object.slug %}"><i class="fa fa-edit"></i></a>
                 </td>
               </tr>
               {% endfor %}
