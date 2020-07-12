@@ -51,7 +51,7 @@ def veiculo_create(request):
 
 class VeiculoUpdate(LRM, UpdateView):
     model = Veiculo
-    template_name = 'veiculo_form.html'
+    template_name = 'veiculo/veiculo_form.html'
     form_class = VeiculoForm
 
     def get_context_data(self, **kwargs):

@@ -42,7 +42,7 @@
                 <td>{{ object.cor }}</td>
                 <td>{{ object.observacao }}</td>
                 <td class="text-center">
-                  <span class="span-is-link"><i class="fa fa-edit"></i></span>
+                  <a href="{% url 'veiculo:veiculo_update' object.slug %}"><i class="fa fa-edit"></i></a>
                 </td>
               </tr>
               {% endfor %}

@@ -32,7 +32,7 @@ class Veiculo(UuidModel, TimeStampedModel):
         return f'{self.placa} - {self.modelo} - {self.cor}'
 
     def get_absolute_url(self):
-        return reverse_lazy('veiculo:veiculos')
+        return reverse_lazy('veiculo:veiculo_list')
 
     def to_dict(self):
         return {
