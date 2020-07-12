@@ -27,27 +27,39 @@
           <table class="table table-responsive-sm table-striped">
             <thead>
               <tr>
-                <th>Infração</th>
+                <th>Infrator</th>
                 <th>Natureza</th>
                 <th>Qualificação</th>
-                <th>Arma de fogo</th>
+                <th>Arma</th>
                 <th>Status</th>
                 <th class="text-center">Ações</th>
               </tr>
             </thead>
             <tbody>
+              {% for object in object_list %}
               <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{ object.pessoa }}</td>
+                <td>{{ object.natureza|default:"---" }}</td>
+                <td>{{ object.get_qualificacao_display }}</td>
+                <td>{{ object.arma|default:"---" }}</td>
                 <td>
-                  <span class="badge badge-success">Ativo</span>
+                  {% if object.status == 'foragido' %}
+                    <span class="badge badge-danger">Foragido</span>
+                  {% elif object.status == 'morto' %}
+                    <span class="badge badge-secondary">Morto</span>
+                  {% elif object.status == 'preso' %}
+                    <span class="badge badge-primary">Preso</span>
+                  {% elif object.status == 'solto' %}
+                    <span class="badge badge-warning">Solto</span>
+                  {% else %}
+                    <span>---</span>
+                  {% endif %}
                 </td>
                 <td class="text-center">
                   <span class="span-is-link"><i class="fa fa-edit"></i></span>
                 </td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
