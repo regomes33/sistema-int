@@ -34,14 +34,18 @@
               </tr>
             </thead>
             <tbody>
+              {% for object in object_list %}
               <tr>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>
+                  {{ object.rai|default:"---" }}
+                </td>
+                <td>{{ object.data_do_fato|date:"d/m/y" }}</td>
+                <td>{{ object.descricao }}</td>
                 <td class="text-center">
                   <span class="span-is-link"><i class="fa fa-edit"></i></span>
                 </td>
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
