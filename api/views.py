@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from localflavor.br.br_states import STATE_CHOICES
 from infracao.forms import InfracaoForm
+from pessoa.models import Pessoa
 # from ocorrencia.forms import InfracaoForm, PessoaOcorrenciaForm
 # from pessoa.forms import PessoaForm, PessoaContatoForm, PessoaComparsaForm
 # from pessoa.forms import PessoaMinimalForm
@@ -20,26 +21,6 @@ def pessoas(request):
     data = [item.to_dict() for item in items]
     response = {'data': data}
     return JsonResponse(response)
-
-
-def cpf_validate(cpf, data):
-    # Retorna somente os números do CPF
-    if not cpf.isdigit():
-        cpf = re.sub("[-\.]", "", cpf)
-    # Verifica se o CPF contém exatamente 11 digitos.
-    if len(cpf) != 11:
-        data = {
-            'message': 'CPF deve conter 11 dígitos!',
-            'status_code': 900
-        }
-    # Verifica se CPF já existe.
-    cpf_exists = Pessoa.objects.filter(cpf=cpf)
-    if cpf_exists:
-        data = {
-            'message': 'CPF já cadastrado!',
-            'status_code': 900
-        }
-    return cpf, data
 
 
 @login_required
