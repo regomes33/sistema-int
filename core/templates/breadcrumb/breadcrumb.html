@@ -1,0 +1,22 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="{% url 'core:index' %}">Dashboard</a>
+  </li>
+  <li class="breadcrumb-item">
+    <a href="{{ url }}">{{ model_name_plural }}</a>
+  </li>
+
+  {% if object %}
+    <li class="breadcrumb-item">
+      {{ object }}
+    </li>
+  {% endif %}
+
+  {% if object.pk %}
+    {% if model_name_plural != 'Pessoas' %}
+      <li class="breadcrumb-item active">Editar</li>
+    {% endif %}
+  {% elif '/add/' in request.resolver_match.route %}
+    <li class="breadcrumb-item active">Adicionar</li>
+  {% endif %}
+</ol>
