@@ -74,6 +74,12 @@ class District(models.Model):
         verbose_name = 'bairro'
         verbose_name_plural = 'bairros'
 
+    def to_dict(self):
+        return {
+            'value': self.pk,
+            'text': f'{self.name} - {self.city}',
+        }
+
 
 class Address(models.Model):
     address = models.CharField(

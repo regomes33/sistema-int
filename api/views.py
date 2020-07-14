@@ -3,18 +3,28 @@ import re
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from localflavor.br.br_states import STATE_CHOICES
+from core.models import District
 from infracao.forms import InfracaoForm
-from pessoa.models import Pessoa
-from pessoa.forms import PessoaForm
-from pessoa.forms import PessoaContatoForm
+from infracao.models import Arma
+from infracao.models import Infracao
+from infracao.models import Natureza
+from ocorrencia.forms import PessoaOcorrenciaForm
+from ocorrencia.models import Ocorrencia
+from ocorrencia.models import PessoaOcorrencia
 from pessoa.forms import PessoaComparsaForm
-# from ocorrencia.forms import InfracaoForm, PessoaOcorrenciaForm
-# from pessoa.forms import PessoaMinimalForm
-# from pessoa.forms import PessoaVeiculoForm
-# from pessoa.models import Pessoa, Faccao, Foto, Tatuagem
-# from pessoa.models import PessoaContato, PessoaVeiculo, Comparsa
+from pessoa.forms import PessoaContatoForm
+from pessoa.forms import PessoaForm
+from pessoa.forms import PessoaMinimalForm
+from pessoa.forms import PessoaVeiculoForm
+from pessoa.models import Comparsa
+from pessoa.models import Faccao
+from pessoa.models import Foto
+from pessoa.models import Pessoa
+from pessoa.models import PessoaContato
+from pessoa.models import PessoaVeiculo
+from pessoa.models import Tatuagem
 from utils.data import QUALIFICACAO, STATUS, TIPO
-# from veiculo.models import Veiculo
+from veiculo.models import Veiculo
 
 
 @login_required
@@ -166,6 +176,14 @@ def pessoa_create_ajax(request):
                 filter(None, [form_post.nome, form_post.sobrenome])
             )
             return JsonResponse(data)
+
+
+@login_required
+def districts(request):
+    items = District.objects.all()
+    data = [item.to_dict() for item in items]
+    response = {'data': data}
+    return JsonResponse(response)
 
 
 @login_required

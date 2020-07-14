@@ -27,6 +27,11 @@
   box-sizing: border-box;
 }
 
+.required:after {
+  content: ' *';
+  color: red;
+}
+
 span.required:after {
   content: ' *';
   color: red;

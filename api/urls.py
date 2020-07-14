@@ -44,6 +44,7 @@ pessoas_patterns = [
 
 urlpatterns = [
     path('pessoas/', include(pessoas_patterns)),
+    path('districts/', v.districts),
     path('faccoes/', v.faccoes),
     path('naturezas/', v.naturezas),
     path('qualificacoes/', v.qualificacoes),

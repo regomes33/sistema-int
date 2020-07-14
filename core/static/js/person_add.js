@@ -20,18 +20,16 @@ var app = new Vue({
       'address_number': '',
       'complement': '',
       'district': '',
-      'city': '',
-      'uf': '',
       'cep': '',
       'country': 'Brasil',
     },
     pessoas: [],
+    districts: [],
     faccoes: [],
     naturezas: [],
     qualificacoes: [],
     armas: [],
     status: [],
-    ufs: [],
     photos: [],
     fotos: [{
       'foto': '',
@@ -97,6 +95,11 @@ var app = new Vue({
         this.naturezas = response.data.data;
       })
 
+    axios.get(endpoint + 'api/districts/')
+      .then(response => {
+        this.districts = response.data.data;
+      })
+
     axios.get(endpoint + 'api/faccoes/')
       .then(response => {
         this.faccoes = response.data.data;
@@ -131,12 +134,6 @@ var app = new Vue({
       .then(response => {
         this.tipos = response.data.data;
       })
-
-    axios.get(endpoint + 'api/ufs/')
-      .then(response => {
-        this.ufs = response.data.data;
-      })
-
   },
   methods: {
     notifyError(title, message) {
