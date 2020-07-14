@@ -41,6 +41,21 @@
           <div class="card p-4">
             <div class="card-body">
               <h1>Login</h1>
+
+              {% for message in messages %}
+                {% if 'success' in message.tags %}
+                  <p class="alert alert-success" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+                {% else %}
+                  <p class="alert alert-danger" role="alert"><span style="font-weight:bold">{{ message }}</span></p>
+                {% endif %}
+              {% endfor %}
+
+              {% if form.errors %}
+                {% for error in form.non_field_errors %}
+                  <p class="alert alert-danger" role="alert"><span style="font-weight:bold">{{ error }}</span></p>
+                {% endfor %}
+              {% endif %}
+
               <form action="." method="POST">
                 {% csrf_token %}
                 <!-- <p class="text-muted">Sign In to your account</p> -->
@@ -50,7 +65,7 @@
                       <i class="icon-user"></i>
                     </span>
                   </div>
-                  <input class="form-control" name="username" type="text" placeholder="Usuário">
+                  <input id="id_username" class="form-control" name="username" type="text" placeholder="Usuário">
                 </div>
                 <div class="input-group mb-4">
                   <div class="input-group-prepend">
@@ -58,7 +73,7 @@
                       <i class="icon-lock"></i>
                     </span>
                   </div>
-                  <input class="form-control" name="password" type="password" placeholder="Senha">
+                  <input id="id_password" class="form-control" name="password" type="password" placeholder="Senha">
                 </div>
                 <div class="row">
                   <div class="col-6">
@@ -92,6 +107,21 @@
   <script src="{% static 'js/pace.min.js' %}"></script>
   <script src="{% static 'js/perfect-scrollbar.min.js' %}"></script>
   <script src="{% static 'js/coreui.min.js' %}"></script>
+
+  <script>
+    window.onload = function() {
+      var input = document.getElementById("id_username").focus();
+    }
+
+    //close alert after 2 seconds
+    window.setTimeout(function() {
+        $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove();
+        });
+    }, 2000);
+
+  </script>
+
 </body>
 
 </html>
