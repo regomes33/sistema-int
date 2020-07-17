@@ -13,6 +13,7 @@ class PessoaForm(forms.ModelForm):
             'mae',
             'pai',
             'faccao',
+            'status_atual',
             'nascimento',
             'cpf',
             'rg',

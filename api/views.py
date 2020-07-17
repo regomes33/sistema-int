@@ -195,6 +195,19 @@ def faccoes(request):
 
 
 @login_required
+def status_atuais(request):
+    items = STATUS
+    data = [
+        {
+            'value': item[0],
+            'text': item[1],
+        }
+        for item in items]
+    response = {'data': data}
+    return JsonResponse(response)
+
+
+@login_required
 def naturezas(request):
     items = Natureza.objects.all()
     data = [item.to_dict() for item in items]

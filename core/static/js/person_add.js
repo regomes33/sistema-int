@@ -12,6 +12,7 @@ var app = new Vue({
       'mae': '',
       'pai': '',
       'faccao': '',
+      'status_atual': '',
       'nascimento': '',
       'cpf': '',
       'rg': '',
@@ -26,6 +27,7 @@ var app = new Vue({
     pessoas: [],
     districts: [],
     faccoes: [],
+    status_atuais: [],
     naturezas: [],
     qualificacoes: [],
     armas: [],
@@ -103,6 +105,11 @@ var app = new Vue({
     axios.get(endpoint + 'api/faccoes/')
       .then(response => {
         this.faccoes = response.data.data;
+      })
+
+    axios.get(endpoint + 'api/status_atuais/')
+      .then(response => {
+        this.status_atuais = response.data.data;
       })
 
     axios.get(endpoint + 'api/qualificacoes/')

@@ -58,10 +58,10 @@ class PessoaAdmin(admin.ModelAdmin):
         ComparsaInline,
         PessoaVeiculoInline
     )
-    list_display = ('__str__', 'slug', 'nome',
-                    'sobrenome', 'apelido', 'faccao', 'vitima')
+    list_display = ('__str__', 'slug', 'apelido',
+                    'status_atual', 'faccao', 'vitima')
     search_fields = ('nome', 'sobrenome', 'apelido', 'mae', 'pai')
-    list_filter = ('vitima', 'faccao', 'infracao__natureza')
+    list_filter = ('status_atual', 'vitima', 'faccao', 'infracao__natureza')
     date_hierarchy = 'created'
 
     def has_delete_permission(self, request, obj=None):

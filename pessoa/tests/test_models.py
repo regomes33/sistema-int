@@ -20,6 +20,7 @@ class TestPessoa(TestCase):
             'pai',
             'observacao',
             'faccao',
+            'status_atual',
             'vitima',
             'nascimento',
             'created',

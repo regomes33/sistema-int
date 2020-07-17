@@ -2,6 +2,7 @@ from django.db import models
 from core.models import UuidModel, TimeStampedModel, CreatedBy, Address, Document
 from veiculo.models import Veiculo
 from utils.data import TIPO
+from utils.data import STATUS
 
 
 class Pessoa(UuidModel, TimeStampedModel, CreatedBy, Address, Document):
@@ -18,6 +19,11 @@ class Pessoa(UuidModel, TimeStampedModel, CreatedBy, Address, Document):
         verbose_name='facção',
         null=True,
         blank=True
+    )
+    status_atual = models.CharField(
+        max_length=8,
+        choices=STATUS,
+        default='foragido'
     )
     vitima = models.BooleanField(default=False)
     nascimento = models.DateField(

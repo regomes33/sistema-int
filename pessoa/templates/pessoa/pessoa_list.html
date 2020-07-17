@@ -130,13 +130,13 @@
                   {% elif object.faccao.nome == 'Não Identificada' %}
                   <span class="badge badge-link fs-badge">Não Identificada</span> <br>
                   {% endif %}
-                  {% if object.infracao_set.all.0.status == 'foragido' %}
+                  {% if object.status_atual == 'foragido' %}
                   <span class="badge badge-danger">Foragido</span>
-                  {% elif object.infracao_set.all.0.status == 'morto' %}
+                  {% elif object.status_atual == 'morto' %}
                   <span class="badge badge-secondary">Morto</span>
-                  {% elif object.infracao_set.all.0.status == 'preso' %}
+                  {% elif object.status_atual == 'preso' %}
                   <span class="badge badge-primary">Preso</span>
-                  {% elif object.infracao_set.all.0.status == 'solto' %}
+                  {% elif object.status_atual == 'solto' %}
                   <span class="badge badge-warning">Solto</span>
                   {% endif %}
                 </td>
