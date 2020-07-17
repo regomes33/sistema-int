@@ -13,6 +13,7 @@ from .models import Pessoa, Faccao
 from core.models import City
 from core.models import District
 from ocorrencia.models import PessoaOcorrencia, Natureza
+from utils.data import STATUS
 
 
 class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):
@@ -26,6 +27,11 @@ class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):
         # context['pessoas_total'] = Pessoa.objects.values_list('id', flat=True).count()
 
         # Dados para popular os dropdown dos filtros
+        context['status_atuais'] = [
+            {'value': item[0], 'text': item[1]}
+            for item in STATUS
+        ]
+
         context['naturezas'] = Natureza.objects.values(
             value=F('pk'),
             text=F('natureza')
@@ -47,12 +53,15 @@ class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):
         )
 
         # Devolve o valor selecionado pra manter o filtro aplicado no template.
+        filter_status_atual = self.request.GET.get('filter_status_atual')
         filter_natureza = self.request.GET.get('filter_natureza')
         filter_bairro = self.request.GET.get('filter_bairro')
         filter_cidade = self.request.GET.get('filter_cidade')
         filter_faccao = self.request.GET.get('filter_faccao')
 
         # Devolve o valor para o template.
+        if filter_status_atual:
+            context['selected_status_atual'] = filter_status_atual
         if filter_natureza:
             context['selected_natureza'] = str(filter_natureza)
         if filter_bairro:

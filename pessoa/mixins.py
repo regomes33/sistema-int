@@ -17,6 +17,7 @@ class SearchMixin(object):
     def get_queryset(self):
         queryset = super(SearchMixin, self).get_queryset()
         search = self.request.GET.get('search')
+        filter_status_atual = self.request.GET.get('filter_status_atual')
         filter_natureza = self.request.GET.get('filter_natureza')
         filter_bairro = self.request.GET.get('filter_bairro')
         filter_cidade = self.request.GET.get('filter_cidade')
@@ -27,6 +28,9 @@ class SearchMixin(object):
                 Q(sobrenome__icontains=search) |
                 Q(apelido__icontains=search)
             )
+
+        if filter_status_atual:
+            queryset = queryset.filter(Q(status_atual=filter_status_atual))
 
         if filter_natureza:
             queryset = queryset.filter(Q(infracao__natureza=filter_natureza))

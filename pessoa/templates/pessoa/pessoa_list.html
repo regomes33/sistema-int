@@ -36,13 +36,20 @@
               <div class="row">
                 <div class="col-12">
                   <form id="formFilter" action="." method="GET">
-                    <!-- <fieldset class="form-group">
+
+                    <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Status</legend>
-                      <select id="" name="" class="form-control">
+                      <select id="filterStatusAtual" name="filter_status_atual" class="form-control">
                         <option value="">---</option>
-                        <option value="">A</option>
+                        {% for item in status_atuais %}
+                          {% if selected_status_atual == item.value %}
+                          <option value="{{ item.value }}" selected>{{ item.text }}</option>
+                          {% else %}
+                          <option value="{{ item.value }}">{{ item.text }}</option>
+                          {% endif %}
+                        {% endfor %}
                       </select>
-                    </fieldset> -->
+                    </fieldset>
 
                     <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Natureza</legend>
@@ -202,8 +209,11 @@
     $('[data-toggle="tooltip"]').tooltip()
   });
 
+  $('#filterStatusAtual').on('change', function () {
+    $('#formFilter').submit();
+  });
+
   $('#filterNatureza').on('change', function () {
-    console.log('oi');
     $('#formFilter').submit();
   });
 
