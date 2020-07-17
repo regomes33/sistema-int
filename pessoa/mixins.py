@@ -19,8 +19,8 @@ class SearchMixin(object):
         search = self.request.GET.get('search')
         filter_natureza = self.request.GET.get('filter_natureza')
         filter_bairro = self.request.GET.get('filter_bairro')
-        filter_faccao = self.request.GET.get('filter_faccao')
         filter_cidade = self.request.GET.get('filter_cidade')
+        filter_faccao = self.request.GET.get('filter_faccao')
         if search:
             queryset = queryset.filter(
                 Q(nome__icontains=search) |

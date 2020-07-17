@@ -1,13 +1,17 @@
+from pprint import pprint
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
+from django.db.models import F
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, resolve_url
 from django.urls import reverse
 from django.views.generic import ListView
 from .forms import PessoaForm
-from .models import Pessoa, Faccao
 from .mixins import PessoaSomenteMixin, SearchMixin
+from .models import Pessoa, Faccao
+from core.models import City
+from core.models import District
 from ocorrencia.models import PessoaOcorrencia, Natureza
 
 
@@ -21,32 +25,42 @@ class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):
         context['model_name_plural'] = 'Pessoas'
         # context['pessoas_total'] = Pessoa.objects.values_list('id', flat=True).count()
 
-        context['naturezas'] = Natureza.objects.values_list('pk', 'natureza')
+        # Dados para popular os dropdown dos filtros
+        context['naturezas'] = Natureza.objects.values(
+            value=F('pk'),
+            text=F('natureza')
+        )
 
-        bairros = Pessoa.objects.values_list(
-            'district', flat=True)
-        context['bairros'] = sorted(
-            set([bairro for bairro in bairros if bairro]))
+        context['bairros'] = District.objects.values(
+            value=F('pk'),
+            text=F('name')
+        )
 
-        # cidades = Pessoa.objects.values_list('city', flat=True)
-        # context['cidades'] = sorted(set([cidade for cidade in cidades if cidade]))
+        context['cidades'] = City.objects.values(
+            value=F('pk'),
+            text=F('name')
+        )
 
-        context['faccoes'] = Faccao.objects.values_list('pk', 'nome')
+        context['faccoes'] = Faccao.objects.values(
+            value=F('pk'),
+            text=F('nome')
+        )
 
         # Devolve o valor selecionado pra manter o filtro aplicado no template.
         filter_natureza = self.request.GET.get('filter_natureza')
         filter_bairro = self.request.GET.get('filter_bairro')
-        filter_faccao = self.request.GET.get('filter_faccao')
         filter_cidade = self.request.GET.get('filter_cidade')
+        filter_faccao = self.request.GET.get('filter_faccao')
 
+        # Devolve o valor para o template.
         if filter_natureza:
             context['selected_natureza'] = str(filter_natureza)
         if filter_bairro:
             context['selected_bairro'] = str(filter_bairro)
-        if filter_faccao:
-            context['selected_faccao'] = str(filter_faccao)
         if filter_cidade:
             context['selected_cidade'] = str(filter_cidade)
+        if filter_faccao:
+            context['selected_faccao'] = str(filter_faccao)
 
         return context
 
