@@ -7,13 +7,13 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, resolve_url
 from django.urls import reverse
 from django.views.generic import ListView
-from .forms import PessoaForm
-from .mixins import PessoaSomenteMixin, SearchMixin
-from .models import Pessoa, Faccao
 from core.models import City
 from core.models import District
 from ocorrencia.models import PessoaOcorrencia, Natureza
 from utils.data import STATUS
+from .forms import PessoaForm
+from .mixins import PessoaSomenteMixin, SearchMixin
+from .models import Pessoa, Faccao
 
 
 class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):

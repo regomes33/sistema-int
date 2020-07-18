@@ -1,14 +1,18 @@
+from pprint import pprint
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
-from django.db.models import Q
+from django.db.models import F
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import ListView, UpdateView
+from core.models import City
+from core.models import District
 from homicidio.mixins import SearchMixin
 from ocorrencia.forms import OcorrenciaForm
 from pessoa.forms import PessoaMinimalForm
+from utils.data import FORMA
 from .forms import HomicidioForm
 from .models import AreaUpm
 from .models import Genero
@@ -16,107 +20,77 @@ from .models import Homicidio
 from .models import Motivacao
 
 
-class HomicidioList(LRM, ListView, SearchMixin):
+class HomicidioList(LRM, SearchMixin, ListView):
     model = Homicidio
     template_name = 'homicidios.html'
     paginate_by = 10
 
-    def get_queryset(self):
-        queryset = super(HomicidioList, self).get_queryset()
-
-        # Retorna somente as vítimas.
-        queryset = queryset.filter(vitima__vitima=True)
-
-        filter_forma = self.request.GET.get('filter_forma')
-        filter_area_upm = self.request.GET.get('filter_area_upm')
-        filter_motivacao = self.request.GET.get('filter_motivacao')
-        filter_data_inicial = self.request.GET.get('filter_data_inicial')
-        filter_data_final = self.request.GET.get('filter_data_final')
-
-        filter_genero = self.request.GET.get('filter_genero')
-        filter_bairro = self.request.GET.get('filter_bairro')
-
-        if filter_forma:
-            queryset = queryset.filter(forma=filter_forma)
-
-        if filter_area_upm:
-            queryset = queryset.filter(area_upm__pk=filter_area_upm)
-
-        if filter_motivacao:
-            queryset = queryset.filter(motivacao=filter_motivacao)
-
-        if filter_data_inicial and filter_data_final:
-            queryset = queryset.filter(
-                data_do_homicidio__range=(
-                    filter_data_inicial, filter_data_final)
-            )
-
-        if filter_genero:
-            queryset = queryset.filter(genero=filter_genero)
-
-        if filter_bairro:
-            queryset = queryset.filter(district=filter_bairro)
-
-        search = self.request.GET.get('search')
-        if search:
-            queryset = queryset.filter(
-                Q(forma__icontains=search) |
-                Q(vitima__nome__icontains=search) |
-                Q(vitima__sobrenome__icontains=search)
-            )
-        return queryset
-
     def get_context_data(self, **kwargs):
         context = super(HomicidioList, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Homicidios'
-        context['area_upms'] = AreaUpm.objects.values_list('pk', 'area_upm')
-        formas = Homicidio.objects.values_list(
-            'forma', flat=True)
-        context['formas'] = sorted(
-            set([forma for forma in formas if forma]))
 
-        motivacoes = Motivacao.objects.values_list('pk', 'titulo')
-        context['motivacoes'] = sorted(
-            set([motivacao for motivacao in motivacoes if motivacao]))
+        # Dados para popular os dropdown dos filtros
+        context['formas'] = [
+            {'value': item[0], 'text': item[1]}
+            for item in FORMA
+        ]
 
-        generos = Genero.objects.values_list('pk', 'genero')
-        context['generos'] = sorted(
-            set([genero for genero in generos if genero]))
+        context['areas'] = AreaUpm.objects.values(
+            value=F('pk'),
+            text=F('area_upm')
+        )
 
-        bairros = Homicidio.objects.values_list(
-            'district', flat=True)
-        context['bairros'] = sorted(
-            set([bairro for bairro in bairros if bairro]))
+        context['motivacoes'] = Motivacao.objects.values(
+            value=F('pk'),
+            text=F('titulo')
+        )
+
+        context['generos'] = Genero.objects.values(
+            value=F('pk'),
+            text=F('genero')
+        )
+
+        context['bairros'] = District.objects.values(
+            value=F('pk'),
+            text=F('name')
+        )
+
+        context['cidades'] = City.objects.values(
+            value=F('pk'),
+            text=F('name')
+        )
 
         # Devolve o valor selecionado pra manter o filtro aplicado no template.
         filter_forma = self.request.GET.get('filter_forma')
-        filter_area_upm = self.request.GET.get('filter_area_upm')
+        filter_area = self.request.GET.get('filter_area')
         filter_motivacao = self.request.GET.get('filter_motivacao')
-        filter_data_inicial = self.request.GET.get('filter_data_inicial')
-        filter_data_final = self.request.GET.get('filter_data_final')
         filter_genero = self.request.GET.get('filter_genero')
         filter_bairro = self.request.GET.get('filter_bairro')
+        filter_cidade = self.request.GET.get('filter_cidade')
 
         if filter_forma:
             context['selected_forma'] = str(filter_forma)
 
-        if filter_area_upm:
-            context['selected_area_upm'] = str(filter_area_upm)
+        if filter_area:
+            context['selected_area'] = str(filter_area)
 
         if filter_motivacao:
             context['selected_motivacao'] = str(filter_motivacao)
-
-        if filter_data_inicial:
-            context['filter_data_inicial'] = str(filter_data_inicial)
-
-        if filter_data_final:
-            context['filter_data_inicial'] = str(filter_data_final)
 
         if filter_genero:
             context['selected_genero'] = str(filter_genero)
 
         if filter_bairro:
             context['selected_bairro'] = str(filter_bairro)
+
+        if filter_cidade:
+            context['selected_cidade'] = str(filter_cidade)
+
+        # if filter_data_inicial:
+        #     context['filter_data_inicial'] = str(filter_data_inicial)
+
+        # if filter_data_final:
+        #     context['filter_data_inicial'] = str(filter_data_final)
 
         return context
 

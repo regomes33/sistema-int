@@ -39,7 +39,7 @@ class SearchMixin(object):
             queryset = queryset.filter(Q(district=filter_bairro))
 
         if filter_cidade:
-            queryset = queryset.filter(Q(city=filter_cidade))
+            queryset = queryset.filter(Q(district__city=filter_cidade))
 
         if filter_faccao:
             queryset = queryset.filter(Q(faccao=filter_faccao))
