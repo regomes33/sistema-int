@@ -1,0 +1,43 @@
+<ul class="pagination">
+  {% if page_obj.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.urlencode %}&{{ request.GET.urlencode }}{% endif %}">&laquo;</a>
+    </li>
+  {% endif %}
+
+  {% for pg in page_obj.paginator.page_range %}
+    <!-- Sempre mostra as 2 primeiras e as 2 últimas páginas -->
+    {% if pg == 1 or pg == 2 or pg == page_obj.paginator.num_pages or pg == page_obj.paginator.num_pages|add:'-1' %}
+      {% if page_obj.number == pg %}
+        <li class="page-item active">
+          <a class="page-link"  href="?page={{ pg }}{% if request.GET.urlencode %}&{{ request.GET.urlencode }}{% endif %}">{{ pg }}</a>
+        </li>
+      {% else %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ pg }}{% if request.GET.urlencode %}&{{ request.GET.urlencode }}{% endif %}">{{ pg }}</a>
+        </li>
+      {% endif %}
+    {% else %}
+      {% if page_obj.number == pg %}
+        <li class="page-item active">
+          <a class="page-link" href="?page={{ pg }}{% if request.GET.urlencode %}&{{ request.GET.urlencode }}{% endif %}">{{ pg }}</a>
+        </li>
+      {% elif pg > page_obj.number|add:'-3' and pg < page_obj.number|add:'3' %}
+        <!-- Mostra 2 páginas antes e 2 páginas depois da atual -->
+        <li class="page-item">
+          <a class="page-link" href="?page={{ pg }}{% if request.GET.urlencode %}&{{ request.GET.urlencode }}{% endif %}">{{ pg }}</a>
+        </li>
+      {% elif pg == page_obj.number|add:'-3' or pg == page_obj.number|add:'3' %}
+        <li class="page-item">
+          <a class="page-link" href=".">...</a>
+        </li>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {% if page_obj.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.urlencode %}&{{ request.GET.urlencode }}{% endif %}">&raquo;</a>
+    </li>
+  {% endif %}
+</ul>
