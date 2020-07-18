@@ -27,6 +27,8 @@ class OcorrenciaList(LRM, ListView):
     def get_context_data(self, **kwargs):
         context = super(OcorrenciaList, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Ocorrências'
+        items_total = Ocorrencia.objects.values_list('id', flat=True).count()
+        context['items_total'] = items_total
         return context
 
 

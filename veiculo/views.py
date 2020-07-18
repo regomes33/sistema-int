@@ -28,6 +28,8 @@ class VeiculoList(LRM, ListView):
     def get_context_data(self, **kwargs):
         context = super(VeiculoList, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Veículos'
+        items_total = Veiculo.objects.values_list('id', flat=True).count()
+        context['items_total'] = items_total
         return context
 
 
@@ -76,6 +78,8 @@ class ModeloList(LRM, ListView):
     def get_context_data(self, **kwargs):
         context = super(ModeloList, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Modelos'
+        items_total = Modelo.objects.values_list('id', flat=True).count()
+        context['items_total'] = items_total
         return context
 
 

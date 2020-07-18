@@ -28,6 +28,8 @@ class HomicidioList(LRM, SearchMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(HomicidioList, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Homicidios'
+        items_total = Homicidio.objects.values_list('id', flat=True).count()
+        context['items_total'] = items_total
 
         # Dados para popular os dropdown dos filtros
         context['formas'] = [

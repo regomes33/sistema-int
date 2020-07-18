@@ -31,6 +31,8 @@ class InfracaoList(LRM, ListView):
     def get_context_data(self, **kwargs):
         context = super(InfracaoList, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Infrações'
+        items_total = Infracao.objects.values_list('id', flat=True).count()
+        context['items_total'] = items_total
         return context
 
 
@@ -81,6 +83,8 @@ class NaturezaList(LRM, ListView):
     def get_context_data(self, **kwargs):
         context = super(NaturezaList, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Naturezas'
+        items_total = Natureza.objects.values_list('id', flat=True).count()
+        context['items_total'] = items_total
         return context
 
 
