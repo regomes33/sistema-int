@@ -37,23 +37,19 @@
                 <div class="col-12">
                   <form id="formFilter" action="." method="GET">
 
+                    <button class="btn btn-primary" type="submit">OK</button>
+
                     <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Status</legend>
-                      <select id="filterStatusAtual" name="filter_status_atual" class="form-control">
-                        <option value="">---</option>
-                        {% for item in status_atuais %}
-                        {% if selected_status_atual == item.value %}
-                        <option value="{{ item.value }}" selected>{{ item.text }}</option>
-                        {% else %}
-                        <option value="{{ item.value }}">{{ item.text }}</option>
-                        {% endif %}
-                        {% endfor %}
-                      </select>
+                      {% for item in status_atuais %}
+                        <input name="filter_status_atual" type="checkbox" value="{{ item.value }}" />
+                        <label>{{ item.text }}</label> <br>
+                      {% endfor %}
                     </fieldset>
 
                     <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Natureza</legend>
-                      <select id="filterNatureza" name="filter_natureza" class="form-control">
+                      <select id="filterNatureza" multiple name="filter_natureza" class="form-control selectpicker">
                         <option value="">---</option>
                         {% for item in naturezas %}
                         {% if selected_natureza == item.value %}
@@ -66,7 +62,7 @@
 
                     <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Bairro</legend>
-                      <select id="filterBairro" name="filter_bairro" class="form-control">
+                      <select id="filterBairro" name="filter_bairro" class="form-control selectpicker">
                         <option value="">---</option>
                         {% for item in bairros %}
                         {% if selected_bairro == item.value %}
@@ -79,7 +75,7 @@
 
                     <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Cidade</legend>
-                      <select id="filterCidade" name="filter_cidade" class="form-control">
+                      <select id="filterCidade" name="filter_cidade" class="form-control selectpicker">
                         <option value="">---</option>
                         {% for item in cidades %}
                         {% if selected_cidade == item.value %}
@@ -92,7 +88,7 @@
 
                     <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Facção</legend>
-                      <select id="filterFaccao" name="filter_faccao" class="form-control">
+                      <select id="filterFaccao" name="filter_faccao" class="form-control selectpicker">
                         <option value="">---</option>
                         {% for item in faccoes %}
                         {% if selected_faccao == item.value %}
@@ -196,6 +192,8 @@
 
 {% block js %}
 <script>
+$.fn.selectpicker.Constructor.BootstrapVersion = '4';
+
 $(document).ready(function() {
   $('#filterNatureza').val('{{ selected_natureza }}');
   $('#filterBairro').val('{{ selected_bairro }}');
@@ -204,20 +202,21 @@ $(document).ready(function() {
 });
 
 $(function() {
-  $('[data-toggle="tooltip"]').tooltip()
+  $('[data-toggle="tooltip"]').tooltip();
 });
 
-$('#filterStatusAtual').on('change', function() {
-  $('#formFilter').submit();
-});
+// $('#filterStatusAtual').on('change', function() {
+//   $('#formFilter').submit();
+// });
 
-$('#filterNatureza').on('change', function() {
-  $('#formFilter').submit();
-});
 
-$('#filterBairro').on('change', function() {
-  $('#formFilter').submit();
-});
+// $('#filterNatureza').on('change', function() {
+//   $('#formFilter').submit();
+// });
+
+// $('#filterBairro').on('change', function() {
+//   $('#formFilter').submit();
+// });
 
 $('#filterFaccao').on('change', function() {
   $('#formFilter').submit();
