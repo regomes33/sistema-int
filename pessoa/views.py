@@ -112,4 +112,4 @@ def pessoa_update(request, slug):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(resolve_url('pessoa:pessoa', pessoa.slug))
+            return HttpResponseRedirect(resolve_url('pessoa:pessoa_detail', pessoa.slug))
