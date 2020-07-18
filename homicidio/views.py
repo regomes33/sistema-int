@@ -61,12 +61,15 @@ class HomicidioList(LRM, SearchMixin, ListView):
         )
 
         # Devolve o valor selecionado pra manter o filtro aplicado no template.
-        filter_forma = self.request.GET.get('filter_forma')
-        filter_area = self.request.GET.get('filter_area')
-        filter_motivacao = self.request.GET.get('filter_motivacao')
-        filter_genero = self.request.GET.get('filter_genero')
-        filter_bairro = self.request.GET.get('filter_bairro')
-        filter_cidade = self.request.GET.get('filter_cidade')
+        data = self.request.GET
+        filter_forma = data.get('filter_forma')
+        filter_area = data.get('filter_area')
+        filter_motivacao = data.get('filter_motivacao')
+        filter_genero = data.get('filter_genero')
+        filter_bairro = data.get('filter_bairro')
+        filter_cidade = data.get('filter_cidade')
+        filter_data_inicial = data.get('filter_data_inicial')
+        filter_data_final = data.get('filter_data_final')
 
         if filter_forma:
             context['selected_forma'] = str(filter_forma)
@@ -86,11 +89,11 @@ class HomicidioList(LRM, SearchMixin, ListView):
         if filter_cidade:
             context['selected_cidade'] = str(filter_cidade)
 
-        # if filter_data_inicial:
-        #     context['filter_data_inicial'] = str(filter_data_inicial)
+        if filter_data_inicial:
+            context['selected_data_inicial'] = str(filter_data_inicial)
 
-        # if filter_data_final:
-        #     context['filter_data_inicial'] = str(filter_data_final)
+        if filter_data_final:
+            context['selected_data_final'] = str(filter_data_final)
 
         return context
 

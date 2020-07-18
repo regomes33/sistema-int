@@ -16,12 +16,16 @@ class SearchMixin(object):
 
     def get_queryset(self):
         queryset = super(SearchMixin, self).get_queryset()
-        search = self.request.GET.get('search')
-        filter_status_atual = self.request.GET.get('filter_status_atual')
-        filter_natureza = self.request.GET.get('filter_natureza')
-        filter_bairro = self.request.GET.get('filter_bairro')
-        filter_cidade = self.request.GET.get('filter_cidade')
-        filter_faccao = self.request.GET.get('filter_faccao')
+
+        data = self.request.GET
+        search = data.get('search')
+
+        filter_status_atual = data.get('filter_status_atual')
+        filter_natureza = data.get('filter_natureza')
+        filter_bairro = data.get('filter_bairro')
+        filter_cidade = data.get('filter_cidade')
+        filter_faccao = data.get('filter_faccao')
+
         if search:
             queryset = queryset.filter(
                 Q(nome__icontains=search) |

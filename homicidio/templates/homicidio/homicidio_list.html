@@ -44,8 +44,9 @@
                         {% for item in formas %}
                           {% if selected_forma == item.value %}
                           <option value="{{ item.value }}" selected>{{ item.text }}</option>
-                          {% endif %}
+                          {% else %}
                           <option value="{{ item.value }}">{{ item.text }}</option>
+                          {% endif %}
                         {% endfor %}
                       </select>
                     </fieldset>
@@ -115,8 +116,31 @@
                       </select>
                     </fieldset>
 
-                    <!-- Data Inicial
-                    Data Final -->
+                    <div class="row">
+
+                      <div class="col">
+                        <fieldset class="form-group">
+                          <legend class="col-form-label pt-0">Data Inicial</legend>
+                          {% if selected_data_inicial %}
+                            <input id="filterDataInicial" name="filter_data_inicial" class="form-control" type="date" value="selected_data_inicial" />
+                          {% else %}
+                            <input id="filterDataInicial" name="filter_data_inicial" class="form-control" type="date" />
+                          {% endif %}
+                        </fieldset>
+                      </div>
+
+                      <div class="col">
+                        <fieldset class="form-group">
+                          <legend class="col-form-label pt-0">Data Final</legend>
+                          {% if selected_data_final %}
+                            <input id="filterDataFinal" name="filter_data_final" class="form-control" type="date" value="selected_data_final" />
+                          {% else %}
+                            <input id="filterDataFinal" name="filter_data_final" class="form-control" type="date" />
+                          {% endif %}
+                        </fieldset>
+                      </div>
+
+                    </div>
 
                   </form>
                 </div>
@@ -209,6 +233,8 @@ $(document).ready(function() {
   $('#filterGenero').val('{{ selected_genero }}');
   $('#filterBairro').val('{{ selected_bairro }}');
   $('#filterCidade').val('{{ selected_cidade }}');
+  $('#filterDataInicial').val('{{ selected_data_inicial }}');
+  $('#filterDataFinal').val('{{ selected_data_final }}');
 });
 
 $('#filterForma').on('change', function() {
@@ -232,6 +258,10 @@ $('#filterBairro').on('change', function() {
 });
 
 $('#filterCidade').on('change', function() {
+  $('#formFilter').submit();
+});
+
+$('#filterDataFinal').on('change', function() {
   $('#formFilter').submit();
 });
 </script>
