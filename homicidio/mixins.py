@@ -26,8 +26,11 @@ class SearchMixin(object):
         if search:
             queryset = queryset.filter(
                 Q(forma__icontains=search) |
-                Q(area_upm__icontains=search) |
-                Q(motivacao__icontains=search)
+                Q(area_upm__area_upm__icontains=search) |
+                Q(motivacao__titulo__icontains=search) |
+                Q(vitima__nome__icontains=search) |
+                Q(vitima__sobrenome__icontains=search) |
+                Q(vitima__apelido__icontains=search)
             )
 
         if filter_forma:

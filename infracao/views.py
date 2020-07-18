@@ -21,6 +21,9 @@ class InfracaoList(LRM, ListView):
         search = self.request.GET.get('search')
         if search:
             queryset = queryset.filter(
+                Q(pessoa__nome__icontains=search) |
+                Q(pessoa__sobrenome__icontains=search) |
+                Q(pessoa__apelido__icontains=search) |
                 Q(natureza__natureza__icontains=search)
             )
         return queryset
