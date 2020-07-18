@@ -62,15 +62,17 @@ class HomicidioList(LRM, SearchMixin, ListView):
 
         # Devolve o valor selecionado pra manter o filtro aplicado no template.
         data = self.request.GET
-        filter_forma = data.get('filter_forma')
-        filter_area = data.get('filter_area')
-        filter_motivacao = data.get('filter_motivacao')
-        filter_genero = data.get('filter_genero')
-        filter_bairro = data.get('filter_bairro')
-        filter_cidade = data.get('filter_cidade')
+        filter_forma = data.getlist('filter_forma')
+        filter_area = data.getlist('filter_area')
+        filter_motivacao = data.getlist('filter_motivacao')
+        filter_genero = data.getlist('filter_genero')
+        filter_bairro = data.getlist('filter_bairro')
+        filter_cidade = data.getlist('filter_cidade')
+
         filter_data_inicial = data.get('filter_data_inicial')
         filter_data_final = data.get('filter_data_final')
 
+        # Devolve o valor para o template.
         if filter_forma:
             context['selected_forma'] = str(filter_forma)
 
