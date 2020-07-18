@@ -70,6 +70,7 @@
     </ul>
   </div>
 </div>
+
 <div class="col-lg-3">
   <div class="card">
     <div class="card-header">
@@ -125,6 +126,7 @@
     </div>
   </div>
 </div>
+
 <div class="col-lg-3">
   <div class="card">
     <div class="card-header">
@@ -161,6 +163,44 @@
         </li>
         {% endfor %}
       </ul>
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-12">
+  <div class="card">
+    <div class="card-header">
+      Ocorrências
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+          <table class="table table-responsive-sm table-striped">
+            <thead>
+              <tr>
+                <th>RAI</th>
+                <th>Data do fato</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for ocorrencia in ocorrencias %}
+                <tr>
+                  <td>{{ ocorrencia.ocorrencia.rai }}</td>
+                  <td>{{ ocorrencia.ocorrencia.data_do_fato }}</td>
+                  <td>{{ ocorrencia.ocorrencia.descricao }}</td>
+                  <td>
+                    <span class="span-is-link" data-toggle="modal" data-target="#modalEditarOcorrencia" @click="getOcorrencia('{% url 'api:ocorrencia_update' ocorrencia.pk %}')">
+                      <i class="fa fa-edit" style="margin-left: 10px;"></i>
+                    </span>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>
