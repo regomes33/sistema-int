@@ -37,14 +37,17 @@
                 <div class="col-12">
                   <form id="formFilter" action="." method="GET">
 
-                    <button class="btn btn-primary" type="submit">OK</button>
-
                     <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Status</legend>
-                      {% for item in status_atuais %}
-                        <input name="filter_status_atual" type="checkbox" value="{{ item.value }}" />
-                        <label>{{ item.text }}</label> <br>
-                      {% endfor %}
+                      <select id="filterStatusAtual" multiple name="filter_status_atual" class="form-control selectpicker">
+                        <option value="">---</option>
+                        {% for item in status_atuais %}
+                        <!-- { if selected_status_atual == item.value %} -->
+                        <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
+                        <!-- { endif %} -->
+                        <option value="{{ item.value }}">{{ item.text }}</option>
+                        {% endfor %}
+                      </select>
                     </fieldset>
 
                     <fieldset class="form-group">
@@ -52,9 +55,9 @@
                       <select id="filterNatureza" multiple name="filter_natureza" class="form-control selectpicker">
                         <option value="">---</option>
                         {% for item in naturezas %}
-                        {% if selected_natureza == item.value %}
-                        <option value="{{ item.value }}" selected>{{ item.text }}</option>
-                        {% endif %}
+                        <!-- { if selected_natureza == item.value %} -->
+                        <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
+                        <!-- { endif %} -->
                         <option value="{{ item.value }}">{{ item.text }}</option>
                         {% endfor %}
                       </select>
@@ -62,12 +65,12 @@
 
                     <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Bairro</legend>
-                      <select id="filterBairro" name="filter_bairro" class="form-control selectpicker">
+                      <select id="filterBairro" multiple name="filter_bairro" class="form-control selectpicker">
                         <option value="">---</option>
                         {% for item in bairros %}
-                        {% if selected_bairro == item.value %}
-                        <option value="{{ item.value }}" selected>{{ item.text }}</option>
-                        {% endif %}
+                        <!-- { if selected_bairro == item.value %} -->
+                        <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
+                        <!-- { endif %} -->
                         <option value="{{ item.value }}">{{ item.text }}</option>
                         {% endfor %}
                       </select>
@@ -75,12 +78,12 @@
 
                     <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Cidade</legend>
-                      <select id="filterCidade" name="filter_cidade" class="form-control selectpicker">
+                      <select id="filterCidade" multiple name="filter_cidade" class="form-control selectpicker">
                         <option value="">---</option>
                         {% for item in cidades %}
-                        {% if selected_cidade == item.value %}
-                        <option value="{{ item.value }}" selected>{{ item.text }}</option>
-                        {% endif %}
+                        <!-- { if selected_cidade == item.value %} -->
+                        <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
+                        <!-- { endif %} -->
                         <option value="{{ item.value }}">{{ item.text }}</option>
                         {% endfor %}
                       </select>
@@ -88,16 +91,21 @@
 
                     <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Facção</legend>
-                      <select id="filterFaccao" name="filter_faccao" class="form-control selectpicker">
+                      <select id="filterFaccao" multiple name="filter_faccao" class="form-control selectpicker">
                         <option value="">---</option>
                         {% for item in faccoes %}
-                        {% if selected_faccao == item.value %}
-                        <option value="{{ item.value }}" selected>{{ item.text }}</option>
-                        {% endif %}
+                        <!-- { if selected_faccao == item.value %} -->
+                        <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
+                        <!-- { endif %} -->
                         <option value="{{ item.value }}">{{ item.text }}</option>
                         {% endfor %}
                       </select>
                     </fieldset>
+
+                    <button class="btn btn-light">Limpar</button>
+                    <div class="pull-right">
+                      <button class="btn btn-primary" type="submit">OK</button>
+                    </div>
 
                   </form>
                 </div>
@@ -195,35 +203,14 @@
 $.fn.selectpicker.Constructor.BootstrapVersion = '4';
 
 $(document).ready(function() {
-  $('#filterNatureza').val('{{ selected_natureza }}');
-  $('#filterBairro').val('{{ selected_bairro }}');
-  $('#filterCidade').val('{{ selected_cidade }}');
-  $('#filterFaccao').val('{{ selected_faccao }}');
+  // $('#filterNatureza').val('{{ selected_natureza }}');
+  // $('#filterBairro').val('{{ selected_bairro }}');
+  // $('#filterCidade').val('{{ selected_cidade }}');
+  // $('#filterFaccao').val('{{ selected_faccao }}');
 });
 
 $(function() {
   $('[data-toggle="tooltip"]').tooltip();
-});
-
-// $('#filterStatusAtual').on('change', function() {
-//   $('#formFilter').submit();
-// });
-
-
-// $('#filterNatureza').on('change', function() {
-//   $('#formFilter').submit();
-// });
-
-// $('#filterBairro').on('change', function() {
-//   $('#formFilter').submit();
-// });
-
-$('#filterFaccao').on('change', function() {
-  $('#formFilter').submit();
-});
-
-$('#filterCidade').on('change', function() {
-  $('#formFilter').submit();
 });
 
 // let path = "{ url 'pessoa:report_pessoas' %}"

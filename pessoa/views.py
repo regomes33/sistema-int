@@ -54,15 +54,15 @@ class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):
 
         # Devolve o valor selecionado pra manter o filtro aplicado no template.
         data = self.request.GET
-        filter_status_atual = data.get('filter_status_atual')
-        filter_natureza = data.get('filter_natureza')
-        filter_bairro = data.get('filter_bairro')
-        filter_cidade = data.get('filter_cidade')
-        filter_faccao = data.get('filter_faccao')
+        filter_status_atual = data.getlist('filter_status_atual')
+        filter_natureza = data.getlist('filter_natureza')
+        filter_bairro = data.getlist('filter_bairro')
+        filter_cidade = data.getlist('filter_cidade')
+        filter_faccao = data.getlist('filter_faccao')
 
         # Devolve o valor para o template.
         if filter_status_atual:
-            context['selected_status_atual'] = filter_status_atual
+            context['selected_status_atual'] = str(filter_status_atual)
         if filter_natureza:
             context['selected_natureza'] = str(filter_natureza)
         if filter_bairro:
