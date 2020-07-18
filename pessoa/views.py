@@ -27,10 +27,10 @@ class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):
         # context['pessoas_total'] = Pessoa.objects.values_list('id', flat=True).count()
 
         # Dados para popular os dropdown dos filtros
-        # context['status_atuais'] = [
-        #     {'value': item[0], 'text': item[1]}
-        #     for item in STATUS
-        # ]
+        context['status_atuais'] = [
+            {'value': item[0], 'text': item[1]}
+            for item in STATUS
+        ]
 
         context['naturezas'] = Natureza.objects.values(
             value=F('pk'),

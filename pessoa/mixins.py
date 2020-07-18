@@ -36,8 +36,8 @@ class SearchMixin(object):
                 Q(apelido__icontains=search)
             )
 
-        # if filter_status_atual:
-        #     queryset = queryset.filter(Q(status_atual__in=filter_status_atual))
+        if filter_status_atual:
+            queryset = queryset.filter(Q(status_atual__in=filter_status_atual))
 
         if filter_natureza:
             queryset = queryset.filter(
