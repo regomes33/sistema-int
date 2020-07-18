@@ -1,7 +1,9 @@
+{% load url_replace %}
+
 <ul class="pagination">
   {% if page_obj.has_previous %}
     <li class="page-item">
-      <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.urlencode %}&{{ request.GET.urlencode }}{% endif %}">&laquo;</a>
+      <a class="page-link" href="?{% url_replace page=page_obj.previous_page_number %}">&laquo;</a>
     </li>
   {% endif %}
 
@@ -10,22 +12,22 @@
     {% if pg == 1 or pg == 2 or pg == page_obj.paginator.num_pages or pg == page_obj.paginator.num_pages|add:'-1' %}
       {% if page_obj.number == pg %}
         <li class="page-item active">
-          <a class="page-link"  href="?page={{ pg }}{% if request.GET.urlencode %}&{{ request.GET.urlencode }}{% endif %}">{{ pg }}</a>
+          <a class="page-link"  href="?{% url_replace page=pg %}">{{ pg }}</a>
         </li>
       {% else %}
         <li class="page-item">
-          <a class="page-link" href="?page={{ pg }}{% if request.GET.urlencode %}&{{ request.GET.urlencode }}{% endif %}">{{ pg }}</a>
+          <a class="page-link" href="?{% url_replace page=pg %}">{{ pg }}</a>
         </li>
       {% endif %}
     {% else %}
       {% if page_obj.number == pg %}
         <li class="page-item active">
-          <a class="page-link" href="?page={{ pg }}{% if request.GET.urlencode %}&{{ request.GET.urlencode }}{% endif %}">{{ pg }}</a>
+          <a class="page-link" href="?{% url_replace page=pg %}">{{ pg }}</a>
         </li>
       {% elif pg > page_obj.number|add:'-3' and pg < page_obj.number|add:'3' %}
         <!-- Mostra 2 páginas antes e 2 páginas depois da atual -->
         <li class="page-item">
-          <a class="page-link" href="?page={{ pg }}{% if request.GET.urlencode %}&{{ request.GET.urlencode }}{% endif %}">{{ pg }}</a>
+          <a class="page-link" href="?{% url_replace page=pg %}">{{ pg }}</a>
         </li>
       {% elif pg == page_obj.number|add:'-3' or pg == page_obj.number|add:'3' %}
         <li class="page-item">
@@ -37,7 +39,7 @@
 
   {% if page_obj.has_next %}
     <li class="page-item">
-      <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.urlencode %}&{{ request.GET.urlencode }}{% endif %}">&raquo;</a>
+      <a class="page-link" href="?{% url_replace page=page_obj.next_page_number %}">&raquo;</a>
     </li>
   {% endif %}
 </ul>
