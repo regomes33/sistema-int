@@ -206,6 +206,47 @@
   </div>
 </div>
 
+<div class="col-lg-12">
+  <div class="card">
+    <div class="card-header">
+      Infrações
+      <span class="pull-right badge badge-success" data-toggle="modal" data-target="#modalAdicionarInfracao" @click="getAddInfracao"><i class="fa fa-plus"></i> Adicionar</span>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+          <table class="table table-responsive-sm table-striped">
+            <thead>
+              <tr>
+                <th>Natureza</th>
+                <th>Qualificação</th>
+                <th>Arma</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for infracao in object.infracao_set.all %}
+                <tr>
+                  <td>{{ infracao.natureza }}</td>
+                  <td>{{ infracao.get_qualificacao_display }}</td>
+                  <td>{{ infracao.arma|default:"---" }}</td>
+                  <td>{{ infracao.get_status_display }}</td>
+                  <td>
+                    <span class="span-is-link" data-toggle="modal" data-target="#modalEditarInfracao" @click="getInfracao('{% url 'api:infracao_update' infracao.pk %}')">
+                      <i class="fa fa-edit" style="margin-left: 10px;"></i>
+                    </span>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Modal Pessoa -->
 <div class="modal fade" id="modalEditarPessoa" tabindex="-1" role="dialog" aria-labelledby="modalEditarPessoaLabel">
   <div class="modal-dialog" role="document">
