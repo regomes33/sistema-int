@@ -8,6 +8,9 @@
   <div class="card">
     <div class="card-header">
       {{ object }}
+      <span class="pull-right btn btn-sm btn-primary" data-toggle="modal" data-target="#modalEditarPessoa">
+        <i class="fa fa-edit"></i> Editar
+      </span>
     </div>
     <div class="card-body">
       <div class="row">
@@ -23,11 +26,6 @@
           {% endif %}
           <h4>Facção: {{ object.faccao|default:"---" }}</h4>
           <h5>Nascimento: {{ object.nascimento|date:"d/m/Y"|default:"---" }}</h5>
-          <div class="pull-right">
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalEditarPessoa">
-              Editar
-            </button>
-          </div>
         </div>
       </div>
     </div>
