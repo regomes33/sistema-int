@@ -170,6 +170,30 @@
 <div class="col-lg-12">
   <div class="card">
     <div class="card-header">
+      Tatuagens
+      <span class="pull-right badge badge-success" data-toggle="modal" data-target="#modalAdicionarTatuagem"><i class="fa fa-plus"></i> Adicionar</span>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        {% for tatuagem in object.tatuagem_set.all %}
+          <div class="col">
+            {% if tatuagem.foto %}
+              <div class="card">
+                <div class="card-body">
+                  <img src="{{ tatuagem.foto.url }}" class="card-img-top" style="min-width: 200px; max-width: 250px;" alt="{{ tatuagem.foto.name }}">
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-12">
+  <div class="card">
+    <div class="card-header">
       Ocorrências
       <span class="pull-right badge badge-success" data-toggle="modal" data-target="#modalAdicionarOcorrencia" @click="getAddOcorrencia"><i class="fa fa-plus"></i> Adicionar</span>
     </div>
@@ -180,7 +204,7 @@
             <thead>
               <tr>
                 <th>RAI</th>
-                <th>Data do fato</th>
+                <th style="width: 8vw;">Data do fato</th>
                 <th>Descrição</th>
                 <th>Ações</th>
               </tr>
@@ -189,7 +213,7 @@
               {% for ocorrencia in ocorrencias %}
                 <tr>
                   <td>{{ ocorrencia.ocorrencia.rai }}</td>
-                  <td>{{ ocorrencia.ocorrencia.data_do_fato }}</td>
+                  <td>{{ ocorrencia.ocorrencia.data_do_fato|date:"d/m/Y" }}</td>
                   <td>{{ ocorrencia.ocorrencia.descricao }}</td>
                   <td>
                     <span class="span-is-link" data-toggle="modal" data-target="#modalEditarOcorrencia" @click="getOcorrencia('{% url 'api:ocorrencia_update' ocorrencia.pk %}')">
