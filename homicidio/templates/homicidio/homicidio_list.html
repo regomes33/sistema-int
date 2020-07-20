@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
+
+<style>
+  .unstyled {
+    -webkit-appearance: none;
+  }
+  .unstyled::-webkit-inner-spin-button,
+  .unstyled::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+  }
+</style>
+
 <div class="col-lg-12">
   <div class="card">
     <div class="card-header">
@@ -123,9 +135,9 @@
                         <fieldset class="form-group">
                           <legend class="col-form-label pt-0">Data Inicial</legend>
                           {% if selected_data_inicial %}
-                            <input id="filterDataInicial" name="filter_data_inicial" class="form-control" type="date" value="selected_data_inicial" />
+                            <input id="filterDataInicial" name="filter_data_inicial" class="form-control unstyled" type="date" value="selected_data_inicial" />
                           {% else %}
-                            <input id="filterDataInicial" name="filter_data_inicial" class="form-control" type="date" />
+                            <input id="filterDataInicial" name="filter_data_inicial" class="form-control unstyled" type="date" />
                           {% endif %}
                         </fieldset>
                       </div>
@@ -134,9 +146,9 @@
                         <fieldset class="form-group">
                           <legend class="col-form-label pt-0">Data Final</legend>
                           {% if selected_data_final %}
-                            <input id="filterDataFinal" name="filter_data_final" class="form-control" type="date" value="selected_data_final" />
+                            <input id="filterDataFinal" name="filter_data_final" class="form-control unstyled" type="date" value="selected_data_final" />
                           {% else %}
-                            <input id="filterDataFinal" name="filter_data_final" class="form-control" type="date" />
+                            <input id="filterDataFinal" name="filter_data_final" class="form-control unstyled" type="date" />
                           {% endif %}
                         </fieldset>
 
@@ -225,6 +237,16 @@ $(document).ready(function() {
   // $('#filterCidade').val('{{ selected_cidade }}');
   // $('#filterDataInicial').val('{{ selected_data_inicial }}');
   // $('#filterDataFinal').val('{{ selected_data_final }}');
+});
+
+$('#filterDataInicial').datepicker({
+  uiLibrary: 'bootstrap4',
+  format: 'dd/mm/yyyy',
+});
+
+$('#filterDataFinal').datepicker({
+  uiLibrary: 'bootstrap4',
+  format: 'dd/mm/yyyy',
 });
 
 // $('#filterForma').on('change', function() {
