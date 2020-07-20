@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.views.generic import ListView, UpdateView
 from core.models import City
 from core.models import District
-from homicidio.mixins import SearchMixin
+from homicidio.mixins import SearchHomicidioMixin
 from ocorrencia.forms import OcorrenciaForm
 from pessoa.forms import PessoaMinimalForm
 from utils.data import FORMA
@@ -20,7 +20,7 @@ from .models import Homicidio
 from .models import Motivacao
 
 
-class HomicidioList(LRM, SearchMixin, ListView):
+class HomicidioList(LRM, SearchHomicidioMixin, ListView):
     model = Homicidio
     template_name = 'homicidios.html'
     paginate_by = 10

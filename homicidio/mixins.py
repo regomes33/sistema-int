@@ -1,11 +1,10 @@
-from pprint import pprint
 from django.db.models import Q
 
 
-class SearchMixin(object):
+class SearchHomicidioMixin(object):
 
     def get_queryset(self):
-        queryset = super(SearchMixin, self).get_queryset()
+        queryset = super(SearchHomicidioMixin, self).get_queryset()
 
         # Retorna somente as vítimas.
         queryset = queryset.filter(vitima__vitima=True)

@@ -23,6 +23,7 @@
               <div class="col-auto p-ari-5">
                 <button class="btn btn-success mb-2" type="submit">OK</button>
                 <button class="btn btn-link mb-2">Limpar</button>
+                <a class="btn btn-warning float-right mr-10" href="{% url 'homicidio:report_homicidios' %}?{{ request.GET.urlencode }}" target="_blank">PDF</a>
               </div>
             </div>
           </form>

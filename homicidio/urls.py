@@ -13,7 +13,7 @@ homicidio_patterns = [
 ]
 
 report_patterns = [
-    path('', rep.report_homicidios, name='report_homicidios'),
+    path('', rep.ReportHomicidioList.as_view(), name='report_homicidios'),
 ]
 
 
