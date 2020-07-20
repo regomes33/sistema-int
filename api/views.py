@@ -226,6 +226,22 @@ def status_atuais(request):
     return JsonResponse(response)
 
 
+@csrf_exempt
+def status_update(request, pk):
+    status_atual = request.POST.get('status_atual')
+    if status_atual:
+        obj = Pessoa.objects.get(pk=pk)
+        obj.status_atual = status_atual
+        obj.save()
+    response = {
+        'data':
+        {
+            'value': obj.status_atual,
+        }
+    }
+    return JsonResponse(response)
+
+
 @login_required
 def naturezas(request):
     items = Natureza.objects.all()

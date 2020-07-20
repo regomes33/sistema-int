@@ -145,14 +145,27 @@
                   {% endif %}
 
                   {% if object.status_atual == 'foragido' %}
-                    <span class="badge badge-danger">Foragido</span>
+                    <span id="status_{{ object.pk }}" class="badge badge-danger">Foragido</span>
                   {% elif object.status_atual == 'morto' %}
-                    <span class="badge badge-secondary">Morto</span>
+                    <span id="status_{{ object.pk }}" class="badge badge-secondary">Morto</span>
                   {% elif object.status_atual == 'preso' %}
-                    <span class="badge badge-primary">Preso</span>
+                    <span id="status_{{ object.pk }}" class="badge badge-primary">Preso</span>
                   {% elif object.status_atual == 'solto' %}
-                    <span class="badge badge-warning">Solto</span>
+                    <span id="status_{{ object.pk }}" class="badge badge-warning">Solto</span>
                   {% endif %}
+
+                  <div class="col-6 pl-0">
+                    <label><small>Editar Status Atual</small></label>
+                    <select data-pk="{{ object.pk }}" name="status_atual" class="form-control edit-status-atual">
+                      {% for status in status_atuais %}
+                        {% if status.value == object.status_atual %}
+                          <option value="{{ status.value }}" selected>{{ status.text }}</option>
+                        {% else %}
+                          <option value="{{ status.value }}">{{ status.text }}</option>
+                        {% endif %}
+                      {% endfor %}
+                    </select>
+                  </div>
 
                 </td>
                 <td>
@@ -202,7 +215,7 @@ $(document).ready(function() {
   // $('#filterCidade').val('{{ selected_cidade }}');
   // $('#filterFaccao').val('{{ selected_faccao }}');
 
-  // Popula todos os select district.
+  // Popula todos os select district. Nem precisava...
   get_districts();
 });
 
@@ -242,6 +255,42 @@ $('.edit-district').on('change', function() {
     let tr = me.parent();
     me.remove();
     tr.append(response.data.district + '<br> <span class="text-muted">' + response.data.city + '</span>');
+  });
+});
+
+// Editar e salvar cada status_atual.
+$('.edit-status-atual').on('change', function() {
+  let meStatus = $(this);
+  let pkPessoa = $(this).data('pk');
+  let valueStatus = $(this).val();
+  $.ajax({
+    url: '/api/status_atuais/' + pkPessoa + '/edit/',
+    type: 'POST',
+    data: {
+      status_atual: valueStatus
+    },
+  })
+  .done(function(response) {
+    meStatus.val(response.data.value);
+    $('#status_' + pkPessoa).removeClass();
+    $('#status_' + pkPessoa).addClass('badge');
+
+    if (response.data.value == 'foragido') {
+      $('#status_' + pkPessoa).addClass('badge-danger');
+      $('#status_' + pkPessoa).text('Foragido');
+    }
+    else if (response.data.value == 'morto') {
+      $('#status_' + pkPessoa).addClass('badge-secondary');
+      $('#status_' + pkPessoa).text('Morto');
+    }
+    else if (response.data.value == 'preso') {
+      $('#status_' + pkPessoa).addClass('badge-primary');
+      $('#status_' + pkPessoa).text('Preso');
+    }
+    else if (response.data.value == 'solto') {
+      $('#status_' + pkPessoa).addClass('badge-warning');
+      $('#status_' + pkPessoa).text('Solto');
+    }
   });
 });
 
