@@ -8,6 +8,7 @@
   <div class="card">
     <div class="card-header">
       {{ object }}
+      <a class="btn btn-sm btn-warning float-right ml-2" href="{% url 'pessoa:report_pessoa_detail' object.slug %}" target="_blank">PDF</a>
       <span class="pull-right btn btn-sm btn-primary" data-toggle="modal" data-target="#modalEditarPessoa">
         <i class="fa fa-edit"></i> Editar
       </span>
