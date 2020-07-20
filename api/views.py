@@ -2,6 +2,7 @@ import json
 import re
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from localflavor.br.br_states import STATE_CHOICES
 from core.models import District
 from infracao.forms import InfracaoForm
@@ -183,6 +184,24 @@ def districts(request):
     items = District.objects.all()
     data = [item.to_dict() for item in items]
     response = {'data': data}
+    return JsonResponse(response)
+
+
+@csrf_exempt
+def district_update(request, pk):
+    district_pk = request.POST.get('district')
+    if district_pk:
+        district = District.objects.get(pk=district_pk)
+        obj = Pessoa.objects.get(pk=pk)
+        obj.district = district
+        obj.save()
+    response = {
+        'data':
+        {
+            'district': obj.district.name,
+            'city': obj.district.city.name,
+        }
+    }
     return JsonResponse(response)
 
 

@@ -160,10 +160,19 @@
                   <img src="{{ object.get_first_photo.foto.url }}" width="100px">
                   {% endif %}
                 </td>
-                <td>
-                  {{ object.district|default:"---" }} <br>
-                  <span class="text-muted">{{ object.district.city }}</span>
-                </td>
+
+                {% if object.district %}
+                  <td>
+                    {{ object.district }} <br>
+                    <span class="text-muted">{{ object.district.city }}</span>
+                  </td>
+                {% else %}
+                  <!-- Editar District -->
+                  <td>
+                    <select data-pk="{{ object.pk }}" name="district" class="form-control edit-district"></select>
+                  </td>
+                {% endif %}
+
                 <td>
                   {{ object.infracao_set.all.0.natureza.natureza.artigo }}
                   {% for infracao in object.infracao_set.all %}
@@ -192,16 +201,57 @@ $(document).ready(function() {
   // $('#filterBairro').val('{{ selected_bairro }}');
   // $('#filterCidade').val('{{ selected_cidade }}');
   // $('#filterFaccao').val('{{ selected_faccao }}');
+
+  // Popula todos os select district.
+  get_districts();
+});
+
+function get_districts() {
+  $.ajax({
+    url: '/api/districts/',
+  })
+  .done(function(response) {
+    var element = ""
+    // Percorre todos os valores de response.data.
+    $.each(response.data, function(index, value) {
+      element += (
+        "<option value='" + value.value + "'>" + value.text + "</option>"
+      );
+    });
+    // Popula todos os select district.
+    $('.edit-district').each(function(idx) {
+      $(this).append("<option value=''>---</option>");
+      $(this).append(element);
+    });
+  });
+}
+
+// Editar e salvar cada district.
+$('.edit-district').on('change', function() {
+  let me = $(this);
+  let pk = $(this).data('pk');
+  let value = $(this).val();
+  $.ajax({
+    url: '/api/districts/' + pk + '/edit/',
+    type: 'POST',
+    data: {
+      district: value
+    },
+  })
+  .done(function(response) {
+    let tr = me.parent();
+    me.remove();
+    tr.append(response.data.district + '<br> <span class="text-muted">' + response.data.city + '</span>');
+  });
 });
 
 $(function() {
   $('[data-toggle="tooltip"]').tooltip();
 });
 
+// Necessário para aplicar o filtro no relatório.
 let path = "{% url 'pessoa:report_pessoa_list' %}"
-
 let query_string = "{{ request.GET.urlencode }}"
-
 if (query_string) {
   path = "{% url 'pessoa:report_pessoa_list' %}" + "?" + query_string
 }
