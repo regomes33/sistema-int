@@ -14,7 +14,7 @@ pessoa_patterns = [
 ]
 
 report_patterns = [
-    path('', rep.report_pessoas, name='report_pessoa_list'),
+    path('', rep.ReportPessoasList.as_view(), name='report_pessoa_list'),
     path('<slug>/detail/', rep.report_pessoa, name='report_pessoa_detail'),
 ]
 

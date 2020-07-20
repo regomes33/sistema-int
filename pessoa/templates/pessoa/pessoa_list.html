@@ -23,6 +23,7 @@
               <div class="col-auto p-ari-5">
                 <button class="btn btn-success mb-2" type="submit">OK</button>
                 <button class="btn btn-link mb-2">Limpar</button>
+                <button class="btn btn-warning mr-10" onclick="printDiv('printme')">PDF</button>
               </div>
             </div>
           </form>
@@ -130,26 +131,29 @@
                   <a href="{% url 'pessoa:pessoa_detail' object.slug %}">{{ object }}</a>
                   <br>
                   {% if object.apelido %}
-                  <span class="text-muted">Apelido: {{ object.apelido }}</span> <br>
+                    <span class="text-muted">Apelido: {{ object.apelido }}</span> <br>
                   {% endif %}
+
                   {% if object.faccao.nome == 'Comando Vermelho' %}
-                  <span class="badge badge-danger fs-badge">C.V.</span> <br>
+                    <span class="badge badge-danger fs-badge">C.V.</span> <br>
                   {% elif object.faccao.nome == 'ADE' %}
-                  <span class="badge badge-dark fs-badge">A.D.E.</span> <br>
+                    <span class="badge badge-dark fs-badge">A.D.E.</span> <br>
                   {% elif object.faccao.nome == 'PCC-Primeiro Comando da Capital' %}
-                  <span class="badge badge-warning fs-badge">P.C.C.</span> <br>
+                    <span class="badge badge-warning fs-badge">P.C.C.</span> <br>
                   {% elif object.faccao.nome == 'Não Identificada' %}
-                  <span class="badge badge-link fs-badge">Não Identificada</span> <br>
+                    <span class="badge badge-link fs-badge">Não Identificada</span> <br>
                   {% endif %}
+
                   {% if object.status_atual == 'foragido' %}
-                  <span class="badge badge-danger">Foragido</span>
+                    <span class="badge badge-danger">Foragido</span>
                   {% elif object.status_atual == 'morto' %}
-                  <span class="badge badge-secondary">Morto</span>
+                    <span class="badge badge-secondary">Morto</span>
                   {% elif object.status_atual == 'preso' %}
-                  <span class="badge badge-primary">Preso</span>
+                    <span class="badge badge-primary">Preso</span>
                   {% elif object.status_atual == 'solto' %}
-                  <span class="badge badge-warning">Solto</span>
+                    <span class="badge badge-warning">Solto</span>
                   {% endif %}
+
                 </td>
                 <td>
                   {% if object.get_first_photo %}
@@ -194,13 +198,13 @@ $(function() {
   $('[data-toggle="tooltip"]').tooltip();
 });
 
-// let path = "{ url 'pessoa:report_pessoas' %}"
+let path = "{% url 'pessoa:report_pessoa_list' %}"
 
-// let query_string = "{{ request.GET.urlencode }}"
+let query_string = "{{ request.GET.urlencode }}"
 
-// if (query_string) {
-//   path = "{ url 'pessoa:report_pessoas' %}" + "?" + query_string
-// }
+if (query_string) {
+  path = "{% url 'pessoa:report_pessoa_list' %}" + "?" + query_string
+}
 
 function printDiv(divName) {
   window.open(path)

@@ -1,36 +1,20 @@
-from django.db.models import Q
 from datetime import datetime
 from django.shortcuts import render
-from .models import Pessoa
+from django.views.generic import ListView
 from ocorrencia.models import PessoaOcorrencia
+from .mixins import PessoaSomenteMixin
+from .mixins import SearchMixin
+from .models import Pessoa
 
 
-def report_pessoas(request):
-    pessoas = Pessoa.objects.all()
+class ReportPessoasList(PessoaSomenteMixin, SearchMixin, ListView):
+    model = Pessoa
+    template_name = 'reports/report_pessoa_list.html'
 
-    filter_natureza = request.GET.get('filter_natureza')
-    filter_bairro = request.GET.get('filter_bairro')
-    filter_faccao = request.GET.get('filter_faccao')
-    filter_cidade = request.GET.get('filter_cidade')
-
-    if filter_natureza:
-        pessoas = pessoas.filter(Q(infracao__natureza=filter_natureza))
-
-    if filter_bairro:
-        pessoas = pessoas.filter(Q(district=filter_bairro))
-
-    if filter_cidade:
-        pessoas = pessoas.filter(Q(city=filter_cidade))
-
-    if filter_faccao:
-        pessoas = pessoas.filter(Q(faccao=filter_faccao))
-
-    context = {
-        'object_list': pessoas,
-        'today': datetime.now().today()
-    }
-    template_name = 'relatorios/report_pessoas.html'
-    return render(request, template_name, context)
+    def get_context_data(self, **kwargs):
+        context = super(ReportPessoasList, self).get_context_data(**kwargs)
+        context['today'] = datetime.now().today()
+        return context
 
 
 def report_pessoa(request, slug):
@@ -41,5 +25,5 @@ def report_pessoa(request, slug):
         'ocorrencias': ocorrencias,
         'today': datetime.now().today(),
     }
-    template_name = 'relatorios/report_pessoa.html'
+    template_name = 'reports/report_pessoa_detail.html'
     return render(request, template_name, context)

@@ -67,3 +67,7 @@ span.required:after {
 .li-line {
   padding: .2rem 1.25rem;
 }
+
+.mr-10 {
+  margin-right: 10px;
+}
