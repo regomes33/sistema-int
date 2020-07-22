@@ -12,7 +12,7 @@ from infracao.models import Natureza
 from ocorrencia.forms import PessoaOcorrenciaForm
 from ocorrencia.models import Ocorrencia
 from ocorrencia.models import PessoaOcorrencia
-from pessoa.forms import PessoaComparsaForm
+from pessoa.forms import ComparsaForm
 from pessoa.forms import PessoaContatoForm
 from pessoa.forms import PessoaForm
 from pessoa.forms import PessoaMinimalForm
@@ -134,11 +134,12 @@ def pessoa_add(request):
         if comparsas_data:
             for comparsa in comparsas_data:
                 if comparsa.get('nome'):
-                    comparsa_form = PessoaComparsaForm(comparsa)
-                    if comparsa_form.is_valid():
-                        comparsa_post = comparsa_form.save(commit=False)
-                        comparsa_post.pessoa = pessoa_post
-                        comparsa_post.save()
+                    pass
+                    # comparsa_form = ComparsaForm(comparsa)
+                    # if comparsa_form.is_valid():
+                    #     comparsa_post = comparsa_form.save(commit=False)
+                    #     comparsa_post.pessoa = pessoa_post
+                    #     comparsa_post.save()
 
         # Adiciona Ocorrências
         ocorrencias_data = json.loads(request.POST.get('ocorrencias'))

@@ -129,25 +129,37 @@ class PessoaContato(UuidModel, TimeStampedModel):
 
 
 class Comparsa(UuidModel, TimeStampedModel, Document):
+    nome = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ('nome',)
+        verbose_name = 'comparsa'
+        verbose_name_plural = 'comparsas'
+
+    def __str__(self):
+        return self.nome
+
+
+class PessoaComparsa(UuidModel, TimeStampedModel):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE, blank=True)
-    nome = models.CharField(
-        max_length=100,
+    comparsa = models.ForeignKey(
+        Comparsa,
+        related_name='comparsas',
+        on_delete=models.SET_NULL,
         null=True,
-        blank=True
+        blank=True,
     )
     parente = models.BooleanField(default=False)
     grau_parentesco = models.CharField(max_length=50, null=True, blank=True)
     observacao = models.TextField(max_length=500, null=True, blank=True)
 
     class Meta:
-        ordering = ('pessoa', 'nome')
-        verbose_name = 'comparsa'
-        verbose_name_plural = 'comparsas'
+        ordering = ('pessoa', 'comparsa')
 
     def __str__(self):
-        if self.nome:
-            return self.nome
-        return str(self.pk)
+        if self.comparsa:
+            return f'{self.pessoa} - {self.comparsa}'
+        return self.pessoa
 
 
 class Faccao(UuidModel):

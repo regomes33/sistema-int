@@ -36,10 +36,10 @@ class PessoaContatoInline(admin.TabularInline):
     extra = 0
 
 
-class ComparsaInline(admin.TabularInline):
-    model = Comparsa
-    # fields = ('nome', 'rg', 'cpf', 'cnh')
-    extra = 0
+# class ComparsaInline(admin.TabularInline):
+#     model = Comparsa
+#     # fields = ('nome', 'rg', 'cpf', 'cnh')
+#     extra = 0
 
 
 class PessoaVeiculoInline(admin.TabularInline):
@@ -55,7 +55,7 @@ class PessoaAdmin(admin.ModelAdmin):
         InfracaoInline,
         PessoaOcorrenciaInline,
         PessoaContatoInline,
-        ComparsaInline,
+        # ComparsaInline,
         PessoaVeiculoInline
     )
     list_display = ('__str__', 'slug', 'apelido',

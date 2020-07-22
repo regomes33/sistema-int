@@ -51,12 +51,11 @@ class PessoaContatoForm(forms.ModelForm):
         fields = ('pessoa', 'tipo', 'telefone')
 
 
-class PessoaComparsaForm(forms.ModelForm):
+class ComparsaForm(forms.ModelForm):
 
     class Meta:
         model = Comparsa
-        fields = ('pessoa', 'nome', 'cpf', 'rg', 'cnh',
-                  'parente', 'grau_parentesco', 'observacao')
+        fields = ('nome', 'cpf', 'rg', 'cnh')
 
 
 class PessoaVeiculoForm(forms.ModelForm):
