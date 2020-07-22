@@ -1,25 +1,24 @@
-import names
 import string
 import timeit
 from datetime import date, datetime, timedelta
-from random import random, choice, randint, randrange, sample
+from random import choice, randint, random, randrange, sample
+
+import names
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
-from core.fix.data import ARMA, NATUREZA, FACCAO, MODELO, COR, LOREM, CIDADE
+
+from core.fix.data import ARMA, CIDADE, COR, FACCAO, LOREM, MODELO, NATUREZA
 from core.management.commands.progress_bar import progressbar
-from infracao.models import Arma
-from infracao.models import Infracao
-from infracao.models import Natureza
-from ocorrencia.models import Ocorrencia
-from ocorrencia.models import PessoaOcorrencia
-from pessoa.models import Comparsa
-from pessoa.models import Faccao
-from pessoa.models import Pessoa
-from pessoa.models import PessoaContato
-from pessoa.models import PessoaVeiculo
-from veiculo.models import Cor
-from veiculo.models import Modelo
-from veiculo.models import Veiculo
+from infracao.models import Arma, Infracao, Natureza
+from ocorrencia.models import Ocorrencia, PessoaOcorrencia
+from pessoa.models import (
+    Comparsa,
+    Faccao,
+    Pessoa,
+    PessoaContato,
+    PessoaVeiculo
+)
+from veiculo.models import Cor, Modelo, Veiculo
 
 
 def gen_string(max_length):

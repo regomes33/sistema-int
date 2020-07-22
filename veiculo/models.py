@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse_lazy
-from core.models import UuidModel, TimeStampedModel
+
+from core.models import TimeStampedModel, UuidModel
 
 
 class Veiculo(UuidModel, TimeStampedModel):

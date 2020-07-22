@@ -1,6 +1,6 @@
-from django.urls import path, include
-from veiculo import views as v
+from django.urls import include, path
 
+from veiculo import views as v
 
 app_name = 'veiculo'
 

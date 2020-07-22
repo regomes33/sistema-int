@@ -1,4 +1,5 @@
 from pprint import pprint
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
@@ -7,17 +8,15 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import ListView, UpdateView
-from core.models import City
-from core.models import District
+
+from core.models import City, District
 from homicidio.mixins import SearchHomicidioMixin
 from ocorrencia.forms import OcorrenciaForm
 from pessoa.forms import PessoaMinimalForm
 from utils.data import FORMA
+
 from .forms import HomicidioForm
-from .models import AreaUpm
-from .models import Genero
-from .models import Homicidio
-from .models import Motivacao
+from .models import AreaUpm, Genero, Homicidio, Motivacao
 
 
 class HomicidioList(LRM, SearchHomicidioMixin, ListView):

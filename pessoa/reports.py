@@ -1,9 +1,11 @@
 from datetime import datetime
+
 from django.shortcuts import render
 from django.views.generic import ListView
+
 from ocorrencia.models import PessoaOcorrencia
-from .mixins import PessoaSomenteMixin
-from .mixins import SearchMixin
+
+from .mixins import PessoaSomenteMixin, SearchMixin
 from .models import Pessoa
 
 

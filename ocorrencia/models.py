@@ -1,8 +1,9 @@
 from django.db import models
 from django.urls import reverse_lazy
-from core.models import UuidModel, TimeStampedModel, CreatedBy, Address
+
+from core.models import Address, CreatedBy, TimeStampedModel, UuidModel
+from infracao.models import Arma, Infracao, Natureza
 from pessoa.models import Pessoa, Veiculo
-from infracao.models import Arma, Natureza, Infracao
 
 
 class Ocorrencia(UuidModel, CreatedBy, TimeStampedModel):

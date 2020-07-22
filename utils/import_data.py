@@ -9,27 +9,22 @@ import time
 import timeit
 import urllib.request
 from pprint import pprint
+
 from django.contrib.auth.models import User
+
 from core.models import City
-from homicidio.models import AreaUpm
-from homicidio.models import Autoria
-from homicidio.models import Genero
-from homicidio.models import Homicidio
-from homicidio.models import Motivacao
-from infracao.models import Arma
-from infracao.models import Infracao
-from infracao.models import Natureza
-from ocorrencia.models import Ocorrencia
-from ocorrencia.models import PessoaOcorrencia
-from pessoa.models import Comparsa
-from pessoa.models import Faccao
-from pessoa.models import Foto
-from pessoa.models import Pessoa
-from pessoa.models import PessoaVeiculo
-from pessoa.models import Tatuagem
-from veiculo.models import Cor
-from veiculo.models import Modelo
-from veiculo.models import Veiculo
+from homicidio.models import AreaUpm, Autoria, Genero, Homicidio, Motivacao
+from infracao.models import Arma, Infracao, Natureza
+from ocorrencia.models import Ocorrencia, PessoaOcorrencia
+from pessoa.models import (
+    Comparsa,
+    Faccao,
+    Foto,
+    Pessoa,
+    PessoaVeiculo,
+    Tatuagem
+)
+from veiculo.models import Cor, Modelo, Veiculo
 
 LOCAL = True
 

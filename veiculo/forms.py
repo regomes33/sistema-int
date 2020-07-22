@@ -1,5 +1,6 @@
 from django import forms
-from .models import Veiculo, Modelo
+
+from .models import Modelo, Veiculo
 
 
 class VeiculoForm(forms.ModelForm):

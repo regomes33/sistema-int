@@ -1,14 +1,18 @@
 from django.conf import settings
 from django.contrib import admin
-from ocorrencia.models import Infracao
-from ocorrencia.models import PessoaOcorrencia
-from .models import Comparsa
-from .models import Faccao
-from .models import Foto
-from .models import Pessoa
-from .models import PessoaContato
-from .models import PessoaVeiculo
-from .models import Tatuagem
+
+from ocorrencia.models import Infracao, PessoaOcorrencia
+
+from .models import (
+    Comparsa,
+    Faccao,
+    Foto,
+    Pessoa,
+    PessoaComparsa,
+    PessoaContato,
+    PessoaVeiculo,
+    Tatuagem
+)
 
 
 class FotoInline(admin.TabularInline):
@@ -36,10 +40,9 @@ class PessoaContatoInline(admin.TabularInline):
     extra = 0
 
 
-# class ComparsaInline(admin.TabularInline):
-#     model = Comparsa
-#     # fields = ('nome', 'rg', 'cpf', 'cnh')
-#     extra = 0
+class PessoaComparsaInline(admin.TabularInline):
+    model = PessoaComparsa
+    extra = 0
 
 
 class PessoaVeiculoInline(admin.TabularInline):
@@ -55,7 +58,7 @@ class PessoaAdmin(admin.ModelAdmin):
         InfracaoInline,
         PessoaOcorrenciaInline,
         PessoaContatoInline,
-        # ComparsaInline,
+        PessoaComparsaInline,
         PessoaVeiculoInline
     )
     list_display = ('__str__', 'slug', 'apelido',

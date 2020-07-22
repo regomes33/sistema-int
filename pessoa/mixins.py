@@ -1,5 +1,6 @@
-from django.db.models import Q
 from pprint import pprint
+
+from django.db.models import Q
 
 
 class PessoaSomenteMixin(object):

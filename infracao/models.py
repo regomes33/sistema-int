@@ -1,7 +1,8 @@
 from django.db import models
 from django.urls import reverse_lazy
+
+from core.models import CreatedBy, TimeStampedModel, UuidModel
 from pessoa.models import Pessoa
-from core.models import UuidModel, TimeStampedModel, CreatedBy
 from utils.data import QUALIFICACAO, STATUS
 
 

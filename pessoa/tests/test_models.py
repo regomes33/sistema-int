@@ -1,12 +1,15 @@
 from django.test import TestCase
-from pessoa.models import Pessoa
-from pessoa.models import Foto
-from pessoa.models import Tatuagem
-from pessoa.models import PessoaContato
-from pessoa.models import PessoaComparsa
-from pessoa.models import Comparsa
-from pessoa.models import Faccao
-from pessoa.models import PessoaVeiculo
+
+from pessoa.models import (
+    Comparsa,
+    Faccao,
+    Foto,
+    Pessoa,
+    PessoaComparsa,
+    PessoaContato,
+    PessoaVeiculo,
+    Tatuagem
+)
 
 
 class TestPessoa(TestCase):

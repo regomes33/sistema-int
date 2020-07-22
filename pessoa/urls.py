@@ -1,7 +1,7 @@
-from django.urls import path, include
-from pessoa import views as v
-from pessoa import reports as rep
+from django.urls import include, path
 
+from pessoa import reports as rep
+from pessoa import views as v
 
 app_name = 'pessoa'
 

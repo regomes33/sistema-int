@@ -1,9 +1,10 @@
 from django.db import models
 from django.urls import reverse_lazy
-from core.models import UuidModel, TimeStampedModel, CreatedBy, Address
+
+from core.models import Address, CreatedBy, TimeStampedModel, UuidModel
+from infracao.models import Arma
 from ocorrencia.models import Ocorrencia
 from pessoa.models import Pessoa
-from infracao.models import Arma
 from utils.data import FORMA
 
 

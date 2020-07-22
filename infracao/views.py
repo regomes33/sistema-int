@@ -5,10 +5,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import ListView, UpdateView
-from .forms import InfracaoForm
-from .forms import NaturezaForm
-from .models import Infracao
-from .models import Natureza
+
+from .forms import InfracaoForm, NaturezaForm
+from .models import Infracao, Natureza
 
 
 class InfracaoList(LRM, ListView):

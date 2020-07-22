@@ -1,7 +1,6 @@
 from django.test import TestCase
-from infracao.models import Arma
-from infracao.models import Infracao
-from infracao.models import Natureza
+
+from infracao.models import Arma, Infracao, Natureza
 
 
 class TestArma(TestCase):

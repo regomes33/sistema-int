@@ -1,4 +1,5 @@
 from pprint import pprint
+
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
@@ -7,13 +8,14 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, resolve_url
 from django.urls import reverse
 from django.views.generic import ListView
-from core.models import City
-from core.models import District
-from ocorrencia.models import PessoaOcorrencia, Natureza
+
+from core.models import City, District
+from ocorrencia.models import Natureza, PessoaOcorrencia
 from utils.data import STATUS
+
 from .forms import PessoaForm
 from .mixins import PessoaSomenteMixin, SearchMixin
-from .models import Pessoa, Faccao
+from .models import Faccao, Pessoa
 
 
 class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):

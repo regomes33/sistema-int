@@ -1,9 +1,6 @@
 from django.contrib import admin
-from .models import AreaUpm
-from .models import Autoria
-from .models import Genero
-from .models import Homicidio
-from .models import Motivacao
+
+from .models import AreaUpm, Autoria, Genero, Homicidio, Motivacao
 
 
 @admin.register(AreaUpm)

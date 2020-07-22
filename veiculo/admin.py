@@ -1,8 +1,7 @@
 from django.conf import settings
 from django.contrib import admin
-from .models import Cor
-from .models import Modelo
-from .models import Veiculo
+
+from .models import Cor, Modelo, Veiculo
 
 
 @admin.register(Veiculo)

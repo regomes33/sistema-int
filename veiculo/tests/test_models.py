@@ -1,7 +1,6 @@
 from django.test import TestCase
-from veiculo.models import Veiculo
-from veiculo.models import Modelo
-from veiculo.models import Cor
+
+from veiculo.models import Cor, Modelo, Veiculo
 
 
 class TestVeiculo(TestCase):

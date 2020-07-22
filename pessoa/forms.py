@@ -1,5 +1,6 @@
 from django import forms
-from .models import Pessoa, Comparsa, PessoaContato, PessoaVeiculo
+
+from .models import Comparsa, Pessoa, PessoaContato, PessoaVeiculo
 
 
 class PessoaForm(forms.ModelForm):

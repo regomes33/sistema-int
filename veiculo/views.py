@@ -5,8 +5,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import ListView, UpdateView
-from .forms import VeiculoForm, ModeloForm
-from .models import Veiculo, Modelo
+
+from .forms import ModeloForm, VeiculoForm
+from .models import Modelo, Veiculo
 
 
 class VeiculoList(LRM, ListView):

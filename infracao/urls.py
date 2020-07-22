@@ -1,6 +1,6 @@
-from django.urls import path, include
-from infracao import views as v
+from django.urls import include, path
 
+from infracao import views as v
 
 app_name = 'infracao'
 

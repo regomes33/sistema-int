@@ -1,7 +1,7 @@
-from django.urls import path, include
-from homicidio import views as v
-from homicidio import reports as rep
+from django.urls import include, path
 
+from homicidio import reports as rep
+from homicidio import views as v
 
 app_name = 'homicidio'
 

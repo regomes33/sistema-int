@@ -1,8 +1,14 @@
 from django.db import models
-from core.models import UuidModel, TimeStampedModel, CreatedBy, Address, Document
+
+from core.models import (
+    Address,
+    CreatedBy,
+    Document,
+    TimeStampedModel,
+    UuidModel
+)
+from utils.data import STATUS, TIPO
 from veiculo.models import Veiculo
-from utils.data import TIPO
-from utils.data import STATUS
 
 
 class Pessoa(UuidModel, TimeStampedModel, CreatedBy, Address, Document):

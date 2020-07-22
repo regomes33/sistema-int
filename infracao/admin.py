@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import Arma
-from .models import Natureza
-from .models import Infracao
+
+from .models import Arma, Infracao, Natureza
 
 
 @admin.register(Arma)

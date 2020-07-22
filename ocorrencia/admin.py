@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Ocorrencia
-from .models import OcorrenciaVeiculo
+
+from .models import Ocorrencia, OcorrenciaVeiculo
 
 
 class OcorrenciaVeiculoInline(admin.TabularInline):

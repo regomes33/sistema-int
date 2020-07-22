@@ -1,7 +1,6 @@
 from django.test import TestCase
-from ocorrencia.models import Ocorrencia
-from ocorrencia.models import OcorrenciaVeiculo
-from ocorrencia.models import PessoaOcorrencia
+
+from ocorrencia.models import Ocorrencia, OcorrenciaVeiculo, PessoaOcorrencia
 
 
 class TestOcorrencia(TestCase):

@@ -1,6 +1,6 @@
-from django.urls import path, include
-from ocorrencia import views as v
+from django.urls import include, path
 
+from ocorrencia import views as v
 
 app_name = 'ocorrencia'
 

@@ -1,5 +1,6 @@
 import os
-from decouple import config, Csv
+
+from decouple import Csv, config
 from dj_database_url import parse as dburl
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

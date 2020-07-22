@@ -1,9 +1,6 @@
 from django.test import TestCase
-from homicidio.models import AreaUpm
-from homicidio.models import Autoria
-from homicidio.models import Genero
-from homicidio.models import Homicidio
-from homicidio.models import Motivacao
+
+from homicidio.models import AreaUpm, Autoria, Genero, Homicidio, Motivacao
 
 
 class TestAreaUpm(TestCase):

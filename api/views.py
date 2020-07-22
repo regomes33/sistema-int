@@ -1,29 +1,32 @@
 import json
 import re
+
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from localflavor.br.br_states import STATE_CHOICES
+
 from core.models import District
 from infracao.forms import InfracaoForm
-from infracao.models import Arma
-from infracao.models import Infracao
-from infracao.models import Natureza
+from infracao.models import Arma, Infracao, Natureza
 from ocorrencia.forms import PessoaOcorrenciaForm
-from ocorrencia.models import Ocorrencia
-from ocorrencia.models import PessoaOcorrencia
-from pessoa.forms import ComparsaForm
-from pessoa.forms import PessoaContatoForm
-from pessoa.forms import PessoaForm
-from pessoa.forms import PessoaMinimalForm
-from pessoa.forms import PessoaVeiculoForm
-from pessoa.models import Comparsa
-from pessoa.models import Faccao
-from pessoa.models import Foto
-from pessoa.models import Pessoa
-from pessoa.models import PessoaContato
-from pessoa.models import PessoaVeiculo
-from pessoa.models import Tatuagem
+from ocorrencia.models import Ocorrencia, PessoaOcorrencia
+from pessoa.forms import (
+    ComparsaForm,
+    PessoaContatoForm,
+    PessoaForm,
+    PessoaMinimalForm,
+    PessoaVeiculoForm
+)
+from pessoa.models import (
+    Comparsa,
+    Faccao,
+    Foto,
+    Pessoa,
+    PessoaContato,
+    PessoaVeiculo,
+    Tatuagem
+)
 from utils.data import QUALIFICACAO, STATUS, TIPO
 from veiculo.models import Veiculo
 

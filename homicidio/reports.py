@@ -1,6 +1,9 @@
 from datetime import datetime
+
 from django.views.generic import ListView
+
 from homicidio.mixins import SearchHomicidioMixin
+
 from .models import Homicidio
 
 
