@@ -102,6 +102,13 @@ var app = new Vue({
           this.comparsas = response.data.data;
         })
     },
+    getAddComparsa() {
+      // Pega todos os comparsas de todas as pessoas.
+      axios.get(endpoint + 'api/comparsas/')
+        .then(response => {
+          this.comparsas = response.data.data;
+        })
+    },
     getPhoto(pk) {
       this.photo.pk = pk
     },

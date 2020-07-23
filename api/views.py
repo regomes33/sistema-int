@@ -435,10 +435,9 @@ def veiculo_update(request, pk):
 def comparsa_add(request, pessoa_pk):
     if request.method == 'POST':
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
-        nome = request.POST.get('nome')
-        rg = request.POST.get('rg')
-        cpf = request.POST.get('cpf')
-        cnh = request.POST.get('cnh')
+
+        comparsa_pk = request.POST.get('comparsa_pk')
+        comparsa = Comparsa.objects.get(pk=comparsa_pk)
 
         parente = request.POST.get('parente')
         if parente == 'true':
@@ -448,35 +447,20 @@ def comparsa_add(request, pessoa_pk):
         grau_parentesco = request.POST.get('grau_parentesco')
         observacao = request.POST.get('observacao')
 
-        # _data = request.POST
+        _data = request.POST
 
-        # data = {'data': _data}
+        data = {'data': _data}
 
         # Transformando 'parente' em booleano.
-        # data['parente'] = parente
+        data['parente'] = parente
 
-        try:
-            Comparsa.objects.create(
-                pessoa=pessoa,
-                nome=nome,
-                rg=rg,
-                cpf=cpf,
-                cnh=cnh,
-                parente=parente,
-                grau_parentesco=grau_parentesco,
-                observacao=observacao,
-            )
-        except:
-            return JsonResponse({'status': 900, 'message': 'CPF já existe.'})
-
-        # Usando formulário você resolve o problema de CPF vazio.
-        # comparsa_form = PessoaComparsaForm(data)
-
-        # if comparsa_form.is_valid():
-        #     comparsa_post = comparsa_form.save(commit=False)
-        #     comparsa_post.pessoa = pessoa
-        #     comparsa_post.save()
-
+        PessoaComparsa.objects.create(
+            pessoa=pessoa,
+            comparsa=comparsa,
+            parente=parente,
+            grau_parentesco=grau_parentesco,
+            observacao=observacao,
+        )
         return JsonResponse({'data': 'OK'})
 
 
