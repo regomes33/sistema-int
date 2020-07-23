@@ -23,6 +23,7 @@ from pessoa.models import (
     Faccao,
     Foto,
     Pessoa,
+    PessoaComparsa,
     PessoaContato,
     PessoaVeiculo,
     Tatuagem
@@ -481,33 +482,32 @@ def comparsa_add(request, pessoa_pk):
 
 @login_required
 def comparsa_update(request, pk):
-    comparsa = Comparsa.objects.get(pk=pk)
+    pessoa_comparsa = PessoaComparsa.objects.get(pk=pk)
 
     data = {
-        'pk': comparsa.pk,
-        'nome': comparsa.nome,
-        'rg': comparsa.rg,
-        'cpf': comparsa.cpf,
-        'cnh': comparsa.cnh,
-        'parente': comparsa.parente,
-        'grau_parentesco': comparsa.grau_parentesco,
-        'observacao': comparsa.observacao,
+        'pk': pessoa_comparsa.pk,
+        'comparsa_pk': pessoa_comparsa.comparsa.pk,
+        'parente': pessoa_comparsa.parente,
+        'grau_parentesco': pessoa_comparsa.grau_parentesco,
+        'observacao': pessoa_comparsa.observacao,
     }
 
     if request.method == 'POST':
-        comparsa.nome = request.POST.get('nome')
-        comparsa.rg = request.POST.get('rg')
-        comparsa.cpf = request.POST.get('cpf')
-        comparsa.cnh = request.POST.get('cnh')
-        comparsa.parente = request.POST.get('parente')
-        if comparsa.parente == 'true':
-            comparsa.parente = True
-        else:
-            comparsa.parente = False
-        comparsa.grau_parentesco = request.POST.get('grau_parentesco')
-        comparsa.observacao = request.POST.get('observacao')
+        comparsa_pk = request.POST.get('comparsa_pk')
+        comparsa = Comparsa.objects.get(pk=comparsa_pk)
 
-        comparsa.save()
+        pessoa_comparsa.comparsa = comparsa
+
+        pessoa_comparsa.parente = request.POST.get('parente')
+        if pessoa_comparsa.parente == 'true':
+            pessoa_comparsa.parente = True
+        else:
+            pessoa_comparsa.parente = False
+
+        pessoa_comparsa.grau_parentesco = request.POST.get('grau_parentesco')
+        pessoa_comparsa.observacao = request.POST.get('observacao')
+
+        pessoa_comparsa.save()
         return JsonResponse({'data': 'OK'})
 
     return JsonResponse(data)

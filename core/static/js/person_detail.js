@@ -17,12 +17,10 @@ var app = new Vue({
       'veiculo': '',
       'observacao': '',
     },
+    comparsas: [],
     comparsa: {
       'pk': '',
-      'nome': '',
-      'rg': '',
-      'cpf': '',
-      'cnh': '',
+      'comparsa_pk': '',
       'parente': '',
       'grau_parentesco': '',
       'observacao': '',
@@ -97,6 +95,11 @@ var app = new Vue({
       axios.get(url)
         .then(response => {
           this.comparsa = response.data
+        })
+      // Pega todos os comparsas de todas as pessoas.
+      axios.get(endpoint + 'api/comparsas/')
+        .then(response => {
+          this.comparsas = response.data.data;
         })
     },
     getPhoto(pk) {
@@ -218,10 +221,7 @@ var app = new Vue({
     },
     salvarAddComparsa(pessoa_pk) {
       let bodyFormData = new FormData();
-      bodyFormData.append('nome', this.comparsa.nome);
-      bodyFormData.append('rg', this.comparsa.rg);
-      bodyFormData.append('cpf', this.comparsa.cpf);
-      bodyFormData.append('cnh', this.comparsa.cnh);
+      bodyFormData.append('comparsa_pk', this.comparsa.comparsa_pk);
       bodyFormData.append('parente', this.comparsa.parente);
       bodyFormData.append('grau_parentesco', this.comparsa.grau_parentesco);
       bodyFormData.append('observacao', this.comparsa.observacao);
@@ -240,10 +240,7 @@ var app = new Vue({
     },
     salvarComparsa() {
       let bodyFormData = new FormData();
-      bodyFormData.append('nome', this.comparsa.nome);
-      bodyFormData.append('rg', this.comparsa.rg);
-      bodyFormData.append('cpf', this.comparsa.cpf);
-      bodyFormData.append('cnh', this.comparsa.cnh);
+      bodyFormData.append('comparsa_pk', this.comparsa.comparsa_pk);
       bodyFormData.append('parente', this.comparsa.parente);
       bodyFormData.append('grau_parentesco', this.comparsa.grau_parentesco);
       bodyFormData.append('observacao', this.comparsa.observacao);
