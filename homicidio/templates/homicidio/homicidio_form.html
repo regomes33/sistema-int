@@ -117,6 +117,12 @@
 {% endblock content %}
 {% block js %}
 <script>
+$(document).ready(function() {
+  $('#id_rai').select2();
+  $('#id_vitima').select2();
+  $('#id_district').select2();
+});
+
 $('#id_data_do_homicidio').datepicker({
   uiLibrary: 'bootstrap4',
   format: 'dd/mm/yyyy',

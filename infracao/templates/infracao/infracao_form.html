@@ -32,3 +32,12 @@
   </div>
 </div>
 {% endblock content %}
+
+{% block js %}
+<script>
+  $(document).ready(function() {
+    $('#id_pessoa').select2();
+    $('#id_natureza').select2();
+  });
+</script>
+{% endblock js %}

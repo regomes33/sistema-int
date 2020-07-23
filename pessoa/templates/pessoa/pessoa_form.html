@@ -222,7 +222,7 @@
                   <div class="form-row" v-for="infracao in infracoes" :key="infracao.id">
                     <div class="form-group col-md-3">
                       <label for="natureza">Natureza</label>
-                      <select :id="'natureza'+infracao.id" class="form-control" v-model="infracao.natureza">
+                      <select :id="'natureza'+infracao.id" class="form-control natureza" v-model="infracao.natureza">
                         <option selected value="">---</option>
                         <option v-for="natureza in naturezas" :key="natureza.value" :value="natureza.value">${ natureza.text
                           }</option>
@@ -276,7 +276,7 @@
                   <div class="form-row" v-for="ocorrencia in ocorrencias" :key="ocorrencia.id">
                     <div class="form-group col-md-3">
                       <label for="ocorrencia">Ocorrência</label>
-                      <select :id="'ocorrencia'+ocorrencia.id" class="form-control" v-model="ocorrencia.ocorrencia">
+                      <select :id="'ocorrencia'+ocorrencia.id" class="form-control ocorrencia" v-model="ocorrencia.ocorrencia">
                         <option selected value="">---</option>
                         <option v-for="ocorrencia in ocorrencias_list" :key="ocorrencia.value" :value="ocorrencia.value">${
                           ocorrencia.text }</option>
@@ -342,7 +342,7 @@
                   <div class="" v-for="comparsa in comparsas" :key="comparsa.id">
                     <div class="form-group">
                       <label class="control-label">Nome</label>
-                      <select :id="'comparsa_nome'+comparsa.id" class="form-control" v-model="comparsa.comparsa">
+                      <select :id="'comparsa_nome'+comparsa.id" class="form-control comparsa" v-model="comparsa.comparsa">
                         <option selected value="">---</option>
                         <option v-for="comparsa in comparsas_list" :key="comparsa.value" :value="comparsa.value">${ comparsa.text } - ${ comparsa.cpf }</option>
                       </select>
@@ -387,7 +387,7 @@
                   <div class="form-row" v-for="veiculo in veiculos" :key="veiculo.id">
                     <div class="form-group col-md-4">
                       <label for="veiculo">Veículo</label>
-                      <select :id="'veiculo'+veiculo.id" class="form-control" v-model="veiculo.veiculo">
+                      <select :id="'veiculo'+veiculo.id" class="form-control veiculo" v-model="veiculo.veiculo">
                         <option selected value="">---</option>
                         <option v-for="carro in carros" :key="carro.value" :value="carro.value">${ carro.text }</option>
                       </select>
@@ -417,6 +417,12 @@ const endpoint = '{{ endpoint }}';
 
 $(document).ready(function() {
   $('#telefone1').mask('(00) 00000-0000');
+
+  // $('#id_district').select2();
+  // $('.natureza').select2();
+  // $('.ocorrencia').select2();
+  // $('.comparsa').select2();
+  // $('.veiculo').select2();
 });
 
 $(document).on('click', '#btnContato', function(id) {
