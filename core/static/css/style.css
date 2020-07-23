@@ -12,6 +12,10 @@
   color: #20a8d8;
 }
 
+.i-is-link {
+  cursor: pointer;
+}
+
 .breadcrumb-mt {
   margin-top: 55px;
 }

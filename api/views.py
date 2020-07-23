@@ -12,12 +12,12 @@ from infracao.models import Arma, Infracao, Natureza
 from ocorrencia.forms import PessoaOcorrenciaForm
 from ocorrencia.models import Ocorrencia, PessoaOcorrencia
 from pessoa.forms import (
+    ComparsaForm,
     PessoaComparsaForm,
     PessoaContatoForm,
     PessoaForm,
     PessoaMinimalForm,
-    PessoaVeiculoForm,
-    ComparsaForm,
+    PessoaVeiculoForm
 )
 from pessoa.models import (
     Comparsa,
