@@ -12,7 +12,7 @@ from pprint import pprint
 
 from django.contrib.auth.models import User
 
-from core.models import City
+from core.models import City, District
 from homicidio.models import AreaUpm, Autoria, Genero, Homicidio, Motivacao
 from infracao.models import Arma, Infracao, Natureza
 from ocorrencia.models import Ocorrencia, PessoaOcorrencia
@@ -185,6 +185,7 @@ def my_import_data():
     import_tatuagem(filename_pessoa_tatuagem)
     import_comparsa(filename_pessoa_comparsa)
     import_pessoa_comparsa(filename_pessoa_comparsa)
+    import_pessoa_bairro(filename_pessoa_pessoa)
 
     # Ocorrencia
     import_ocorrencia(filename_ocorrencia_ocorrencia)
@@ -225,6 +226,9 @@ def create_pessoa(filename):
     data = []
     for item in progressbar(items, 'Pessoas: '):
         del item['id']
+
+        item['observacao_bairro'] = f"{item['district']} - {item['city']}"
+
         del item['district']  # Remove district
         del item['city']  # Remove city
         del item['uf']  # Remove uf
@@ -517,6 +521,17 @@ def import_pessoa_comparsa(filename):
                 grau_parentesco=item['grau_parentesco'],
                 observacao=item['observacao']
             )
+
+
+def import_pessoa_bairro(filename):
+    items = csv_online_to_list(filename)
+    for item in progressbar(items, 'Bairros: '):
+        district_name = item['district']
+        city = City.objects.filter(name=item['city']).first()
+        if city:
+            district = District.objects.filter(name=district_name).first()
+            if not district:
+                District.objects.create(name=district_name, city=city)
 
 
 def import_pessoaveiculo(filename):

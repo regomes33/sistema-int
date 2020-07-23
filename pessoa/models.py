@@ -28,6 +28,11 @@ class Pessoa(UuidModel, TimeStampedModel, CreatedBy, Address, Document):
         null=True,
         blank=True
     )
+    observacao_bairro = models.TextField(
+        'Observação Bairro',
+        null=True,
+        blank=True
+    )
     faccao = models.ForeignKey(
         'Faccao',
         on_delete=models.SET_NULL,

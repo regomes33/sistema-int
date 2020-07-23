@@ -10,6 +10,8 @@ class DistrictAdmin(admin.ModelAdmin):
     list_filter = ('city',)
 
     def has_delete_permission(self, request, obj=None):
+        if request.user.username == 'admin':
+            return True
         return False
 
 

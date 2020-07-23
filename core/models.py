@@ -42,7 +42,7 @@ class CreatedBy(models.Model):
 
 
 class City(models.Model):
-    name = models.CharField('cidade', max_length=100)
+    name = models.CharField('cidade', max_length=100, unique=True)
     uf = models.CharField(
         'UF',
         max_length=2,
@@ -60,7 +60,7 @@ class City(models.Model):
 
 
 class District(models.Model):
-    name = models.CharField('bairro', max_length=100)
+    name = models.CharField('bairro', max_length=100, unique=True)
     city = models.ForeignKey(
         'City',
         verbose_name='cidade',
