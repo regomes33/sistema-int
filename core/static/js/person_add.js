@@ -12,7 +12,7 @@ var app = new Vue({
       'mae': '',
       'pai': '',
       'faccao': '',
-      'status_atual': '',
+      'status_atual': 'foragido',
       'nascimento': '',
       'cpf': '',
       'rg': '',
@@ -68,12 +68,10 @@ var app = new Vue({
       'telefone': '',
     }],
     comparsa_id: 1,
+    comparsas_list: [],
     comparsas: [{
       'id': 1,
       'nome': '',
-      'cpf': '',
-      'rg': '',
-      'cnh': '',
       'parente': '',
       'grau_parentesco': '',
       'observacao': '',
@@ -125,6 +123,11 @@ var app = new Vue({
     axios.get(endpoint + 'api/status/')
       .then(response => {
         this.status = response.data.data;
+      })
+
+    axios.get(endpoint + 'api/comparsas/')
+      .then(response => {
+        this.comparsas_list = response.data.data;
       })
 
     axios.get(endpoint + 'api/veiculos/')
@@ -205,10 +208,7 @@ var app = new Vue({
       this.comparsa_id++;
       this.comparsas.push({
         'id': this.comparsa_id,
-        'nome': '',
-        'cpf': '',
-        'rg': '',
-        'cnh': '',
+        'comparsa': '',
         'parente': '',
         'grau_parentesco': '',
         'observacao': '',

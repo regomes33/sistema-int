@@ -158,18 +158,18 @@
     <div>
       <!-- card-body -->
       <ul class="list-group list-group-flush">
-        {% for comparsa in object.comparsa_set.all %}
+        {% for comparsa in object.pessoacomparsa_set.all %}
         <li class="list-group-item">
           <ul class="list-group list-group-flush">
             <li class="list-group-item no-border li-line pl-0 pr-0">
-              <span class="lead">{{ comparsa }}</span>
+              <span class="lead">{{ comparsa.comparsa.nome }}</span>
               <span class="span-is-link pull-right" data-toggle="modal" data-target="#modalEditarComparsa" @click="getComparsa('{% url 'api:comparsa_update' comparsa.pk %}')">
                 <i class="fa fa-edit" style="margin-left: 10px;"></i>
               </span>
             </li>
-            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">RG:</span> {{ comparsa.rg }}</li>
-            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">CPF:</span> {{ comparsa.cpf|cpf_mask }}</li>
-            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">CNH:</span> {{ comparsa.cnh }}</li>
+            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">RG:</span> {{ comparsa.comparsa.rg|default:"---" }}</li>
+            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">CPF:</span> {{ comparsa.comparsa.cpf|cpf_mask }}</li>
+            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">CNH:</span> {{ comparsa.comparsa.cnh|default:"---" }}</li>
             <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">Parente:</span>
               {% if comparsa.parente %} <span class="badge badge-success">Sim</span>
               {% else %}

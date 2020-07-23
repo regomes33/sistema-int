@@ -1,4 +1,4 @@
-let name = ['Benedito', 'Augusto', 'Paula', 'Silvia', 'Miranda']
+let name = ['Aarão', 'Benedito', 'Paula', 'Silvia', 'Miranda']
 let rand_cpf
 let rand_rg
 let rand_cnh
@@ -18,7 +18,7 @@ describe('Input form', () => {
     cy.wait(500)
     cy.get('a[href="/pessoa/"]').click()
     cy.wait(1000)
-    cy.get('.btn-primary').click()
+    cy.get('#btnAdicionar').click()
     cy.wait(500)
 
     var rand_name = name[Math.floor(Math.random() * name.length)]
@@ -78,25 +78,15 @@ describe('Input form', () => {
     cy.wait(500)
 
     cy.get('#heading9').click()
-    cy.get('#comparsa_nome1').type('André')
+    cy.get('#comparsa_nome1').select('1')
     rand_cpf = Math.floor(Math.random() * 999999999999)
-    cy.get('#comparsa_cpf1').type(rand_cpf)
-    rand_rg = Math.floor(Math.random() * 100000000000)
-    cy.get('#comparsa_rg1').type(rand_rg)
-    rand_cnh = Math.floor(Math.random() * 1000000)
-    cy.get('#comparsa_cnh1').type(rand_cnh)
     cy.get('#comparsa_grau_parentesco1').type('Irmão')
     cy.get('#comparsa_observacao1').type('Cúmplice')
     cy.get('#btnComparsa').click()
-    cy.get('#comparsa_nome2').type('Pedro')
-    rand_cpf = Math.floor(Math.random() * 10000000000)
-    cy.get('#comparsa_cpf2').type(rand_cpf)
+    cy.get('#comparsa_nome2').select('2')
+    rand_cpf = Math.floor(Math.random() * 999999999999)
     cy.get('#comparsa_grau_parentesco2').type('Primo')
     cy.get('#comparsa_observacao2').type('Disse que é inocente.')
-    rand_rg = Math.floor(Math.random() * 100000000000)
-    cy.get('#comparsa_rg2').type(rand_rg)
-    rand_cnh = Math.floor(Math.random() * 1000000)
-    cy.get('#comparsa_cnh2').type(rand_cnh)
 
     cy.get('#heading10').click()
     cy.get('#veiculo1').select('1')

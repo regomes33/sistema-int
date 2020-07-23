@@ -165,7 +165,7 @@ class PessoaComparsa(UuidModel, TimeStampedModel):
     def __str__(self):
         if self.comparsa:
             return f'{self.pessoa} - {self.comparsa}'
-        return self.pessoa
+        return str(self.pessoa)
 
 
 class Faccao(UuidModel):

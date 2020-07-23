@@ -56,7 +56,6 @@
                   <div class="form-group">
                     <label for="status_atual">Status atual</label>
                     <select id="status_atual" class="form-control" v-model="pessoa.status_atual">
-                      <option selected value="">---</option>
                       <option v-for="status in status_atuais" :key="status.value" :value="status.value">${ status.text }</option>
                     </select>
                   </div>
@@ -343,24 +342,16 @@
                   <div class="" v-for="comparsa in comparsas" :key="comparsa.id">
                     <div class="form-group">
                       <label class="control-label">Nome</label>
-                      <input :id="'comparsa_nome'+comparsa.id" v-model="comparsa.nome" class="form-control" type="text" />
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label">CPF</label>
-                      <input :id="'comparsa_cpf'+comparsa.id" v-model="comparsa.cpf" class="form-control" type="text" maxlength="11" />
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label">RG</label>
-                      <input :id="'comparsa_rg'+comparsa.id" v-model="comparsa.rg" class="form-control" type="text" maxlength="11" />
-                    </div>
-                    <div class="form-group">
-                      <label class="control-label">CNH</label>
-                      <input :id="'comparsa_cnh'+comparsa.id" v-model="comparsa.cnh" class="form-control" type="text" maxlength="20" />
+                      <select :id="'comparsa_nome'+comparsa.id" class="form-control" v-model="comparsa.comparsa">
+                        <option selected value="">---</option>
+                        <option v-for="comparsa in comparsas_list" :key="comparsa.value" :value="comparsa.value">${ comparsa.text } - ${ comparsa.cpf }</option>
+                      </select>
+                      aqui
                     </div>
                     <div class="form-group">
                       <div class="checkbox-row">
+                        <input :id="'comparsa_parente'+comparsa.id" v-model="comparsa.parente" type="checkbox" style="width: 40px;">
                         <label class="control-label" style="margin-left: 10px;" title="Escolha se for Parente">Parente</label>
-                        <input :id="'comparsa_parente'+comparsa.id" v-model="comparsa.parente" class="form-control" type="checkbox" style="width: 40px;">
                       </div>
                     </div>
                     <div class="form-group">

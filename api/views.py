@@ -12,7 +12,7 @@ from infracao.models import Arma, Infracao, Natureza
 from ocorrencia.forms import PessoaOcorrenciaForm
 from ocorrencia.models import Ocorrencia, PessoaOcorrencia
 from pessoa.forms import (
-    ComparsaForm,
+    PessoaComparsaForm,
     PessoaContatoForm,
     PessoaForm,
     PessoaMinimalForm,
@@ -136,13 +136,12 @@ def pessoa_add(request):
         comparsas_data = json.loads(request.POST.get('comparsas'))
         if comparsas_data:
             for comparsa in comparsas_data:
-                if comparsa.get('nome'):
-                    pass
-                    # comparsa_form = ComparsaForm(comparsa)
-                    # if comparsa_form.is_valid():
-                    #     comparsa_post = comparsa_form.save(commit=False)
-                    #     comparsa_post.pessoa = pessoa_post
-                    #     comparsa_post.save()
+                if comparsa.get('comparsa'):
+                    comparsa_form = PessoaComparsaForm(comparsa)
+                    if comparsa_form.is_valid():
+                        comparsa_post = comparsa_form.save(commit=False)
+                        comparsa_post.pessoa = pessoa_post
+                        comparsa_post.save()
 
         # Adiciona Ocorrências
         ocorrencias_data = json.loads(request.POST.get('ocorrencias'))
@@ -370,6 +369,20 @@ def pessoa_veiculos(request):
             'veiculo': veiculo.placa,
         }
         for veiculo in veiculos
+    ]
+    return JsonResponse({'data': data})
+
+
+@login_required
+def comparsas(request):
+    comparsas = Comparsa.objects.all()
+    data = [
+        {
+            'value': comparsa.pk,
+            'text': comparsa.nome,
+            'cpf': comparsa.cpf
+        }
+        for comparsa in comparsas
     ]
     return JsonResponse({'data': data})
 

@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Comparsa, Pessoa, PessoaContato, PessoaVeiculo
+from .models import Comparsa, Pessoa, PessoaComparsa, PessoaContato, PessoaVeiculo
 
 
 class PessoaForm(forms.ModelForm):
@@ -57,6 +57,19 @@ class ComparsaForm(forms.ModelForm):
     class Meta:
         model = Comparsa
         fields = ('nome', 'cpf', 'rg', 'cnh')
+
+
+class PessoaComparsaForm(forms.ModelForm):
+
+    class Meta:
+        model = PessoaComparsa
+        fields = (
+            'pessoa',
+            'comparsa',
+            'parente',
+            'grau_parentesco',
+            'observacao',
+        )
 
 
 class PessoaVeiculoForm(forms.ModelForm):

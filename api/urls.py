@@ -46,6 +46,7 @@ urlpatterns = [
     path('pessoas/', include(pessoas_patterns)),
     path('districts/', v.districts),
     path('districts/<int:pk>/edit/', v.district_update),
+    path('comparsas/', v.comparsas, name='comparsas'),
     path('faccoes/', v.faccoes),
     path('status_atuais/', v.status_atuais),
     path('status_atuais/<int:pk>/edit/', v.status_update),
