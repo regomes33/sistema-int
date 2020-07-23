@@ -89,6 +89,10 @@
         <h4>Observações</h4>
         <p class="text-justify">{{ object.observacao }}</p>
       </li>
+      <li class="list-group-item">
+        <h4>Observações Comparsas</h4>
+        <p class="text-justify">{{ object.observacao_comparsas }}</p>
+      </li>
     </ul>
   </div>
 </div>
@@ -168,7 +172,7 @@
               </span>
             </li>
             <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">RG:</span> {{ comparsa.comparsa.rg|default:"---" }}</li>
-            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">CPF:</span> {{ comparsa.comparsa.cpf|cpf_mask }}</li>
+            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">CPF:</span> {{ comparsa.comparsa.cpf|cpf_mask|default:"---" }}</li>
             <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">CNH:</span> {{ comparsa.comparsa.cnh|default:"---" }}</li>
             <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">Parente:</span>
               {% if comparsa.parente %} <span class="badge badge-success">Sim</span>

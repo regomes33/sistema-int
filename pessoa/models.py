@@ -18,7 +18,16 @@ class Pessoa(UuidModel, TimeStampedModel, CreatedBy, Address, Document):
     mae = models.CharField('mãe', max_length=50, null=True, blank=True)
     pai = models.CharField(max_length=50, null=True, blank=True)
     observacao = models.TextField(
-        'Observação', max_length=500, null=True, blank=True)
+        'Observação',
+        max_length=500,
+        null=True,
+        blank=True
+    )
+    observacao_comparsas = models.TextField(
+        'Observação Comparsas',
+        null=True,
+        blank=True
+    )
     faccao = models.ForeignKey(
         'Faccao',
         on_delete=models.SET_NULL,
@@ -62,6 +71,9 @@ class Pessoa(UuidModel, TimeStampedModel, CreatedBy, Address, Document):
         photos = self.foto_set.all()
         if photos:
             return photos[0]
+
+    def comparsas(self):
+        return PessoaComparsa.objects.filter(pessoa=self)
 
     def to_dict(self):
         # document_dict = Document.to_dict_base(self)
@@ -161,6 +173,7 @@ class PessoaComparsa(UuidModel, TimeStampedModel):
 
     class Meta:
         ordering = ('pessoa', 'comparsa')
+        unique_together = ('pessoa', 'comparsa')
 
     def __str__(self):
         if self.comparsa:

@@ -88,8 +88,9 @@ class ComparsaAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'rg', 'cpf', 'slug')
     search_fields = ('nome',)
 
-    # if not settings.DEBUG:
     def has_delete_permission(self, request, obj=None):
+        if request.user.username == 'admin':
+            return True
         return False
 
 

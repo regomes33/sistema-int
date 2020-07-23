@@ -21,12 +21,13 @@ from pessoa.models import (
     Faccao,
     Foto,
     Pessoa,
+    PessoaComparsa,
     PessoaVeiculo,
     Tatuagem
 )
 from veiculo.models import Cor, Modelo, Veiculo
 
-LOCAL = True
+LOCAL = False
 
 path = 'https://res.cloudinary.com/sistema-int/raw/upload'
 
@@ -183,6 +184,7 @@ def my_import_data():
     import_foto(filename_pessoa_foto)
     import_tatuagem(filename_pessoa_tatuagem)
     import_comparsa(filename_pessoa_comparsa)
+    import_pessoa_comparsa(filename_pessoa_comparsa)
 
     # Ocorrencia
     import_ocorrencia(filename_ocorrencia_ocorrencia)
@@ -456,11 +458,14 @@ def import_comparsa(filename):
     data = []
     for item in progressbar(items, 'Comparsas: '):
         del item['id']
+        del item['parente']
+        del item['grau_parentesco']
+        del item['observacao']
 
-        pessoa = get_pessoa(item.get('pessoa_id'))
+        # pessoa = get_pessoa(item.get('pessoa_id'))
         del item['pessoa_id']
-        if pessoa:
-            item['pessoa'] = pessoa
+        # if pessoa:
+        #     item['pessoa'] = pessoa
 
         if item['rg'] == 'nan':
             item['rg'] = None
@@ -481,6 +486,37 @@ def import_comparsa(filename):
         data.append(obj)
 
     Comparsa.objects.bulk_create(data)
+
+
+def import_pessoa_comparsa(filename):
+    items = csv_online_to_list(filename)
+    for item in progressbar(items, 'Pessoa Comparsas: '):
+        pessoa = get_pessoa(item['pessoa_id'])
+        item['pessoa'] = pessoa
+        # Procura comparsa
+        comparsa = Comparsa.objects.filter(nome=item['nome']).first()
+        observacao_comparsas = pessoa.observacao_comparsas
+        if not observacao_comparsas:
+            observacao_comparsas = ''
+        pessoa.observacao_comparsas = observacao_comparsas + f"""
+            Nome: {comparsa.nome}, 
+            RG: {comparsa.rg}, 
+            CPF: {comparsa.cpf}, 
+            CNH: {comparsa.cnh}
+        """.strip()
+        pessoa.save()
+        if comparsa:
+            if item['parente'] == 't':
+                parente = True
+            else:
+                parente = False
+            PessoaComparsa.objects.create(
+                pessoa=item['pessoa'],
+                comparsa=comparsa,
+                parente=parente,
+                grau_parentesco=item['grau_parentesco'],
+                observacao=item['observacao']
+            )
 
 
 def import_pessoaveiculo(filename):
