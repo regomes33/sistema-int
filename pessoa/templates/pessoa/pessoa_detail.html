@@ -475,12 +475,21 @@
         <div class="modal-body">
           {% csrf_token %}
           <input id="id_comparsa_pk" type="hidden" v-model="comparsa.pk" />
-          <div class="form-group">
-            <label for="id_comparsa">Comparsa</label>
-            <select id="id_comparsa" name="comparsa" class="form-control" v-model="comparsa.comparsa_pk">
-              <option value="">---</option>
-              <option v-for="comparsa in comparsas" :key="comparsa.value" :value="comparsa.value">${ comparsa.text } - ${ comparsa.cpf }</option>
-            </select>
+          <div class="form-row">
+            <div class="col">
+              <div class="form-group">
+                <label for="id_comparsa">Comparsa</label>
+                <select id="id_comparsa" name="comparsa" class="form-control" v-model="comparsa.comparsa_pk">
+                  <option value="">---</option>
+                  <option v-for="comparsa in comparsas" :key="comparsa.value" :value="comparsa.value">${ comparsa.text } - ${ comparsa.cpf }</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-auto" style="padding-top: 35px;">
+              <span style="color: green; cursor: pointer;" data-toggle="modal" data-target="#modalAddComparsa">
+                <i class="fa fa-plus"></i>
+              </span>
+            </div>
           </div>
           <div class="checkbox-row">
             <input id="id_parente" name="parente" type="checkbox" v-model="comparsa.parente" style="width: 50;">
@@ -538,6 +547,44 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Adicionar Novo Comparsa -->
+<div class="modal fade" id="modalAddComparsa" tabindex="-1" role="dialog" aria-labelledby="modalAddComparsaLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalAddComparsaLabel">Adicionar Novo Comparsa</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form method="POST" @submit.prevent="salvarAddNewComparsa">
+        <div class="modal-body">
+          {% csrf_token %}
+          <input type="hidden"  /> <!-- g-model="" -->
+          <div class="form-group">
+            <label for="id_new_nome">Nome</label>
+            <input id="id_new_nome" name="nome" required type="text" maxlength="100" class="form-control" v-model="newcomparsa.nome">
+          </div>
+          <div class="form-group">
+            <label for="id_new_rg">RG</label>
+            <input id="id_new_rg" name="rg" type="text" maxlength="11" class="form-control" v-model="newcomparsa.rg">
+          </div>
+          <div class="form-group">
+            <label for="id_new_cpf">CPF</label>
+            <input id="id_new_cpf" name="cpf" type="text" maxlength="11" class="form-control" v-model="newcomparsa.cpf">
+          </div>
+          <div class="form-group">
+            <label for="id_new_cnh">CNH</label>
+            <input id="id_new_cnh" name="cnh" type="text" maxlength="20" class="form-control" v-model="newcomparsa.cnh">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="comparsaCloseModal" type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
           <button type="submit" class="btn btn-primary">Salvar</button>
         </div>
       </form>

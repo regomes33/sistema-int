@@ -16,7 +16,8 @@ from pessoa.forms import (
     PessoaContatoForm,
     PessoaForm,
     PessoaMinimalForm,
-    PessoaVeiculoForm
+    PessoaVeiculoForm,
+    ComparsaForm,
 )
 from pessoa.models import (
     Comparsa,
@@ -494,6 +495,22 @@ def comparsa_update(request, pk):
         pessoa_comparsa.save()
         return JsonResponse({'data': 'OK'})
 
+    return JsonResponse(data)
+
+
+@login_required
+def new_comparsa_add(request):
+    comparsa_data = json.loads(request.POST.get('newcomparsa'))
+    form = ComparsaForm(comparsa_data)
+    data = {}
+    if form.is_valid():
+        obj = form.save()
+        data = form.data
+        data['comparsa_pk'] = obj.pk
+        return JsonResponse(data)
+    else:
+        data = {'message': 'Comparsa com este CPF já existe.', 'status': 900}
+        return JsonResponse(data)
     return JsonResponse(data)
 
 

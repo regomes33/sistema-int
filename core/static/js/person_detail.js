@@ -25,6 +25,12 @@ var app = new Vue({
       'grau_parentesco': '',
       'observacao': '',
     },
+    newcomparsa: {
+      'nome': '',
+      'rg': '',
+      'cpf': '',
+      'cnh': '',
+    },
     photo: {
       'pk': '',
       'photo': null,
@@ -64,7 +70,7 @@ var app = new Vue({
       'qualificacao': '',
       'arma_pk': '',
       'status': '',
-    },
+    }
   },
   methods: {
     getContato(url) {
@@ -103,6 +109,12 @@ var app = new Vue({
         })
     },
     getAddComparsa() {
+      this.newcomparsa = {
+        'nome': '',
+        'rg': '',
+        'cpf': '',
+        'cnh': '',
+      }
       // Pega todos os comparsas de todas as pessoas.
       axios.get(endpoint + 'api/comparsas/')
         .then(response => {
@@ -255,6 +267,24 @@ var app = new Vue({
       axios.post(url, bodyFormData)
         .then(response => {
           location.reload();
+        })
+    },
+    salvarAddNewComparsa() {
+      let bodyFormData = new FormData();
+      bodyFormData.append('newcomparsa', JSON.stringify(this.newcomparsa));
+      let url = endpoint + 'api/new-comparsa/add/'
+      axios.post(url, bodyFormData)
+        .then(response => {
+          if (response.data.status === 900) {
+            console.log(response.data.message);
+            alert(response.data.message);
+            return
+          } else {
+            console.log(response.data);
+            this.getAddComparsa()
+            this.comparsa.comparsa_pk = response.data.comparsa_pk
+            document.getElementById("comparsaCloseModal").click();
+          }
         })
     },
     processFile: function(e) {
