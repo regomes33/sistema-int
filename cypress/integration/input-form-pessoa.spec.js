@@ -59,6 +59,11 @@ describe('Input form', () => {
     cy.get('#qualificacao2').select('aut')
     cy.get('#arma2').select('2')
     cy.get('#status2').select('morto')
+    cy.get('#btnInfracao').click()
+    cy.get('#natureza3').select('3')
+    cy.get('#qualificacao3').select('coaut')
+    cy.get('#arma3').select('3')
+    cy.get('#status3').select('solto')
     cy.wait(500)
 
     cy.get('#heading7').click()

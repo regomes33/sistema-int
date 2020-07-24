@@ -188,6 +188,20 @@ var app = new Vue({
         'arma': '',
         'status': '',
       })
+
+      // const values = this.infracoes.map((i) => {
+      //   return {
+      //     id: i.id,
+      //     val: $('#natureza' + i.id).select2('val')
+      //   };
+      // });
+
+      // setTimeout(() => {
+      //   $('#natureza' + this.infracao_id).select2();
+      //   values.forEach(v => {
+      //     $('#natureza' + v.id).select2('val', v.val);
+      //   })
+      // }, 50);
     },
     ocorrenciaAdd() {
       this.ocorrencia_id++;
@@ -229,6 +243,10 @@ var app = new Vue({
     },
     salvar(e) {
       let bodyFormData = new FormData();
+
+      // Adiciona novamente o valor por causa do select2.
+      this.pessoa.district = $('#id_district').val();
+
       bodyFormData.append('pessoa', JSON.stringify(this.pessoa));
 
       this.photos.forEach((file, i) => {
@@ -268,7 +286,7 @@ var app = new Vue({
         })
     },
     toggleCollapse(v) {
-      Object.keys(this.v).forEach(item => { 
+      Object.keys(this.v).forEach(item => {
         if (item != 'v' + v) {
           Vue.set(this.v, item, false);
         }
