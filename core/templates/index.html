@@ -1,5 +1,45 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="card-columns cols-2">
+  <div class="card">
+    <div class="card-header">Pessoas por Status
+    </div>
+    <div class="card-body">
+      <div class="chart-wrapper">
+        <canvas id="chartStatus"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">Pessoas por Facção
+    </div>
+    <div class="card-body">
+      <div class="chart-wrapper">
+        <canvas id="chartFaccao"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card-columns cols-2" style="column-count: 1">
+  <div class="card">
+    <div class="card-header">Pessoas por Cidade
+    </div>
+    <div class="card-body">
+      <div class="chart-wrapper">
+        <canvas id="chartCity"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="visibility: hidden; height: 5px;">
+    <div class="card-header">Bar Chart
+    </div>
+    <div class="card-body">
+      <div class="chart-wrapper">
+        <canvas id=""></canvas>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- <div class="col-lg-12">
   <div class="card">
     <div class="card-header">
@@ -82,3 +122,138 @@
 </div> -->
 <!-- /.col-->
 {% endblock content %}
+{% block js %}
+<script>
+function random_color(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+let bgcColorCategory = [
+  'rgba(255, 0, 0, 1)',
+  'rgba(200, 206, 211, 1)',
+  'rgba(0, 0, 255, 1)',
+  'rgba(255, 255, 0, 1)',
+]
+let bdColorCategory = []
+
+$.ajax({
+  url: '/api/graphics/status/',
+  success: function(response) {
+    let mylabels = response.data.map(function(e) {
+      return e.label
+    })
+    let myvalues = response.data.map(function(e) {
+      return e.value
+    })
+    var ctx = document.getElementById('chartStatus').getContext('2d');
+    var data = {
+      labels: mylabels,
+      datasets: [{
+        data: myvalues,
+        backgroundColor: bgcColorCategory,
+        borderColor: bdColorCategory,
+        borderWidth: 1
+      }]
+    }
+    // For a pie chart
+    var myPieChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: data
+    });
+  }
+});
+
+let bgcColorFaccao = [
+  'rgba(200, 206, 211, 1)',
+  'rgba(20, 33, 61, 1)',
+  'rgba(255, 0, 0, 1)',
+  'rgba(200, 206, 211, 1)',
+  'rgba(255, 193, 7, 1)',
+]
+let bdColorFaccao = []
+
+$.ajax({
+  url: '/api/graphics/faccao/',
+  success: function(response) {
+    let mylabels = response.data.map(function(e) {
+      return e.label
+    })
+    let myvalues = response.data.map(function(e) {
+      return e.value
+    })
+    var ctx = document.getElementById('chartFaccao').getContext('2d');
+    var data = {
+      labels: mylabels,
+      datasets: [{
+        data: myvalues,
+        backgroundColor: bgcColorFaccao,
+        borderColor: bdColorFaccao,
+        borderWidth: 1
+      }]
+    }
+    // For a pie chart
+    var myPieChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: data
+    });
+  }
+});
+
+// https://coolors.co/f94144-f3722c-f8961e-f9c74f-90be6d-43aa8b-577590
+let bgcPalette = [
+  'rgba(255, 0, 0, 0.5)',
+  'rgba(249, 65, 68, 0.5)',
+  'rgba(246, 90, 56, 0.5)',
+  'rgba(243, 114, 44, 0.5)',
+  'rgba(248, 150, 30, 0.5)',
+  'rgba(249, 199, 79, 0.5)',
+  'rgba(250, 199, 80, 0.5)',
+  'rgba(144, 190, 109, 0.5)',
+  'rgba(106, 180, 124, 0.5)',
+  'rgba(100, 170, 132, 0.5)',
+  'rgba(67, 170, 139, 0.5)',
+  'rgba(77, 144, 142, 0.5)',
+  'rgba(87, 117, 144, 0.5)',
+  'rgba(92, 100, 148, 0.5)',
+  'rgba(100, 92, 150, 0.5)',
+]
+
+function random_color(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+let bgcColorCity = []
+
+for (var i = 0; i < 15; i++) {
+  let bgcRandomColor = random_color(bgcPalette)
+  bgcColorCity.push(bgcRandomColor);
+}
+
+$.ajax({
+  url: '/api/graphics/city/',
+  success: function(response) {
+    let mylabels = response.data.map(function(e) {
+      return e.label
+    })
+    let myvalues = response.data.map(function(e) {
+      return e.value
+    })
+    var ctx = document.getElementById('chartCity').getContext('2d');
+    var data = {
+      labels: mylabels,
+      datasets: [{
+        data: myvalues,
+        label: 'Cidades',
+        backgroundColor: bgcColorCity,
+        borderWidth: 1
+      }],
+    }
+    // For a pie chart
+    var myPieChart = new Chart(ctx, {
+      type: 'bar',
+      data: data
+    });
+  }
+});
+</script>
+{% endblock js %}

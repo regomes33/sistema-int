@@ -1,8 +1,10 @@
 from django.urls import include, path
 
+from api import graphics as g
 from api import views as v
 
 app_name = 'api'
+
 
 pessoas_patterns = [
     path('', v.pessoas),
@@ -42,6 +44,14 @@ pessoas_patterns = [
     ),
 ]
 
+
+graphics_patterns = [
+    path('status/', g.per_status),
+    path('faccao/', g.per_faccao),
+    path('city/', g.per_city),
+]
+
+
 urlpatterns = [
     path('pessoas/', include(pessoas_patterns)),
     path('districts/', v.districts),
@@ -59,4 +69,5 @@ urlpatterns = [
     path('veiculos/', v.veiculos),
     path('tipo_telefone/', v.tipo_telefone),
     path('ufs/', v.ufs),
+    path('graphics/', include(graphics_patterns)),
 ]
