@@ -2,14 +2,14 @@
 {% block content %}
 
 <style>
-  .unstyled {
+  /*.unstyled {
     -webkit-appearance: none;
   }
   .unstyled::-webkit-inner-spin-button,
   .unstyled::-webkit-calendar-picker-indicator {
     display: none;
     -webkit-appearance: none;
-  }
+  }*/
 </style>
 
 <div class="col-lg-12">
@@ -239,15 +239,15 @@ $(document).ready(function() {
   // $('#filterDataFinal').val('{{ selected_data_final }}');
 });
 
-$('#filterDataInicial').datepicker({
-  uiLibrary: 'bootstrap4',
-  format: 'dd/mm/yyyy',
-});
+// $('#filterDataInicial').datepicker({
+//   uiLibrary: 'bootstrap4',
+//   format: 'dd/mm/yyyy',
+// });
 
-$('#filterDataFinal').datepicker({
-  uiLibrary: 'bootstrap4',
-  format: 'dd/mm/yyyy',
-});
+// $('#filterDataFinal').datepicker({
+//   uiLibrary: 'bootstrap4',
+//   format: 'dd/mm/yyyy',
+// });
 
 // $('#filterForma').on('change', function() {
 //   $('#formFilter').submit();
