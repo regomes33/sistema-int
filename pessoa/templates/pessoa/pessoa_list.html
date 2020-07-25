@@ -182,7 +182,7 @@
                 {% else %}
                   <!-- Editar District -->
                   <td>
-                    <span>{{ object.observacao_bairro }}</span>
+                    <span class="text-muted">{{ object.observacao_bairro }}</span>
                     <br>
                     <select data-pk="{{ object.pk }}" name="district" class="form-control edit-district"></select>
                   </td>
@@ -259,7 +259,7 @@ $('.edit-district').on('change', function() {
     let tr = me.parent();
     me.remove();
     tr.append(response.data.district + '<br> <span class="text-muted">' + response.data.city + '</span>');
-    tr.find(">:first-child").remove()
+    tr.find(".select2").remove()
   });
 });
 
