@@ -31,28 +31,28 @@ LOCAL = False
 
 path = 'https://res.cloudinary.com/sistema-int/raw/upload'
 
-filename_auth_user = f'{path}/v1594243966/csv/auth_user_200708_z7wcnb.csv'
-filename_ocorrencia_areaupm = f'{path}/v1594243966/csv/ocorrencia_areaupm_200708_fji0wr.csv'
-filename_ocorrencia_arma = f'{path}/v1594243966/csv/ocorrencia_arma_200708_gxnpjn.csv'
-filename_ocorrencia_autoria = f'{path}/v1594243966/csv/ocorrencia_autoria_200708_wcoufy.csv'
-filename_ocorrencia_genero = f'{path}/v1594243967/csv/ocorrencia_genero_200708_ns2sp1.csv'
-filename_ocorrencia_homicidio = f'{path}/v1594243967/csv/ocorrencia_homicidio_200708_x7qqeo.csv'
-filename_ocorrencia_infracao = f'{path}/v1594243967/csv/ocorrencia_infracao_200708_jdo8yj.csv'
-filename_ocorrencia_motivacao = f'{path}/v1594243967/csv/ocorrencia_motivacao_200708_ek0ylz.csv'
-filename_ocorrencia_natureza = f'{path}/v1594243967/csv/ocorrencia_natureza_200708_tvpwhg.csv'
-filename_ocorrencia_ocorrencia = f'{path}/v1594243967/csv/ocorrencia_ocorrencia_200708_isamya.csv'
-filename_ocorrencia_ocorrenciaveiculo = f'{path}/v1594243967/csv/ocorrencia_ocorrenciaveiculo_200708_cp53uj.csv'
-filename_ocorrencia_pessoaocorrencia = f'{path}/v1594243967/csv/ocorrencia_pessoaocorrencia_200708_rq29s4.csv'
-filename_pessoa_comparsa = f'{path}/v1594243967/csv/pessoa_comparsa_200708_crlvnd.csv'
-filename_pessoa_faccao = f'{path}/v1594243967/csv/pessoa_faccao_200708_mz2xt1.csv'
-filename_pessoa_foto = f'{path}/v1594243967/csv/pessoa_foto_200708_rvrtgl.csv'
-filename_pessoa_pessoa = f'{path}/v1594243967/csv/pessoa_pessoa_200708_byrb4x.csv'
-filename_pessoa_pessoacontato = f'{path}/v1594243968/csv/pessoa_pessoacontato_200708_lfa9hw.csv'
-filename_pessoa_pessoaveiculo = f'{path}/v1594243968/csv/pessoa_pessoaveiculo_200708_c1yph9.csv'
-filename_pessoa_tatuagem = f'{path}/v1594243968/csv/pessoa_tatuagem_200708_rwg6dl.csv'
-filename_veiculo_cor = f'{path}/v1594243968/csv/veiculo_cor_200708_mi1rgw.csv'
-filename_veiculo_modelo = f'{path}/v1594243968/csv/veiculo_modelo_200708_z1fgmr.csv'
-filename_veiculo_veiculo = f'{path}/v1594243968/csv/veiculo_veiculo_200708_azri8x.csv'
+filename_auth_user = f'{path}/v1595712890/csv/auth_user_200725_tws4hm.csv'
+filename_ocorrencia_areaupm = f'{path}/v1595712890/csv/ocorrencia_areaupm_200725_gpzdqv.csv'
+filename_ocorrencia_arma = f'{path}/v1595712890/csv/ocorrencia_arma_200725_b6f7sa.csv'
+filename_ocorrencia_autoria = f'{path}/v1595712890/csv/ocorrencia_autoria_200725_yfengy.csv'
+filename_ocorrencia_genero = f'{path}/v1595712890/csv/ocorrencia_genero_200725_xg1hdh.csv'
+filename_ocorrencia_homicidio = f'{path}/v1595712890/csv/ocorrencia_homicidio_200725_zhcl2w.csv'
+filename_ocorrencia_infracao = f'{path}/v1595712891/csv/ocorrencia_infracao_200725_e0amzl.csv'
+filename_ocorrencia_motivacao = f'{path}/v1595712890/csv/ocorrencia_motivacao_200725_bilifv.csv'
+filename_ocorrencia_natureza = f'{path}/v1595712890/csv/ocorrencia_natureza_200725_guoocu.csv'
+filename_ocorrencia_ocorrencia = f'{path}/v1595712891/csv/ocorrencia_ocorrencia_200725_r2euwl.csv'
+filename_ocorrencia_ocorrenciaveiculo = f'{path}/v1595712890/csv/ocorrencia_ocorrenciaveiculo_200725_xoplza.csv'
+filename_ocorrencia_pessoaocorrencia = f'{path}/v1595712890/csv/ocorrencia_pessoaocorrencia_200725_scszab.csv'
+filename_pessoa_comparsa = f'{path}/v1595712891/csv/pessoa_comparsa_200725_oblat5.csv'
+filename_pessoa_faccao = f'{path}/v1595712891/csv/pessoa_faccao_200725_lo2e5w.csv'
+filename_pessoa_foto = f'{path}/v1595712891/csv/pessoa_foto_200725_tjpdl9.csv'
+filename_pessoa_pessoa = f'{path}/v1595712891/csv/pessoa_pessoa_200725_xdgvxd.csv'
+filename_pessoa_pessoacontato = f'{path}/v1595712891/csv/pessoa_pessoacontato_200725_ypmktf.csv'
+filename_pessoa_pessoaveiculo = f'{path}/v1595712891/csv/pessoa_pessoaveiculo_200725_xyosot.csv'
+filename_pessoa_tatuagem = f'{path}/v1595712891/csv/pessoa_tatuagem_200725_emhysb.csv'
+filename_veiculo_cor = f'{path}/v1595712891/csv/veiculo_cor_200725_q9lxdd.csv'
+filename_veiculo_modelo = f'{path}/v1595712892/csv/veiculo_modelo_200725_somxnz.csv'
+filename_veiculo_veiculo = f'{path}/v1595712891/csv/veiculo_veiculo_200725_b6pjhg.csv'
 
 
 def download_file(file):
@@ -734,7 +734,7 @@ def create_cities():
         'GOIÂNIA',
         'LEOPOLDO DE BULHÕES',
         'LUZIÂNIA',
-        'NATAL'
+        'NATAL',
         'PIRENÓPOLIS',
         'PIRES DO RIO',
         'PONTA PORÃ',
