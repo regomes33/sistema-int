@@ -1,4 +1,5 @@
 from django.db.models import Q
+from dateutil.parser import parse
 
 
 class SearchHomicidioMixin(object):
@@ -21,6 +22,12 @@ class SearchHomicidioMixin(object):
 
         filter_data_inicial = data.get('filter_data_inicial')
         filter_data_final = data.get('filter_data_final')
+
+        if filter_data_inicial:
+            filter_data_inicial = parse(filter_data_inicial)
+
+        if filter_data_final:
+            filter_data_final = parse(filter_data_final)
 
         if search:
             queryset = queryset.filter(

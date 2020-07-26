@@ -135,7 +135,7 @@
                         <fieldset class="form-group">
                           <legend class="col-form-label pt-0">Data Inicial</legend>
                           {% if selected_data_inicial %}
-                            <input id="filterDataInicial" name="filter_data_inicial" class="form-control unstyled" type="text" value="selected_data_inicial" />
+                            <input id="filterDataInicial" name="filter_data_inicial" class="form-control unstyled" type="text" value="{{ selected_data_inicial }}" />
                           {% else %}
                             <input id="filterDataInicial" name="filter_data_inicial" class="form-control unstyled" type="text" />
                           {% endif %}
@@ -146,7 +146,7 @@
                         <fieldset class="form-group">
                           <legend class="col-form-label pt-0">Data Final</legend>
                           {% if selected_data_final %}
-                            <input id="filterDataFinal" name="filter_data_final" class="form-control unstyled" type="text" value="selected_data_final" />
+                            <input id="filterDataFinal" name="filter_data_final" class="form-control unstyled" type="text" value="{{ selected_data_final }}" />
                           {% else %}
                             <input id="filterDataFinal" name="filter_data_final" class="form-control unstyled" type="text" />
                           {% endif %}
@@ -156,7 +156,7 @@
 
                     </div>
 
-                    <button class="btn btn-light">Limpar</button>
+                    <a href="." class="btn btn-light">Limpar</a>
                     <div class="pull-right">
                       <button class="btn btn-primary" type="submit">OK</button>
                     </div>
