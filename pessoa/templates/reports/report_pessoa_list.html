@@ -14,6 +14,7 @@
 <table class="table">
   <thead>
     <tr>
+      <td></td>
       <th>Nome/Apelido</th>
       <th>Documento</th>
       <th>Foto</th>
@@ -24,6 +25,7 @@
   <tbody>
     {% for object in object_list %}
       <tr>
+        <td>{{ forloop.counter }}</td>
         <td>
           {{ object }} <br>
           {% if object.apelido %}
@@ -72,6 +74,10 @@
     {% endfor %}
   </tbody>
 </table>
+
+<div class="container">
+  <span class="lead float-right">{{ object_list.count }} resultados ({{ items_total }} total)</span>
+</div>
 
 {% endblock content %}
 
