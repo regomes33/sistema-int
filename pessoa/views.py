@@ -26,7 +26,9 @@ class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(PessoasList, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Pessoas'
-        items_total = Pessoa.objects.values_list('id', flat=True).count()
+        items_total = Pessoa.objects.\
+            filter(vitima=False)\
+            .values_list('id', flat=True).count()
         context['items_total'] = items_total
 
         # Dados para popular os dropdown dos filtros
