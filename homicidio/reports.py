@@ -13,5 +13,7 @@ class ReportHomicidioList(SearchHomicidioMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ReportHomicidioList, self).get_context_data(**kwargs)
+        items_total = Homicidio.objects.values_list('id', flat=True).count()
+        context['items_total'] = items_total
         context['today'] = datetime.now().today()
         return context

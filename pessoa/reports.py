@@ -15,6 +15,8 @@ class ReportPessoasList(PessoaSomenteMixin, SearchMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ReportPessoasList, self).get_context_data(**kwargs)
+        items_total = Pessoa.objects.values_list('id', flat=True).count()
+        context['items_total'] = items_total
         context['today'] = datetime.now().today()
         return context
 

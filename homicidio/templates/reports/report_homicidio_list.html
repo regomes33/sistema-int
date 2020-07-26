@@ -1,84 +1,74 @@
 {% extends "base.html" %}
-
 {% block title %}Relatorio de Homicídios-{{ today|date:"Y-m-d" }}{%endblock%}
-
 {% block content %}
-<div class="col-lg-12">
-  <div class="card">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-12">
-          <table class="table table-responsive-sm table-striped">
-            <thead>
-              <tr>
-                <th>RAI/Data</th>
-                <th>Área/Forma</th>
-                <th>Vítima</th>
-                <th>Instrumento/Motivação</th>
-                <th>Autoria</th>
-                <th>Bairro</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for object in object_list %}
-              <tr>
-                <td>
-                  {{ object.rai }} <br>
-                  <span class="text-muted">{{ object.data_do_homicidio|date:"d/m/y" }}</span>
-                </td>
-                <td>
-                  {{ object.area_upm }} <br>
-                  {{ object.get_forma_display }}
-                </td>
-                <td>
-                  {{ object.vitima }}
-                  {% if object.genero.genero == 'MASCULINO' %}
-                  <br> <span class="badge badge-info">Masculino</span>
-                  {% else %}
-                  <br> <span class="badge badge-warning">Feminino</span>
-                  {% endif %}
-                </td>
-                <td>
-                  <small>Instrumento:</small> <br>
-                  {{ object.instrumento }} <br>
-                  <small>Motivação:</small> <br>
-                  <span>{{ object.motivacao }}</span>
-                </td>
-                <td>{{ object.autoria|default:"---" }}</td>
-                <td>
-                  {% if object.district %}
-                    <small>Bairro</small><br> {{ object.district }}<br>
-                  {% endif %}
-
-                  {% if object.district.city %}
-                    <small>Cidade:</small><br> {{ object.district.city }}
-                  {% endif %}
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="container">
+  <h3>Relatório de Homicídios
+    <small class="float-right">{{ object_list.count }} resultados ({{ items_total }} total)</small>
+  </h3>
 </div>
+<table class="table table-responsive-sm table-striped">
+  <thead>
+    <tr>
+      <th>RAI/Data</th>
+      <th>Área/Forma</th>
+      <th>Vítima</th>
+      <th>Instrumento/Motivação</th>
+      <th>Autoria</th>
+      <th>Bairro</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for object in object_list %}
+    <tr>
+      <td>
+        {{ object.rai }} <br>
+        <span class="text-muted">{{ object.data_do_homicidio|date:"d/m/y" }}</span>
+      </td>
+      <td>
+        {{ object.area_upm }} <br>
+        {{ object.get_forma_display }}
+      </td>
+      <td>
+        {{ object.vitima }}
+        {% if object.genero.genero == 'MASCULINO' %}
+        <br> <span class="badge badge-info">Masculino</span>
+        {% else %}
+        <br> <span class="badge badge-warning">Feminino</span>
+        {% endif %}
+      </td>
+      <td>
+        <small>Instrumento:</small> <br>
+        {{ object.instrumento }} <br>
+        <small>Motivação:</small> <br>
+        <span>{{ object.motivacao }}</span>
+      </td>
+      <td>{{ object.autoria|default:"---" }}</td>
+      <td>
+        {% if object.district %}
+        <small>Bairro</small><br> {{ object.district }}<br>
+        {% endif %}
+        {% if object.district.city %}
+        <small>Cidade:</small><br> {{ object.district.city }}
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock content %}
-
-
 {% block js %}
-  <script>
-    // Remove breadcrumb
-    $(document).ready(function() {
-      $('.breadcrumb').remove();
-    });
+<script>
+// Remove breadcrumb
+$(document).ready(function() {
+  $('.breadcrumb').remove();
+});
 
-    // Imprime
-    window.onload = function () {
-      window.print();
-      setTimeout(() => {
-        window.close();
-      }, 2000);
-    };
-  </script>
+// Imprime
+window.onload = function() {
+  window.print();
+  setTimeout(() => {
+    window.close();
+  }, 2000);
+};
+</script>
 {% endblock js %}
