@@ -1,6 +1,8 @@
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 axios.defaults.xsrfCookieName = 'csrftoken'
 
+Vue.component('v-select', VueSelect.VueSelect);
+
 var app = new Vue({
   el: '#app',
   delimiters: ['${', '}'],
@@ -188,20 +190,6 @@ var app = new Vue({
         'arma': '',
         'status': '',
       })
-
-      // const values = this.infracoes.map((i) => {
-      //   return {
-      //     id: i.id,
-      //     val: $('#natureza' + i.id).select2('val')
-      //   };
-      // });
-
-      // setTimeout(() => {
-      //   $('#natureza' + this.infracao_id).select2();
-      //   values.forEach(v => {
-      //     $('#natureza' + v.id).select2('val', v.val);
-      //   })
-      // }, 50);
     },
     ocorrenciaAdd() {
       this.ocorrencia_id++;

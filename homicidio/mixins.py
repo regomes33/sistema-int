@@ -1,5 +1,5 @@
-from django.db.models import Q
 from dateutil.parser import parse
+from django.db.models import Q
 
 
 class SearchHomicidioMixin(object):

@@ -187,10 +187,8 @@
                   </div>
                   <div class="form-group">
                     <label for="id_district">Bairro</label>
-                    <select id="id_district" class="form-control" v-model="pessoa.district">
-                      <option selected value="">---</option>
-                      <option v-for="district in districts" :key="district.value" :value="district.value">${ district.text }</option>
-                    </select>
+                    <v-select id="id_district" v-model="pessoa.district" label="text" :reduce="district => district.value" :options="districts">
+                    </v-select>
                   </div>
                   <div class="form-group">
                     <label for="id_cep" class="control-label">CEP (sem pontuação)</label>
@@ -222,14 +220,11 @@
                   <div class="form-row" v-for="infracao in infracoes" :key="infracao.id">
                     <div class="form-group col-md-3">
                       <label for="natureza">Natureza</label>
-                      <select :id="'natureza'+infracao.id" class="form-control natureza" v-model="infracao.natureza">
-                        <option selected value="">---</option>
-                        <option v-for="natureza in naturezas" :key="natureza.value" :value="natureza.value">${ natureza.text
-                          }</option>
-                      </select>
+                      <v-select :id="'natureza'+infracao.id" class="natureza" v-model="infracao.natureza" label="text" :reduce="natureza => natureza.value" :options="naturezas">
+                      </v-select>
                     </div>
                     <div class="form-group col-md-3">
-                      <label for="qualificacao">Qualificação</label>
+                      <label for="qualificacao" class="required">Qualificação</label>
                       <select :id="'qualificacao'+infracao.id" class="form-control" v-model="infracao.qualificacao">
                         <option selected value="">---</option>
                         <option v-for="qualificacao in qualificacoes" :key="qualificacao.value" :value="qualificacao.value">
@@ -244,7 +239,7 @@
                       </select>
                     </div>
                     <div class="form-group col-md-3">
-                      <label for="status">Status</label>
+                      <label for="status" class="required">Status</label>
                       <select :id="'status'+infracao.id" class="form-control" v-model="infracao.status">
                         <option selected value="">---</option>
                         <option v-for="status in status" :key="status.value" :value="status.value">${ status.text }</option>
@@ -276,11 +271,8 @@
                   <div class="form-row" v-for="ocorrencia in ocorrencias" :key="ocorrencia.id">
                     <div class="form-group col-md-3">
                       <label for="ocorrencia">Ocorrência</label>
-                      <select :id="'ocorrencia'+ocorrencia.id" class="form-control ocorrencia" v-model="ocorrencia.ocorrencia">
-                        <option selected value="">---</option>
-                        <option v-for="ocorrencia in ocorrencias_list" :key="ocorrencia.value" :value="ocorrencia.value">${
-                          ocorrencia.text }</option>
-                      </select>
+                      <v-select :id="'ocorrencia'+ocorrencia.id" v-model="ocorrencia.ocorrencia" label="text" :reduce="ocorrencia => ocorrencia.value" :options="ocorrencias_list">
+                      </v-select>
                     </div>
                   </div> <!-- form-row -->
                   <button id="btnOcorrencia" type="button" class="btn btn-primary" @click="ocorrenciaAdd">
@@ -307,13 +299,13 @@
                 <div>
                   <div class="form-row" v-for="contato in contatos" :key="contato.id">
                     <div class="form-group col-md-3">
-                      <label for="tipo">Tipo</label>
+                      <label for="tipo" class="required">Tipo</label>
                       <select :id="'tipo'+contato.id" class="form-control" v-model="contato.tipo">
                         <option v-for="tipo in tipos" :key="tipo.value" :value="tipo.value">${ tipo.text }</option>
                       </select>
                     </div>
                     <div class="form-group col-md-3">
-                      <label class="control-label">Telefone</label>
+                      <label class="control-label required">Telefone</label>
                       <input :id="'telefone'+contato.id" v-model="contato.telefone" class="form-control phone-mask" type="text" maxlength="20" />
                     </div>
                   </div> <!-- form-row -->
@@ -342,10 +334,8 @@
                   <div class="" v-for="comparsa in comparsas" :key="comparsa.id">
                     <div class="form-group">
                       <label class="control-label">Nome</label>
-                      <select :id="'comparsa_nome'+comparsa.id" class="form-control comparsa" v-model="comparsa.comparsa">
-                        <option selected value="">---</option>
-                        <option v-for="comparsa in comparsas_list" :key="comparsa.value" :value="comparsa.value">${ comparsa.text } - ${ comparsa.cpf }</option>
-                      </select>
+                      <v-select :id="'comparsa_nome'+comparsa.id" v-model="comparsa.comparsa" label="text" :reduce="comparsa => comparsa.value" :options="comparsas_list">
+                      </v-select>
                     </div>
                     <div class="form-group">
                       <div class="checkbox-row">
@@ -387,10 +377,8 @@
                   <div class="form-row" v-for="veiculo in veiculos" :key="veiculo.id">
                     <div class="form-group col-md-4">
                       <label for="veiculo">Veículo</label>
-                      <select :id="'veiculo'+veiculo.id" class="form-control veiculo" v-model="veiculo.veiculo">
-                        <option selected value="">---</option>
-                        <option v-for="carro in carros" :key="carro.value" :value="carro.value">${ carro.text }</option>
-                      </select>
+                      <v-select :id="'veiculo'+veiculo.id" v-model="veiculo.veiculo" label="text" :reduce="veiculo => veiculo.value" :options="carros">
+                      </v-select>
                     </div>
                   </div> <!-- form-row -->
                   <button id="btnVeiculo" type="button" class="btn btn-primary" @click="veiculoAdd">
