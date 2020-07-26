@@ -211,6 +211,8 @@
 <script>
 $.fn.selectpicker.Constructor.BootstrapVersion = '4';
 
+const status = {{ selected_status_atual | safe }};
+
 $(document).ready(function() {
   // $('#filterNatureza').val('{{ selected_natureza }}');
   // $('#filterBairro').val('{{ selected_bairro }}');
@@ -218,6 +220,7 @@ $(document).ready(function() {
   // $('#filterFaccao').val('{{ selected_faccao }}');
 
   $('.edit-district').select2();
+  $('#filterStatusAtual').selectpicker('val', status);
 
   // Popula todos os select district. Nem precisava...
   get_districts();

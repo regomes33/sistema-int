@@ -65,7 +65,7 @@ class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):
 
         # Devolve o valor para o template.
         if filter_status_atual:
-            context['selected_status_atual'] = str(filter_status_atual)
+            context['selected_status_atual'] = filter_status_atual
         if filter_natureza:
             context['selected_natureza'] = str(filter_natureza)
         if filter_bairro:
