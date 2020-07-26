@@ -22,7 +22,8 @@ class VeiculoList(LRM, ListView):
             queryset = queryset.filter(
                 Q(placa__icontains=search) |
                 Q(modelo__modelo__icontains=search) |
-                Q(cor__cor__icontains=search)
+                Q(cor__cor__icontains=search) |
+                Q(observacao__icontains=search)
             )
         return queryset
 
