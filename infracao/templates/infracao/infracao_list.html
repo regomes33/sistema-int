@@ -33,7 +33,7 @@
           <table class="table table-responsive-sm table-striped">
             <thead>
               <tr>
-                <th>Infrator/Status</th>
+                <th>Infrator</th>
                 <th>Natureza</th>
                 <th>Qualificação</th>
                 <th>Arma</th>
@@ -45,7 +45,7 @@
               <tr>
                 <td>
                   {{ object.pessoa }} <br>
-                  {% if object.status == 'foragido' %}
+                  <!-- {% if object.status == 'foragido' %}
                   <span class="badge badge-danger">Foragido</span>
                   {% elif object.status == 'morto' %}
                   <span class="badge badge-secondary">Morto</span>
@@ -53,7 +53,7 @@
                   <span class="badge badge-primary">Preso</span>
                   {% elif object.status == 'solto' %}
                   <span class="badge badge-warning">Solto</span>
-                  {% endif %}
+                  {% endif %} -->
                 </td>
                 <td>{{ object.natureza|default:"---" }}</td>
                 <td>{{ object.get_qualificacao_display }}</td>
