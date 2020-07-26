@@ -13,6 +13,12 @@ pessoa_patterns = [
     path('<slug>/edit/', v.pessoa_update, name='pessoa_update'),
 ]
 
+comparsa_patterns = [
+    path('', v.ComparsaList.as_view(), name='comparsa_list'),
+    path('add/', v.ComparsaCreate.as_view(), name='comparsa_create'),
+    path('<slug>/edit/', v.ComparsaUpdate.as_view(), name='comparsa_update'),
+]
+
 report_patterns = [
     path('', rep.ReportPessoasList.as_view(), name='report_pessoa_list'),
     path('<slug>/detail/', rep.report_pessoa, name='report_pessoa_detail'),
@@ -20,5 +26,6 @@ report_patterns = [
 
 urlpatterns = [
     path('', include(pessoa_patterns)),
+    path('comparsa/', include(comparsa_patterns)),
     path('report/', include(report_patterns)),
 ]

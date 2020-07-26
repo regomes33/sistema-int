@@ -475,6 +475,7 @@ def comparsa_update(request, pk):
     data = {
         'pk': pessoa_comparsa.pk,
         'comparsa_pk': pessoa_comparsa.comparsa.pk,
+        'slug': pessoa_comparsa.comparsa.slug,
         'parente': pessoa_comparsa.parente,
         'grau_parentesco': pessoa_comparsa.grau_parentesco,
         'observacao': pessoa_comparsa.observacao,

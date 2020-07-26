@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load easy_mask %}
+{% block content %}
+<div class="col-lg-12">
+  <div class="card">
+    <div class="card-header">
+      Comparsas
+      <span class="pull-right">{{ object_list.count }} / {{ items_total }} items</span>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-auto pr-ari-5">
+          <a class="btn btn-primary" href="{% url 'pessoa:comparsa_create' %}">
+            <i class="fa fa-plus"></i>
+            Adicionar
+          </a>
+        </div>
+        <div class="col">
+          <form action="." method="GET">
+            <div class="row">
+              <div class="col p-ari-5">
+                <input name="search" class="form-control mb-2" type="text" placeholder="Busca..." />
+              </div>
+              <div class="col-auto p-ari-5">
+                <button class="btn btn-success mb-2" type="submit">OK</button>
+                <button class="btn btn-link mb-2">Limpar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <table class="table table-responsive-sm table-striped">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>RG</th>
+                <th>CPF</th>
+                <th>CNH</th>
+                <th class="text-center">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for object in object_list %}
+              <tr>
+                <td>{{ object }}</td>
+                <td>{{ object.rg|default:"---" }}</td>
+                <td>{{ object.cpf|cpf_mask|default:"---" }}</td>
+                <td>{{ object.cnh|default:"---" }}</td>
+                <td class="text-center">
+                  <a href="{% url 'pessoa:comparsa_update' object.slug %}"><i class="fa fa-edit"></i></a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- pagination -->
+      {% include "includes/pagination.html" %}
+    </div>
+  </div>
+</div>
+{% endblock content %}

@@ -7,15 +7,15 @@ from django.db.models import F
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, resolve_url
 from django.urls import reverse
-from django.views.generic import ListView
+from django.views.generic import CreateView, ListView, UpdateView
 
 from core.models import City, District
 from ocorrencia.models import Natureza, PessoaOcorrencia
 from utils.data import STATUS
 
-from .forms import PessoaForm
+from .forms import ComparsaForm, PessoaForm
 from .mixins import PessoaSomenteMixin, SearchMixin
-from .models import Faccao, Pessoa
+from .models import Comparsa, Faccao, Pessoa
 
 
 class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):
@@ -115,3 +115,44 @@ def pessoa_update(request, slug):
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(resolve_url('pessoa:pessoa_detail', pessoa.slug))
+
+
+class ComparsaList(LRM, ListView):
+    model = Comparsa
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super(ComparsaList, self).get_queryset()
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(nome__icontains=search)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(ComparsaList, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Comparsas'
+        items_total = Comparsa.objects.values_list('id', flat=True).count()
+        context['items_total'] = items_total
+        return context
+
+
+class ComparsaCreate(LRM, CreateView):
+    model = Comparsa
+    form_class = ComparsaForm
+
+    def get_context_data(self, **kwargs):
+        context = super(ComparsaCreate, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Comparsas'
+        context['url'] = reverse('pessoa:comparsa_list')
+        return context
+
+
+class ComparsaUpdate(LRM, UpdateView):
+    model = Comparsa
+    form_class = ComparsaForm
+
+    def get_context_data(self, **kwargs):
+        context = super(ComparsaUpdate, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Comparsas'
+        context['url'] = reverse('pessoa:comparsa_list')
+        return context

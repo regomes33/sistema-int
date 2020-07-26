@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse_lazy
 
 from core.models import (
     Address,
@@ -161,6 +162,9 @@ class Comparsa(UuidModel, TimeStampedModel, Document):
 
     def __str__(self):
         return self.nome
+
+    def get_absolute_url(self):
+        return reverse_lazy('pessoa:comparsa_list')
 
 
 class PessoaComparsa(UuidModel, TimeStampedModel):
