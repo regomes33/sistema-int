@@ -23,7 +23,6 @@
           <h4 class="text-muted">Apelido: {{ object.apelido }}</h4>
           {% endif %}
           <h4>Facção: {{ object.faccao|default:"---" }}</h4>
-          <h5>Nascimento: {{ object.nascimento|date:"d/m/Y"|default:"---" }}</h5>
         </div>
       </div>
     </div>
@@ -33,6 +32,7 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item no-border">Mãe: {{ object.mae }}</li>
           <li class="list-group-item no-border">Pai: {{ object.pai }}</li>
+          <li class="list-group-item no-border">Nascimento: {{ object.nascimento|date:"d/m/Y"|default:"---" }}</li>
         </ul>
       </li>
       <li class="list-group-item">
