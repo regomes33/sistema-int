@@ -4,7 +4,7 @@
   <div class="card">
     <div class="card-header">
       Infrações
-      <span class="pull-right">{{ object_list.count }} / {{ items_total }} items</span>
+      <span class="pull-right">{{ object_list.count }} de {{ page_obj.paginator.count }} resultados ({{ items_total }} total)</span>
     </div>
     <div class="card-body">
       <div class="row">
