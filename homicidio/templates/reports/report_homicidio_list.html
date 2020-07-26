@@ -9,6 +9,7 @@
 <table class="table table-responsive-sm table-striped">
   <thead>
     <tr>
+      <th></th>
       <th>RAI/Data</th>
       <th>Área/Forma</th>
       <th>Vítima</th>
@@ -20,6 +21,7 @@
   <tbody>
     {% for object in object_list %}
     <tr>
+      <td>{{ forloop.counter }}</td>
       <td>
         {{ object.rai }} <br>
         <span class="text-muted">{{ object.data_do_homicidio|date:"d/m/y" }}</span>
@@ -55,6 +57,9 @@
     {% endfor %}
   </tbody>
 </table>
+<div class="container">
+  <span class="lead float-right">{{ object_list.count }} resultados ({{ items_total }} total)</span>
+</div>
 {% endblock content %}
 {% block js %}
 <script>
