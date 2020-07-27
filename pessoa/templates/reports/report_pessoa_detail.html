@@ -30,6 +30,18 @@
           <h4 class="text-muted">Apelido: {{ object.apelido }}</h4>
           {% endif %}
           <h4>Facção: {{ object.faccao|default:"---" }}</h4>
+
+          <h4><small>Status Atual:</small>
+            {% if object.status_atual == 'foragido' %}
+              <span class="badge badge-danger">Foragido</span>
+            {% elif object.status_atual == 'morto' %}
+              <span class="badge badge-secondary">Morto</span>
+            {% elif object.status_atual == 'preso' %}
+              <span class="badge badge-primary">Preso</span>
+            {% elif object.status_atual == 'solto' %}
+              <span class="badge badge-warning">Livre</span>
+            {% endif %}
+          </h4>
         </div>
       </div>
     </div>
@@ -227,7 +239,7 @@
                 <th>Natureza</th>
                 <th>Qualificação</th>
                 <th>Arma</th>
-                <th>Status</th>
+                <!-- <th>Status</th> -->
               </tr>
             </thead>
             <tbody>
@@ -236,7 +248,7 @@
                   <td>{{ infracao.natureza }}</td>
                   <td>{{ infracao.get_qualificacao_display }}</td>
                   <td>{{ infracao.arma|default:"---" }}</td>
-                  <td>{{ infracao.get_status_display }}</td>
+                  <!-- <td>{{ infracao.get_status_display }}</td> -->
                 </tr>
               {% endfor %}
             </tbody>

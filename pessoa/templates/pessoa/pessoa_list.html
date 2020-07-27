@@ -151,7 +151,7 @@
                   {% elif object.status_atual == 'preso' %}
                     <span id="status_{{ object.pk }}" class="badge badge-primary">Preso</span>
                   {% elif object.status_atual == 'solto' %}
-                    <span id="status_{{ object.pk }}" class="badge badge-warning">Solto</span>
+                    <span id="status_{{ object.pk }}" class="badge badge-warning">Livre</span>
                   {% endif %}
 
                   <div class="col-6 pl-0">
@@ -298,7 +298,7 @@ $('.edit-status-atual').on('change', function() {
     }
     else if (response.data.value == 'solto') {
       $('#status_' + pkPessoa).addClass('badge-warning');
-      $('#status_' + pkPessoa).text('Solto');
+      $('#status_' + pkPessoa).text('Livre');
     }
   });
 });

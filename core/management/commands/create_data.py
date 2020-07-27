@@ -280,7 +280,7 @@ STATUS = [
     ('vivo', 'Vivo'),
     ('morto', 'Morto'),
     ('preso', 'Preso'),
-    ('solto', 'Solto')
+    ('solto', 'Livre')
 ]
 
 
