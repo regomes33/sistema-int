@@ -60,7 +60,7 @@ class City(models.Model):
 
 
 class District(models.Model):
-    name = models.CharField('bairro', max_length=100, unique=True)
+    name = models.CharField('bairro', max_length=100)
     city = models.ForeignKey(
         'City',
         verbose_name='cidade',
