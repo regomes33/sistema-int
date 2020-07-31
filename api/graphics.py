@@ -13,7 +13,7 @@ def per_status(request):
     data = {
         'data': [
             {
-                'label': item['status_atual'],
+                'label': 'livre' if item['status_atual'] == 'solto' else item['status_atual'],
                 'value': item['value'],
             }
             for item in status
