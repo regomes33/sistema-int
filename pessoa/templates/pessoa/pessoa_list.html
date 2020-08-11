@@ -8,12 +8,15 @@
     </div>
     <div class="card-body">
       <div class="row">
+        {% if user.groups.all.0.name == 'chefe' %}
+          
         <div class="col-md-auto pr-ari-5">
           <a id="btnAdicionar" class="btn btn-primary" href="{% url 'pessoa:pessoa_create' %}">
             <i class="fa fa-plus"></i>
             Adicionar
           </a>
         </div>
+        {% endif %}
         <div class="col">
           <form action="." method="GET">
             <div class="row">
@@ -154,18 +157,20 @@
                     <span id="status_{{ object.pk }}" class="badge badge-warning">Livre</span>
                   {% endif %}
 
-                  <div class="col-6 pl-0">
-                    <label><small>Editar Status Atual</small></label>
-                    <select data-pk="{{ object.pk }}" name="status_atual" class="form-control edit-status-atual">
-                      {% for status in status_atuais %}
-                        {% if status.value == object.status_atual %}
-                          <option value="{{ status.value }}" selected>{{ status.text }}</option>
-                        {% else %}
-                          <option value="{{ status.value }}">{{ status.text }}</option>
-                        {% endif %}
-                      {% endfor %}
-                    </select>
-                  </div>
+                  {% if user.groups.all.0.name == 'chefe' %}
+                    <div class="col-6 pl-0">
+                      <label><small>Editar Status Atual</small></label>
+                      <select data-pk="{{ object.pk }}" name="status_atual" class="form-control edit-status-atual">
+                        {% for status in status_atuais %}
+                          {% if status.value == object.status_atual %}
+                            <option value="{{ status.value }}" selected>{{ status.text }}</option>
+                          {% else %}
+                            <option value="{{ status.value }}">{{ status.text }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  {% endif %}
 
                 </td>
                 <td>
@@ -182,9 +187,11 @@
                 {% else %}
                   <!-- Editar District -->
                   <td>
-                    <span class="text-muted">{{ object.observacao_bairro }}</span>
-                    <br>
-                    <select data-pk="{{ object.pk }}" name="district" class="form-control edit-district"></select>
+                    {% if user.groups.all.0.name == 'chefe' %}
+                      <span class="text-muted">{{ object.observacao_bairro }}</span>
+                      <br>
+                      <select data-pk="{{ object.pk }}" name="district" class="form-control edit-district"></select>
+                    {% endif %}
                   </td>
                 {% endif %}
 

@@ -9,9 +9,11 @@
     <div class="card-header">
       {{ object }}
       <a class="btn btn-sm btn-warning float-right ml-2" href="{% url 'pessoa:report_pessoa_detail' object.slug %}" target="_blank">PDF</a>
-      <span class="pull-right btn btn-sm btn-primary" data-toggle="modal" data-target="#modalEditarPessoa">
-        <i class="fa fa-edit"></i> Editar
-      </span>
+      {% if user.groups.all.0.name == 'chefe' %}
+        <span class="pull-right btn btn-sm btn-primary" data-toggle="modal" data-target="#modalEditarPessoa">
+          <i class="fa fa-edit"></i> Editar
+        </span>
+      {% endif %}
     </div>
     <div class="card-body">
       <div class="row">
@@ -105,7 +107,9 @@
   <div class="card">
     <div class="card-header">
       CONTATOS
-      <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarContato"><i class="fa fa-plus"></i> Adicionar</span>
+      {% if user.groups.all.0.name == 'chefe' %}
+        <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarContato"><i class="fa fa-plus"></i> Adicionar</span>
+      {% endif %}
     </div>
     <div class="card-body">
       <ul class="list-group list-group-flush">
@@ -116,9 +120,11 @@
           {% else %}
           <span class="badge badge-info">{{ contato.tipo }}</span> {{ contato.telefone }}
           {% endif %}
-          <span class="span-is-link pull-right" data-toggle="modal" data-target="#modalEditarContato" @click="getContato('{% url 'api:contato_update' contato.pk %}')">
-            <i class="fa fa-edit" style="margin-left: 10px;"></i>
-          </span>
+          {% if user.groups.all.0.name == 'chefe' %}
+            <span class="span-is-link pull-right" data-toggle="modal" data-target="#modalEditarContato" @click="getContato('{% url 'api:contato_update' contato.pk %}')">
+              <i class="fa fa-edit" style="margin-left: 10px;"></i>
+            </span>
+          {% endif %}
         </li>
         {% endfor %}
       </ul>
@@ -127,7 +133,9 @@
   <div class="card">
     <div class="card-header">
       VEÍCULOS
-      <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarVeiculo" @click="getAddVeiculo"><i class="fa fa-plus"></i> Adicionar</span>
+      {% if user.groups.all.0.name == 'chefe' %}
+        <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarVeiculo" @click="getAddVeiculo"><i class="fa fa-plus"></i> Adicionar</span>
+      {% endif %}
     </div>
     <div class="card-body">
       <ul class="list-group list-group-flush">
@@ -136,9 +144,11 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item no-border li-line pl-0 pr-0">
               <span class="text-muted">Placa:</span> <span class="lead">{{ veiculo.veiculo.placa }}</span>
-              <span class="span-is-link float-right" data-toggle="modal" data-target="#modalEditarVeiculo" @click="getVeiculo('{% url 'api:veiculo_update' veiculo.pk %}')">
-                <i class="fa fa-edit" style="margin-left: 10px;"></i>
-              </span>
+              {% if user.groups.all.0.name == 'chefe' %}
+                <span class="span-is-link float-right" data-toggle="modal" data-target="#modalEditarVeiculo" @click="getVeiculo('{% url 'api:veiculo_update' veiculo.pk %}')">
+                  <i class="fa fa-edit" style="margin-left: 10px;"></i>
+                </span>
+              {% endif %}
             </li>
             <li class="list-group-item no-border li-line pl-0 pr-0">
               <span class="text-muted">{{ veiculo.veiculo.modelo }} {{ veiculo.veiculo.cor }}</span>
@@ -161,7 +171,9 @@
   <div class="card">
     <div class="card-header">
       COMPARSAS
-      <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarComparsa" @click="getAddComparsa"><i class="fa fa-plus"></i> Adicionar</span>
+      {% if user.groups.all.0.name == 'chefe' %}
+        <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarComparsa" @click="getAddComparsa"><i class="fa fa-plus"></i> Adicionar</span>
+      {% endif %}
     </div>
     <div>
       <!-- card-body -->
@@ -171,9 +183,11 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item no-border li-line pl-0 pr-0">
               <span class="lead">{{ comparsa.comparsa.nome }}</span>
-              <span class="span-is-link pull-right" data-toggle="modal" data-target="#modalEditarComparsa" @click="getComparsa('{% url 'api:comparsa_update' comparsa.pk %}')">
-                <i class="fa fa-edit" style="margin-left: 10px;"></i>
-              </span>
+              {% if user.groups.all.0.name == 'chefe' %}
+                <span class="span-is-link pull-right" data-toggle="modal" data-target="#modalEditarComparsa" @click="getComparsa('{% url 'api:comparsa_update' comparsa.pk %}')">
+                  <i class="fa fa-edit" style="margin-left: 10px;"></i>
+                </span>
+              {% endif %}
             </li>
             <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">RG:</span> {{ comparsa.comparsa.rg|default:"---" }}</li>
             <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">CPF:</span> {{ comparsa.comparsa.cpf|cpf_mask|default:"---" }}</li>
@@ -201,7 +215,9 @@
   <div class="card">
     <div class="card-header">
       Tatuagens
-      <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarTatuagem"><i class="fa fa-plus"></i> Adicionar</span>
+      {% if user.groups.all.0.name == 'chefe' %}
+        <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarTatuagem"><i class="fa fa-plus"></i> Adicionar</span>
+      {% endif %}
     </div>
     <div class="card-body">
       <div class="row">
@@ -225,7 +241,9 @@
   <div class="card">
     <div class="card-header">
       Ocorrências
-      <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarOcorrencia" @click="getAddOcorrencia"><i class="fa fa-plus"></i> Adicionar</span>
+      {% if user.groups.all.0.name == 'chefe' %}
+        <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarOcorrencia" @click="getAddOcorrencia"><i class="fa fa-plus"></i> Adicionar</span>
+      {% endif %}
     </div>
     <div class="card-body">
       <div class="row">
@@ -236,7 +254,9 @@
                 <th>RAI</th>
                 <th style="width: 8vw;">Data do fato</th>
                 <th>Descrição</th>
-                <th>Ações</th>
+                {% if user.groups.all.0.name == 'chefe' %}
+                  <th>Ações</th>
+                {% endif %}
               </tr>
             </thead>
             <tbody>
@@ -245,11 +265,13 @@
                   <td>{{ ocorrencia.ocorrencia.rai }}</td>
                   <td>{{ ocorrencia.ocorrencia.data_do_fato|date:"d/m/Y" }}</td>
                   <td>{{ ocorrencia.ocorrencia.descricao }}</td>
-                  <td>
-                    <span class="span-is-link" data-toggle="modal" data-target="#modalEditarOcorrencia" @click="getOcorrencia('{% url 'api:ocorrencia_update' ocorrencia.pk %}')">
-                      <i class="fa fa-edit" style="margin-left: 10px;"></i>
-                    </span>
-                  </td>
+                  {% if user.groups.all.0.name == 'chefe' %}
+                    <td>
+                      <span class="span-is-link" data-toggle="modal" data-target="#modalEditarOcorrencia" @click="getOcorrencia('{% url 'api:ocorrencia_update' ocorrencia.pk %}')">
+                        <i class="fa fa-edit" style="margin-left: 10px;"></i>
+                      </span>
+                    </td>
+                  {% endif %}
                 </tr>
               {% endfor %}
             </tbody>
@@ -264,7 +286,9 @@
   <div class="card">
     <div class="card-header">
       Infrações
-      <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarInfracao" @click="getAddInfracao"><i class="fa fa-plus"></i> Adicionar</span>
+      {% if user.groups.all.0.name == 'chefe' %}
+        <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarInfracao" @click="getAddInfracao"><i class="fa fa-plus"></i> Adicionar</span>
+      {% endif %}
     </div>
     <div class="card-body">
       <div class="row">
@@ -276,7 +300,9 @@
                 <th>Qualificação</th>
                 <th>Arma</th>
                 <th>Status</th>
-                <th>Ações</th>
+                {% if user.groups.all.0.name == 'chefe' %}
+                  <th>Ações</th>
+                {% endif %}
               </tr>
             </thead>
             <tbody>
@@ -286,11 +312,13 @@
                   <td>{{ infracao.get_qualificacao_display }}</td>
                   <td>{{ infracao.arma|default:"---" }}</td>
                   <td>{{ infracao.get_status_display }}</td>
-                  <td>
-                    <span class="span-is-link" data-toggle="modal" data-target="#modalEditarInfracao" @click="getInfracao('{% url 'api:infracao_update' infracao.pk %}')">
-                      <i class="fa fa-edit" style="margin-left: 10px;"></i>
-                    </span>
-                  </td>
+                  {% if user.groups.all.0.name == 'chefe' %}
+                    <td>
+                      <span class="span-is-link" data-toggle="modal" data-target="#modalEditarInfracao" @click="getInfracao('{% url 'api:infracao_update' infracao.pk %}')">
+                        <i class="fa fa-edit" style="margin-left: 10px;"></i>
+                      </span>
+                    </td>
+                  {% endif %}
                 </tr>
               {% endfor %}
             </tbody>

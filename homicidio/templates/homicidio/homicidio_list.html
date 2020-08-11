@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-
 <style>
   /*.unstyled {
     -webkit-appearance: none;
@@ -11,7 +10,6 @@
     -webkit-appearance: none;
   }*/
 </style>
-
 <div class="col-lg-12">
   <div class="card">
     <div class="card-header">
@@ -20,12 +18,14 @@
     </div>
     <div class="card-body">
       <div class="row">
-        <div class="col-md-auto pr-ari-5">
-          <a class="btn btn-primary" href="{% url 'homicidio:homicidio_create' %}">
-            <i class="fa fa-plus"></i>
-            Adicionar
-          </a>
-        </div>
+        {% if user.groups.all.0.name == 'chefe' %}
+          <div class="col-md-auto pr-ari-5">
+            <a class="btn btn-primary" href="{% url 'homicidio:homicidio_create' %}">
+              <i class="fa fa-plus"></i>
+              Adicionar
+            </a>
+          </div>
+        {% endif %}
         <div class="col">
           <form action="." method="GET">
             <div class="row">
@@ -49,60 +49,55 @@
               <div class="row">
                 <div class="col-12">
                   <form id="formFilter" action="." method="GET">
-
                     <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Forma</legend>
                       <select id="filterForma" multiple name="filter_forma" class="form-control selectpicker">
                         <option value="">---</option>
                         {% for item in formas %}
-                          <!-- { if selected_forma == item.value %} -->
-                          <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
-                          <!-- { else %} -->
-                          <option value="{{ item.value }}">{{ item.text }}</option>
-                          { endif %}
+                        <!-- { if selected_forma == item.value %} -->
+                        <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
+                        <!-- { else %} -->
+                        <option value="{{ item.value }}">{{ item.text }}</option>
+                        { endif %}
                         {% endfor %}
                       </select>
                     </fieldset>
-
                     <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Área</legend>
                       <select id="filterArea" multiple name="filter_area" class="form-control selectpicker">
                         <option value="">---</option>
                         {% for item in areas %}
-                          <!-- { if selected_area == item.value %} -->
-                          <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
-                          <!-- { endif %} -->
-                          <option value="{{ item.value }}">{{ item.text }}</option>
+                        <!-- { if selected_area == item.value %} -->
+                        <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
+                        <!-- { endif %} -->
+                        <option value="{{ item.value }}">{{ item.text }}</option>
                         {% endfor %}
                       </select>
                     </fieldset>
-
                     <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Motivação</legend>
                       <select id="filterMotivacao" multiple name="filter_motivacao" class="form-control selectpicker">
                         <option value="">---</option>
                         {% for item in motivacoes %}
-                          <!-- { if selected_motivacao == item.value %} -->
-                          <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
-                          <!-- { endif %} -->
-                          <option value="{{ item.value }}">{{ item.text }}</option>
+                        <!-- { if selected_motivacao == item.value %} -->
+                        <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
+                        <!-- { endif %} -->
+                        <option value="{{ item.value }}">{{ item.text }}</option>
                         {% endfor %}
                       </select>
                     </fieldset>
-
                     <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Gênero</legend>
                       <select id="filterGenero" multiple name="filter_genero" class="form-control selectpicker">
                         <option value="">---</option>
                         {% for item in generos %}
-                          <!-- { if selected_genero == item.value %} -->
-                          <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
-                          <!-- { endif %} -->
-                          <option value="{{ item.value }}">{{ item.text }}</option>
+                        <!-- { if selected_genero == item.value %} -->
+                        <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
+                        <!-- { endif %} -->
+                        <option value="{{ item.value }}">{{ item.text }}</option>
                         {% endfor %}
                       </select>
                     </fieldset>
-
                     <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Bairro</legend>
                       <select id="filterBairro" multiple name="filter_bairro" class="form-control selectpicker">
@@ -115,7 +110,6 @@
                         {% endfor %}
                       </select>
                     </fieldset>
-
                     <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Cidade</legend>
                       <select id="filterCidade" multiple name="filter_cidade" class="form-control selectpicker">
@@ -128,39 +122,32 @@
                         {% endfor %}
                       </select>
                     </fieldset>
-
                     <div class="row">
-
                       <div class="col-12">
                         <fieldset class="form-group">
                           <legend class="col-form-label pt-0">Data Inicial</legend>
                           {% if selected_data_inicial %}
-                            <input id="filterDataInicial" name="filter_data_inicial" class="form-control unstyled" type="text" value="{{ selected_data_inicial }}" />
+                          <input id="filterDataInicial" name="filter_data_inicial" class="form-control unstyled" type="text" value="{{ selected_data_inicial }}" />
                           {% else %}
-                            <input id="filterDataInicial" name="filter_data_inicial" class="form-control unstyled" type="text" />
+                          <input id="filterDataInicial" name="filter_data_inicial" class="form-control unstyled" type="text" />
                           {% endif %}
                         </fieldset>
                       </div>
-
                       <div class="col-12">
                         <fieldset class="form-group">
                           <legend class="col-form-label pt-0">Data Final</legend>
                           {% if selected_data_final %}
-                            <input id="filterDataFinal" name="filter_data_final" class="form-control unstyled" type="text" value="{{ selected_data_final }}" />
+                          <input id="filterDataFinal" name="filter_data_final" class="form-control unstyled" type="text" value="{{ selected_data_final }}" />
                           {% else %}
-                            <input id="filterDataFinal" name="filter_data_final" class="form-control unstyled" type="text" />
+                          <input id="filterDataFinal" name="filter_data_final" class="form-control unstyled" type="text" />
                           {% endif %}
                         </fieldset>
-
                       </div>
-
                     </div>
-
                     <a href="." class="btn btn-light">Limpar</a>
                     <div class="pull-right">
                       <button class="btn btn-primary" type="submit">OK</button>
                     </div>
-
                   </form>
                 </div>
               </div>
@@ -177,41 +164,45 @@
                 <th>Instrumento/Motivação</th>
                 <th>Autoria</th>
                 <th>Bairro</th>
-                <th class="text-center">Ações</th>
+                {% if user.groups.all.0.name == 'chefe' %}
+                  <th class="text-center">Ações</th>
+                {% endif %}
               </tr>
             </thead>
             <tbody>
               {% for object in object_list %}
-              <tr>
-                <td>
-                  {{ object.rai }} <br>
-                  <span class="text-muted">{{ object.data_do_homicidio|date:"d/m/y" }}</span>
-                </td>
-                <td>
-                  {{ object.area_upm }} <br>
-                  {{ object.get_forma_display }}
-                </td>
-                <td>
-                  {{ object.vitima }}
-                  {% if object.genero.genero == 'MASCULINO' %}
-                  <br> <span class="badge badge-info">Masculino</span>
-                  {% else %}
-                  <br> <span class="badge badge-warning">Feminino</span>
+                <tr>
+                  <td>
+                    {{ object.rai }} <br>
+                    <span class="text-muted">{{ object.data_do_homicidio|date:"d/m/y" }}</span>
+                  </td>
+                  <td>
+                    {{ object.area_upm }} <br>
+                    {{ object.get_forma_display }}
+                  </td>
+                  <td>
+                    {{ object.vitima }}
+                    {% if object.genero.genero == 'MASCULINO' %}
+                      <br> <span class="badge badge-info">Masculino</span>
+                    {% else %}
+                      <br> <span class="badge badge-warning">Feminino</span>
+                    {% endif %}
+                  </td>
+                  <td>
+                    {{ object.instrumento }} <br>
+                    <span class="text-muted">{{ object.motivacao }}</span>
+                  </td>
+                  <td>{{ object.autoria|default:"---" }}</td>
+                  <td>
+                    {{ object.district|default:"---" }} <br>
+                    <span class="text-muted">{{ object.district.city }}</span>
+                  </td>
+                  {% if user.groups.all.0.name == 'chefe' %}
+                    <td class="text-center">
+                      <a href="{% url 'homicidio:homicidio_update' object.slug %}"><i class="fa fa-edit"></i></a>
+                    </td>
                   {% endif %}
-                </td>
-                <td>
-                  {{ object.instrumento }} <br>
-                  <span class="text-muted">{{ object.motivacao }}</span>
-                </td>
-                <td>{{ object.autoria|default:"---" }}</td>
-                <td>
-                  {{ object.district|default:"---" }} <br>
-                  <span class="text-muted">{{ object.district.city }}</span>
-                </td>
-                <td class="text-center">
-                  <a href="{% url 'homicidio:homicidio_update' object.slug %}"><i class="fa fa-edit"></i></a>
-                </td>
-              </tr>
+                </tr>
               {% endfor %}
             </tbody>
           </table>
@@ -223,7 +214,6 @@
   </div>
 </div>
 {% endblock content %}
-
 {% block js %}
 <script>
 $.fn.selectpicker.Constructor.BootstrapVersion = '4';

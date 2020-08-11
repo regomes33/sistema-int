@@ -9,12 +9,14 @@
     </div>
     <div class="card-body">
       <div class="row">
+        {% if user.groups.all.0.name == 'chefe' %}
         <div class="col-md-auto pr-ari-5">
           <a class="btn btn-primary" href="{% url 'pessoa:comparsa_create' %}">
             <i class="fa fa-plus"></i>
             Adicionar
           </a>
         </div>
+        {% endif %}
         <div class="col">
           <form action="." method="GET">
             <div class="row">
@@ -38,7 +40,9 @@
                 <th>RG</th>
                 <th>CPF</th>
                 <th>CNH</th>
+                {% if user.groups.all.0.name == 'chefe' %}
                 <th class="text-center">Ações</th>
+                {% endif %}
               </tr>
             </thead>
             <tbody>
@@ -48,9 +52,11 @@
                 <td>{{ object.rg|default:"---" }}</td>
                 <td>{{ object.cpf|cpf_mask|default:"---" }}</td>
                 <td>{{ object.cnh|default:"---" }}</td>
-                <td class="text-center">
-                  <a href="{% url 'pessoa:comparsa_update' object.slug %}"><i class="fa fa-edit"></i></a>
-                </td>
+                {% if user.groups.all.0.name == 'chefe' %}
+                  <td class="text-center">
+                    <a href="{% url 'pessoa:comparsa_update' object.slug %}"><i class="fa fa-edit"></i></a>
+                  </td>
+                {% endif %}
               </tr>
               {% endfor %}
             </tbody>

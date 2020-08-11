@@ -8,12 +8,14 @@
     </div>
     <div class="card-body">
       <div class="row">
+        {% if user.groups.all.0.name == 'chefe' %}
         <div class="col-md-auto pr-ari-5">
           <a class="btn btn-primary" href="{% url 'veiculo:modelo_create' %}">
             <i class="fa fa-plus"></i>
             Adicionar
           </a>
         </div>
+        {% endif %}
         <div class="col">
           <form action="." method="GET">
             <div class="row">
@@ -34,16 +36,20 @@
             <thead>
               <tr>
                 <th>Modelo</th>
+                {% if user.groups.all.0.name == 'chefe' %}
                 <th class="text-center">Ações</th>
+                {% endif %}
               </tr>
             </thead>
             <tbody>
               {% for object in object_list %}
               <tr>
                 <td>{{ object }}</td>
+                {% if user.groups.all.0.name == 'chefe' %}
                 <td class="text-center">
                   <a href="{% url 'veiculo:modelo_update' object.slug %}"><i class="fa fa-edit"></i></a>
                 </td>
+                {% endif %}
               </tr>
               {% endfor %}
             </tbody>
