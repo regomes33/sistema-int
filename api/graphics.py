@@ -6,6 +6,7 @@ from pessoa.models import Pessoa
 
 def per_status(request):
     status = Pessoa.objects\
+        .filter(vitima=False)\
         .values('status_atual')\
         .annotate(value=Count('status_atual'))\
         .order_by('status_atual')\
@@ -24,6 +25,7 @@ def per_status(request):
 
 def per_faccao(request):
     faccoes = Pessoa.objects\
+        .filter(vitima=False)\
         .values('faccao')\
         .annotate(value=Count('faccao'))\
         .order_by('faccao')\
@@ -42,6 +44,7 @@ def per_faccao(request):
 
 def per_city(request):
     cities = Pessoa.objects\
+        .filter(vitima=False)\
         .values('district__city')\
         .annotate(value=Count('district__city'))\
         .order_by('district__city')\
