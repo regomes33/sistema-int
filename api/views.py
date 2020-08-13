@@ -62,6 +62,7 @@ def cpf_validate(cpf, data):
 
 
 # @login_required
+@csrf_exempt
 def pessoa_add(request):
     # Adiciona Pessoa
     pessoa_data = json.loads(request.POST.get('pessoa'))
@@ -393,6 +394,7 @@ def comparsas(request):
 
 
 # @login_required
+@csrf_exempt
 def veiculo_add(request, pessoa_pk):
     if request.method == 'POST':
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
@@ -412,6 +414,7 @@ def veiculo_add(request, pessoa_pk):
 
 
 # @login_required
+@csrf_exempt
 def veiculo_update(request, pk):
     veiculo = PessoaVeiculo.objects.get(pk=pk)
 
@@ -436,6 +439,7 @@ def veiculo_update(request, pk):
 
 
 # @login_required
+@csrf_exempt
 def comparsa_add(request, pessoa_pk):
     if request.method == 'POST':
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
@@ -469,6 +473,7 @@ def comparsa_add(request, pessoa_pk):
 
 
 # @login_required
+@csrf_exempt
 def comparsa_update(request, pk):
     pessoa_comparsa = PessoaComparsa.objects.get(pk=pk)
 
@@ -503,6 +508,7 @@ def comparsa_update(request, pk):
 
 
 # @login_required
+@csrf_exempt
 def new_comparsa_add(request):
     comparsa_data = json.loads(request.POST.get('newcomparsa'))
     form = ComparsaForm(comparsa_data)
@@ -519,6 +525,7 @@ def new_comparsa_add(request):
 
 
 # @login_required
+@csrf_exempt
 def photo_add(request, pessoa_pk):
     if request.method == 'POST':
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
@@ -530,6 +537,7 @@ def photo_add(request, pessoa_pk):
 
 
 # @login_required
+@csrf_exempt
 def photo_update(request, pk):
     photo = Foto.objects.get(pk=pk)
 
@@ -542,6 +550,7 @@ def photo_update(request, pk):
 
 
 # @login_required
+@csrf_exempt
 def tattoo_add(request, pessoa_pk):
     if request.method == 'POST':
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
@@ -553,6 +562,7 @@ def tattoo_add(request, pessoa_pk):
 
 
 # @login_required
+@csrf_exempt
 def tattoo_update(request, pk):
     tattoo = Tatuagem.objects.get(pk=pk)
 
@@ -578,6 +588,7 @@ def pessoa_ocorrencias(request):
 
 
 # @login_required
+@csrf_exempt
 def ocorrencia_add(request, pessoa_pk):
     if request.method == 'POST':
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
@@ -591,6 +602,7 @@ def ocorrencia_add(request, pessoa_pk):
 
 
 # @login_required
+@csrf_exempt
 def ocorrencia_update(request, pk):
     ocorrencia = PessoaOcorrencia.objects.get(pk=pk)
 
@@ -611,6 +623,7 @@ def ocorrencia_update(request, pk):
 
 
 # @login_required
+@csrf_exempt
 def infracao_add(request, pessoa_pk):
     if request.method == 'POST':
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
@@ -650,6 +663,7 @@ def infracao_add(request, pessoa_pk):
 
 
 # @login_required
+@csrf_exempt
 def infracao_update(request, pk):
     infracao = Infracao.objects.get(pk=pk)
     natureza_pk = ''
