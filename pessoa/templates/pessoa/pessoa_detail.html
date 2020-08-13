@@ -9,7 +9,7 @@
     <div class="card-header">
       {{ object }}
       <a class="btn btn-sm btn-warning float-right ml-2" href="{% url 'pessoa:report_pessoa_detail' object.slug %}" target="_blank">PDF</a>
-      {% if user.groups.all.0.name == 'chefe' %}
+      {% if user.groups.all.0.name == 'backoffice' %}
         <span class="pull-right btn btn-sm btn-primary" data-toggle="modal" data-target="#modalEditarPessoa">
           <i class="fa fa-edit"></i> Editar
         </span>
@@ -107,7 +107,7 @@
   <div class="card">
     <div class="card-header">
       CONTATOS
-      {% if user.groups.all.0.name == 'chefe' %}
+      {% if user.groups.all.0.name == 'backoffice' %}
         <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarContato"><i class="fa fa-plus"></i> Adicionar</span>
       {% endif %}
     </div>
@@ -120,7 +120,7 @@
           {% else %}
           <span class="badge badge-info">{{ contato.tipo }}</span> {{ contato.telefone }}
           {% endif %}
-          {% if user.groups.all.0.name == 'chefe' %}
+          {% if user.groups.all.0.name == 'backoffice' %}
             <span class="span-is-link pull-right" data-toggle="modal" data-target="#modalEditarContato" @click="getContato('{% url 'api:contato_update' contato.pk %}')">
               <i class="fa fa-edit" style="margin-left: 10px;"></i>
             </span>
@@ -133,7 +133,7 @@
   <div class="card">
     <div class="card-header">
       VEÍCULOS
-      {% if user.groups.all.0.name == 'chefe' %}
+      {% if user.groups.all.0.name == 'backoffice' %}
         <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarVeiculo" @click="getAddVeiculo"><i class="fa fa-plus"></i> Adicionar</span>
       {% endif %}
     </div>
@@ -144,7 +144,7 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item no-border li-line pl-0 pr-0">
               <span class="text-muted">Placa:</span> <span class="lead">{{ veiculo.veiculo.placa }}</span>
-              {% if user.groups.all.0.name == 'chefe' %}
+              {% if user.groups.all.0.name == 'backoffice' %}
                 <span class="span-is-link float-right" data-toggle="modal" data-target="#modalEditarVeiculo" @click="getVeiculo('{% url 'api:veiculo_update' veiculo.pk %}')">
                   <i class="fa fa-edit" style="margin-left: 10px;"></i>
                 </span>
@@ -171,7 +171,7 @@
   <div class="card">
     <div class="card-header">
       COMPARSAS
-      {% if user.groups.all.0.name == 'chefe' %}
+      {% if user.groups.all.0.name == 'backoffice' %}
         <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarComparsa" @click="getAddComparsa"><i class="fa fa-plus"></i> Adicionar</span>
       {% endif %}
     </div>
@@ -183,7 +183,7 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item no-border li-line pl-0 pr-0">
               <span class="lead">{{ comparsa.comparsa.nome }}</span>
-              {% if user.groups.all.0.name == 'chefe' %}
+              {% if user.groups.all.0.name == 'backoffice' %}
                 <span class="span-is-link pull-right" data-toggle="modal" data-target="#modalEditarComparsa" @click="getComparsa('{% url 'api:comparsa_update' comparsa.pk %}')">
                   <i class="fa fa-edit" style="margin-left: 10px;"></i>
                 </span>
@@ -215,7 +215,7 @@
   <div class="card">
     <div class="card-header">
       Tatuagens
-      {% if user.groups.all.0.name == 'chefe' %}
+      {% if user.groups.all.0.name == 'backoffice' %}
         <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarTatuagem"><i class="fa fa-plus"></i> Adicionar</span>
       {% endif %}
     </div>
@@ -241,7 +241,7 @@
   <div class="card">
     <div class="card-header">
       Ocorrências
-      {% if user.groups.all.0.name == 'chefe' %}
+      {% if user.groups.all.0.name == 'backoffice' %}
         <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarOcorrencia" @click="getAddOcorrencia"><i class="fa fa-plus"></i> Adicionar</span>
       {% endif %}
     </div>
@@ -254,7 +254,7 @@
                 <th>RAI</th>
                 <th style="width: 8vw;">Data do fato</th>
                 <th>Descrição</th>
-                {% if user.groups.all.0.name == 'chefe' %}
+                {% if user.groups.all.0.name == 'backoffice' %}
                   <th>Ações</th>
                 {% endif %}
               </tr>
@@ -265,7 +265,7 @@
                   <td>{{ ocorrencia.ocorrencia.rai }}</td>
                   <td>{{ ocorrencia.ocorrencia.data_do_fato|date:"d/m/Y" }}</td>
                   <td>{{ ocorrencia.ocorrencia.descricao }}</td>
-                  {% if user.groups.all.0.name == 'chefe' %}
+                  {% if user.groups.all.0.name == 'backoffice' %}
                     <td>
                       <span class="span-is-link" data-toggle="modal" data-target="#modalEditarOcorrencia" @click="getOcorrencia('{% url 'api:ocorrencia_update' ocorrencia.pk %}')">
                         <i class="fa fa-edit" style="margin-left: 10px;"></i>
@@ -286,7 +286,7 @@
   <div class="card">
     <div class="card-header">
       Infrações
-      {% if user.groups.all.0.name == 'chefe' %}
+      {% if user.groups.all.0.name == 'backoffice' %}
         <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarInfracao" @click="getAddInfracao"><i class="fa fa-plus"></i> Adicionar</span>
       {% endif %}
     </div>
@@ -300,7 +300,7 @@
                 <th>Qualificação</th>
                 <th>Arma</th>
                 <th>Status</th>
-                {% if user.groups.all.0.name == 'chefe' %}
+                {% if user.groups.all.0.name == 'backoffice' %}
                   <th>Ações</th>
                 {% endif %}
               </tr>
@@ -312,7 +312,7 @@
                   <td>{{ infracao.get_qualificacao_display }}</td>
                   <td>{{ infracao.arma|default:"---" }}</td>
                   <td>{{ infracao.get_status_display }}</td>
-                  {% if user.groups.all.0.name == 'chefe' %}
+                  {% if user.groups.all.0.name == 'backoffice' %}
                     <td>
                       <span class="span-is-link" data-toggle="modal" data-target="#modalEditarInfracao" @click="getInfracao('{% url 'api:infracao_update' infracao.pk %}')">
                         <i class="fa fa-edit" style="margin-left: 10px;"></i>

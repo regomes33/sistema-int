@@ -18,7 +18,7 @@
     </div>
     <div class="card-body">
       <div class="row">
-        {% if user.groups.all.0.name == 'chefe' %}
+        {% if user.groups.all.0.name == 'backoffice' %}
           <div class="col-md-auto pr-ari-5">
             <a class="btn btn-primary" href="{% url 'homicidio:homicidio_create' %}">
               <i class="fa fa-plus"></i>
@@ -164,7 +164,7 @@
                 <th>Instrumento/Motivação</th>
                 <th>Autoria</th>
                 <th>Bairro</th>
-                {% if user.groups.all.0.name == 'chefe' %}
+                {% if user.groups.all.0.name == 'backoffice' %}
                   <th class="text-center">Ações</th>
                 {% endif %}
               </tr>
@@ -197,7 +197,7 @@
                     {{ object.district|default:"---" }} <br>
                     <span class="text-muted">{{ object.district.city }}</span>
                   </td>
-                  {% if user.groups.all.0.name == 'chefe' %}
+                  {% if user.groups.all.0.name == 'backoffice' %}
                     <td class="text-center">
                       <a href="{% url 'homicidio:homicidio_update' object.slug %}"><i class="fa fa-edit"></i></a>
                     </td>

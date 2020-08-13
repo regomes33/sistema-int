@@ -8,7 +8,7 @@
     </div>
     <div class="card-body">
       <div class="row">
-        {% if user.groups.all.0.name == 'chefe' %}
+        {% if user.groups.all.0.name == 'backoffice' %}
           <div class="col-md-auto pr-ari-5">
             <a class="btn btn-primary" href="{% url 'infracao:infracao_create' %}">
               <i class="fa fa-plus"></i>
@@ -39,7 +39,7 @@
                 <th>Natureza</th>
                 <th>Qualificação</th>
                 <th>Arma</th>
-                {% if user.groups.all.0.name == 'chefe' %}
+                {% if user.groups.all.0.name == 'backoffice' %}
                   <th class="text-center">Ações</th>
                 {% endif %}
               </tr>
@@ -62,7 +62,7 @@
                 <td>{{ object.natureza|default:"---" }}</td>
                 <td>{{ object.get_qualificacao_display }}</td>
                 <td>{{ object.arma|default:"---" }}</td>
-                {% if user.groups.all.0.name == 'chefe' %}
+                {% if user.groups.all.0.name == 'backoffice' %}
                   <td class="text-center">
                     <a href="{% url 'infracao:infracao_update' object.slug %}"><i class="fa fa-edit"></i></a>
                   </td>

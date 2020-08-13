@@ -8,7 +8,7 @@
     </div>
     <div class="card-body">
       <div class="row">
-        {% if user.groups.all.0.name == 'chefe' %}
+        {% if user.groups.all.0.name == 'backoffice' %}
         <div class="col-md-auto pr-ari-5">
           <a class="btn btn-primary" href="{% url 'ocorrencia:ocorrencia_create' %}">
             <i class="fa fa-plus"></i>
@@ -38,7 +38,7 @@
                 <th>RAI</th>
                 <th>Data</th>
                 <th>Descrição</th>
-                {% if user.groups.all.0.name == 'chefe' %}
+                {% if user.groups.all.0.name == 'backoffice' %}
                   <th class="text-center">Ações</th>
                 {% endif %}
               </tr>
@@ -51,7 +51,7 @@
                 </td>
                 <td>{{ object.data_do_fato|date:"d/m/y" }}</td>
                 <td>{{ object.descricao }}</td>
-                {% if user.groups.all.0.name == 'chefe' %}
+                {% if user.groups.all.0.name == 'backoffice' %}
                   <td class="text-center">
                     <a href="{% url 'ocorrencia:ocorrencia_update' object.slug %}"><i class="fa fa-edit"></i></a>
                   </td>

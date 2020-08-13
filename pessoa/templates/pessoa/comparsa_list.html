@@ -9,7 +9,7 @@
     </div>
     <div class="card-body">
       <div class="row">
-        {% if user.groups.all.0.name == 'chefe' %}
+        {% if user.groups.all.0.name == 'backoffice' %}
         <div class="col-md-auto pr-ari-5">
           <a class="btn btn-primary" href="{% url 'pessoa:comparsa_create' %}">
             <i class="fa fa-plus"></i>
@@ -40,7 +40,7 @@
                 <th>RG</th>
                 <th>CPF</th>
                 <th>CNH</th>
-                {% if user.groups.all.0.name == 'chefe' %}
+                {% if user.groups.all.0.name == 'backoffice' %}
                 <th class="text-center">Ações</th>
                 {% endif %}
               </tr>
@@ -52,7 +52,7 @@
                 <td>{{ object.rg|default:"---" }}</td>
                 <td>{{ object.cpf|cpf_mask|default:"---" }}</td>
                 <td>{{ object.cnh|default:"---" }}</td>
-                {% if user.groups.all.0.name == 'chefe' %}
+                {% if user.groups.all.0.name == 'backoffice' %}
                   <td class="text-center">
                     <a href="{% url 'pessoa:comparsa_update' object.slug %}"><i class="fa fa-edit"></i></a>
                   </td>

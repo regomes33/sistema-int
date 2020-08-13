@@ -8,8 +8,7 @@
     </div>
     <div class="card-body">
       <div class="row">
-        {% if user.groups.all.0.name == 'chefe' %}
-          
+        {% if user.groups.all.0.name == 'backoffice' %}
         <div class="col-md-auto pr-ari-5">
           <a id="btnAdicionar" class="btn btn-primary" href="{% url 'pessoa:pessoa_create' %}">
             <i class="fa fa-plus"></i>
@@ -157,7 +156,7 @@
                     <span id="status_{{ object.pk }}" class="badge badge-warning">Livre</span>
                   {% endif %}
 
-                  {% if user.groups.all.0.name == 'chefe' %}
+                  {% if user.groups.all.0.name == 'backoffice' %}
                     <div class="col-6 pl-0">
                       <label><small>Editar Status Atual</small></label>
                       <select data-pk="{{ object.pk }}" name="status_atual" class="form-control edit-status-atual">
@@ -187,7 +186,7 @@
                 {% else %}
                   <!-- Editar District -->
                   <td>
-                    {% if user.groups.all.0.name == 'chefe' %}
+                    {% if user.groups.all.0.name == 'backoffice' %}
                       <span class="text-muted">{{ object.observacao_bairro }}</span>
                       <br>
                       <select data-pk="{{ object.pk }}" name="district" class="form-control edit-district"></select>
