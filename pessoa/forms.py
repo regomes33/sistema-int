@@ -32,7 +32,6 @@ class PessoaForm(forms.ModelForm):
             'cep',
             'country',
             'observacao',
-            'created_by'
         )
 
 

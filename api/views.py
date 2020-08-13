@@ -77,13 +77,10 @@ def pessoa_add(request):
         if data.get('status_code') == 900:
             return JsonResponse(data)
 
-    try:
-        created_by = request.user
-    except Exception as e:
-        created_by = User.objects.get(username='admin')
+    # created_by = User.objects.get(username='admin')
     if form.is_valid():
         pessoa_post = form.save(commit=False)
-        pessoa_post.created_by = created_by
+        # pessoa_post.created_by = created_by
         pessoa_post.save()
         # retorna dados serializados
         data = form.data
@@ -115,7 +112,7 @@ def pessoa_add(request):
                 if infracao_form.is_valid():
                     infracao_post = infracao_form.save(commit=False)
                     infracao_post.pessoa = pessoa_post
-                    infracao_post.created_by = created_by
+                    # infracao_post.created_by = created_by
                     infracao_post.save()
 
         # Adiciona Veículos
@@ -127,7 +124,7 @@ def pessoa_add(request):
                     if veiculo_form.is_valid():
                         veiculo_post = veiculo_form.save(commit=False)
                         veiculo_post.pessoa = pessoa_post
-                        veiculo_post.created_by = created_by
+                        # veiculo_post.created_by = created_by
                         veiculo_post.save()
 
         # Adiciona Contatos
@@ -161,7 +158,7 @@ def pessoa_add(request):
                     if ocorrencia_form.is_valid():
                         ocorrencia_post = ocorrencia_form.save(commit=False)
                         ocorrencia_post.pessoa = pessoa_post
-                        ocorrencia_post.created_by = created_by
+                        # ocorrencia_post.created_by = created_by
                         ocorrencia_post.save()
     else:
         # data = {'message': 'Erro'}
