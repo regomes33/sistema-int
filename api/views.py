@@ -33,7 +33,7 @@ from utils.data import QUALIFICACAO, STATUS, TIPO
 from veiculo.models import Veiculo
 
 
-@login_required
+# @login_required
 def pessoas(request):
     items = Pessoa.objects.all()
     data = [item.to_dict() for item in items]
@@ -61,7 +61,7 @@ def cpf_validate(cpf, data):
     return cpf, data
 
 
-@login_required
+# @login_required
 def pessoa_add(request):
     # Adiciona Pessoa
     pessoa_data = json.loads(request.POST.get('pessoa'))
@@ -187,7 +187,7 @@ def pessoa_create_ajax(request):
             return JsonResponse(data)
 
 
-@login_required
+# @login_required
 def districts(request):
     items = District.objects.all()
     data = [item.to_dict() for item in items]
@@ -213,7 +213,7 @@ def district_update(request, pk):
     return JsonResponse(response)
 
 
-@login_required
+# @login_required
 def faccoes(request):
     items = Faccao.objects.all()
     data = [item.to_dict() for item in items]
@@ -221,7 +221,7 @@ def faccoes(request):
     return JsonResponse(response)
 
 
-@login_required
+# @login_required
 def status_atuais(request):
     items = STATUS
     data = [
@@ -250,7 +250,7 @@ def status_update(request, pk):
     return JsonResponse(response)
 
 
-@login_required
+# @login_required
 def naturezas(request):
     items = Natureza.objects.all()
     data = [item.to_dict() for item in items]
@@ -258,7 +258,7 @@ def naturezas(request):
     return JsonResponse(response)
 
 
-@login_required
+# @login_required
 def qualificacoes(request):
     items = QUALIFICACAO
     data = [
@@ -271,7 +271,7 @@ def qualificacoes(request):
     return JsonResponse(response)
 
 
-@login_required
+# @login_required
 def armas(request):
     items = Arma.objects.all()
     data = [item.to_dict() for item in items]
@@ -279,7 +279,7 @@ def armas(request):
     return JsonResponse(response)
 
 
-@login_required
+# @login_required
 def status(request):
     items = STATUS
     data = [
@@ -292,7 +292,7 @@ def status(request):
     return JsonResponse(response)
 
 
-@login_required
+# @login_required
 def tipo_telefone(request):
     items = TIPO
     data = [
@@ -305,7 +305,7 @@ def tipo_telefone(request):
     return JsonResponse(response)
 
 
-@login_required
+# @login_required
 def ocorrencias(request):
     items = Ocorrencia.objects.all()
     data = [item.to_dict() for item in items]
@@ -313,7 +313,7 @@ def ocorrencias(request):
     return JsonResponse(response)
 
 
-@login_required
+# @login_required
 def veiculos(request):
     items = Veiculo.objects.all()
     data = [item.to_dict() for item in items]
@@ -321,7 +321,7 @@ def veiculos(request):
     return JsonResponse(response)
 
 
-@login_required
+# @login_required
 def ufs(request):
     items = STATE_CHOICES
     data = [
@@ -334,7 +334,7 @@ def ufs(request):
     return JsonResponse(response)
 
 
-@login_required
+# @login_required
 def contato_add(request, pessoa_pk):
     if request.method == 'POST':
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
@@ -346,7 +346,7 @@ def contato_add(request, pessoa_pk):
         return JsonResponse({'data': 'OK'})
 
 
-@login_required
+# @login_required
 def contato_update(request, pk):
     contato = PessoaContato.objects.get(pk=pk)
 
@@ -365,7 +365,7 @@ def contato_update(request, pk):
     return JsonResponse(data)
 
 
-@login_required
+# @login_required
 def pessoa_veiculos(request):
     veiculos = Veiculo.objects.all()
     data = [
@@ -378,7 +378,7 @@ def pessoa_veiculos(request):
     return JsonResponse({'data': data})
 
 
-@login_required
+# @login_required
 def comparsas(request):
     comparsas = Comparsa.objects.all()
     data = [
@@ -392,7 +392,7 @@ def comparsas(request):
     return JsonResponse({'data': data})
 
 
-@login_required
+# @login_required
 def veiculo_add(request, pessoa_pk):
     if request.method == 'POST':
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
@@ -411,7 +411,7 @@ def veiculo_add(request, pessoa_pk):
         return JsonResponse({'data': 'OK'})
 
 
-@login_required
+# @login_required
 def veiculo_update(request, pk):
     veiculo = PessoaVeiculo.objects.get(pk=pk)
 
@@ -435,7 +435,7 @@ def veiculo_update(request, pk):
     return JsonResponse(data)
 
 
-@login_required
+# @login_required
 def comparsa_add(request, pessoa_pk):
     if request.method == 'POST':
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
@@ -468,7 +468,7 @@ def comparsa_add(request, pessoa_pk):
         return JsonResponse({'data': 'OK'})
 
 
-@login_required
+# @login_required
 def comparsa_update(request, pk):
     pessoa_comparsa = PessoaComparsa.objects.get(pk=pk)
 
@@ -502,7 +502,7 @@ def comparsa_update(request, pk):
     return JsonResponse(data)
 
 
-@login_required
+# @login_required
 def new_comparsa_add(request):
     comparsa_data = json.loads(request.POST.get('newcomparsa'))
     form = ComparsaForm(comparsa_data)
@@ -518,7 +518,7 @@ def new_comparsa_add(request):
     return JsonResponse(data)
 
 
-@login_required
+# @login_required
 def photo_add(request, pessoa_pk):
     if request.method == 'POST':
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
@@ -529,7 +529,7 @@ def photo_add(request, pessoa_pk):
     return JsonResponse({})
 
 
-@login_required
+# @login_required
 def photo_update(request, pk):
     photo = Foto.objects.get(pk=pk)
 
@@ -541,7 +541,7 @@ def photo_update(request, pk):
     return JsonResponse({})
 
 
-@login_required
+# @login_required
 def tattoo_add(request, pessoa_pk):
     if request.method == 'POST':
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
@@ -552,7 +552,7 @@ def tattoo_add(request, pessoa_pk):
     return JsonResponse({})
 
 
-@login_required
+# @login_required
 def tattoo_update(request, pk):
     tattoo = Tatuagem.objects.get(pk=pk)
 
@@ -564,7 +564,7 @@ def tattoo_update(request, pk):
     return JsonResponse({})
 
 
-@login_required
+# @login_required
 def pessoa_ocorrencias(request):
     ocorrencias = Ocorrencia.objects.all()
     data = [
@@ -577,7 +577,7 @@ def pessoa_ocorrencias(request):
     return JsonResponse({'data': data})
 
 
-@login_required
+# @login_required
 def ocorrencia_add(request, pessoa_pk):
     if request.method == 'POST':
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
@@ -590,7 +590,7 @@ def ocorrencia_add(request, pessoa_pk):
         return JsonResponse({'data': 'OK'})
 
 
-@login_required
+# @login_required
 def ocorrencia_update(request, pk):
     ocorrencia = PessoaOcorrencia.objects.get(pk=pk)
 
@@ -610,7 +610,7 @@ def ocorrencia_update(request, pk):
     return JsonResponse(data)
 
 
-@login_required
+# @login_required
 def infracao_add(request, pessoa_pk):
     if request.method == 'POST':
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
@@ -649,7 +649,7 @@ def infracao_add(request, pessoa_pk):
         return JsonResponse({'data': 'OK'})
 
 
-@login_required
+# @login_required
 def infracao_update(request, pk):
     infracao = Infracao.objects.get(pk=pk)
     natureza_pk = ''
