@@ -2,6 +2,7 @@ import json
 import re
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from localflavor.br.br_states import STATE_CHOICES
@@ -76,7 +77,10 @@ def pessoa_add(request):
         if data.get('status_code') == 900:
             return JsonResponse(data)
 
-    created_by = request.user
+    try:
+        created_by = request.user
+    except Exception as e:
+        created_by = User.objects.get(username='admin')
     if form.is_valid():
         pessoa_post = form.save(commit=False)
         pessoa_post.created_by = created_by
