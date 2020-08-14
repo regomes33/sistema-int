@@ -232,9 +232,6 @@ var app = new Vue({
     salvar(e) {
       let bodyFormData = new FormData();
 
-      // Adiciona novamente o valor por causa do select2.
-      this.pessoa.district = $('#id_district').val();
-
       bodyFormData.append('pessoa', JSON.stringify(this.pessoa));
 
       this.photos.forEach((file, i) => {
