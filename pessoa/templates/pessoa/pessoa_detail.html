@@ -20,6 +20,9 @@
         <div class="col-6">
           {% if object.get_first_photo %}
           <img src="{{ object.get_first_photo.foto.url }}" width="200px">
+          <span class="span-is-link" data-toggle="modal" data-target="#modalEditarFoto" @click="getPhoto('{{ object.get_first_photo.pk }}')">
+            <i class="fa fa-edit" style="margin-left: 10px; margin-top: 10px;"></i> Editar foto
+          </span>
           {% endif %}
         </div>
         <div class="col-6">
@@ -207,6 +210,34 @@
         </li>
         {% endfor %}
       </ul>
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-12">
+  <div class="card">
+    <div class="card-header">
+      Fotos
+      {% if user.groups.all.0.name == 'backoffice' %}
+        <span class="pull-right badge badge-success i-is-link" data-toggle="modal" data-target="#modalAdicionarFoto"><i class="fa fa-plus"></i> Adicionar</span>
+      {% endif %}
+    </div>
+    <div class="card-body">
+      <div class="row">
+        {% for foto in object.foto_set.all %}
+          {% if foto != object.get_first_photo %}
+            <div class="col">
+                {% if foto.foto %}
+                  <div class="card">
+                    <div class="card-body">
+                      <img src="{{ foto.foto.url }}" class="card-img-top" style="min-width: 200px; max-width: 250px;" alt="{{ foto.foto.name }}">
+                    </div>
+                  </div>
+                {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
     </div>
   </div>
 </div>
