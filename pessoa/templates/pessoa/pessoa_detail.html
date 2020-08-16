@@ -20,9 +20,11 @@
         <div class="col-6">
           {% if object.get_first_photo %}
           <img src="{{ object.get_first_photo.foto.url }}" width="200px">
-          <span class="span-is-link" data-toggle="modal" data-target="#modalEditarFoto" @click="getPhoto('{{ object.get_first_photo.pk }}')">
-            <i class="fa fa-edit" style="margin-left: 10px; margin-top: 10px;"></i> Editar foto
-          </span>
+          {% if user.groups.all.0.name == 'backoffice' %}
+            <span class="span-is-link" data-toggle="modal" data-target="#modalEditarFoto" @click="getPhoto('{{ object.get_first_photo.pk }}')">
+              <i class="fa fa-edit" style="margin-left: 10px; margin-top: 10px;"></i> Editar foto
+            </span>
+            {% endif %}
           {% endif %}
         </div>
         <div class="col-6">
