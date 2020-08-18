@@ -46,6 +46,28 @@ class Natureza(UuidModel):
         }
 
 
+class Operacao(UuidModel):
+    operacao = models.CharField(max_length=15, help_text='Número da Operação')
+    descricao = models.TextField(unique=True)
+
+    class Meta:
+        ordering = ('operacao',)
+        verbose_name = 'operacao'
+        verbose_name_plural = 'operacoes'
+
+    def __str__(self):
+        return self.operacao
+
+    def get_absolute_url(self):
+        return reverse_lazy('infracao:operacao_list')
+
+    def to_dict(self):
+        return {
+            'value': self.pk,
+            'text': self.operacao,
+        }
+
+
 class Infracao(UuidModel, CreatedBy, TimeStampedModel):
     pessoa = models.ForeignKey(Pessoa, on_delete=models.PROTECT, blank=True)
     natureza = models.ForeignKey(
@@ -53,6 +75,14 @@ class Infracao(UuidModel, CreatedBy, TimeStampedModel):
         on_delete=models.SET_NULL,
         verbose_name='natureza',
         related_name='naturezas',
+        null=True,
+        blank=True
+    )
+    operacao = models.ForeignKey(
+        Operacao,
+        on_delete=models.SET_NULL,
+        verbose_name='operacao',
+        related_name='operacoes',
         null=True,
         blank=True
     )
