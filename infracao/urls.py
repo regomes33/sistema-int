@@ -17,8 +17,14 @@ natureza_patterns = [
     path('<slug>/update/', v.NaturezaUpdate.as_view(), name='natureza_update'),
 ]
 
+operacao_patterns = [
+    path('', v.OperacaoList.as_view(), name='operacao_list'),
+    path('add/', v.operacao_create, name='operacao_create'),
+    path('<slug>/update/', v.OperacaoUpdate.as_view(), name='operacao_update'),
+]
 
 urlpatterns = [
     path('infracao/', include(infracao_patterns)),
     path('natureza/', include(natureza_patterns)),
+    path('operacao/', include(operacao_patterns)),
 ]
