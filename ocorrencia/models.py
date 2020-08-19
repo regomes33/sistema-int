@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse_lazy
 
 from core.models import Address, CreatedBy, TimeStampedModel, UuidModel
-from infracao.models import Arma, Infracao, Natureza
+from infracao.models import Arma, Infracao, Natureza, Operacao
 from pessoa.models import Pessoa, Veiculo
 
 

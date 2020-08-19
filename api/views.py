@@ -10,7 +10,7 @@ from localflavor.br.br_states import STATE_CHOICES
 
 from core.models import District
 from infracao.forms import InfracaoForm
-from infracao.models import Arma, Infracao, Natureza
+from infracao.models import Arma, Infracao, Natureza, Operacao
 from ocorrencia.forms import PessoaOcorrenciaForm
 from ocorrencia.models import Ocorrencia, PessoaOcorrencia
 from pessoa.forms import (
@@ -260,6 +260,12 @@ def naturezas(request):
     response = {'data': data}
     return JsonResponse(response)
 
+# @login_required
+def operacoes(request):
+    items = Operacao.objects.all()
+    data = [item.to_dict() for item in items]
+    response = {'data': data}
+    return JsonResponse(response)
 
 # @login_required
 def qualificacoes(request):
@@ -631,8 +637,10 @@ def infracao_add(request, pessoa_pk):
         pessoa = Pessoa.objects.get(pk=pessoa_pk)
         natureza_pk = ''
         arma_pk = ''
+        operacao_pk = ''
         natureza = None
         arma = None
+        operacao = None
 
         natureza_pk = request.POST.get('natureza_pk')
         natureza_obj = None
@@ -645,6 +653,11 @@ def infracao_add(request, pessoa_pk):
             print(arma_pk)
             arma_obj = Arma.objects.get(pk=arma_pk)
 
+        operacao_pk = request.POST.get('operacao_pk')
+        operacao_obj = None
+        if operacao_pk:
+            operacao_obj = Operacao.objects.get(pk=operacao_pk)
+
         qualificacao = request.POST.get('qualificacao')
         status = request.POST.get('status')
 
@@ -654,9 +667,13 @@ def infracao_add(request, pessoa_pk):
         if arma_obj:
             arma = arma_obj
 
+        if operacao_obj:
+            operacao = operacao_obj
+
         Infracao.objects.create(
             pessoa=pessoa,
             natureza=natureza,
+            operacao=operacao,
             qualificacao=qualificacao,
             arma=arma,
             status=status,
@@ -669,15 +686,19 @@ def infracao_add(request, pessoa_pk):
 def infracao_update(request, pk):
     infracao = Infracao.objects.get(pk=pk)
     natureza_pk = ''
+    operacao_pk = ''
     arma_pk = ''
     if infracao.natureza:
         natureza_pk = infracao.natureza.pk
+    if infracao.operacao:
+        operacao_pk = infracao.operacao.pk
     if infracao.arma:
         arma_pk = infracao.arma.pk
 
     data = {
         'pk': infracao.pk,
         'natureza_pk': natureza_pk,
+        'operacao_pk': operacao_pk,
         'arma_pk': arma_pk,
         'qualificacao': infracao.qualificacao,
         'status': infracao.status,
@@ -689,6 +710,11 @@ def infracao_update(request, pk):
         if natureza_pk:
             natureza_obj = Natureza.objects.get(pk=natureza_pk)
 
+        operacao_pk = request.POST.get('operacao_pk')
+        operacao_obj = None
+        if operacao_pk:
+            operacao_obj = Operacao.objects.get(pk=operacao_pk)
+
         arma_pk = request.POST.get('arma_pk')
         arma_obj = None
         if arma_pk:
@@ -699,6 +725,9 @@ def infracao_update(request, pk):
 
         if natureza_obj:
             infracao.natureza = natureza_obj
+
+        if operacao_obj:
+            infracao.operacao = operacao_obj
 
         if arma_obj:
             infracao.arma = arma_obj

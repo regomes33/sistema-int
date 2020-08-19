@@ -64,7 +64,7 @@ class Operacao(UuidModel):
     def to_dict(self):
         return {
             'value': self.pk,
-            'text': self.operacao 
+            'text': self.operacao +" - "+ self.descricao 
         }
 
 

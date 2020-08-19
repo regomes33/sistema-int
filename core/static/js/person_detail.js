@@ -61,12 +61,14 @@ var app = new Vue({
       'ocorrencia': '',
     },
     naturezas: [],
+    operacoes: [],
     qualificacoes: [],
     armas: [],
     status: [],
     infracao: {
       'pk': '',
       'natureza_pk': '',
+      'operacao_pk': '',
       'qualificacao': '',
       'arma_pk': '',
       'status': '',
@@ -160,6 +162,11 @@ var app = new Vue({
         .then(response => {
           this.naturezas = response.data.data;
         })
+      // Pega todas as operacoes.  
+        axios.get(endpoint + 'api/operacoes/')
+        .then(response => {
+          this.operacoess = response.data.data;
+        })  
       // Pega todas as qualificacoes.
       axios.get(endpoint + 'api/qualificacoes/')
         .then(response => {
@@ -182,6 +189,11 @@ var app = new Vue({
         .then(response => {
           this.naturezas = response.data.data;
         })
+      // Pega todas as operacoes.  
+      axios.get(endpoint + 'api/operacoes/')
+      .then(response => {
+        this.operacoess = response.data.data;
+      })    
       // Pega todas as qualificacoes.
       axios.get(endpoint + 'api/qualificacoes/')
         .then(response => {
@@ -388,6 +400,7 @@ var app = new Vue({
     salvarAddInfracao(pessoa_pk) {
       let bodyFormData = new FormData();
       bodyFormData.append('natureza_pk', this.infracao.natureza_pk)
+      bodyFormData.append('operacao_pk', this.infracao.operacao_pk)
       bodyFormData.append('qualificacao', this.infracao.qualificacao)
       bodyFormData.append('arma_pk', this.infracao.arma_pk)
       bodyFormData.append('status', this.infracao.status)
@@ -400,6 +413,7 @@ var app = new Vue({
     salvarInfracao() {
       let bodyFormData = new FormData();
       bodyFormData.append('natureza_pk', this.infracao.natureza_pk)
+      bodyFormData.append('operacao_pk', this.infracao.operacao_pk)
       bodyFormData.append('qualificacao', this.infracao.qualificacao)
       bodyFormData.append('arma_pk', this.infracao.arma_pk)
       bodyFormData.append('status', this.infracao.status)

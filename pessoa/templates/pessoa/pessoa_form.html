@@ -224,6 +224,11 @@
                       </v-select>
                     </div>
                     <div class="form-group col-md-3">
+                      <label for="operacao">Operacão</label>
+                      <v-select :id="'operacao'+infracao.id" class="operacao" v-model="infracao.operacao" label="text" :reduce="operacao => operacao.value" :options="operacoes">
+                      </v-select>
+                    </div>
+                    <div class="form-group col-md-3">
                       <label for="qualificacao" class="required">Qualificação</label>
                       <select :id="'qualificacao'+infracao.id" class="form-control" v-model="infracao.qualificacao">
                         <option selected value="">---</option>
