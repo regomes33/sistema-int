@@ -12,7 +12,7 @@ class Ocorrencia(UuidModel, CreatedBy, TimeStampedModel):
     descricao = models.TextField('descrição', null=True, blank=True)
 
     class Meta:
-        ordering = ('rai',)
+        ordering = ('-data_do_fato',)
         verbose_name = 'ocorrência'
         verbose_name_plural = 'ocorrências'
 
