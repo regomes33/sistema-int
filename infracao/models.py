@@ -56,7 +56,7 @@ class Operacao(UuidModel):
         verbose_name_plural = 'operacoes'
 
     def __str__(self):
-        return self.operacao + self.descricao
+        return self.operacao +' - '+ self.descricao
 
     def get_absolute_url(self):
         return reverse_lazy('infracao:operacao_list')
@@ -64,7 +64,7 @@ class Operacao(UuidModel):
     def to_dict(self):
         return {
             'value': self.pk,
-            'text': self.operacao+self.descricao 
+            'text': self.operacao+ ' - ' +self.descricao 
         }
 
 

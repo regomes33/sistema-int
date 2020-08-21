@@ -43,7 +43,8 @@ class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):
         )
         context['operacoes'] = Operacao.objects.values(
             value=F('pk'),
-            text=F('operacao')
+            text=F('descricao')
+            
         )
 
         context['bairros'] = District.objects.values(
