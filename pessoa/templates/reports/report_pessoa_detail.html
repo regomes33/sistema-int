@@ -237,6 +237,7 @@
             <thead>
               <tr>
                 <th>Natureza</th>
+                <th>Operação</th>
                 <th>Qualificação</th>
                 <th>Arma</th>
                 <!-- <th>Status</th> -->
@@ -246,6 +247,7 @@
               {% for infracao in object.infracao_set.all %}
                 <tr>
                   <td>{{ infracao.natureza }}</td>
+                  <td>{{ infracao.operacao }}</td>
                   <td>{{ infracao.get_qualificacao_display }}</td>
                   <td>{{ infracao.arma|default:"---" }}</td>
                   <!-- <td>{{ infracao.get_status_display }}</td> -->
