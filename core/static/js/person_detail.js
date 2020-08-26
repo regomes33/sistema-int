@@ -165,9 +165,8 @@ var app = new Vue({
       // Pega todas as operacoes.  
       axios.get(endpoint + 'api/operacoes/')
         .then(response => {
-          console.log(response.data.data);
           this.operacoes = response.data.data;
-        })  
+        })
       // Pega todas as qualificacoes.
       axios.get(endpoint + 'api/qualificacoes/')
         .then(response => {
@@ -192,10 +191,9 @@ var app = new Vue({
         })
       // Pega todas as operacoes.  
       axios.get(endpoint + 'api/operacoes/')
-      .then(response => {
-        console.log(response.data.data)
-        this.operacoes = response.data.data;
-      })    
+        .then(response => {
+          this.operacoes = response.data.data;
+        })
       // Pega todas as qualificacoes.
       axios.get(endpoint + 'api/qualificacoes/')
         .then(response => {

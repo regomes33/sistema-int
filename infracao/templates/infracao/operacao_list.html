@@ -9,12 +9,12 @@
     <div class="card-body">
       <div class="row">
         {% if user.groups.all.0.name == 'backoffice' %}
-          <div class="col-md-auto pr-ari-5">
-            <a class="btn btn-primary" href="{% url 'infracao:operacao_create' %}">
-              <i class="fa fa-plus"></i>
-              Adicionar
-            </a>
-          </div>
+        <div class="col-md-auto pr-ari-5">
+          <a class="btn btn-primary" href="{% url 'infracao:operacao_create' %}">
+            <i class="fa fa-plus"></i>
+            Adicionar
+          </a>
+        </div>
         {% endif %}
         <div class="col">
           <form action="." method="GET">
@@ -37,7 +37,7 @@
               <tr>
                 <th>Operação</th>
                 {% if user.groups.all.0.name == 'backoffice' %}
-                  <th class="text-center">Ações</th>
+                <th class="text-center">Ações</th>
                 {% endif %}
               </tr>
             </thead>
@@ -46,9 +46,9 @@
               <tr>
                 <td>{{ object }}</td>
                 {% if user.groups.all.0.name == 'backoffice' %}
-                  <td class="text-center">
-                    <a href="{% url 'infracao:operacao_update' object.slug %}"><i class="fa fa-edit"></i></a>
-                  </td>
+                <td class="text-center">
+                  <a href="{% url 'infracao:operacao_update' object.slug %}"><i class="fa fa-edit"></i></a>
+                </td>
                 {% endif %}
               </tr>
               {% endfor %}

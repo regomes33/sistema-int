@@ -46,9 +46,9 @@ class SearchMixin(object):
                 Q(infracao__natureza__in=filter_natureza)
             )
         if filter_operacao:
-                queryset = queryset.filter(
+            queryset = queryset.filter(
                 Q(infracao__operacao__in=filter_operacao)
-            )    
+            )
         if filter_bairro:
             queryset = queryset.filter(Q(district__in=filter_bairro))
 

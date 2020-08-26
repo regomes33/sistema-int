@@ -44,7 +44,7 @@ class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):
         context['operacoes'] = Operacao.objects.values(
             value=F('pk'),
             text=F('descricao')
-            
+
         )
 
         context['bairros'] = District.objects.values(
@@ -66,7 +66,7 @@ class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):
         data = self.request.GET
         filter_status_atual = data.getlist('filter_status_atual')
         filter_natureza = data.getlist('filter_natureza')
-        filter_operacao=data.getlist('filter_operacao')
+        filter_operacao = data.getlist('filter_operacao')
         filter_bairro = data.getlist('filter_bairro')
         filter_cidade = data.getlist('filter_cidade')
         filter_faccao = data.getlist('filter_faccao')
@@ -77,7 +77,7 @@ class PessoasList(LRM, PessoaSomenteMixin, SearchMixin, ListView):
         if filter_natureza:
             context['selected_natureza'] = str(filter_natureza)
         if filter_operacao:
-            context['selected_operacao'] = str(filter_operacao)    
+            context['selected_operacao'] = str(filter_operacao)
         if filter_bairro:
             context['selected_bairro'] = str(filter_bairro)
         if filter_cidade:

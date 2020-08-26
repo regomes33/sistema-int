@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Infracao, Natureza,Operacao
+from .models import Infracao, Natureza, Operacao
 
 
 class InfracaoForm(forms.ModelForm):

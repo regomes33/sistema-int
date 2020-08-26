@@ -261,6 +261,8 @@ def naturezas(request):
     return JsonResponse(response)
 
 # @login_required
+
+
 def operacoes(request):
     items = Operacao.objects.all()
     data = [item.to_dict() for item in items]
@@ -268,6 +270,8 @@ def operacoes(request):
     return JsonResponse(response)
 
 # @login_required
+
+
 def qualificacoes(request):
     items = QUALIFICACAO
     data = [

@@ -248,10 +248,10 @@ var app = new Vue({
         'veiculo': '',
       })
     },
-    processFile: function (e) {
+    processFile: function(e) {
       this.photos.push(e.target.files[0])
     },
-    processFileTattoo: function (e) {
+    processFileTattoo: function(e) {
       this.tattoos_list.push(e.target.files[0])
     },
     salvar(e) {

@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import ListView, UpdateView
 
-from .forms import InfracaoForm, NaturezaForm,OperacaoForm
+from .forms import InfracaoForm, NaturezaForm, OperacaoForm
 from .models import Infracao, Natureza, Operacao
 
 
@@ -87,6 +87,7 @@ class NaturezaList(LRM, ListView):
         context['items_total'] = items_total
         return context
 
+
 class NaturezaUpdate(LRM, UpdateView):
     model = Natureza
     template_name = 'infracao/natureza_form.html'
@@ -97,6 +98,7 @@ class NaturezaUpdate(LRM, UpdateView):
         context['model_name_plural'] = 'Naturezas'
         context['url'] = reverse('infracao:natureza_list')
         return context
+
 
 @login_required
 def natureza_create(request):
@@ -126,7 +128,8 @@ class NaturezaUpdate(LRM, UpdateView):
         context['model_name_plural'] = 'Naturezas'
         context['url'] = reverse('infracao:natureza_list')
         return context
-    
+
+
 class OperacaoList(LRM, ListView):
     model = Operacao
     template_name = 'operacao.html'
@@ -144,7 +147,8 @@ class OperacaoList(LRM, ListView):
         context['model_name_plural'] = 'Operacoes'
         items_total = Operacao.objects.values_list('id', flat=True).count()
         context['items_total'] = items_total
-        return context    
+        return context
+
 
 @login_required
 def operacao_create(request):
@@ -162,6 +166,7 @@ def operacao_create(request):
         'url': reverse('infracao:operacao_list'),
     }
     return render(request, template_name, context)
+
 
 class OperacaoUpdate(LRM, UpdateView):
     model = Operacao
