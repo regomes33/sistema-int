@@ -31,6 +31,7 @@ var app = new Vue({
     faccoes: [],
     status_atuais: [],
     naturezas: [],
+    operacoes: [],
     qualificacoes: [],
     armas: [],
     status: [],
@@ -46,6 +47,7 @@ var app = new Vue({
     infracoes: [{
       'id': 1,
       'natureza': '',
+      'operacao': '',
       'qualificacao': '',
       'arma': '',
       'status': '',
@@ -78,17 +80,36 @@ var app = new Vue({
       'grau_parentesco': '',
       'observacao': '',
     }],
-    v: [
-      { 'v1': false },
-      { 'v2': false },
-      { 'v3': false },
-      { 'v4': false },
-      { 'v5': false },
-      { 'v6': false },
-      { 'v7': false },
-      { 'v8': false },
-      { 'v9': false },
-      { 'v10': false },
+    v: [{
+        'v1': false
+      },
+      {
+        'v2': false
+      },
+      {
+        'v3': false
+      },
+      {
+        'v4': false
+      },
+      {
+        'v5': false
+      },
+      {
+        'v6': false
+      },
+      {
+        'v7': false
+      },
+      {
+        'v8': false
+      },
+      {
+        'v9': false
+      },
+      {
+        'v10': false
+      },
     ]
   },
   created() {
@@ -96,7 +117,10 @@ var app = new Vue({
       .then(response => {
         this.naturezas = response.data.data;
       })
-
+    axios.get(endpoint + 'api/operacoes/')
+      .then(response => {
+        this.operacoes = response.data.data;
+      })
     axios.get(endpoint + 'api/districts/')
       .then(response => {
         this.districts = response.data.data;
@@ -186,6 +210,7 @@ var app = new Vue({
       this.infracoes.push({
         'id': this.infracao_id,
         'natureza': '',
+        'operacao': '',
         'qualificacao': '',
         'arma': '',
         'status': '',
@@ -223,10 +248,10 @@ var app = new Vue({
         'veiculo': '',
       })
     },
-    processFile: function(e) {
+    processFile: function (e) {
       this.photos.push(e.target.files[0])
     },
-    processFileTattoo: function(e) {
+    processFileTattoo: function (e) {
       this.tattoos_list.push(e.target.files[0])
     },
     salvar(e) {

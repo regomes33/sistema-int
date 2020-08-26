@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Arma, Infracao, Natureza
+from .models import Arma, Infracao, Natureza, Operacao
 
 
 @admin.register(Arma)
@@ -21,7 +21,15 @@ class NaturezaAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
 
+@admin.register(Operacao)
+class OperacaoAdmin(admin.ModelAdmin):
+    list_display = ('operacao', 'descricao')
+    search_fields = ('operacao',)
 
+    # if not settings.DEBUG:
+    def has_delete_permission(self, request, obj=None):
+        return False
+    
 @admin.register(Infracao)
 class InfracaoAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'qualificacao', 'arma', 'status')

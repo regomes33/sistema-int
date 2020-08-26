@@ -65,6 +65,19 @@
                         {% endfor %}
                       </select>
                     </fieldset>
+                    
+                    <fieldset class="form-group">
+                      <legend class="col-form-label pt-0">Operacão</legend>
+                      <select id="filterOperacao" multiple name="filter_operacao" class="form-control selectpicker">
+                        <option value="">---</option>
+                        {% for item in operacoes %}
+                        <!-- { if selected_natureza == item.value %} -->
+                        <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
+                        <!-- { endif %} -->
+                        <option value="{{ item.value }}">{{ item.text }}</option>
+                        {% endfor %}
+                      </select>
+                    </fieldset>
 
                     <fieldset class="form-group">
                       <legend class="col-form-label pt-0">Bairro</legend>

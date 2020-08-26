@@ -26,6 +26,7 @@ class SearchMixin(object):
         # getlist é usado para pegar os vários itens do request.
         filter_status_atual = data.getlist('filter_status_atual')
         filter_natureza = data.getlist('filter_natureza')
+        filter_operacao = data.getlist('filter_operacao')
         filter_bairro = data.getlist('filter_bairro')
         filter_cidade = data.getlist('filter_cidade')
         filter_faccao = data.getlist('filter_faccao')
@@ -44,6 +45,10 @@ class SearchMixin(object):
             queryset = queryset.filter(
                 Q(infracao__natureza__in=filter_natureza)
             )
+        if filter_operacao:
+                queryset = queryset.filter(
+                Q(infracao__operacao__in=filter_operacao)
+            )    
         if filter_bairro:
             queryset = queryset.filter(Q(district__in=filter_bairro))
 

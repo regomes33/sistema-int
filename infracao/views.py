@@ -6,8 +6,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import ListView, UpdateView
 
-from .forms import InfracaoForm, NaturezaForm
-from .models import Infracao, Natureza
+from .forms import InfracaoForm, NaturezaForm,OperacaoForm
+from .models import Infracao, Natureza, Operacao
 
 
 class InfracaoList(LRM, ListView):
@@ -23,7 +23,8 @@ class InfracaoList(LRM, ListView):
                 Q(pessoa__nome__icontains=search) |
                 Q(pessoa__sobrenome__icontains=search) |
                 Q(pessoa__apelido__icontains=search) |
-                Q(natureza__natureza__icontains=search)
+                Q(natureza__natureza__icontains=search) |
+                Q(operacao__operacao__icontains=search)
             )
         return queryset
 
@@ -86,6 +87,16 @@ class NaturezaList(LRM, ListView):
         context['items_total'] = items_total
         return context
 
+class NaturezaUpdate(LRM, UpdateView):
+    model = Natureza
+    template_name = 'infracao/natureza_form.html'
+    form_class = NaturezaForm
+
+    def get_context_data(self, **kwargs):
+        context = super(NaturezaUpdate, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Naturezas'
+        context['url'] = reverse('infracao:natureza_list')
+        return context
 
 @login_required
 def natureza_create(request):
@@ -114,4 +125,51 @@ class NaturezaUpdate(LRM, UpdateView):
         context = super(NaturezaUpdate, self).get_context_data(**kwargs)
         context['model_name_plural'] = 'Naturezas'
         context['url'] = reverse('infracao:natureza_list')
+        return context
+    
+class OperacaoList(LRM, ListView):
+    model = Operacao
+    template_name = 'operacao.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super(OperacaoList, self).get_queryset()
+        search = self.request.GET.get('search')
+        if search:
+            queryset = queryset.filter(operacao__icontains=search)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(OperacaoList, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Operacoes'
+        items_total = Operacao.objects.values_list('id', flat=True).count()
+        context['items_total'] = items_total
+        return context    
+
+@login_required
+def operacao_create(request):
+    form = OperacaoForm(request.POST or None)
+    template_name = 'infracao/operacao_form.html'
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('infracao:operacao_list'))
+
+    context = {
+        'form': form,
+        'model_name_plural': 'Operacoes',
+        'url': reverse('infracao:operacao_list'),
+    }
+    return render(request, template_name, context)
+
+class OperacaoUpdate(LRM, UpdateView):
+    model = Operacao
+    template_name = 'infracao/operacao_form.html'
+    form_class = OperacaoForm
+
+    def get_context_data(self, **kwargs):
+        context = super(OperacaoUpdate, self).get_context_data(**kwargs)
+        context['model_name_plural'] = 'Operações'
+        context['url'] = reverse('infracao:operacao_list')
         return context

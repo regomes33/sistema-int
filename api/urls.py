@@ -62,6 +62,7 @@ urlpatterns = [
     path('status_atuais/', v.status_atuais),
     path('status_atuais/<int:pk>/edit/', v.status_update),
     path('naturezas/', v.naturezas),
+    path('operacoes/', v.operacoes),
     path('qualificacoes/', v.qualificacoes),
     path('armas/', v.armas),
     path('status/', v.status),
