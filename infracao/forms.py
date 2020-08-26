@@ -7,7 +7,7 @@ class InfracaoForm(forms.ModelForm):
 
     class Meta:
         model = Infracao
-        fields = ('pessoa', 'natureza', 'qualificacao', 'arma')
+        fields = ('pessoa', 'natureza','operacao', 'qualificacao', 'arma')
 
 
 class NaturezaForm(forms.ModelForm):

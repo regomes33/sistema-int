@@ -163,9 +163,10 @@ var app = new Vue({
           this.naturezas = response.data.data;
         })
       // Pega todas as operacoes.  
-        axios.get(endpoint + 'api/operacoes/')
+      axios.get(endpoint + 'api/operacoes/')
         .then(response => {
-          this.operacoess = response.data.data;
+          console.log(response.data.data);
+          this.operacoes = response.data.data;
         })  
       // Pega todas as qualificacoes.
       axios.get(endpoint + 'api/qualificacoes/')
@@ -192,7 +193,8 @@ var app = new Vue({
       // Pega todas as operacoes.  
       axios.get(endpoint + 'api/operacoes/')
       .then(response => {
-        this.operacoess = response.data.data;
+        console.log(response.data.data)
+        this.operacoes = response.data.data;
       })    
       // Pega todas as qualificacoes.
       axios.get(endpoint + 'api/qualificacoes/')
