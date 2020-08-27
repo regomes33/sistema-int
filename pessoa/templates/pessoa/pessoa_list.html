@@ -194,7 +194,18 @@
                 {% if object.district %}
                   <td>
                     {{ object.district }} <br>
-                    <span class="text-muted">{{ object.district.city }}</span>
+                    <span class="text-muted">{{ object.district.city }} - {{ object.district.city.uf }}</span> <br>
+
+                    <!-- Cidade -->
+                    {% if object.city %}
+                      <span>{{ object.city }}</span>
+                    {% endif %}
+
+                    <!-- Estado -->
+                    {% if object.uf %}
+                      <span>- {{ object.uf }}</span>
+                    {% endif %}
+
                   </td>
                 {% else %}
                   <!-- Editar District -->
@@ -204,6 +215,17 @@
                       <br>
                       <select data-pk="{{ object.pk }}" name="district" class="form-control edit-district"></select>
                     {% endif %}
+
+                    <!-- Cidade -->
+                    {% if object.city %}
+                      <span>{{ object.city }}</span>
+                    {% endif %}
+
+                    <!-- Estado -->
+                    {% if object.uf %}
+                      <span>- {{ object.uf }}</span>
+                    {% endif %}
+
                   </td>
                 {% endif %}
 

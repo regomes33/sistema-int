@@ -1,3 +1,4 @@
+from localflavor.br.br_states import STATE_CHOICES
 from django.db import models
 from django.urls import reverse_lazy
 
@@ -52,6 +53,14 @@ class Pessoa(UuidModel, TimeStampedModel, CreatedBy, Address, Document):
         null=True,
         blank=True,
         help_text='Data no formato dd/mm/YYYY'
+    )
+    city = models.CharField('cidade', max_length=100, null=True, blank=True)
+    uf = models.CharField(
+        'UF',
+        max_length=2,
+        choices=STATE_CHOICES,
+        null=True,
+        blank=True
     )
 
     class Meta:

@@ -191,6 +191,15 @@
                     </v-select>
                   </div>
                   <div class="form-group">
+                    <label for="id_city">Cidade</label>
+                    <input id="id_city" name="city" v-model="pessoa.city" class="form-control" type="text" />
+                  </div>
+                  <div class="form-group">
+                    <label for="id_state">Estado</label>
+                    <v-select id="id_state" v-model="pessoa.uf" label="text" :reduce="state => state.value" :options="states">
+                    </v-select>
+                  </div>
+                  <div class="form-group">
                     <label for="id_cep" class="control-label">CEP (sem pontuação)</label>
                     <input id="id_cep" name="cep" v-model="pessoa.cep" class="form-control" type="text" />
                   </div>

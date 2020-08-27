@@ -35,6 +35,8 @@ class TestPessoa(TestCase):
             'complement',
             'district',
             'cep',
+            'city',
+            'uf',
             'country',
             'cpf',
             'rg',

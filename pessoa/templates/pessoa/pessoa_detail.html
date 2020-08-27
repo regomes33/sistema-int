@@ -85,6 +85,10 @@
             {{ object.get_address_complement }}
           </li>
           {% endif %}
+          <!-- Cidade -->
+          {% if object.city %}
+            <span>{{ object.city }} {% if object.uf %} <span>- {{ object.uf }}</span> {% endif %}</span>
+          {% endif %}
           {% if object.cep %}
           <li class="list-group-item no-border">
             CEP: {{ object.cep }}
