@@ -24,10 +24,10 @@ class SearchHomicidioMixin(object):
         filter_data_final = data.get('filter_data_final')
 
         if filter_data_inicial:
-            filter_data_inicial = parse(filter_data_inicial)
+            filter_data_inicial = parse(filter_data_inicial, dayfirst=True)
 
         if filter_data_final:
-            filter_data_final = parse(filter_data_final)
+            filter_data_final = parse(filter_data_final, dayfirst=True)
 
         if search:
             queryset = queryset.filter(

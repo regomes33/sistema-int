@@ -1,6 +1,6 @@
-from localflavor.br.br_states import STATE_CHOICES
 from django.db import models
 from django.urls import reverse_lazy
+from localflavor.br.br_states import STATE_CHOICES
 
 from core.models import (
     Address,
