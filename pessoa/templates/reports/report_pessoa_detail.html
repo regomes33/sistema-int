@@ -10,6 +10,9 @@
     #tatuagem {
       page-break-before: always;
     }
+    .comparsa-page-break {
+      page-break-inside: avoid;
+    }
 </style>
 
 <div class="col-lg-6">
@@ -134,16 +137,14 @@
   </div>
 </div>
 
-<div class="col-lg-3">
   <div class="card">
     <div class="card-header">
       COMPARSAS
     </div>
-    <div>
-      <!-- card-body -->
-      <ul class="list-group list-group-flush">
+    </div>
+
         {% for comparsa in object.pessoacomparsa_set.all %}
-        <li class="list-group-item">
+        <li class="list-group-item comparsa-page-break">
           <ul class="list-group list-group-flush">
             <li class="list-group-item no-border li-line pl-0 pr-0">
               <span class="lead">{{ comparsa }}</span>
@@ -165,10 +166,6 @@
           </ul>
         </li>
         {% endfor %}
-      </ul>
-    </div>
-  </div>
-</div>
 
 <div id="tatuagem" class="col-lg-12">
   <div class="card">

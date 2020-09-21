@@ -29,7 +29,7 @@ describe('Input form', () => {
     cy.get('input[name="pai"]').type('Benedito Santos')
     cy.get('#faccao').select('1')
     cy.get('input[name="nascimento"]').type('2020-06-12')
-    cy.get("#id_observacao").type('Lorem ipsum dollor amet.')
+    cy.get("#id_observacao").type('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.')
     cy.wait(500)
 
     cy.get('#heading2').click()
@@ -45,7 +45,7 @@ describe('Input form', () => {
     cy.get('#id_address').type('Rua da Glória')
     cy.get('#id_address_number').type(rand_number)
     cy.get('#id_complement').type('4º andar')
-    cy.get('#id_district').select('1')
+    cy.get('#id_district').click().type('{downarrow}{enter}')
     cy.get('#id_cep').type(rand_cep)
     cy.wait(500)
 
@@ -60,16 +60,16 @@ describe('Input form', () => {
     cy.get('#arma2').select('2')
     cy.get('#status2').select('morto')
     cy.get('#btnInfracao').click()
-    cy.get('#natureza3').select('3')
+    cy.get('#natureza3').click().type('{downarrow}{downarrow}{enter}')
     cy.get('#qualificacao3').select('coaut')
     cy.get('#arma3').select('3')
     cy.get('#status3').select('solto')
     cy.wait(500)
 
     cy.get('#heading7').click()
-    cy.get('#ocorrencia1').select('1')
+    cy.get('#ocorrencia1').click().type('{downarrow}{enter}')
     cy.get('#btnOcorrencia').click()
-    cy.get('#ocorrencia2').select('2')
+    cy.get('#ocorrencia2').click().type('{downarrow}{downarrow}{enter}')
     cy.wait(500)
 
     cy.get('#heading8').click()
@@ -83,21 +83,26 @@ describe('Input form', () => {
     cy.wait(500)
 
     cy.get('#heading9').click()
-    cy.get('#comparsa_nome1').select('1')
+    cy.get('#comparsa_nome1').click().type('{downarrow}{enter}')
     rand_cpf = Math.floor(Math.random() * 999999999999)
     cy.get('#comparsa_grau_parentesco1').type('Irmão')
     cy.get('#comparsa_observacao1').type('Cúmplice')
-    cy.get('#btnComparsa').click()
-    cy.get('#comparsa_nome2').select('2')
-    rand_cpf = Math.floor(Math.random() * 999999999999)
-    cy.get('#comparsa_grau_parentesco2').type('Primo')
-    cy.get('#comparsa_observacao2').type('Disse que é inocente.')
+
+    for (var i = 2; i < 10; i++) {
+      cy.get('#btnComparsa').click()
+      cy.get('#comparsa_nome'+i).click().type('{downarrow}{downarrow}')
+      cy.wait(100)
+      cy.get('#comparsa_nome'+i).click().type('{enter}')
+      rand_cpf = Math.floor(Math.random() * 999999999999)
+      cy.get('#comparsa_grau_parentesco'+i).type('Primo')
+      cy.get('#comparsa_observacao'+i).type('Disse que é inocente.')
+    }
 
     cy.get('#heading10').click()
-    cy.get('#veiculo1').select('1')
+    cy.get('#veiculo1').click().type('{downarrow}{enter}')
     cy.get('#btnVeiculo').click()
-    cy.get('#veiculo2').select('2')
+    cy.get('#veiculo2').click().type('{downarrow}{enter}')
 
-    cy.get('button[type="submit"]').click()
+    // cy.get('button[type="submit"]').click()
   })
 })
