@@ -167,6 +167,8 @@
                     <span id="status_{{ object.pk }}" class="badge badge-primary">Preso</span>
                   {% elif object.status_atual == 'solto' %}
                     <span id="status_{{ object.pk }}" class="badge badge-warning">Livre</span>
+                  {% elif object.status_atual == 'torno' %}
+                    <span id="status_{{ object.pk }}" class="badge badge-info">Tornozelado</span>
                   {% endif %}
 
                   {% if user.groups.all.0.name == 'backoffice' %}

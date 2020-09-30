@@ -9,7 +9,8 @@ STATUS = (
     ('foragido', 'Foragido'),
     ('morto', 'Morto'),
     ('preso', 'Preso'),
-    ('solto', 'Livre')
+    ('solto', 'Livre'),
+    ('torno', 'Tornozelado'),
 )
 
 TIPO = (
