@@ -14,7 +14,9 @@ class OcorrenciaAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'slug', 'data_do_fato')
     search_fields = ('rai', 'descricao')
     date_hierarchy = 'created'
+    ordering = ('rai',)
 
-    # if not settings.DEBUG:
     def has_delete_permission(self, request, obj=None):
+        if request.user.username == 'admin':
+            return True
         return False
