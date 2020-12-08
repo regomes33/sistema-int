@@ -19,9 +19,9 @@ class SearchHomicidioMixin(object):
         filter_genero = data.getlist('filter_genero')
         filter_bairro = data.getlist('filter_bairro')
         filter_cidade = data.getlist('filter_cidade')
-
         filter_data_inicial = data.get('filter_data_inicial')
         filter_data_final = data.get('filter_data_final')
+        filter_autoria = data.getlist('filter_autoria')
 
         if filter_data_inicial:
             filter_data_inicial = parse(filter_data_inicial, dayfirst=True)
@@ -36,7 +36,8 @@ class SearchHomicidioMixin(object):
                 Q(motivacao__titulo__icontains=search) |
                 Q(vitima__nome__icontains=search) |
                 Q(vitima__sobrenome__icontains=search) |
-                Q(vitima__apelido__icontains=search)
+                Q(vitima__apelido__icontains=search) |
+                Q(autoria__incontains=search)
             )
 
         if filter_forma:
@@ -63,4 +64,7 @@ class SearchHomicidioMixin(object):
                     filter_data_inicial, filter_data_final)
             )
 
+        if filter_autoria:
+            queryset=queryset.filter(Q(autoria__in=filter_autoria))
+            
         return queryset

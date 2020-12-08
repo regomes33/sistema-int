@@ -14,7 +14,7 @@ from pessoa.forms import PessoaMinimalForm
 from utils.data import FORMA
 
 from .forms import HomicidioForm
-from .models import AreaUpm, Genero, Homicidio, Motivacao
+from .models import AreaUpm, Genero, Homicidio, Motivacao, Autoria
 
 
 class HomicidioList(LRM, SearchHomicidioMixin, ListView):
@@ -59,6 +59,11 @@ class HomicidioList(LRM, SearchHomicidioMixin, ListView):
             text=F('name')
         )
 
+        context['autorias'] = Autoria.objects.values(
+            value=F('pk'),
+            text=F('autoria')
+        )
+
         # Devolve o valor selecionado pra manter o filtro aplicado no template.
         data = self.request.GET
         filter_forma = data.getlist('filter_forma')
@@ -67,10 +72,9 @@ class HomicidioList(LRM, SearchHomicidioMixin, ListView):
         filter_genero = data.getlist('filter_genero')
         filter_bairro = data.getlist('filter_bairro')
         filter_cidade = data.getlist('filter_cidade')
-
         filter_data_inicial = data.get('filter_data_inicial')
         filter_data_final = data.get('filter_data_final')
-
+        filter_autoria = data.get('filter_autoria')
         # Devolve o valor para o template.
         if filter_forma:
             context['selected_forma'] = str(filter_forma)
@@ -95,6 +99,9 @@ class HomicidioList(LRM, SearchHomicidioMixin, ListView):
 
         if filter_data_final:
             context['selected_data_final'] = str(filter_data_final)
+
+        if filter_autoria:
+            context['selected_autoria'] = str(filter_autoria)
 
         return context
 
