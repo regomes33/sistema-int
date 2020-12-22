@@ -51,7 +51,7 @@ class GeneroAdmin(admin.ModelAdmin):
 class HomicidioAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'slug', 'data_do_homicidio',
                     'forma', 'area_upm', 'vitima', 'motivacao')
-    search_fields = ('vitima__nome',)
+    search_fields = ('vitima__nome', 'rai__rai')
     readonly_fields = ('slug',)
     list_filter = ('forma', 'area_upm', 'motivacao', 'data_do_homicidio')
     date_hierarchy = 'created'
