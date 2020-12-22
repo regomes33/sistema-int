@@ -65,6 +65,6 @@ class SearchHomicidioMixin(object):
             )
 
         if filter_autoria:
-            queryset=queryset.filter(Q(autoria__in=filter_autoria))
-            
+            queryset = queryset.filter(Q(autoria__in=filter_autoria))
+
         return queryset

@@ -53,8 +53,7 @@ class HomicidioAdmin(admin.ModelAdmin):
                     'forma', 'area_upm', 'vitima', 'motivacao')
     search_fields = ('vitima__nome',)
     readonly_fields = ('slug',)
-    list_filter = ('forma', 'district', 'area_upm',
-                   'motivacao', 'data_do_homicidio')
+    list_filter = ('forma', 'area_upm', 'motivacao', 'data_do_homicidio')
     date_hierarchy = 'created'
 
     def has_delete_permission(self, request, obj=None):
