@@ -37,7 +37,7 @@ class SearchHomicidioMixin(object):
                 Q(vitima__nome__icontains=search) |
                 Q(vitima__sobrenome__icontains=search) |
                 Q(vitima__apelido__icontains=search) |
-                Q(autoria__incontains=search)
+                Q(autoria__autoria__icontains=search)
             )
 
         if filter_forma:
