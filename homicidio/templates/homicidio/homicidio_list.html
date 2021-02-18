@@ -134,6 +134,18 @@
                         {% endfor %}
                       </select>
                     </fieldset>
+                    <fieldset class="form-group">
+                      <legend class="col-form-label pt-0">Ano</legend>
+                      <select id="filterAno" multiple name="filter_ano" class="form-control selectpicker">
+                        <option value="">---</option>
+                        {% for item in anos %}
+                        <!-- { if selected_cidade == item.value %} -->
+                        <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
+                        <!-- { endif %} -->
+                        <option value="{{ item.value }}">{{ item.text }}</option>
+                        {% endfor %}
+                      </select>
+                    </fieldset>
                     
                     <div class="row">
                       <div class="col-12">

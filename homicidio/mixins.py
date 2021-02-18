@@ -22,6 +22,7 @@ class SearchHomicidioMixin(object):
         filter_data_inicial = data.get('filter_data_inicial')
         filter_data_final = data.get('filter_data_final')
         filter_autoria = data.getlist('filter_autoria')
+        filter_ano = data.getlist('filter_ano')
 
         if filter_data_inicial:
             filter_data_inicial = parse(filter_data_inicial, dayfirst=True)
@@ -57,6 +58,9 @@ class SearchHomicidioMixin(object):
 
         if filter_cidade:
             queryset = queryset.filter(Q(district__city__in=filter_cidade))
+
+        if filter_ano:
+            queryset = queryset.filter(Q(data_do_homicidio__year__in=filter_ano))
 
         if filter_data_inicial and filter_data_final:
             queryset = queryset.filter(

@@ -17,6 +17,19 @@ from .forms import HomicidioForm
 from .models import AreaUpm, Genero, Homicidio, Motivacao, Autoria
 
 
+def get_all_homicidio_years():
+    '''
+    Retorna todos os anos de Homicidios.
+    Pra filtrar por ano.
+    '''
+    last_year = Homicidio.objects.first().data_do_homicidio.year
+    first_year = Homicidio.objects.last().data_do_homicidio.year
+    years = []
+    for i in range(first_year, last_year + 1):
+        years.append({'value': i, 'text': i})
+    return years
+
+
 class HomicidioList(LRM, SearchHomicidioMixin, ListView):
     model = Homicidio
     template_name = 'homicidios.html'
@@ -64,6 +77,8 @@ class HomicidioList(LRM, SearchHomicidioMixin, ListView):
             text=F('autoria')
         )
 
+        context['anos'] = get_all_homicidio_years()
+
         # Devolve o valor selecionado pra manter o filtro aplicado no template.
         data = self.request.GET
         filter_forma = data.getlist('filter_forma')
@@ -75,6 +90,7 @@ class HomicidioList(LRM, SearchHomicidioMixin, ListView):
         filter_data_inicial = data.get('filter_data_inicial')
         filter_data_final = data.get('filter_data_final')
         filter_autoria = data.get('filter_autoria')
+        filter_ano = data.getlist('filter_ano')
         # Devolve o valor para o template.
         if filter_forma:
             context['selected_forma'] = str(filter_forma)
@@ -102,6 +118,9 @@ class HomicidioList(LRM, SearchHomicidioMixin, ListView):
 
         if filter_autoria:
             context['selected_autoria'] = str(filter_autoria)
+
+        if filter_ano:
+            context['selected_ano'] = str(filter_ano)
 
         return context
 

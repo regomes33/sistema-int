@@ -3,7 +3,11 @@
     <a href="{% url 'core:index' %}">Dashboard</a>
   </li>
   <li class="breadcrumb-item">
-    <a href="{{ url }}">{{ model_name_plural }}</a>
+    {% if model_name_plural == 'Homicidios' and object %}
+      <a href="{{ url }}?filter_ano=2021">{{ model_name_plural }}</a>
+    {% else %}
+      <a href="{{ url }}">{{ model_name_plural }}</a>
+    {% endif %}
   </li>
 
   {% if object %}
