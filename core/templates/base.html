@@ -467,6 +467,16 @@
   <script src="{% static '/js/vue.js' %}"></script>
   <!-- Axios -->
   <script src="{% static '/js/axios.min.js' %}"></script>
+
+  <script>
+  $(document).ready(function(){
+    $('#linkHomicidio').attr('href', function(i, str) {
+      current_year = new Date().getFullYear()
+      return str + '?filter_ano=' + current_year
+    })
+  })
+</script>
+
   {% block js %}{% endblock js %}
   {% block vuejs %}{% endblock vuejs %}
 </body>

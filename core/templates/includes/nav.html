@@ -36,7 +36,8 @@
       </li>
       <li class="nav-title">Homicídios</li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'homicidio:homicidio_list' %}?filter_ano=2021">
+        <!-- Tem um filtro aplicado via JS em base.html -->
+        <a id="linkHomicidio" class="nav-link" href="{% url 'homicidio:homicidio_list' %}">
           <i class="nav-icon icon-user-unfollow"></i> Homicídios</a>
       </li>
       <li class="nav-title">Veículos</li>
@@ -52,3 +53,4 @@
   </nav>
   <button class="sidebar-minimizer brand-minimizer" type="button"></button>
 </div>
+
