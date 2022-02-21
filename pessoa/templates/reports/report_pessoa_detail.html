@@ -6,259 +6,259 @@
 
 {% block content %}
 
-<style>
+  <style>
     #tatuagem {
       page-break-before: always;
     }
     .comparsa-page-break {
       page-break-inside: avoid;
     }
-</style>
+  </style>
 
-<div class="col-lg-6">
-  <div class="card">
-    <div class="card-header">
-      {{ object }}
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-6">
-          {% if object.get_first_photo %}
-          <img src="{{ object.get_first_photo.foto.url }}" width="200px">
-          {% endif %}
-        </div>
-        <div class="col-6">
-          <h4>{{ object }}</h4>
-          {% if object.apelido %}
-          <h4 class="text-muted">Apelido: {{ object.apelido }}</h4>
-          {% endif %}
-          <h4>Facção: {{ object.faccao|default:"---" }}</h4>
-
-          <h4><small>Status Atual:</small>
-            {% if object.status_atual == 'foragido' %}
-              <span class="badge badge-danger">Foragido</span>
-            {% elif object.status_atual == 'morto' %}
-              <span class="badge badge-secondary">Morto</span>
-            {% elif object.status_atual == 'preso' %}
-              <span class="badge badge-primary">Preso</span>
-            {% elif object.status_atual == 'solto' %}
-              <span class="badge badge-warning">Livre</span>
-            {% elif object.status_atual == 'torno' %}
-              <span class="badge badge-info">Tornozelado</span>
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">
+        {{ object }}
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-6">
+            {% if object.get_first_photo %}
+              <img src="{{ object.get_first_photo.foto.url }}" width="200px">
             {% endif %}
-          </h4>
+          </div>
+          <div class="col-6">
+            <h4>{{ object }}</h4>
+            {% if object.apelido %}
+              <h4 class="text-muted">Apelido: {{ object.apelido }}</h4>
+            {% endif %}
+            <h4>Facção: {{ object.faccao|default:"---" }}</h4>
+
+            <h4><small>Status Atual:</small>
+              {% if object.status_atual == 'foragido' %}
+                <span class="badge badge-danger">Foragido</span>
+              {% elif object.status_atual == 'morto' %}
+                <span class="badge badge-secondary">Morto</span>
+              {% elif object.status_atual == 'preso' %}
+                <span class="badge badge-primary">Preso</span>
+              {% elif object.status_atual == 'solto' %}
+                <span class="badge badge-warning">Livre</span>
+              {% elif object.status_atual == 'torno' %}
+                <span class="badge badge-info">Tornozelado</span>
+              {% endif %}
+            </h4>
+          </div>
         </div>
       </div>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">
-        <h4>Filiação</h4>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item no-border">Mãe: {{ object.mae }}</li>
-          <li class="list-group-item no-border">Pai: {{ object.pai }}</li>
-          <li class="list-group-item no-border">Nascimento: {{ object.nascimento|date:"d/m/Y"|default:"---" }}</li>
-        </ul>
-      </li>
-      <li class="list-group-item">
-        <h4>Documentos</h4>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item no-border">RG: {{ object.rg|default:"---" }}</li>
-          <li class="list-group-item no-border">CPF: {{ object.cpf|cpf_mask|default:"---" }}</li>
-          <li class="list-group-item no-border">CNH: {{ object.cnh|default:"---" }}</li>
-        </ul>
-      </li>
-      <li class="list-group-item">
-        <h4>Endereço</h4>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item no-border">{{ object.get_address|default:"---" }}</li>
-          {% if object.get_address_complement %}
-          <li class="list-group-item no-border">
-            {{ object.get_address_complement }}
-          </li>
-          {% endif %}
-          {% if object.cep %}
-          <li class="list-group-item no-border">
-            CEP: {{ object.cep }}
-          </li>
-          {% endif %}
-        </ul>
-      </li>
-      <li class="list-group-item">
-        <h4>Observações</h4>
-        <p class="text-justify">{{ object.observacao }}</p>
-      </li>
-    </ul>
-  </div>
-</div>
-
-<div class="col-lg-3">
-  <div class="card">
-    <div class="card-header">
-      CONTATOS
-    </div>
-    <div class="card-body">
       <ul class="list-group list-group-flush">
-        {% for contato in object.pessoacontato_set.all %}
-        <li class="list-group-item no-border">
-          {% if contato.tipo == 'cel' %}
-          <span class="badge badge-warning">{{ contato.tipo }}</span> {{ contato.telefone }}
-          {% else %}
-          <span class="badge badge-info">{{ contato.tipo }}</span> {{ contato.telefone }}
-          {% endif %}
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header">
-      VEÍCULOS
-    </div>
-    <div class="card-body">
-      <ul class="list-group list-group-flush">
-        {% for veiculo in object.pessoas_veiculos.all %}
         <li class="list-group-item">
+          <h4>Filiação</h4>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item no-border li-line pl-0 pr-0">
-              <span class="text-muted">Placa:</span> <span class="lead">{{ veiculo.veiculo.placa }}</span>
-            </li>
-            <li class="list-group-item no-border li-line pl-0 pr-0">
-              <span class="text-muted">{{ veiculo.veiculo.modelo }} {{ veiculo.veiculo.cor }}</span>
-            </li>
-            {% if veiculo.veiculo.observacao %}
-            <li class="list-group-item no-border li-line pl-0 pr-0">
-              <span class="text-muted">Observações:</span>
-              <p class="text-justify">{{ veiculo.veiculo.observacao }}</p>
-            </li>
+            <li class="list-group-item no-border">Mãe: {{ object.mae }}</li>
+            <li class="list-group-item no-border">Pai: {{ object.pai }}</li>
+            <li class="list-group-item no-border">Nascimento: {{ object.nascimento|date:"d/m/Y"|default:"---" }}</li>
+          </ul>
+        </li>
+        <li class="list-group-item">
+          <h4>Documentos</h4>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item no-border">RG: {{ object.rg|default:"---" }}</li>
+            <li class="list-group-item no-border">CPF: {{ object.cpf|cpf_mask|default:"---" }}</li>
+            <li class="list-group-item no-border">CNH: {{ object.cnh|default:"---" }}</li>
+          </ul>
+        </li>
+        <li class="list-group-item">
+          <h4>Endereço</h4>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item no-border">{{ object.get_address|default:"---" }}</li>
+            {% if object.get_address_complement %}
+              <li class="list-group-item no-border">
+                {{ object.get_address_complement }}
+              </li>
+            {% endif %}
+            {% if object.cep %}
+              <li class="list-group-item no-border">
+                CEP: {{ object.cep }}
+              </li>
             {% endif %}
           </ul>
         </li>
-        {% endfor %}
+        <li class="list-group-item">
+          <h4>Observações</h4>
+          <p class="text-justify">{{ object.observacao }}</p>
+        </li>
       </ul>
     </div>
   </div>
-</div>
+
+  <div class="col-lg-3">
+    <div class="card">
+      <div class="card-header">
+        CONTATOS
+      </div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          {% for contato in object.pessoacontato_set.all %}
+            <li class="list-group-item no-border">
+              {% if contato.tipo == 'cel' %}
+                <span class="badge badge-warning">{{ contato.tipo }}</span> {{ contato.telefone }}
+              {% else %}
+                <span class="badge badge-info">{{ contato.tipo }}</span> {{ contato.telefone }}
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        VEÍCULOS
+      </div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          {% for veiculo in object.pessoas_veiculos.all %}
+            <li class="list-group-item">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item no-border li-line pl-0 pr-0">
+                  <span class="text-muted">Placa:</span> <span class="lead">{{ veiculo.veiculo.placa }}</span>
+                </li>
+                <li class="list-group-item no-border li-line pl-0 pr-0">
+                  <span class="text-muted">{{ veiculo.veiculo.modelo }} {{ veiculo.veiculo.cor }}</span>
+                </li>
+                {% if veiculo.veiculo.observacao %}
+                  <li class="list-group-item no-border li-line pl-0 pr-0">
+                    <span class="text-muted">Observações:</span>
+                    <p class="text-justify">{{ veiculo.veiculo.observacao }}</p>
+                  </li>
+                {% endif %}
+              </ul>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
 
   <div class="card">
     <div class="card-header">
       COMPARSAS
     </div>
-    </div>
+  </div>
 
-        {% for comparsa in object.pessoacomparsa_set.all %}
-        <li class="list-group-item comparsa-page-break">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item no-border li-line pl-0 pr-0">
-              <span class="lead">{{ comparsa }}</span>
-            </li>
-            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">RG:</span> {{ comparsa.rg }}</li>
-            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">CPF:</span> {{ comparsa.cpf|cpf_mask }}</li>
-            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">CNH:</span> {{ comparsa.cnh }}</li>
-            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">Parente:</span>
-              {% if comparsa.parente %} <span class="badge badge-success">Sim</span>
-              {% else %}
-              <span class="badge badge-danger">Não</span>
-              {% endif %}
-            </li>
-            <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">Grau de Parentesco:</span> {{ comparsa.grau_parentesco }}</li>
-            <li class="list-group-item li-line pl-0 pr-0">
-              <span class="text-muted">Observações:</span>
-              <p class="text-justify">{{ comparsa.observacao }}</p>
-            </li>
-          </ul>
+  {% for comparsa in object.pessoacomparsa_set.all %}
+    <li class="list-group-item comparsa-page-break">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item no-border li-line pl-0 pr-0">
+          <span class="lead">{{ comparsa }}</span>
         </li>
-        {% endfor %}
+        <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">RG:</span> {{ comparsa.rg }}</li>
+        <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">CPF:</span> {{ comparsa.cpf|cpf_mask }}</li>
+        <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">CNH:</span> {{ comparsa.cnh }}</li>
+        <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">Parente:</span>
+          {% if comparsa.parente %} <span class="badge badge-success">Sim</span>
+          {% else %}
+            <span class="badge badge-danger">Não</span>
+          {% endif %}
+        </li>
+        <li class="list-group-item no-border li-line pl-0 pr-0"><span class="text-muted">Grau de Parentesco:</span> {{ comparsa.grau_parentesco }}</li>
+        <li class="list-group-item li-line pl-0 pr-0">
+          <span class="text-muted">Observações:</span>
+          <p class="text-justify">{{ comparsa.observacao }}</p>
+        </li>
+      </ul>
+    </li>
+  {% endfor %}
 
-<div id="tatuagem" class="col-lg-12">
-  <div class="card">
-    <div class="card-header">
-      Tatuagens
-    </div>
-    <div class="card-body">
-      <div class="row">
-        {% for tatuagem in object.tatuagem_set.all %}
-          <div class="col">
-            {% if tatuagem.foto %}
-              <div class="card">
-                <div class="card-body">
-                  <img src="{{ tatuagem.foto.url }}" class="card-img-top" style="min-width: 200px; max-width: 250px;" alt="{{ tatuagem.foto.name }}">
+  <div id="tatuagem" class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        Tatuagens
+      </div>
+      <div class="card-body">
+        <div class="row">
+          {% for tatuagem in object.tatuagem_set.all %}
+            <div class="col">
+              {% if tatuagem.foto %}
+                <div class="card">
+                  <div class="card-body">
+                    <img src="{{ tatuagem.foto.url }}" class="card-img-top" style="min-width: 200px; max-width: 250px;" alt="{{ tatuagem.foto.name }}">
+                  </div>
                 </div>
-              </div>
-            {% endif %}
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        Ocorrências
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <table class="table table-responsive-sm table-striped">
+              <thead>
+                <tr>
+                  <th>RAI</th>
+                  <th style="width: 8vw;">Data do fato</th>
+                  <th>Descrição</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for ocorrencia in ocorrencias %}
+                  <tr>
+                    <td>{{ ocorrencia.ocorrencia.rai }}</td>
+                    <td>{{ ocorrencia.ocorrencia.data_do_fato|date:"d/m/Y" }}</td>
+                    <td>{{ ocorrencia.ocorrencia.descricao }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="col-lg-12">
-  <div class="card">
-    <div class="card-header">
-      Ocorrências
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-12">
-          <table class="table table-responsive-sm table-striped">
-            <thead>
-              <tr>
-                <th>RAI</th>
-                <th style="width: 8vw;">Data do fato</th>
-                <th>Descrição</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for ocorrencia in ocorrencias %}
-                <tr>
-                  <td>{{ ocorrencia.ocorrencia.rai }}</td>
-                  <td>{{ ocorrencia.ocorrencia.data_do_fato|date:"d/m/Y" }}</td>
-                  <td>{{ ocorrencia.ocorrencia.descricao }}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="col-lg-12">
-  <div class="card">
-    <div class="card-header">
-      Infrações
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-12">
-          <table class="table table-responsive-sm table-striped">
-            <thead>
-              <tr>
-                <th>Natureza</th>
-                <th>Operação</th>
-                <th>Qualificação</th>
-                <th>Arma</th>
-                <!-- <th>Status</th> -->
-              </tr>
-            </thead>
-            <tbody>
-              {% for infracao in object.infracao_set.all %}
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        Infrações
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <table class="table table-responsive-sm table-striped">
+              <thead>
                 <tr>
-                  <td>{{ infracao.natureza }}</td>
-                  <td>{{ infracao.operacao }}</td>
-                  <td>{{ infracao.get_qualificacao_display }}</td>
-                  <td>{{ infracao.arma|default:"---" }}</td>
-                  <!-- <td>{{ infracao.get_status_display }}</td> -->
+                  <th>Natureza</th>
+                  <th>Operação</th>
+                  <th>Qualificação</th>
+                  <th>Arma</th>
+                  <!-- <th>Status</th> -->
                 </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {% for infracao in object.infracao_set.all %}
+                  <tr>
+                    <td>{{ infracao.natureza }}</td>
+                    <td>{{ infracao.operacao }}</td>
+                    <td>{{ infracao.get_qualificacao_display }}</td>
+                    <td>{{ infracao.arma|default:"---" }}</td>
+                    <!-- <td>{{ infracao.get_status_display }}</td> -->
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 {% endblock content %}
 

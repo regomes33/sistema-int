@@ -1,364 +1,364 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="col-lg-12">
-  <div class="card">
-    <div class="card-header">
-      Pessoas
-      <span class="pull-right">{{ object_list.count }} de {{ page_obj.paginator.count }} resultados ({{ items_total }} total)</span>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        {% if user.groups.all.0.name == 'backoffice' %}
-        <div class="col-md-auto pr-ari-5">
-          <a id="btnAdicionar" class="btn btn-primary" href="{% url 'pessoa:pessoa_create' %}">
-            <i class="fa fa-plus"></i>
-            Adicionar
-          </a>
-        </div>
-        {% endif %}
-        <div class="col">
-          <form action="." method="GET">
-            <div class="row">
-              <div class="col p-ari-5">
-                <input name="search" class="form-control mb-2" type="text" placeholder="Busca..." />
-              </div>
-              <div class="col-auto p-ari-5">
-                <button class="btn btn-success mb-2" type="submit">OK</button>
-                <button class="btn btn-link mb-2">Limpar</button>
-                <button class="btn btn-warning mb-2 mr-10" onclick="printDiv('printme')">PDF</button>
-              </div>
-            </div>
-          </form>
-        </div>
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        Pessoas
+        <span class="pull-right">{{ object_list.count }} de {{ page_obj.paginator.count }} resultados ({{ items_total }} total)</span>
       </div>
-      <div class="row">
-        <div class="col-12 col-md-3">
-          <div class="card">
-            <div class="card-header">Selecione um filtro</div>
-            <div class="card-body">
+      <div class="card-body">
+        <div class="row">
+          {% if user.groups.all.0.name == 'backoffice' %}
+            <div class="col-md-auto pr-ari-5">
+              <a id="btnAdicionar" class="btn btn-primary" href="{% url 'pessoa:pessoa_create' %}">
+                <i class="fa fa-plus"></i>
+                Adicionar
+              </a>
+            </div>
+          {% endif %}
+          <div class="col">
+            <form action="." method="GET">
               <div class="row">
-                <div class="col-12">
-                  <form id="formFilter" action="." method="GET">
+                <div class="col p-ari-5">
+                  <input name="search" class="form-control mb-2" type="text" placeholder="Busca..." />
+                </div>
+                <div class="col-auto p-ari-5">
+                  <button class="btn btn-success mb-2" type="submit">OK</button>
+                  <button class="btn btn-link mb-2">Limpar</button>
+                  <button class="btn btn-warning mb-2 mr-10" onclick="printDiv('printme')">PDF</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-md-3">
+            <div class="card">
+              <div class="card-header">Selecione um filtro</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <form id="formFilter" action="." method="GET">
 
-                    <fieldset class="form-group">
-                      <legend class="col-form-label pt-0">Status</legend>
-                      <select id="filterStatusAtual" multiple name="filter_status_atual" class="form-control selectpicker">
-                        <option value="">---</option>
-                        {% for item in status_atuais %}
-                        <!-- { if selected_status_atual == item.value %} -->
-                        <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
-                        <!-- { endif %} -->
-                        <option value="{{ item.value }}">{{ item.text }}</option>
-                        {% endfor %}
-                      </select>
-                    </fieldset>
+                      <fieldset class="form-group">
+                        <legend class="col-form-label pt-0">Status</legend>
+                        <select id="filterStatusAtual" multiple name="filter_status_atual" class="form-control selectpicker">
+                          <option value="">---</option>
+                          {% for item in status_atuais %}
+                            <!-- { if selected_status_atual == item.value %} -->
+                            <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
+                            <!-- { endif %} -->
+                            <option value="{{ item.value }}">{{ item.text }}</option>
+                          {% endfor %}
+                        </select>
+                      </fieldset>
 
-                    <fieldset class="form-group">
-                      <legend class="col-form-label pt-0">Natureza</legend>
-                      <select id="filterNatureza" multiple name="filter_natureza" class="form-control selectpicker">
-                        <option value="">---</option>
-                        {% for item in naturezas %}
-                        <!-- { if selected_natureza == item.value %} -->
-                        <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
-                        <!-- { endif %} -->
-                        <option value="{{ item.value }}">{{ item.text }}</option>
-                        {% endfor %}
-                      </select>
-                    </fieldset>
-                    
-                    <fieldset class="form-group">
-                      <legend class="col-form-label pt-0">Operacão</legend>
-                      <select id="filterOperacao" multiple name="filter_operacao" class="form-control selectpicker">
-                        <option value="">---</option>
-                        {% for item in operacoes %}
-                        <!-- { if selected_natureza == item.value %} -->
-                        <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
-                        <!-- { endif %} -->
-                        <option value="{{ item.value }}">{{ item.text }}</option>
-                        {% endfor %}
-                      </select>
-                    </fieldset>
+                      <fieldset class="form-group">
+                        <legend class="col-form-label pt-0">Natureza</legend>
+                        <select id="filterNatureza" multiple name="filter_natureza" class="form-control selectpicker">
+                          <option value="">---</option>
+                          {% for item in naturezas %}
+                            <!-- { if selected_natureza == item.value %} -->
+                            <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
+                            <!-- { endif %} -->
+                            <option value="{{ item.value }}">{{ item.text }}</option>
+                          {% endfor %}
+                        </select>
+                      </fieldset>
 
-                    <fieldset class="form-group">
-                      <legend class="col-form-label pt-0">Bairro</legend>
-                      <select id="filterBairro" multiple name="filter_bairro" class="form-control selectpicker">
-                        <option value="">---</option>
-                        {% for item in bairros %}
-                        <!-- { if selected_bairro == item.value %} -->
-                        <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
-                        <!-- { endif %} -->
-                        <option value="{{ item.value }}">{{ item.text }}</option>
-                        {% endfor %}
-                      </select>
-                    </fieldset>
+                      <fieldset class="form-group">
+                        <legend class="col-form-label pt-0">Operacão</legend>
+                        <select id="filterOperacao" multiple name="filter_operacao" class="form-control selectpicker">
+                          <option value="">---</option>
+                          {% for item in operacoes %}
+                            <!-- { if selected_natureza == item.value %} -->
+                            <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
+                            <!-- { endif %} -->
+                            <option value="{{ item.value }}">{{ item.text }}</option>
+                          {% endfor %}
+                        </select>
+                      </fieldset>
 
-                    <fieldset class="form-group">
-                      <legend class="col-form-label pt-0">Cidade</legend>
-                      <select id="filterCidade" multiple name="filter_cidade" class="form-control selectpicker">
-                        <option value="">---</option>
-                        {% for item in cidades %}
-                        <!-- { if selected_cidade == item.value %} -->
-                        <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
-                        <!-- { endif %} -->
-                        <option value="{{ item.value }}">{{ item.text }}</option>
-                        {% endfor %}
-                      </select>
-                    </fieldset>
+                      <fieldset class="form-group">
+                        <legend class="col-form-label pt-0">Bairro</legend>
+                        <select id="filterBairro" multiple name="filter_bairro" class="form-control selectpicker">
+                          <option value="">---</option>
+                          {% for item in bairros %}
+                            <!-- { if selected_bairro == item.value %} -->
+                            <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
+                            <!-- { endif %} -->
+                            <option value="{{ item.value }}">{{ item.text }}</option>
+                          {% endfor %}
+                        </select>
+                      </fieldset>
 
-                    <fieldset class="form-group">
-                      <legend class="col-form-label pt-0">Facção</legend>
-                      <select id="filterFaccao" multiple name="filter_faccao" class="form-control selectpicker">
-                        <option value="">---</option>
-                        {% for item in faccoes %}
-                        <!-- { if selected_faccao == item.value %} -->
-                        <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
-                        <!-- { endif %} -->
-                        <option value="{{ item.value }}">{{ item.text }}</option>
-                        {% endfor %}
-                      </select>
-                    </fieldset>
+                      <fieldset class="form-group">
+                        <legend class="col-form-label pt-0">Cidade</legend>
+                        <select id="filterCidade" multiple name="filter_cidade" class="form-control selectpicker">
+                          <option value="">---</option>
+                          {% for item in cidades %}
+                            <!-- { if selected_cidade == item.value %} -->
+                            <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
+                            <!-- { endif %} -->
+                            <option value="{{ item.value }}">{{ item.text }}</option>
+                          {% endfor %}
+                        </select>
+                      </fieldset>
 
-                    <a href="." class="btn btn-light">Limpar</a>
-                    <div class="pull-right">
-                      <button class="btn btn-primary" type="submit">OK</button>
-                    </div>
+                      <fieldset class="form-group">
+                        <legend class="col-form-label pt-0">Facção</legend>
+                        <select id="filterFaccao" multiple name="filter_faccao" class="form-control selectpicker">
+                          <option value="">---</option>
+                          {% for item in faccoes %}
+                            <!-- { if selected_faccao == item.value %} -->
+                            <!-- <option value="{{ item.value }}" selected>{{ item.text }}</option> -->
+                            <!-- { endif %} -->
+                            <option value="{{ item.value }}">{{ item.text }}</option>
+                          {% endfor %}
+                        </select>
+                      </fieldset>
 
-                  </form>
+                      <a href="." class="btn btn-light">Limpar</a>
+                      <div class="pull-right">
+                        <button class="btn btn-primary" type="submit">OK</button>
+                      </div>
+
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-12 col-md-9">
-          <table class="table table-responsive-sm table-striped">
-            <thead>
-              <tr>
-                <th>Nome/Apelido/Facção/Status</th>
-                <th>Foto</th>
-                <th>Bairro</th>
-                <th>Infrações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for object in object_list %}
-              <tr>
-                <td>
-                  <a href="{% url 'pessoa:pessoa_detail' object.slug %}">{{ object }}</a>
-                  <br>
-                  {% if object.apelido %}
-                    <span class="text-muted">Apelido: {{ object.apelido }}</span> <br>
-                  {% endif %}
-
-                  {% if object.faccao.nome == 'Comando Vermelho' %}
-                    <span class="badge badge-danger fs-badge">C.V.</span> <br>
-                  {% elif object.faccao.nome == 'ADE' %}
-                    <span class="badge badge-dark fs-badge">A.D.E.</span> <br>
-                  {% elif object.faccao.nome == 'PCC-Primeiro Comando da Capital' %}
-                    <span class="badge badge-warning fs-badge">P.C.C.</span> <br>
-                  {% elif object.faccao.nome == 'Não Identificada' %}
-                    <span class="badge badge-link fs-badge">Não Identificada</span> <br>
-                  {% endif %}
-
-                  {% if object.status_atual == 'foragido' %}
-                    <span id="status_{{ object.pk }}" class="badge badge-danger">Foragido</span>
-                  {% elif object.status_atual == 'morto' %}
-                    <span id="status_{{ object.pk }}" class="badge badge-secondary">Morto</span>
-                  {% elif object.status_atual == 'preso' %}
-                    <span id="status_{{ object.pk }}" class="badge badge-primary">Preso</span>
-                  {% elif object.status_atual == 'solto' %}
-                    <span id="status_{{ object.pk }}" class="badge badge-warning">Livre</span>
-                  {% elif object.status_atual == 'torno' %}
-                    <span id="status_{{ object.pk }}" class="badge badge-info">Tornozelado</span>
-                  {% endif %}
-
-                  {% if user.groups.all.0.name == 'backoffice' %}
-                    <div class="col-6 pl-0">
-                      <label><small>Editar Status Atual</small></label>
-                      <select data-pk="{{ object.pk }}" name="status_atual" class="form-control edit-status-atual">
-                        {% for status in status_atuais %}
-                          {% if status.value == object.status_atual %}
-                            <option value="{{ status.value }}" selected>{{ status.text }}</option>
-                          {% else %}
-                            <option value="{{ status.value }}">{{ status.text }}</option>
-                          {% endif %}
-                        {% endfor %}
-                      </select>
-                    </div>
-                  {% endif %}
-
-                </td>
-                <td>
-                  {% if object.get_first_photo %}
-                  <img src="{{ object.get_first_photo.foto.url }}" width="100px">
-                  {% endif %}
-                </td>
-
-                {% if object.district %}
-                  <td>
-                    {{ object.district }} <br>
-                    <span class="text-muted">{{ object.district.city }} - {{ object.district.city.uf }}</span> <br>
-
-                    <!-- Cidade -->
-                    {% if object.city %}
-                      <span>{{ object.city }}</span>
-                    {% endif %}
-
-                    <!-- Estado -->
-                    {% if object.uf %}
-                      <span>- {{ object.uf }}</span>
-                    {% endif %}
-
-                  </td>
-                {% else %}
-                  <!-- Editar District -->
-                  <td>
-                    {% if user.groups.all.0.name == 'backoffice' %}
-                      <span class="text-muted">{{ object.observacao_bairro }}</span>
+          <div class="col-12 col-md-9">
+            <table class="table table-responsive-sm table-striped">
+              <thead>
+                <tr>
+                  <th>Nome/Apelido/Facção/Status</th>
+                  <th>Foto</th>
+                  <th>Bairro</th>
+                  <th>Infrações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for object in object_list %}
+                  <tr>
+                    <td>
+                      <a href="{% url 'pessoa:pessoa_detail' object.slug %}">{{ object }}</a>
                       <br>
-                      <select data-pk="{{ object.pk }}" name="district" class="form-control edit-district"></select>
+                      {% if object.apelido %}
+                        <span class="text-muted">Apelido: {{ object.apelido }}</span> <br>
+                      {% endif %}
+
+                      {% if object.faccao.nome == 'Comando Vermelho' %}
+                        <span class="badge badge-danger fs-badge">C.V.</span> <br>
+                      {% elif object.faccao.nome == 'ADE' %}
+                        <span class="badge badge-dark fs-badge">A.D.E.</span> <br>
+                      {% elif object.faccao.nome == 'PCC-Primeiro Comando da Capital' %}
+                        <span class="badge badge-warning fs-badge">P.C.C.</span> <br>
+                      {% elif object.faccao.nome == 'Não Identificada' %}
+                        <span class="badge badge-link fs-badge">Não Identificada</span> <br>
+                      {% endif %}
+
+                      {% if object.status_atual == 'foragido' %}
+                        <span id="status_{{ object.pk }}" class="badge badge-danger">Foragido</span>
+                      {% elif object.status_atual == 'morto' %}
+                        <span id="status_{{ object.pk }}" class="badge badge-secondary">Morto</span>
+                      {% elif object.status_atual == 'preso' %}
+                        <span id="status_{{ object.pk }}" class="badge badge-primary">Preso</span>
+                      {% elif object.status_atual == 'solto' %}
+                        <span id="status_{{ object.pk }}" class="badge badge-warning">Livre</span>
+                      {% elif object.status_atual == 'torno' %}
+                        <span id="status_{{ object.pk }}" class="badge badge-info">Tornozelado</span>
+                      {% endif %}
+
+                      {% if user.groups.all.0.name == 'backoffice' %}
+                        <div class="col-6 pl-0">
+                          <label><small>Editar Status Atual</small></label>
+                          <select data-pk="{{ object.pk }}" name="status_atual" class="form-control edit-status-atual">
+                            {% for status in status_atuais %}
+                              {% if status.value == object.status_atual %}
+                                <option value="{{ status.value }}" selected>{{ status.text }}</option>
+                              {% else %}
+                                <option value="{{ status.value }}">{{ status.text }}</option>
+                              {% endif %}
+                            {% endfor %}
+                          </select>
+                        </div>
+                      {% endif %}
+
+                    </td>
+                    <td>
+                      {% if object.get_first_photo %}
+                        <img src="{{ object.get_first_photo.foto.url }}" width="100px">
+                      {% endif %}
+                    </td>
+
+                    {% if object.district %}
+                      <td>
+                        {{ object.district }} <br>
+                        <span class="text-muted">{{ object.district.city }} - {{ object.district.city.uf }}</span> <br>
+
+                        <!-- Cidade -->
+                        {% if object.city %}
+                          <span>{{ object.city }}</span>
+                        {% endif %}
+
+                        <!-- Estado -->
+                        {% if object.uf %}
+                          <span>- {{ object.uf }}</span>
+                        {% endif %}
+
+                      </td>
+                    {% else %}
+                      <!-- Editar District -->
+                      <td>
+                        {% if user.groups.all.0.name == 'backoffice' %}
+                          <span class="text-muted">{{ object.observacao_bairro }}</span>
+                          <br>
+                          <select data-pk="{{ object.pk }}" name="district" class="form-control edit-district"></select>
+                        {% endif %}
+
+                        <!-- Cidade -->
+                        {% if object.city %}
+                          <span>{{ object.city }}</span>
+                        {% endif %}
+
+                        <!-- Estado -->
+                        {% if object.uf %}
+                          <span>- {{ object.uf }}</span>
+                        {% endif %}
+
+                      </td>
                     {% endif %}
 
-                    <!-- Cidade -->
-                    {% if object.city %}
-                      <span>{{ object.city }}</span>
-                    {% endif %}
-
-                    <!-- Estado -->
-                    {% if object.uf %}
-                      <span>- {{ object.uf }}</span>
-                    {% endif %}
-
-                  </td>
-                {% endif %}
-
-                <td>
-                  {{ object.infracao_set.all.0.natureza.natureza.artigo }}
-                  {% for infracao in object.infracao_set.all %}
-                  <span class="badge badge-info badge-article" data-toggle="tooltip" data-placement="top" title="{{ infracao.natureza }}">{{ infracao.natureza.artigo }}</span>
-                  {% endfor %}
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+                    <td>
+                      {{ object.infracao_set.all.0.natureza.natureza.artigo }}
+                      {% for infracao in object.infracao_set.all %}
+                        <span class="badge badge-info badge-article" data-toggle="tooltip" data-placement="top" title="{{ infracao.natureza }}">{{ infracao.natureza.artigo }}</span>
+                      {% endfor %}
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
+        <!-- pagination -->
+        {% include "includes/pagination.html" %}
       </div>
-      <!-- pagination -->
-      {% include "includes/pagination.html" %}
     </div>
   </div>
-</div>
 {% endblock content %}
 
 {% block js %}
-<script>
-$.fn.selectpicker.Constructor.BootstrapVersion = '4';
+  <script>
+    $.fn.selectpicker.Constructor.BootstrapVersion = '4';
 
-const status = {{ selected_status_atual | safe }}
+    const status = {{ selected_status_atual | safe }}
 
-$(document).ready(function() {
-  // $('#filterNatureza').val('{{ selected_natureza }}');
-  // $('#filterBairro').val('{{ selected_bairro }}');
-  // $('#filterCidade').val('{{ selected_cidade }}');
-  // $('#filterFaccao').val('{{ selected_faccao }}');
+    $(document).ready(function() {
+      // $('#filterNatureza').val('{{ selected_natureza }}');
+      // $('#filterBairro').val('{{ selected_bairro }}');
+      // $('#filterCidade').val('{{ selected_cidade }}');
+      // $('#filterFaccao').val('{{ selected_faccao }}');
 
-  $('.edit-district').select2();
+      $('.edit-district').select2();
 
-  $('#filterStatusAtual').selectpicker('val', status);
+      $('#filterStatusAtual').selectpicker('val', status);
 
-  // Popula todos os select district. Nem precisava...
-  get_districts();
-});
-
-function get_districts() {
-  $.ajax({
-    url: '/api/districts/',
-  })
-  .done(function(response) {
-    var element = ""
-    // Percorre todos os valores de response.data.
-    $.each(response.data, function(index, value) {
-      element += (
-        "<option value='" + value.value + "'>" + value.text + "</option>"
-      );
+      // Popula todos os select district. Nem precisava...
+      get_districts();
     });
-    // Popula todos os select district.
-    $('.edit-district').each(function(idx) {
-      $(this).append("<option value=''>---</option>");
-      $(this).append(element);
+
+    function get_districts() {
+      $.ajax({
+        url: '/api/districts/',
+      })
+        .done(function(response) {
+        var element = ""
+        // Percorre todos os valores de response.data.
+        $.each(response.data, function(index, value) {
+          element += (
+            "<option value='" + value.value + "'>" + value.text + "</option>"
+          );
+        });
+        // Popula todos os select district.
+        $('.edit-district').each(function(idx) {
+          $(this).append("<option value=''>---</option>");
+          $(this).append(element);
+        });
+      });
+    }
+
+    // Editar e salvar cada district.
+    $('.edit-district').on('change', function() {
+      let me = $(this);
+      let pk = $(this).data('pk');
+      let value = $(this).val();
+      $.ajax({
+        url: '/api/districts/' + pk + '/edit/',
+        type: 'POST',
+        data: {
+          district: value
+        },
+      })
+        .done(function(response) {
+        let tr = me.parent();
+        me.remove();
+        tr.append(response.data.district + '<br> <span class="text-muted">' + response.data.city + '</span>');
+        tr.find(".select2").remove()
+      });
     });
-  });
-}
 
-// Editar e salvar cada district.
-$('.edit-district').on('change', function() {
-  let me = $(this);
-  let pk = $(this).data('pk');
-  let value = $(this).val();
-  $.ajax({
-    url: '/api/districts/' + pk + '/edit/',
-    type: 'POST',
-    data: {
-      district: value
-    },
-  })
-  .done(function(response) {
-    let tr = me.parent();
-    me.remove();
-    tr.append(response.data.district + '<br> <span class="text-muted">' + response.data.city + '</span>');
-    tr.find(".select2").remove()
-  });
-});
+    // Editar e salvar cada status_atual.
+    $('.edit-status-atual').on('change', function() {
+      let meStatus = $(this);
+      let pkPessoa = $(this).data('pk');
+      let valueStatus = $(this).val();
+      $.ajax({
+        url: '/api/status_atuais/' + pkPessoa + '/edit/',
+        type: 'POST',
+        data: {
+          status_atual: valueStatus
+        },
+      })
+        .done(function(response) {
+        meStatus.val(response.data.value);
+        $('#status_' + pkPessoa).removeClass();
+        $('#status_' + pkPessoa).addClass('badge');
 
-// Editar e salvar cada status_atual.
-$('.edit-status-atual').on('change', function() {
-  let meStatus = $(this);
-  let pkPessoa = $(this).data('pk');
-  let valueStatus = $(this).val();
-  $.ajax({
-    url: '/api/status_atuais/' + pkPessoa + '/edit/',
-    type: 'POST',
-    data: {
-      status_atual: valueStatus
-    },
-  })
-  .done(function(response) {
-    meStatus.val(response.data.value);
-    $('#status_' + pkPessoa).removeClass();
-    $('#status_' + pkPessoa).addClass('badge');
+        if (response.data.value == 'foragido') {
+          $('#status_' + pkPessoa).addClass('badge-danger');
+          $('#status_' + pkPessoa).text('Foragido');
+        }
+        else if (response.data.value == 'morto') {
+          $('#status_' + pkPessoa).addClass('badge-secondary');
+          $('#status_' + pkPessoa).text('Morto');
+        }
+        else if (response.data.value == 'preso') {
+          $('#status_' + pkPessoa).addClass('badge-primary');
+          $('#status_' + pkPessoa).text('Preso');
+        }
+        else if (response.data.value == 'solto') {
+          $('#status_' + pkPessoa).addClass('badge-warning');
+          $('#status_' + pkPessoa).text('Livre');
+        }
+      });
+    });
 
-    if (response.data.value == 'foragido') {
-      $('#status_' + pkPessoa).addClass('badge-danger');
-      $('#status_' + pkPessoa).text('Foragido');
+    $(function() {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    // Necessário para aplicar o filtro no relatório.
+    let path = "{% url 'pessoa:report_pessoa_list' %}"
+    let query_string = "{{ request.GET.urlencode }}"
+    if (query_string) {
+      path = "{% url 'pessoa:report_pessoa_list' %}" + "?" + query_string
     }
-    else if (response.data.value == 'morto') {
-      $('#status_' + pkPessoa).addClass('badge-secondary');
-      $('#status_' + pkPessoa).text('Morto');
-    }
-    else if (response.data.value == 'preso') {
-      $('#status_' + pkPessoa).addClass('badge-primary');
-      $('#status_' + pkPessoa).text('Preso');
-    }
-    else if (response.data.value == 'solto') {
-      $('#status_' + pkPessoa).addClass('badge-warning');
-      $('#status_' + pkPessoa).text('Livre');
-    }
-  });
-});
 
-$(function() {
-  $('[data-toggle="tooltip"]').tooltip();
-});
-
-// Necessário para aplicar o filtro no relatório.
-let path = "{% url 'pessoa:report_pessoa_list' %}"
-let query_string = "{{ request.GET.urlencode }}"
-if (query_string) {
-  path = "{% url 'pessoa:report_pessoa_list' %}" + "?" + query_string
-}
-
-function printDiv(divName) {
-  window.open(path)
-};
-</script>
+    function printDiv(divName) {
+      window.open(path)
+    };
+  </script>
 {% endblock js %}

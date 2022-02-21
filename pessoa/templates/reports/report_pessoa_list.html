@@ -5,79 +5,79 @@
 
 {% block content %}
 
-<div class="container">
-  <h3>Relatório de Pessoas 
-    <small class="float-right">{{ object_list.count }} resultados ({{ items_total }} total)</small>
-  </h3>
-</div>
+  <div class="container">
+    <h3>Relatório de Pessoas
+      <small class="float-right">{{ object_list.count }} resultados ({{ items_total }} total)</small>
+    </h3>
+  </div>
 
-<table class="table">
-  <thead>
-    <tr>
-      <td></td>
-      <th>Nome/Apelido</th>
-      <th>Documento</th>
-      <th>Foto</th>
-      <th>Bairro/Cidade</th>
-      <th>Infrações</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for object in object_list %}
+  <table class="table">
+    <thead>
       <tr>
-        <td>{{ forloop.counter }}</td>
-        <td>
-          {{ object }} <br>
-          {% if object.apelido %}
-            <small>Apelido:</small> <span>{{ object.apelido }}</span> <br>
-          {% endif %}
+        <td></td>
+        <th>Nome/Apelido</th>
+        <th>Documento</th>
+        <th>Foto</th>
+        <th>Bairro/Cidade</th>
+        <th>Infrações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for object in object_list %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>
+            {{ object }} <br>
+            {% if object.apelido %}
+              <small>Apelido:</small> <span>{{ object.apelido }}</span> <br>
+            {% endif %}
 
-          {% if object.faccao.nome == 'Comando Vermelho' %}
-            <span class="badge badge-link fs-badge">C.V.</span> <br>
-          {% elif object.faccao.nome == 'ADE' %}
-            <span class="badge badge-link fs-badge">A.D.E.</span> <br>
-          {% elif object.faccao.nome == 'PCC-Primeiro Comando da Capital' %}
-            <span class="badge badge-link fs-badge">P.C.C.</span> <br>
-          {% elif object.faccao.nome == 'Não Identificada' %}
-            <span class="badge badge-link fs-badge">Não Identificada</span> <br>
-          {% endif %}
+            {% if object.faccao.nome == 'Comando Vermelho' %}
+              <span class="badge badge-link fs-badge">C.V.</span> <br>
+            {% elif object.faccao.nome == 'ADE' %}
+              <span class="badge badge-link fs-badge">A.D.E.</span> <br>
+            {% elif object.faccao.nome == 'PCC-Primeiro Comando da Capital' %}
+              <span class="badge badge-link fs-badge">P.C.C.</span> <br>
+            {% elif object.faccao.nome == 'Não Identificada' %}
+              <span class="badge badge-link fs-badge">Não Identificada</span> <br>
+            {% endif %}
 
             <span class="badge badge-link">{{ object.get_status_atual_display }}</span>
-        </td>
-        <td style="width: 200px;">
-          {% if object.rg %}
-            <small>RG:</small> {{ object.rg }}
-          {% endif %}
-          {% if object.cpf %}
-            <br><small>CPF:</small> {{ object.cpf|cpf_mask }}
-          {% endif %}
-        </td>
-        <td>
-          {% if object.get_first_photo %}
-            <img src="{{ object.get_first_photo.foto.url }}" width="100px">
-          {% endif %}
-        </td>
-        <td>
-          {% if object.district %}
-            <small>Bairro</small><br> {{ object.district }}<br>
-          {% endif %}
+          </td>
+          <td style="width: 200px;">
+            {% if object.rg %}
+              <small>RG:</small> {{ object.rg }}
+            {% endif %}
+            {% if object.cpf %}
+              <br><small>CPF:</small> {{ object.cpf|cpf_mask }}
+            {% endif %}
+          </td>
+          <td>
+            {% if object.get_first_photo %}
+              <img src="{{ object.get_first_photo.foto.url }}" width="100px">
+            {% endif %}
+          </td>
+          <td>
+            {% if object.district %}
+              <small>Bairro</small><br> {{ object.district }}<br>
+            {% endif %}
 
-          {% if object.district.city %}
-            <small>Cidade:</small><br> {{ object.district.city }}
-          {% endif %}
-        <td>
-          {% for infracao in object.infracao_set.all %}
-            <span>{{ infracao.natureza.artigo }}{% if not forloop.last %},{% endif %}</span>
-          {% endfor %}
-        </td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
+            {% if object.district.city %}
+              <small>Cidade:</small><br> {{ object.district.city }}
+            {% endif %}
+            <td>
+              {% for infracao in object.infracao_set.all %}
+                <span>{{ infracao.natureza.artigo }}{% if not forloop.last %},{% endif %}</span>
+              {% endfor %}
+            </td>
+          </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
-<div class="container">
-  <span class="lead float-right">{{ object_list.count }} resultados ({{ items_total }} total)</span>
-</div>
+  <div class="container">
+    <span class="lead float-right">{{ object_list.count }} resultados ({{ items_total }} total)</span>
+  </div>
 
 {% endblock content %}
 
