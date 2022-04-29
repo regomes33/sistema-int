@@ -23,6 +23,8 @@ from veiculo.models import Cor, Modelo, Veiculo
 
 def gen_string(max_length):
     return str(''.join(choice(string.ascii_letters) for i in range(max_length)))
+
+
 gen_string.required = ['max_length']
 
 

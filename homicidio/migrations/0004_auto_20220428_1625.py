@@ -16,10 +16,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Autor',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('nomeautor', models.CharField(max_length=50, verbose_name='nome autor')),
-                ('sobrenomeautor', models.CharField(max_length=50, verbose_name='sobre nome autor')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('slug', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
+                ('nomeautor', models.CharField(
+                    max_length=50, verbose_name='nome autor')),
+                ('sobrenomeautor', models.CharField(
+                    max_length=50, verbose_name='sobre nome autor')),
             ],
             options={
                 'verbose_name': 'nomeautor',
@@ -38,6 +42,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='homicidio',
             name='autor',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='homicidio.Autor', verbose_name='Autor'),
+            field=models.ForeignKey(
+                blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='homicidio.Autor', verbose_name='Autor'),
         ),
     ]

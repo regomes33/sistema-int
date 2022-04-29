@@ -12,6 +12,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='ocorrencia',
-            options={'ordering': ('-data_do_fato',), 'verbose_name': 'ocorrência', 'verbose_name_plural': 'ocorrências'},
+            options={'ordering': (
+                '-data_do_fato',), 'verbose_name': 'ocorrência', 'verbose_name_plural': 'ocorrências'},
         ),
     ]

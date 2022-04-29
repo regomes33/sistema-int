@@ -17,8 +17,10 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Cor',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('slug', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
                 ('cor', models.CharField(max_length=50, unique=True)),
             ],
             options={
@@ -30,8 +32,10 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Modelo',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('slug', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
                 ('modelo', models.CharField(max_length=70, unique=True)),
             ],
             options={
@@ -43,14 +47,21 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Veiculo',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created', models.DateTimeField(auto_now_add=True, verbose_name='criado em')),
-                ('modified', models.DateTimeField(auto_now=True, verbose_name='modificado em')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('slug', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
+                ('created', models.DateTimeField(
+                    auto_now_add=True, verbose_name='criado em')),
+                ('modified', models.DateTimeField(
+                    auto_now=True, verbose_name='modificado em')),
                 ('placa', models.CharField(blank=True, max_length=100, null=True)),
-                ('observacao', models.TextField(blank=True, max_length=500, null=True, verbose_name='Observação')),
-                ('cor', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='cores', to='veiculo.Cor')),
-                ('modelo', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='modelos', to='veiculo.Modelo')),
+                ('observacao', models.TextField(blank=True,
+                                                max_length=500, null=True, verbose_name='Observação')),
+                ('cor', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT,
+                                          related_name='cores', to='veiculo.Cor')),
+                ('modelo', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT,
+                                             related_name='modelos', to='veiculo.Modelo')),
             ],
             options={
                 'verbose_name': 'veículo',

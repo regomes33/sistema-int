@@ -21,14 +21,20 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Ocorrencia',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created', models.DateTimeField(auto_now_add=True, verbose_name='criado em')),
-                ('modified', models.DateTimeField(auto_now=True, verbose_name='modificado em')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('slug', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
+                ('created', models.DateTimeField(
+                    auto_now_add=True, verbose_name='criado em')),
+                ('modified', models.DateTimeField(
+                    auto_now=True, verbose_name='modificado em')),
                 ('rai', models.IntegerField(blank=True, null=True, verbose_name='RAI')),
                 ('data_do_fato', models.DateField(verbose_name='Data do Fato')),
-                ('descricao', models.TextField(blank=True, null=True, verbose_name='descrição')),
-                ('created_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, verbose_name='criado por')),
+                ('descricao', models.TextField(
+                    blank=True, null=True, verbose_name='descrição')),
+                ('created_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                                 to=settings.AUTH_USER_MODEL, verbose_name='criado por')),
             ],
             options={
                 'verbose_name': 'ocorrência',
@@ -39,13 +45,20 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PessoaOcorrencia',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created', models.DateTimeField(auto_now_add=True, verbose_name='criado em')),
-                ('modified', models.DateTimeField(auto_now=True, verbose_name='modificado em')),
-                ('created_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, verbose_name='criado por')),
-                ('ocorrencia', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, related_name='ocorrencias1', to='ocorrencia.Ocorrencia')),
-                ('pessoa', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, related_name='pessoas_ocorrencias', to='pessoa.Pessoa')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('slug', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
+                ('created', models.DateTimeField(
+                    auto_now_add=True, verbose_name='criado em')),
+                ('modified', models.DateTimeField(
+                    auto_now=True, verbose_name='modificado em')),
+                ('created_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                                 to=settings.AUTH_USER_MODEL, verbose_name='criado por')),
+                ('ocorrencia', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE,
+                                                 related_name='ocorrencias1', to='ocorrencia.Ocorrencia')),
+                ('pessoa', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE,
+                                             related_name='pessoas_ocorrencias', to='pessoa.Pessoa')),
             ],
             options={
                 'ordering': ('-created',),
@@ -54,13 +67,20 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='OcorrenciaVeiculo',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created', models.DateTimeField(auto_now_add=True, verbose_name='criado em')),
-                ('modified', models.DateTimeField(auto_now=True, verbose_name='modificado em')),
-                ('created_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, verbose_name='criado por')),
-                ('ocorrencia', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='ocorrencia.Ocorrencia')),
-                ('veiculo', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='veiculo.Veiculo')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('slug', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
+                ('created', models.DateTimeField(
+                    auto_now_add=True, verbose_name='criado em')),
+                ('modified', models.DateTimeField(
+                    auto_now=True, verbose_name='modificado em')),
+                ('created_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                                 to=settings.AUTH_USER_MODEL, verbose_name='criado por')),
+                ('ocorrencia', models.ForeignKey(blank=True, null=True,
+                                                 on_delete=django.db.models.deletion.SET_NULL, to='ocorrencia.Ocorrencia')),
+                ('veiculo', models.ForeignKey(blank=True, null=True,
+                                              on_delete=django.db.models.deletion.SET_NULL, to='veiculo.Veiculo')),
             ],
             options={
                 'ordering': ('-created',),

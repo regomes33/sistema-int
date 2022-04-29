@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='ocorrencia',
             name='rai',
-            field=models.IntegerField(blank=True, null=True, unique=True, verbose_name='RAI'),
+            field=models.IntegerField(
+                blank=True, null=True, unique=True, verbose_name='RAI'),
         ),
     ]

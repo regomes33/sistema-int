@@ -21,10 +21,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Faccao',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('slug', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
                 ('nome', models.CharField(max_length=100, unique=True)),
-                ('funcao', models.CharField(blank=True, choices=[('chefe', 'Chefe'), ('membro', 'Membro')], max_length=10, null=True)),
+                ('funcao', models.CharField(blank=True, choices=[
+                 ('chefe', 'Chefe'), ('membro', 'Membro')], max_length=10, null=True)),
             ],
             options={
                 'verbose_name': 'facção',
@@ -35,29 +38,48 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Pessoa',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created', models.DateTimeField(auto_now_add=True, verbose_name='criado em')),
-                ('modified', models.DateTimeField(auto_now=True, verbose_name='modificado em')),
-                ('address', models.CharField(blank=True, max_length=100, null=True, verbose_name='endereço')),
-                ('address_number', models.IntegerField(blank=True, null=True, verbose_name='número')),
-                ('complement', models.CharField(blank=True, max_length=100, null=True, verbose_name='complemento')),
-                ('cep', models.CharField(blank=True, max_length=9, null=True, verbose_name='CEP')),
-                ('country', models.CharField(blank=True, default='Brasil', max_length=50, null=True, verbose_name='país')),
-                ('cpf', models.CharField(blank=True, max_length=11, null=True, unique=True, verbose_name='CPF')),
-                ('rg', models.CharField(blank=True, max_length=11, null=True, verbose_name='RG')),
-                ('cnh', models.CharField(blank=True, max_length=20, null=True, verbose_name='CNH')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('slug', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
+                ('created', models.DateTimeField(
+                    auto_now_add=True, verbose_name='criado em')),
+                ('modified', models.DateTimeField(
+                    auto_now=True, verbose_name='modificado em')),
+                ('address', models.CharField(blank=True,
+                                             max_length=100, null=True, verbose_name='endereço')),
+                ('address_number', models.IntegerField(
+                    blank=True, null=True, verbose_name='número')),
+                ('complement', models.CharField(blank=True,
+                                                max_length=100, null=True, verbose_name='complemento')),
+                ('cep', models.CharField(blank=True,
+                                         max_length=9, null=True, verbose_name='CEP')),
+                ('country', models.CharField(blank=True, default='Brasil',
+                                             max_length=50, null=True, verbose_name='país')),
+                ('cpf', models.CharField(blank=True, max_length=11,
+                                         null=True, unique=True, verbose_name='CPF')),
+                ('rg', models.CharField(blank=True,
+                                        max_length=11, null=True, verbose_name='RG')),
+                ('cnh', models.CharField(blank=True,
+                                         max_length=20, null=True, verbose_name='CNH')),
                 ('nome', models.CharField(max_length=50, verbose_name='nome')),
-                ('sobrenome', models.CharField(max_length=100, verbose_name='sobrenome')),
+                ('sobrenome', models.CharField(
+                    max_length=100, verbose_name='sobrenome')),
                 ('apelido', models.CharField(blank=True, max_length=50, null=True)),
-                ('mae', models.CharField(blank=True, max_length=50, null=True, verbose_name='mãe')),
+                ('mae', models.CharField(blank=True,
+                                         max_length=50, null=True, verbose_name='mãe')),
                 ('pai', models.CharField(blank=True, max_length=50, null=True)),
-                ('observacao', models.TextField(blank=True, max_length=500, null=True, verbose_name='Observação')),
+                ('observacao', models.TextField(blank=True,
+                                                max_length=500, null=True, verbose_name='Observação')),
                 ('vitima', models.BooleanField(default=False)),
-                ('nascimento', models.DateField(blank=True, help_text='Data no formato dd/mm/YYYY', null=True, verbose_name='data de nascimento')),
-                ('created_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, verbose_name='criado por')),
-                ('district', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='core.District', verbose_name='bairro')),
-                ('faccao', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='pessoa.Faccao', verbose_name='facção')),
+                ('nascimento', models.DateField(blank=True, help_text='Data no formato dd/mm/YYYY',
+                                                null=True, verbose_name='data de nascimento')),
+                ('created_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                                 to=settings.AUTH_USER_MODEL, verbose_name='criado por')),
+                ('district', models.ForeignKey(blank=True, null=True,
+                                               on_delete=django.db.models.deletion.SET_NULL, to='core.District', verbose_name='bairro')),
+                ('faccao', models.ForeignKey(blank=True, null=True,
+                                             on_delete=django.db.models.deletion.SET_NULL, to='pessoa.Faccao', verbose_name='facção')),
             ],
             options={
                 'verbose_name': 'pessoa',
@@ -68,13 +90,20 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Tatuagem',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created', models.DateTimeField(auto_now_add=True, verbose_name='criado em')),
-                ('modified', models.DateTimeField(auto_now=True, verbose_name='modificado em')),
-                ('foto', models.ImageField(upload_to='tatuagem', verbose_name='Imagem da Tatuagem')),
-                ('descricao', models.TextField(blank=True, null=True, verbose_name='Descrição da Tatuagem')),
-                ('pessoa', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.PROTECT, to='pessoa.Pessoa')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('slug', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
+                ('created', models.DateTimeField(
+                    auto_now_add=True, verbose_name='criado em')),
+                ('modified', models.DateTimeField(
+                    auto_now=True, verbose_name='modificado em')),
+                ('foto', models.ImageField(upload_to='tatuagem',
+                                           verbose_name='Imagem da Tatuagem')),
+                ('descricao', models.TextField(blank=True,
+                                               null=True, verbose_name='Descrição da Tatuagem')),
+                ('pessoa', models.ForeignKey(
+                    blank=True, on_delete=django.db.models.deletion.PROTECT, to='pessoa.Pessoa')),
             ],
             options={
                 'verbose_name': 'tatuagem',
@@ -85,13 +114,20 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PessoaVeiculo',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created', models.DateTimeField(auto_now_add=True, verbose_name='criado em')),
-                ('modified', models.DateTimeField(auto_now=True, verbose_name='modificado em')),
-                ('created_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, verbose_name='criado por')),
-                ('pessoa', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, related_name='pessoas_veiculos', to='pessoa.Pessoa')),
-                ('veiculo', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='veiculos2', to='veiculo.Veiculo')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('slug', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
+                ('created', models.DateTimeField(
+                    auto_now_add=True, verbose_name='criado em')),
+                ('modified', models.DateTimeField(
+                    auto_now=True, verbose_name='modificado em')),
+                ('created_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                                 to=settings.AUTH_USER_MODEL, verbose_name='criado por')),
+                ('pessoa', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE,
+                                             related_name='pessoas_veiculos', to='pessoa.Pessoa')),
+                ('veiculo', models.ForeignKey(blank=True, null=True,
+                                              on_delete=django.db.models.deletion.SET_NULL, related_name='veiculos2', to='veiculo.Veiculo')),
             ],
             options={
                 'ordering': ('-created',),
@@ -100,13 +136,19 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PessoaContato',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created', models.DateTimeField(auto_now_add=True, verbose_name='criado em')),
-                ('modified', models.DateTimeField(auto_now=True, verbose_name='modificado em')),
-                ('tipo', models.CharField(choices=[('cel', 'Celular'), ('tel', 'Telefone')], default='cel', max_length=10)),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('slug', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
+                ('created', models.DateTimeField(
+                    auto_now_add=True, verbose_name='criado em')),
+                ('modified', models.DateTimeField(
+                    auto_now=True, verbose_name='modificado em')),
+                ('tipo', models.CharField(choices=[
+                 ('cel', 'Celular'), ('tel', 'Telefone')], default='cel', max_length=10)),
                 ('telefone', models.CharField(max_length=20)),
-                ('pessoa', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, to='pessoa.Pessoa')),
+                ('pessoa', models.ForeignKey(
+                    blank=True, on_delete=django.db.models.deletion.CASCADE, to='pessoa.Pessoa')),
             ],
             options={
                 'verbose_name': 'contato',
@@ -117,12 +159,18 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Foto',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created', models.DateTimeField(auto_now_add=True, verbose_name='criado em')),
-                ('modified', models.DateTimeField(auto_now=True, verbose_name='modificado em')),
-                ('foto', models.ImageField(upload_to='pessoa', verbose_name='Imagem da Pessoa')),
-                ('pessoa', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.PROTECT, to='pessoa.Pessoa')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('slug', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
+                ('created', models.DateTimeField(
+                    auto_now_add=True, verbose_name='criado em')),
+                ('modified', models.DateTimeField(
+                    auto_now=True, verbose_name='modificado em')),
+                ('foto', models.ImageField(
+                    upload_to='pessoa', verbose_name='Imagem da Pessoa')),
+                ('pessoa', models.ForeignKey(
+                    blank=True, on_delete=django.db.models.deletion.PROTECT, to='pessoa.Pessoa')),
             ],
             options={
                 'verbose_name': 'foto',
@@ -133,18 +181,28 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Comparsa',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created', models.DateTimeField(auto_now_add=True, verbose_name='criado em')),
-                ('modified', models.DateTimeField(auto_now=True, verbose_name='modificado em')),
-                ('cpf', models.CharField(blank=True, max_length=11, null=True, unique=True, verbose_name='CPF')),
-                ('rg', models.CharField(blank=True, max_length=11, null=True, verbose_name='RG')),
-                ('cnh', models.CharField(blank=True, max_length=20, null=True, verbose_name='CNH')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('slug', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
+                ('created', models.DateTimeField(
+                    auto_now_add=True, verbose_name='criado em')),
+                ('modified', models.DateTimeField(
+                    auto_now=True, verbose_name='modificado em')),
+                ('cpf', models.CharField(blank=True, max_length=11,
+                                         null=True, unique=True, verbose_name='CPF')),
+                ('rg', models.CharField(blank=True,
+                                        max_length=11, null=True, verbose_name='RG')),
+                ('cnh', models.CharField(blank=True,
+                                         max_length=20, null=True, verbose_name='CNH')),
                 ('nome', models.CharField(blank=True, max_length=100, null=True)),
                 ('parente', models.BooleanField(default=False)),
-                ('grau_parentesco', models.CharField(blank=True, max_length=50, null=True)),
-                ('observacao', models.TextField(blank=True, max_length=500, null=True)),
-                ('pessoa', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, to='pessoa.Pessoa')),
+                ('grau_parentesco', models.CharField(
+                    blank=True, max_length=50, null=True)),
+                ('observacao', models.TextField(
+                    blank=True, max_length=500, null=True)),
+                ('pessoa', models.ForeignKey(
+                    blank=True, on_delete=django.db.models.deletion.CASCADE, to='pessoa.Pessoa')),
             ],
             options={
                 'verbose_name': 'comparsa',

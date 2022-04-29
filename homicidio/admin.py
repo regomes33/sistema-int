@@ -36,7 +36,6 @@ class AutoriaAdmin(admin.ModelAdmin):
         return False
 
 
-
 @admin.register(Genero)
 class GeneroAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'slug')

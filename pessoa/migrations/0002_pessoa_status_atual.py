@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='pessoa',
             name='status_atual',
-            field=models.CharField(choices=[('foragido', 'Foragido'), ('morto', 'Morto'), ('preso', 'Preso'), ('solto', 'Solto')], default='foragido', max_length=8),
+            field=models.CharField(choices=[('foragido', 'Foragido'), ('morto', 'Morto'), (
+                'preso', 'Preso'), ('solto', 'Solto')], default='foragido', max_length=8),
         ),
     ]

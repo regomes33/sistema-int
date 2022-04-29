@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='homicidio',
             name='apelidovitima',
-            field=models.CharField(blank=True, max_length=50, null=True, verbose_name='apelido vítima'),
+            field=models.CharField(
+                blank=True, max_length=50, null=True, verbose_name='apelido vítima'),
         ),
     ]

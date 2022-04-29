@@ -22,7 +22,6 @@ class AreaUpm(UuidModel, models.Model):
 
 class Autoria(UuidModel, models.Model):
     autoria = models.CharField('autoria', max_length=50)
-    
 
     class Meta:
         ordering = ('autoria',)
@@ -31,7 +30,7 @@ class Autoria(UuidModel, models.Model):
 
     def __str__(self):
         return self.autoria
- 
+
 
 class Genero(UuidModel, models.Model):
     genero = models.CharField('genero', max_length=50)
@@ -57,7 +56,6 @@ class Motivacao(UuidModel, models.Model):
         return self.titulo
 
 
-
 class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
     rai = models.ForeignKey(
         Ocorrencia,
@@ -81,10 +79,11 @@ class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
         blank=True
     )
 
-    nomeautor= models.CharField('nome Autor',max_length=50,blank=True,null=True)
-    
-    apelido=models.CharField('apelido Autor', max_length=50, blank=True, null=True)
-    
+    nomeautor = models.CharField(
+        'nome Autor', max_length=50, blank=True, null=True)
+
+    apelido = models.CharField(
+        'apelido Autor', max_length=50, blank=True, null=True)
 
     genero = models.ForeignKey(
         Genero,
@@ -98,7 +97,8 @@ class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
         verbose_name='vítima',
         on_delete=models.CASCADE,
     )
-    apelidovitima=models.CharField('apelido Vítima', max_length=50, blank=True, null=True)
+    apelidovitima = models.CharField(
+        'apelido Vítima', max_length=50, blank=True, null=True)
     instrumento = models.ForeignKey(
         Arma,
         on_delete=models.SET_NULL,
@@ -110,8 +110,9 @@ class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
         verbose_name='motivação',
         on_delete=models.CASCADE
     )
-    
-    diligencia=models.TextField('diligências',max_length=5000, null=True,blank=True)
+
+    diligencia = models.TextField(
+        'diligências', max_length=5000, null=True, blank=True)
 
     class Meta:
         ordering = ('-data_do_homicidio',)

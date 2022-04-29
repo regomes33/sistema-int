@@ -16,9 +16,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Operacao',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('operacao', models.CharField(help_text='Número da Operação', max_length=15)),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('slug', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
+                ('operacao', models.CharField(
+                    help_text='Número da Operação', max_length=15)),
                 ('descricao', models.TextField(unique=True)),
             ],
             options={
@@ -30,6 +33,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='infracao',
             name='operacao',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='operacoes', to='infracao.Operacao', verbose_name='operacao'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                    related_name='operacoes', to='infracao.Operacao', verbose_name='operacao'),
         ),
     ]

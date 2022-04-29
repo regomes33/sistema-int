@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='homicidio',
             name='apelido',
-            field=models.CharField(blank=True, max_length=50, null=True, verbose_name='apelido'),
+            field=models.CharField(
+                blank=True, max_length=50, null=True, verbose_name='apelido'),
         ),
     ]

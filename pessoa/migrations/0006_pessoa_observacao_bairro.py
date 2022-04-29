@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='pessoa',
             name='observacao_bairro',
-            field=models.TextField(blank=True, null=True, verbose_name='Observação Bairro'),
+            field=models.TextField(blank=True, null=True,
+                                   verbose_name='Observação Bairro'),
         ),
     ]

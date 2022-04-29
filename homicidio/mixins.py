@@ -60,7 +60,8 @@ class SearchHomicidioMixin(object):
             queryset = queryset.filter(Q(district__city__in=filter_cidade))
 
         if filter_ano:
-            queryset = queryset.filter(Q(data_do_homicidio__year__in=filter_ano))
+            queryset = queryset.filter(
+                Q(data_do_homicidio__year__in=filter_ano))
 
         if filter_data_inicial and filter_data_final:
             queryset = queryset.filter(

@@ -15,9 +15,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Diligencias',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('diligencia', models.CharField(max_length=300, verbose_name='diligência')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('slug', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
+                ('diligencia', models.CharField(
+                    max_length=300, verbose_name='diligência')),
             ],
             options={
                 'verbose_name': 'diligência',
@@ -28,13 +31,15 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='autoria',
             name='nomeAutor',
-            field=models.CharField(default=1, max_length=50, verbose_name='nome autor'),
+            field=models.CharField(
+                default=1, max_length=50, verbose_name='nome autor'),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='autoria',
             name='sobrenomeAutor',
-            field=models.CharField(default=1, max_length=50, verbose_name='sobre nome autor'),
+            field=models.CharField(
+                default=1, max_length=50, verbose_name='sobre nome autor'),
             preserve_default=False,
         ),
     ]

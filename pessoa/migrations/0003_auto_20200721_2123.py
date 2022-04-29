@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='comparsa',
-            options={'ordering': ('nome',), 'verbose_name': 'comparsa', 'verbose_name_plural': 'comparsas'},
+            options={'ordering': (
+                'nome',), 'verbose_name': 'comparsa', 'verbose_name_plural': 'comparsas'},
         ),
         migrations.RemoveField(
             model_name='comparsa',
@@ -42,15 +43,23 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='PessoaComparsa',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('created', models.DateTimeField(auto_now_add=True, verbose_name='criado em')),
-                ('modified', models.DateTimeField(auto_now=True, verbose_name='modificado em')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('slug', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
+                ('created', models.DateTimeField(
+                    auto_now_add=True, verbose_name='criado em')),
+                ('modified', models.DateTimeField(
+                    auto_now=True, verbose_name='modificado em')),
                 ('parente', models.BooleanField(default=False)),
-                ('grau_parentesco', models.CharField(blank=True, max_length=50, null=True)),
-                ('observacao', models.TextField(blank=True, max_length=500, null=True)),
-                ('comparsa', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='comparsas', to='pessoa.Comparsa')),
-                ('pessoa', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, to='pessoa.Pessoa')),
+                ('grau_parentesco', models.CharField(
+                    blank=True, max_length=50, null=True)),
+                ('observacao', models.TextField(
+                    blank=True, max_length=500, null=True)),
+                ('comparsa', models.ForeignKey(blank=True, null=True,
+                                               on_delete=django.db.models.deletion.SET_NULL, related_name='comparsas', to='pessoa.Comparsa')),
+                ('pessoa', models.ForeignKey(
+                    blank=True, on_delete=django.db.models.deletion.CASCADE, to='pessoa.Pessoa')),
             ],
             options={
                 'ordering': ('pessoa', 'comparsa'),

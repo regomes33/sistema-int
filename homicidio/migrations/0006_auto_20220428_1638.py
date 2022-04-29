@@ -16,17 +16,20 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='homicidio',
             name='diligencia',
-            field=models.CharField(blank=True, max_length=300, null=True, verbose_name='diligências'),
+            field=models.CharField(
+                blank=True, max_length=300, null=True, verbose_name='diligências'),
         ),
         migrations.AddField(
             model_name='homicidio',
             name='sobrenomeautor',
-            field=models.CharField(blank=True, max_length=50, null=True, verbose_name='sobrenome Autor'),
+            field=models.CharField(
+                blank=True, max_length=50, null=True, verbose_name='sobrenome Autor'),
         ),
         migrations.AlterField(
             model_name='homicidio',
             name='nomeautor',
-            field=models.CharField(blank=True, max_length=50, null=True, verbose_name='nome Autor'),
+            field=models.CharField(
+                blank=True, max_length=50, null=True, verbose_name='nome Autor'),
         ),
         migrations.DeleteModel(
             name='Autor',
