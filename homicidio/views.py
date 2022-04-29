@@ -14,7 +14,7 @@ from pessoa.forms import PessoaMinimalForm
 from utils.data import FORMA
 
 from .forms import HomicidioForm
-from .models import AreaUpm, Genero, Homicidio, Motivacao, Autoria
+from .models import AreaUpm, Autoria, Genero, Homicidio, Motivacao
 
 
 def get_all_homicidio_years():
