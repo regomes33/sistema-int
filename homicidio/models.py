@@ -80,10 +80,18 @@ class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
     )
 
     nomeautor = models.CharField(
-        'nome Autor', max_length=50, blank=True, null=True)
+        'nome Autor',
+        max_length=50,
+        blank=True,
+        null=True
+    )
 
     apelido = models.CharField(
-        'apelido Autor', max_length=50, blank=True, null=True)
+        'apelido Autor',
+        max_length=50,
+        blank=True,
+        null=True
+    )
 
     genero = models.ForeignKey(
         Genero,
@@ -98,7 +106,11 @@ class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
         on_delete=models.CASCADE,
     )
     apelidovitima = models.CharField(
-        'apelido Vítima', max_length=50, blank=True, null=True)
+        'apelido Vítima',
+        max_length=50,
+        blank=True,
+        null=True
+    )
     instrumento = models.ForeignKey(
         Arma,
         on_delete=models.SET_NULL,
@@ -112,7 +124,11 @@ class Homicidio(UuidModel, Address, CreatedBy, TimeStampedModel):
     )
 
     diligencia = models.TextField(
-        'diligências', max_length=5000, null=True, blank=True)
+        'diligências',
+        max_length=5000,
+        null=True,
+        blank=True
+    )
 
     class Meta:
         ordering = ('-data_do_homicidio',)

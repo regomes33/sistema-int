@@ -49,8 +49,15 @@ class GeneroAdmin(admin.ModelAdmin):
 
 @admin.register(Homicidio)
 class HomicidioAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'slug', 'data_do_homicidio',
-                    'forma', 'area_upm', 'vitima', 'motivacao')
+    list_display = (
+        '__str__',
+        'slug',
+        'data_do_homicidio',
+        'forma',
+        'area_upm',
+        'vitima',
+        'motivacao'
+    )
     search_fields = ('vitima__nome', 'rai__rai')
     readonly_fields = ('slug',)
     list_filter = ('forma', 'area_upm', 'motivacao', 'data_do_homicidio')
