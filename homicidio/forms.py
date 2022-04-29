@@ -13,9 +13,13 @@ class HomicidioForm(forms.ModelForm):
             'forma',
             'area_upm',
             'vitima',
+            'apelidovitima',
             'instrumento',
             'motivacao',
             'autoria',
+            'nomeautor',
+            'apelido',
             'genero',
             'district',
+            'diligencia',
         )
