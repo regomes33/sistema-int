@@ -7,7 +7,7 @@ from pessoa.models import Pessoa, Veiculo
 
 
 class Ocorrencia(UuidModel, CreatedBy, TimeStampedModel):
-    rai = models.IntegerField('RAI', unique=True)
+    rai = models.IntegerField('RAI')
     data_do_fato = models.DateField('Data do Fato')
     descricao = models.TextField('descrição', null=True, blank=True)
 
